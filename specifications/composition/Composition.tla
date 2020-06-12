@@ -23,12 +23,14 @@ VARIABLES x, \* Abstract/very high-level representation of the overall computati
           y, \* Represents the phase that the composed system is in.
              \* This toy example has three phases: <<"A", "B", "C">>.
           z  \* z is the variable that is only going to be present in spec A.
-varsA == <<x, y, z>>
+          ,zz  \* The more the merrier.
+varsA == <<x, y, z, zz>>
 
 InitA ==
   /\ x = 0
   /\ y = "A"
   /\ z = TRUE
+  /\ zz= FALSE \* Could happen to be zz=TRUE.
   
 NextA == 
   /\ y = "A"
@@ -37,6 +39,7 @@ NextA ==
      THEN y' = "B"
      ELSE UNCHANGED y
   /\ z' = ~ z
+  /\ zz'= ~ zz
 
 ==================================
 
@@ -83,7 +86,7 @@ vars ==
 (* Down here we know about the internals  *)
 (* of spec A and B (whitebox component).  *)
 
-INSTANCE A WITH z <- restOfTheUniverse
+INSTANCE A WITH z <- restOfTheUniverse, zz <- restOfTheUniverse
 
 Spec == InitA /\ InitB /\ [][ \/ [NextA]_vars
                               \/ [OpenNextB]_vars
@@ -94,6 +97,6 @@ THEOREM Spec => Inv
 
 =============================================================================
 \* Modification History
-\* Last modified Fri Jun 12 16:30:33 PDT 2020 by markus
+\* Last modified Fri Jun 12 16:44:17 PDT 2020 by markus
 \* Last modified Fri Jun 12 16:30:19 PDT 2020 by Markus Kuppe
 \* Created Fri Jun 12 10:30:09 PDT 2020 by Leslie Lamport
