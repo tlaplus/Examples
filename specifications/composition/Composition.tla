@@ -20,30 +20,23 @@ VARIABLES x, \* Abstract/very high-level representation of the overall computati
              \* Think of it as some computation going on.  At a certain state
              \* of the computation, the composed system transitions into the
              \* next phase.
-          y, \* Represents the phase that the composed system is in.
-             \* This toy example has three phases: <<"A", "B", "C">>.
           z  \* z is the variable that is only going to be present in spec A.
-varsA == <<x, y, z>>
+varsA == <<x, z>>
 
 InitA ==
   /\ x = 0
-  /\ y = "A"
   /\ z = TRUE
   
 NextA == 
-  /\ y = "A"
+  /\ x < 6
   /\ x' = x + 1
-  /\ IF x' = 5 
-     THEN y' = "B"
-     ELSE UNCHANGED y
   /\ z' = ~ z
 
 ==================================
 
 (* COMPONENT Spec B *)
-VARIABLES x,
-          y
-varsB == <<x, y>>
+VARIABLES x
+varsB == <<x>>
 
 \* ++Observation: This is most likely not the original Init predicate of a 
 \*                standalone B component, unless perhaps we consider spec A 
@@ -54,15 +47,10 @@ varsB == <<x, y>>
 InitB == 
   /\ x \in Nat          \* Spec B may starts with x being any natural number,
                         \* which is where A left off.
-  /\ y \in {"A", "B"}   \* Phase A or B, otherwise InitA /\ InitB in Spec 
-                        \* below will equal FALSE.
 
 NextB ==
-  /\ y = "B"
+  /\ x < 10
   /\ x' = x + 1
-  /\ IF x' = 10    \* (Make sure values is greater than in spec A)
-     THEN y' = "C" \* Phase C of the composed system (or ultimate termination).
-     ELSE UNCHANGED y
 
 -----------------------------------------------------------------------------
 
@@ -77,7 +65,7 @@ OpenNextB ==
   /\ UNCHANGED <<restOfTheUniverse>>
 
 vars ==
-  <<x,y,restOfTheUniverse>>
+  <<x,restOfTheUniverse>>
 
 (* Composition of A and B (A /\ B)        *)
 (* Down here we know about the internals  *)
@@ -85,15 +73,18 @@ vars ==
 
 INSTANCE A WITH z <- restOfTheUniverse
 
-Spec == InitA /\ InitB /\ [][ \/ [NextA]_vars
-                              \/ [OpenNextB]_vars
+Spec == InitA /\ InitB /\ [][ IF ENABLED NextA THEN [NextA]_vars
+                              ELSE [OpenNextB]_vars
                             ]_vars
 
-Inv == y \in {"A","B","C"}
+Inv == x \in 0..10
 THEOREM Spec => Inv
 
+\* Not a theorem due to no fairness constraint.
+Live ==
+  <>[](x = 10)
 =============================================================================
 \* Modification History
-\* Last modified Fri Jun 12 17:30:28 PDT 2020 by markus
+\* Last modified Fri Jun 12 17:34:09 PDT 2020 by markus
 \* Last modified Fri Jun 12 16:30:19 PDT 2020 by Markus Kuppe
 \* Created Fri Jun 12 10:30:09 PDT 2020 by Leslie Lamport
