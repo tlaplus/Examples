@@ -2,89 +2,141 @@
 (**************************************************************************)
 (* Background reading: Conjoining Specifications by Abadi and Lamport     *)
 (* https://lamport.azurewebsites.net/pubs/abadi-conjoining.pdf            *)
-(*                                                                        *)
-(* Spec A and B are two components that together are composed into a      *)
-(* larger system.  It's toy example in the sense that minimize            *)
-(* interaction of A and B to behaviors where first A takes its steps      *)
-(* followed by B.  Variable y in A and B represents the control wire      *)
-(* that A and B use to synchronize.                                       *)
-(* Variable z has been added to make the example more interesting--it     *)
-(* only appears in spec A but *not* B.                                    *)
-(*                                                                        *)
 (**************************************************************************)
-EXTENDS Naturals, Sequences
+EXTENDS Integers, Sequences
 
-(* COMPONENT Spec A *)
------------- MODULE A ------------
-VARIABLES x, \* Abstract/very high-level representation of the overall computation.
-             \* Think of it as some computation going on.  At a certain state
-             \* of the computation, the composed system transitions into the
-             \* next phase.
-          z  \* z is the variable that is only going to be present in spec A.
-varsA == <<x, z>>
+Nodes == 1..3 \* Fixed to 1..3 here but should be a constant.
 
-InitA ==
+(* COMPONENT Spec A (Computation) *)
+------ MODULE A --------
+VARIABLES x,      \* Private to this component.
+          active  \* Shared with component spec B.
+vars == <<x,active>>
+
+Type ==
+  /\ x \in 0..10
+  /\ active \in [ Nodes -> BOOLEAN ]
+
+Init ==
   /\ x = 0
-  /\ z = TRUE
-  
-NextA == 
-  /\ x < 6
-  /\ x' = x + 1
-  /\ z' = ~ z
+  /\ active \in [ Nodes -> BOOLEAN ]
+
+Next ==
+  \* Not all nodes are inactive.
+  /\ \E i \in DOMAIN active : active[i] = TRUE
+  \* Mimic some computation.
+  /\ x' \in 1..10
+  \* Computation changed the activation of 0 to N nodes.
+  /\ active' \in [ Nodes -> BOOLEAN ]
 
 ==================================
 
-(* COMPONENT Spec B *)
-VARIABLES x
-varsB == <<x>>
+(* COMPONENT Spec B (Safra's termination detection) *)
+------------ MODULE B ------------
+VARIABLES active,    \* Shared with component A.
+          inactive   \* Shared with component C.
+vars == <<inactive, active>>
 
-\* ++Observation: This is most likely not the original Init predicate of a 
-\*                standalone B component, unless perhaps we consider spec A 
-\*                the environment of spec B.  In this particular example, 
-\*                InitB is superfluouos anyway.  However, if one would want
-\*                to prove something about spec B, we probably need an init
-\*                predicate (=> Conjoining Specifications).
-InitB == 
-  /\ x \in Nat          \* Spec B may starts with x being any natural number,
-                        \* which is where A left off.
+Type ==
+  /\ inactive \subseteq Nodes
+  /\ active \in [ Nodes -> BOOLEAN ]
 
-NextB ==
-  /\ x < 10
-  /\ x' = x + 1
+Init ==
+  /\ inactive = {}
+  /\ active \in [ Nodes -> BOOLEAN ]
+  
+Next == 
+  \* Since this high-level composition abstracts away communication,
+  \* we could abstract termination detection into a single step: 
+  \*   /\ \A i \in DOMAIN active : active[i] = FALSE 
+  \*   /\ inactive' = Nodes
+  \* However, we want to model the possible interleavings of the
+  \* A and B spec.
+  /\ \E i \in DOMAIN active: 
+                    active[i] = FALSE /\ i \notin inactive
+  /\ inactive' = inactive \cup { 
+                 CHOOSE i \in DOMAIN active: 
+                    active[i] = FALSE /\ i \notin inactive
+                               }  
+  /\ UNCHANGED active
+  
+==================================
+
+(* COMPONENT Spec C (orderly/graceful shutdown) *)
+------------ MODULE C ------------
+VARIABLES inactive \* Shared with component spec B. 
+vars == <<inactive>>
+
+Type ==
+  /\ inactive \subseteq Nodes
+
+Init == 
+  /\ inactive \subseteq Nodes
+
+IOExit == TRUE \* Shutdown via sys.exit
+
+Next ==
+  /\ inactive = Nodes
+  /\ UNCHANGED inactive
+  /\ IOExit
+==================================
 
 -----------------------------------------------------------------------------
 
-(* This *extends* component spec B to defines what happens to the variables
-   in spec A, which are not defined in B, when B takes a step. *) 
-VARIABLES restOfTheUniverse
-
-\* Note that TLC doesn't complain about restOfTheUniverse
-\* not appearing in InitB.
-OpenNextB ==
-  /\ NextB
-  /\ UNCHANGED <<restOfTheUniverse>>
-
+(* Component specification. *)
+VARIABLES x, active, inactive
 vars ==
-  <<x,restOfTheUniverse>>
+  <<inactive, x, active>>
 
-(* Composition of A and B (A /\ B)        *)
-(* Down here we know about the internals  *)
-(* of spec A and B (whitebox component).  *)
+A == INSTANCE A
+B == INSTANCE B
+C == INSTANCE C
 
-INSTANCE A WITH z <- restOfTheUniverse
+TypeOK ==
+  /\ A!Type
+  /\ B!Type
+  /\ C!Type
 
-Spec == InitA /\ InitB /\ [][ IF ENABLED NextA THEN [NextA]_vars
-                              ELSE [OpenNextB]_vars
-                            ]_vars
+Init == 
+  /\ A!Init
+  /\ B!Init
+  /\ C!Init
 
-Inv == x \in 0..10
-THEOREM Spec => Inv
+\* PlusPy will most certainly not be able to evaluate this 
+\* Next formula. Might have to introduce an auxiliary variable
+\* that represents the phase/stage of composed system.
+Next ==
+  \/ /\ ENABLED A!Next
+     /\ [A!Next]_vars
+     /\ UNCHANGED <<inactive>>
+  \/ /\ ENABLED B!Next
+     /\ [B!Next]_vars
+     /\ UNCHANGED <<x>>
+  \/ /\ [C!Next]_vars
+     /\ UNCHANGED <<x, active>>
+     
+Spec == Init /\ [][Next]_vars /\ WF_vars(Next)
 
-\* Not a theorem due to no fairness constraint.
-Live ==
-  <>[](x = 10)
+THEOREM Spec => []TypeOK
+
+(* The system eventually converges to shutdown. This, however, does 
+   *not* hold because component spec A could keep computing forever. *)
+AlwaysShutdown ==
+  <>[][C!Next]_vars
+
+(* Unless all nodes are inactive at startup, some computation will occur. *)
+ComputationIfSomeActive == 
+  [n \in Nodes |-> FALSE] # active => <>[](x \in 1..10)
+THEOREM Spec => ComputationIfSomeActive
+
+(* Iff - from some point onward - all nodes will become
+   inactive, the composed system will eventually shutdown. *)
+ShutdownIfNoComputation ==
+  <>[][~ A!Next]_vars => <>[][C!Next]_vars
+THEOREM Spec => ShutdownIfNoComputation
+
 =============================================================================
 \* Modification History
-\* Last modified Fri Jun 12 17:34:09 PDT 2020 by markus
+\* Last modified Mon Jun 15 17:37:21 PDT 2020 by markus
 \* Last modified Fri Jun 12 16:30:19 PDT 2020 by Markus Kuppe
 \* Created Fri Jun 12 10:30:09 PDT 2020 by Leslie Lamport
