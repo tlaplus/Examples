@@ -19,12 +19,13 @@ Actors == 1..NumActors
 
 ToSet(s) == { s[i] : i \in DOMAIN s }
 
-read(s)  == s[1] = "read"
-write(s) == s[1] = "write"
+\* predicates to check the type of a process: read or write
+IsRead(s)  == s[1] = "read"
+IsWrite(s) == s[1] = "write"
 
-WaitingToRead  == { p[2] : p \in ToSet(SelectSeq(waiting, read)) }
+WaitingToRead  == { p[2] : p \in ToSet(SelectSeq(waiting, IsRead)) }
 
-WaitingToWrite == { p[2] : p \in ToSet(SelectSeq(waiting, write)) }
+WaitingToWrite == { p[2] : p \in ToSet(SelectSeq(waiting, IsWrite)) }
 
 ---------------------------------------------------------------------------
 
