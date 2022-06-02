@@ -23,7 +23,6 @@ read(s)  == s[1] = "read"
 write(s) == s[1] = "write"
 
 WaitingToRead  == { p[2] : p \in ToSet(SelectSeq(waiting, read)) }
-
 WaitingToWrite == { p[2] : p \in ToSet(SelectSeq(waiting, write)) }
 
 ---------------------------------------------------------------------------
@@ -44,13 +43,11 @@ TryWrite(actor) ==
 
 Read(actor) ==
     /\ readers' = readers \union {actor}
-    /\ waiting' = Tail(waiting)
     /\ UNCHANGED writers
 
 Write(actor) ==
     /\ readers = {}
     /\ writers' = writers \union {actor}
-    /\ waiting' = Tail(waiting)
     /\ UNCHANGED readers
 
 ReadOrWrite ==
@@ -60,6 +57,7 @@ ReadOrWrite ==
            actor == pair[2]
        IN CASE pair[1] = "read" -> Read(actor)
             [] pair[1] = "write" -> Write(actor)
+    /\ waiting' = Tail(waiting)
 
 StopActivity(actor) ==
     IF actor \in readers
