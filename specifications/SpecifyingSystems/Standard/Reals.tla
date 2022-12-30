@@ -3,6 +3,6 @@ EXTENDS Integers
 LOCAL R == INSTANCE ProtoReals
 
 Real  ==  R!Real
-a / b == a R!/(a, b)
+a / b == R!/(a, b)
 Infinity == R!Infinity
 =============================================================================
