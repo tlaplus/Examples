@@ -16,9 +16,9 @@ VARIABLES input, output
 VARIABLES allInput, chosen
 
 IInit == /\ input \in [Proc -> Inputs]
-        /\ output = [p \in Proc |-> NotAnInput]
-        /\ chosen = NotAnInput
-        /\ allInput = {input[p] : p \in Proc}
+         /\ output = [p \in Proc |-> NotAnInput]
+         /\ chosen = NotAnInput
+         /\ allInput = {input[p] : p \in Proc}
 
 IChoose(p) ==
   /\ output[p] = NotAnInput
