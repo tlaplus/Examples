@@ -48,7 +48,7 @@
 (* The problem of generalizing the algorithm of module Simple to use       *)
 (* regular registers was proposed by Yuri Abraham in                       *)
 (*                                                                         *)
-(*    On Lamport’s “Teaching Concurrency”                                  *)
+(*    On Lamport's "Teaching Concurrency"                                  *)
 (*    Bulletin of EATS (European Association for Theoretical Computer      *)
 (*      Science) No. 127, February 2019                                    *)
 (*    http://bulletin.eatcs.org/index.php/beatcs/article/view/569          *)
