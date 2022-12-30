@@ -3,11 +3,11 @@ LOCAL R == INSTANCE ProtoReals
 
 Nat == R!Nat
 
-a + b == a R!+ b
-a - b == a R!- b
-a * b == a R!* b
-a ^ b == a R!^ b
-a \leq b == a R!\leq b
+a + b == R!+(a, b)
+a - b == R!-(a, b)
+a * b == R!*(a, b)
+a ^ b == R!^(a, b)
+a \leq b == R!\leq(a, b)
 a \geq b == b \leq a
 a < b == (a \leq b) /\ (a # b)
 a > b == b < a
