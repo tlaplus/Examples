@@ -100,10 +100,11 @@ Do you have your own case study that you like to share with the community? Send 
 | 87  | MET for CRDT-Redis         | <a href="https://github.com/elem-azar-unis/CRDT-Redis/tree/master/MET/TLA">Model-check the CRDT designs, then generate test cases to test CRDT implementations</a>  | Yuqi Zhang  |             |                                                   &#10004;                                                    | Integers, Sequences, FiniteSets, TLC              | &#10004; | |
 | 88  | Parallel increment    | <a href="https://github.com/Cjen1/tla_increment">Parallel threads incrementing a shared variable. Demonstrates invariants, liveness, fairness and symmetry</a>  | Chris Jensen |             |                                                   &#10004;                                                    | Integers, FiniteSets, TLC              | | |
 | 89 | The Streamlet consensus algorithm | <a href="https://www.losa.fr/blog/streamlet-in-tla+">Specification and model-checking of both safety and liveness properties of Streamlet with TLC</a> | Giuliano Losa | | &#10004; | Sequences, Integers, FiniteSets | &#10004; | |
-| 90 | Petri Nets | <a href="https://github.com/elh/petri-tlaplus">Instantiable Petri Nets with liveness properties</a> | Eugene Huang | | &#10004; | Integers, Sequences, FiniteSets, TLC | |
-| 91 | Knuth Yao & Markov Chains | <a href="specifications/KnuthYao">Knuth-Yao algorithm for simulating a sixsided die</a> | Ron Pressler, Markus Kuppe | | &#10004; | DyadicRationals | |
-| 92 | ewd426 - Token Stabilization | <a href="specifications/ewd426">Self-stabilizing systems in spite of distributed control</a> | Murat Demirbas, Markus Kuppe | | &#10004; | Naturals, FiniteSets | |
+| 90 | Petri Nets | <a href="https://github.com/elh/petri-tlaplus">Instantiable Petri Nets with liveness properties</a> | Eugene Huang | | &#10004; | Integers, Sequences, FiniteSets, TLC | | |
+| 91 | Knuth Yao & Markov Chains | <a href="specifications/KnuthYao">Knuth-Yao algorithm for simulating a sixsided die</a> | Ron Pressler, Markus Kuppe | | &#10004; | DyadicRationals | | |
+| 92 | ewd426 - Token Stabilization | <a href="specifications/ewd426">Self-stabilizing systems in spite of distributed control</a> | Murat Demirbas, Markus Kuppe | | &#10004; | Naturals, FiniteSets | | |
 | 93 | CRDT | <a href="https://github.com/JYwellin/CRDT-TLA">Specifying and Verifying CRDT Protocols</a> | Ye Ji, Hengfeng Wei | | &#10004;| Naturals, FiniteSets |  |
+| 93 | Multi-Car Elevator System | <a href="specifications/MultiCarElevator"> | Andrew Helwer | | &#10004; | Integers | | |
 
 ## License
 
