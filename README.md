@@ -105,6 +105,8 @@ Do you have your own case study that you like to share with the community? Send 
 | 92 | ewd426 - Token Stabilization | <a href="specifications/ewd426">Self-stabilizing systems in spite of distributed control</a> | Murat Demirbas, Markus Kuppe | | &#10004; | Naturals, FiniteSets | | |
 | 93 | CRDT | <a href="https://github.com/JYwellin/CRDT-TLA">Specifying and Verifying CRDT Protocols</a> | Ye Ji, Hengfeng Wei | | &#10004;| Naturals, FiniteSets |  |
 | 93 | Multi-Car Elevator System | <a href="specifications/MultiCarElevator"> | Andrew Helwer | | &#10004; | Integers | | |
+| 94 | Snapshot Key-Value Store | <a href="specifications/KeyValueStore"> | Andrew Helwer | | &#10004; | | | |
+| 95 | Nano Blockchain Protocol | <a href="specifications/NanoBlockchain"> | Andrew Helwer | | &#10004; | Naturals, Bags | | |
 
 ## License
 
