@@ -80,6 +80,42 @@
           ]
         }
       ]
+    },
+    {
+      "title": "Nano Blockchain Protocol",
+      "description": "A specification of the protocol originally used by the Nano blockchain",
+      "source": "https://docs.nano.org/whitepaper/english/"
+      "authors": ["Andrew Helwer"],
+      "modules": [
+        {
+          "path": "specifications/NanoBlockchain/Nano.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/NanoBlockchain/NanoMC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/NanoBlockchain/NanoMCExistential.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/NanoBlockchain/NanoMCSingleChain.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+      ]
     }
   ]
 }
