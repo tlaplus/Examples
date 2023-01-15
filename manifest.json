@@ -1,0 +1,86 @@
+{
+  "specifications": [
+    {
+      "title": "Key-Value Store with Snapshot Isolation",
+      "description": "A simple KVS implementing snapshot isolation",
+      "source": "https://en.wikipedia.org/wiki/TLA%2B#Examples",
+      "authors": ["Andrew Helwer"],
+      "modules": [
+        {
+          "path": "specifications/KeyValueStore/KeyValueStore.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/KeyValueStore/MCKeyValueStore.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/KeyValueStore/KVSSafetySmall.cfg",
+              "runtime": "00:00:40",
+              "features": [],
+              "result": "success"
+            },
+            {
+              "path": "specifications/KeyValueStore/KVSSafetyMedium.cfg",
+              "runtime": "00:04:30",
+              "features": ["symmetry"],
+              "result": "success"
+            },
+            {
+              "path": "specifications/KeyValueStore/KVSSafetyLarge.cfg",
+              "runtime": "00:04:30",
+              "features": ["symmetry"],
+              "result": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Multi-Car Elevator System",
+      "description": "A simple multi-car elevator system servicing a multi-floor building",
+      "source": "https://groups.google.com/g/tlaplus/c/5Xd8kv288jE/m/IrliJIatBwAJ",
+      "authors": ["Andrew Helwer"],
+      "modules": [
+        {
+          "path": "specifications/MultiCarElevator/Elevator.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/MultiCarElevator/ElevatorLivenessSmall.cfg",
+              "runtime": "00:00:10",
+              "features": ["liveness"],
+              "result": "success"
+            },
+            {
+              "path": "specifications/MultiCarElevator/ElevatorSafetyMedium.cfg",
+              "runtime": "00:03:00",
+              "features": [],
+              "result": "success"
+            },
+            {
+              "path": "specifications/MultiCarElevator/ElevatorSafetyLarge.cfg",
+              "runtime": "00:10:00",
+              "features": [],
+              "result": "success"
+            },
+            {
+              "path": "specifications/MultiCarElevator/ElevatorLivenessLarge.cfg",
+              "runtime": "00:11:00",
+              "features": ["liveness"],
+              "result": "success"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
