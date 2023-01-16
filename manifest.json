@@ -33,7 +33,7 @@
             },
             {
               "path": "specifications/KeyValueStore/KVSSafetyLarge.cfg",
-              "runtime": "00:04:30",
+              "runtime": "07:16:00",
               "features": ["symmetry"],
               "result": "success"
             }
@@ -119,7 +119,7 @@
     },
     {
       "title": "The Coffee Can Black/White Bean Problem",
-      "description": "Math problem often sourced to 1981 book The Science of Programming by David Gries, which itself sources it to a 1979 letter penned by Dijkstra where he credits his colleague Carel Scholten",
+      "description": "Math problem published by Dijkstra attributed to Carel Scholten",
       "source": "https://stackoverflow.com/a/66304920/2852699",
       "authors": ["Andrew Helwer"],
       "modules": [
