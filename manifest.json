@@ -105,8 +105,14 @@
           "models": [
             {
               "path": "specifications/NanoBlockchain/NanoMCSmall.cfg",
-              "runtime": "00:00:01",
-              "features": [],
+              "runtime": "00:00:05",
+              "features": ["view"],
+              "result": "success"
+            },
+            {
+              "path": "specifications/NanoBlockchain/NanoMCLarge.cfg",
+              "runtime": "00:50:00",
+              "features": ["view", "symmetry"],
               "result": "success"
             }
           ]
