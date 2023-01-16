@@ -107,6 +107,7 @@ Do you have your own case study that you like to share with the community? Send 
 | 93 | Multi-Car Elevator System | <a href="specifications/MultiCarElevator"> | Andrew Helwer | | &#10004; | Integers | | |
 | 94 | Snapshot Key-Value Store | <a href="specifications/KeyValueStore"> | Andrew Helwer | | &#10004; | | | |
 | 95 | Nano Blockchain Protocol | <a href="specifications/NanoBlockchain"> | Andrew Helwer | | &#10004; | Naturals, Bags | | |
+| 96 | Coffee Can White/Black Bean Problem | <a href="specifications/CoffeeCan"> | Andrew Helwer | | &#10004; | Naturals | | |
 
 ## License
 
