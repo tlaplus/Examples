@@ -82,9 +82,9 @@
       ]
     },
     {
-      "title": "Nano Blockchain Protocol",
+      "title": "The Nano Blockchain Protocol",
       "description": "A specification of the protocol originally used by the Nano blockchain",
-      "source": "https://docs.nano.org/whitepaper/english/"
+      "source": "https://docs.nano.org/whitepaper/english/",
       "authors": ["Andrew Helwer"],
       "modules": [
         {
@@ -116,6 +116,20 @@
           "models": []
         },
       ]
+    },
+    {
+      "title": "The Coffee Can Black/White Bean Problem",
+      "description": "Math problem often sourced to 1981 book The Science of Programming by David Gries, which itself sources it to a 1979 letter penned by Dijkstra where he credits his colleague Carel Scholten",
+      "source": "https://stackoverflow.com/a/66304920/2852699",
+      "authors": ["Andrew Helwer"],
+      "modules": [
+        {
+          "path": "specifications/CoffeeCan/CoffeeCan.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
     }
   ]
 }
