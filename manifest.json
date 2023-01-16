@@ -128,7 +128,26 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/CoffeeCan/100BeanCoffeeCan.cfg",
+              "runtime": "00:00:01",
+              "features": ["liveness"],
+              "result": "success"
+            },
+            {
+              "path": "specifications/CoffeeCan/1000BeanCoffeeCan.cfg",
+              "runtime": "00:00:15",
+              "features": ["liveness"],
+              "result": "success"
+            },
+            {
+              "path": "specifications/CoffeeCan/3000BeanCoffeeCan.cfg",
+              "runtime": "00:02:30",
+              "features": ["liveness"],
+              "result": "success"
+            }
+          ]
         },
     }
   ]
