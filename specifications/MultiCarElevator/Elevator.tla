@@ -85,8 +85,10 @@ PickNewDestination(p) ==    \* Person decides they need to go to a different flo
     /\ UNCHANGED <<ActiveElevatorCalls, ElevatorState>>
 
 CallElevator(p) ==  \* Person calls the elevator to go in a certain direction from their floor
-    LET pState == PersonState[p] IN
-    LET call == [floor |-> pState.location, direction |-> GetDirection[pState.location, pState.destination]] IN
+    LET
+      pState == PersonState[p]
+      call == [floor |-> pState.location, direction |-> GetDirection[pState.location, pState.destination]]
+    IN
     /\ ~pState.waiting
     /\ pState.location /= pState.destination
     /\ ActiveElevatorCalls' =
@@ -108,9 +110,11 @@ OpenElevatorDoors(e) == \* Open the elevator doors if there is a call on this fl
     /\ UNCHANGED <<PersonState>>
     
 EnterElevator(e) == \* All people on this floor who are waiting for the elevator and travelling the same direction enter the elevator.
-    LET eState == ElevatorState[e] IN
-    LET gettingOn == PeopleWaiting[eState.floor, eState.direction] IN
-    LET destinations == {PersonState[p].destination : p \in gettingOn} IN
+    LET
+      eState == ElevatorState[e]
+      gettingOn == PeopleWaiting[eState.floor, eState.direction]
+      destinations == {PersonState[p].destination : p \in gettingOn}
+    IN
     /\ eState.doorsOpen
     /\ eState.direction /= "Stationary"
     /\ gettingOn /= {}
@@ -122,8 +126,10 @@ EnterElevator(e) == \* All people on this floor who are waiting for the elevator
     /\ UNCHANGED <<ActiveElevatorCalls>>
 
 ExitElevator(e) ==  \* All people whose destination is this floor exit the elevator.
-    LET eState == ElevatorState[e] IN
-    LET gettingOff == {p \in Person : PersonState[p].location = e /\ PersonState[p].destination = eState.floor} IN
+    LET
+      eState == ElevatorState[e]
+      gettingOff == {p \in Person : PersonState[p].location = e /\ PersonState[p].destination = eState.floor}
+    IN
     /\ eState.doorsOpen
     /\ gettingOff /= {}
     /\ PersonState' = [p \in Person |->
@@ -141,8 +147,10 @@ CloseElevatorDoors(e) ==    \* Close the elevator doors once all people have ent
     /\ UNCHANGED <<PersonState, ActiveElevatorCalls>>
 
 MoveElevator(e) ==  \* Move the elevator to the next floor unless we have to open the doors here.
-    LET eState == ElevatorState[e] IN
-    LET nextFloor == IF eState.direction = "Up" THEN eState.floor + 1 ELSE eState.floor - 1 IN
+    LET
+      eState == ElevatorState[e]
+      nextFloor == IF eState.direction = "Up" THEN eState.floor + 1 ELSE eState.floor - 1
+    IN
     /\ eState.direction /= "Stationary"
     /\ ~eState.doorsOpen
     /\ eState.floor \notin eState.buttonsPressed
@@ -156,8 +164,10 @@ MoveElevator(e) ==  \* Move the elevator to the next floor unless we have to ope
     /\ UNCHANGED <<PersonState, ActiveElevatorCalls>>
 
 StopElevator(e) == \* Stops the elevator if it's moved as far as it can in one direction
-    LET eState == ElevatorState[e] IN
-    LET nextFloor == IF eState.direction = "Up" THEN eState.floor + 1 ELSE eState.floor - 1 IN
+    LET
+      eState == ElevatorState[e]
+      nextFloor == IF eState.direction = "Up" THEN eState.floor + 1 ELSE eState.floor - 1
+    IN
     /\ ~ENABLED OpenElevatorDoors(e)
     /\ ~eState.doorsOpen
     /\ nextFloor \notin Floor
@@ -173,11 +183,13 @@ StopElevator(e) == \* Stops the elevator if it's moved as far as it can in one d
 (* guaranteed an elevator will eventually become available.                *)
 (***************************************************************************)
 DispatchElevator(c) ==
-    LET stationary == {e \in Elevator : ElevatorState[e].direction = "Stationary"} IN
-    LET approaching == {e \in Elevator :
+    LET
+      stationary == {e \in Elevator : ElevatorState[e].direction = "Stationary"}
+      approaching == {e \in Elevator :
         /\ ElevatorState[e].direction = c.direction
         /\  \/ ElevatorState[e].floor = c.floor
-            \/ GetDirection[ElevatorState[e].floor, c.floor] = c.direction } IN
+            \/ GetDirection[ElevatorState[e].floor, c.floor] = c.direction }
+    IN
     /\ c \in ActiveElevatorCalls
     /\ stationary \cup approaching /= {}
     /\ ElevatorState' = 

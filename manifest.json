@@ -5,6 +5,7 @@
       "description": "A simple KVS implementing snapshot isolation",
       "source": "https://en.wikipedia.org/wiki/TLA%2B#Examples",
       "authors": ["Andrew Helwer"],
+      "tags": [],
       "modules": [
         {
           "path": "specifications/KeyValueStore/KeyValueStore.tla",
@@ -46,6 +47,7 @@
       "description": "A simple multi-car elevator system servicing a multi-floor building",
       "source": "https://groups.google.com/g/tlaplus/c/5Xd8kv288jE/m/IrliJIatBwAJ",
       "authors": ["Andrew Helwer"],
+      "tags": ["beginner"],
       "modules": [
         {
           "path": "specifications/MultiCarElevator/Elevator.tla",
@@ -55,7 +57,7 @@
           "models": [
             {
               "path": "specifications/MultiCarElevator/ElevatorLivenessSmall.cfg",
-              "runtime": "00:00:10",
+              "runtime": "00:00:05",
               "features": ["liveness"],
               "result": "success"
             },
@@ -86,6 +88,7 @@
       "description": "A specification of the protocol originally used by the Nano blockchain",
       "source": "https://docs.nano.org/whitepaper/english/",
       "authors": ["Andrew Helwer"],
+      "tags": [],
       "modules": [
         {
           "path": "specifications/NanoBlockchain/Nano.tla",
@@ -99,7 +102,14 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/NanoBlockchain/NanoMCSmall.cfg",
+              "runtime": "00:00:01",
+              "features": [],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/NanoBlockchain/NanoMCExistential.tla",
@@ -122,6 +132,7 @@
       "description": "Math problem published by Dijkstra attributed to Carel Scholten",
       "source": "https://stackoverflow.com/a/66304920/2852699",
       "authors": ["Andrew Helwer"],
+      "tags": ["beginner"],
       "modules": [
         {
           "path": "specifications/CoffeeCan/CoffeeCan.tla",
@@ -148,7 +159,8 @@
               "result": "success"
             }
           ]
-        },
+        }
+      ]
     }
   ]
 }
