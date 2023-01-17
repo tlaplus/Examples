@@ -104,7 +104,7 @@ Do you have your own case study that you like to share with the community? Send 
 | 91 | Knuth Yao & Markov Chains | <a href="specifications/KnuthYao">Knuth-Yao algorithm for simulating a sixsided die</a> | Ron Pressler, Markus Kuppe | | &#10004; | DyadicRationals | |
 | 92 | ewd426 - Token Stabilization | <a href="specifications/ewd426">Self-stabilizing systems in spite of distributed control</a> | Murat Demirbas, Markus Kuppe | | &#10004; | Naturals, FiniteSets | |
 | 93 | CRDT | <a href="https://github.com/JYwellin/CRDT-TLA">Specifying and Verifying CRDT Protocols</a> | Ye Ji, Hengfeng Wei | | &#10004;| Naturals, FiniteSets |  |
-| 94 | CRDT | <a href="https://github.com/10227694/SDP_Verification">Specifying and Verifying SDP Protocol Based Zero Trust Architecture</a> | Luming Dong, Zhi Niu | | &#10004;| FiniteSets, Sequences, Naturals, Integers, TLC, Bitwise, Functions |  |
+| 94 | Software Defined Perimeter(SDP) | <a href="https://github.com/10227694/SDP_Verification">Specifying and Verifying SDP Protocol Based Zero Trust Architecture</a> | Luming Dong, Zhi Niu | | &#10004;| FiniteSets, Sequences, Naturals, Integers, TLC, Bitwise, Functions |  |
 ## License
 
 The repository is under the MIT license. However, we can upload your benchmarks under your license.
