@@ -38,7 +38,7 @@
     {
       "title": "Key-Value Store with Snapshot Isolation",
       "description": "A simple KVS implementing snapshot isolation",
-      "source": "https://github.com/ahelwer",
+      "source": "https://ahelwer.ca",
       "authors": ["Andrew Helwer"],
       "tags": [],
       "modules": [
@@ -155,7 +155,7 @@
       ]
     },
     {
-      "title": "The Slush Probabilistic Consensus Protocol"
+      "title": "The Slush Probabilistic Consensus Protocol",
       "description": "An attempt to use TLA⁺ to analyze a probabilistic protocol in the Avalanche family",
       "source": "https://github.com/ahelwer/avalanche-analysis",
       "authors": ["Andrew Helwer"],
