@@ -33,8 +33,7 @@
 
 EXTENDS
   Naturals,
-  FiniteSets,
-  TLC
+  FiniteSets
 
 CONSTANTS
   CalculateHash(_,_,_),
@@ -50,9 +49,6 @@ ASSUME
   /\ Cardinality(PrivateKey) = Cardinality(PublicKey)
   /\ Cardinality(PrivateKey) <= Cardinality(Node)
   /\ GenesisBalance \in Nat
-
-\* Define all permutations of the Hash set; used for symmetry reduction
-HashSymmetric == Permutations(Hash)
 
 VARIABLES
   hashFunction,
