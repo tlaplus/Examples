@@ -3,7 +3,7 @@
     {
       "title": "Key-Value Store with Snapshot Isolation",
       "description": "A simple KVS implementing snapshot isolation",
-      "source": "https://en.wikipedia.org/wiki/TLA%2B#Examples",
+      "source": "https://github.com/ahelwer",
       "authors": ["Andrew Helwer"],
       "tags": [],
       "modules": [
@@ -47,7 +47,7 @@
       "description": "A simple multi-car elevator system servicing a multi-floor building",
       "source": "https://groups.google.com/g/tlaplus/c/5Xd8kv288jE/m/IrliJIatBwAJ",
       "authors": ["Andrew Helwer"],
-      "tags": ["beginner"],
+      "tags": [],
       "modules": [
         {
           "path": "specifications/MultiCarElevator/Elevator.tla",
@@ -88,7 +88,7 @@
       "description": "A specification of the protocol originally used by the Nano blockchain",
       "source": "https://docs.nano.org/whitepaper/english/",
       "authors": ["Andrew Helwer"],
-      "tags": [],
+      "tags": ["blockchain"],
       "modules": [
         {
           "path": "specifications/NanoBlockchain/Nano.tla",
@@ -96,26 +96,6 @@
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
-        },
-        {
-          "path": "specifications/NanoBlockchain/NanoMC.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": [
-            {
-              "path": "specifications/NanoBlockchain/NanoMCSmall.cfg",
-              "runtime": "00:00:05",
-              "features": ["view"],
-              "result": "success"
-            },
-            {
-              "path": "specifications/NanoBlockchain/NanoMCLarge.cfg",
-              "runtime": "00:50:00",
-              "features": ["view", "symmetry"],
-              "result": "success"
-            }
-          ]
         },
         {
           "path": "specifications/NanoBlockchain/MCNano.tla",
@@ -130,13 +110,13 @@
               "result": "success"
             },
             {
-              "path": "specifications/NanoBlockchain/MCNanoMedium.cfg",
+              "path": "specifications/NanoBlockchain/MCNanoLarge.cfg",
               "runtime": "00:20:00",
-              "features": ["view", "symmetry"],
+              "features": ["view"],
               "result": "success"
-            },
+            }
           ]
-        },
+        }
       ]
     },
     {

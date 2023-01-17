@@ -2,7 +2,10 @@
 (***************************************************************************)
 (* An outdated and not-ultimately-useful specification of the original     *)
 (* protocol used by the Nano blockchain. Primarily interesting as an       *)
-(* example of how to model hash functions and cryptographic signatures.    *)
+(* example of how to model hash functions and cryptographic signatures,    *)
+(* and the difficulties in using finite modelchecking to analyze           *)
+(* blockchain-like data structures or anything else that records action    *)
+(* history in an ordered way.                                              *)
 (***************************************************************************)
 
 EXTENDS
