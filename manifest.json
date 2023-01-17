@@ -118,18 +118,24 @@
           ]
         },
         {
-          "path": "specifications/NanoBlockchain/NanoMCExistential.tla",
+          "path": "specifications/NanoBlockchain/MCNano.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/NanoBlockchain/NanoMCSingleChain.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/NanoBlockchain/MCNanoSmall.cfg",
+              "runtime": "00:00:05",
+              "features": ["view"],
+              "result": "success"
+            },
+            {
+              "path": "specifications/NanoBlockchain/MCNanoMedium.cfg",
+              "runtime": "00:20:00",
+              "features": ["view", "symmetry"],
+              "result": "success"
+            },
+          ]
         },
       ]
     },
