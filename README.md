@@ -108,6 +108,7 @@ Do you have your own case study that you like to share with the community? Send 
 | 94 | Snapshot Key-Value Store | <a href="specifications/KeyValueStore"> | Andrew Helwer | | &#10004; | | | |
 | 95 | Nano Blockchain Protocol | <a href="specifications/NanoBlockchain"> | Andrew Helwer | | &#10004; | Naturals, Bags | | |
 | 96 | Coffee Can White/Black Bean Problem | <a href="specifications/CoffeeCan"> | Andrew Helwer | | &#10004; | Naturals | | |
+| 97 | The Slush Protocol | <a href="specifications/SlushProtocol"> | Andrew Helwer | | &#10004; | Naturals, FiniteSets, Sequences | | |
 
 ## License
 
