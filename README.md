@@ -104,11 +104,11 @@ Do you have your own case study that you like to share with the community? Send 
 | 91 | Knuth Yao & Markov Chains | <a href="specifications/KnuthYao">Knuth-Yao algorithm for simulating a sixsided die</a> | Ron Pressler, Markus Kuppe | | &#10004; | DyadicRationals | | |
 | 92 | ewd426 - Token Stabilization | <a href="specifications/ewd426">Self-stabilizing systems in spite of distributed control</a> | Murat Demirbas, Markus Kuppe | | &#10004; | Naturals, FiniteSets | | |
 | 93 | CRDT | <a href="https://github.com/JYwellin/CRDT-TLA">Specifying and Verifying CRDT Protocols</a> | Ye Ji, Hengfeng Wei | | &#10004;| Naturals, FiniteSets |  |
-| 94 | Multi-Car Elevator System | <a href="specifications/MultiCarElevator"> | Andrew Helwer | | &#10004; | Integers | | |
-| 95 | Snapshot Key-Value Store | <a href="specifications/KeyValueStore"> | Andrew Helwer | | &#10004; | | | |
-| 96 | Nano Blockchain Protocol | <a href="specifications/NanoBlockchain"> | Andrew Helwer | | &#10004; | Naturals, Bags | | |
-| 97 | Coffee Can White/Black Bean Problem | <a href="specifications/CoffeeCan"> | Andrew Helwer | | &#10004; | Naturals | | |
-| 98 | The Slush Protocol | <a href="specifications/SlushProtocol"> | Andrew Helwer | | &#10004; | Naturals, FiniteSets, Sequences | | |
+| 94 | Multi-Car Elevator System | <a href="specifications/MultiCarElevator">Directory</a> | Andrew Helwer | | &#10004; | Integers | | |
+| 95 | Snapshot Key-Value Store | <a href="specifications/KeyValueStore">Directory</a> | Andrew Helwer | | &#10004; | | | |
+| 96 | Nano Blockchain Protocol | <a href="specifications/NanoBlockchain">Directory</a> | Andrew Helwer | | &#10004; | Naturals, Bags | | |
+| 97 | Coffee Can White/Black Bean Problem | <a href="specifications/CoffeeCan">Directory</a> | Andrew Helwer | | &#10004; | Naturals | | |
+| 98 | The Slush Protocol | <a href="specifications/SlushProtocol">Directory</a> | Andrew Helwer | | &#10004; | Naturals, FiniteSets, Sequences | &#10004; | |
 
 ## License
 
