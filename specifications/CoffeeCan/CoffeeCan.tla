@@ -28,6 +28,11 @@
 (*  2. Identify a loop/inductive invariant                                 *)
 (*  3. Form a hypothesis about the final bean and modelcheck it            *)
 (*                                                                         *)
+(* Finite modelchecking can only check our properties for a finite number  *)
+(* of beans, while we want to show that it holds for all Natural numbers.  *)
+(* TLA⁺'s built-in proof language can be used for this purpose, although   *)
+(* such a proof is not currently included in this spec.                    *)
+(*                                                                         *)
 (***************************************************************************)
 
 EXTENDS Naturals
