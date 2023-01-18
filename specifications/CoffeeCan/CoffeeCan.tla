@@ -82,13 +82,13 @@ Next ==
     \/ Termination
 
 \* Action formula: every step decreases the number of beans in the can
-MonotonicDecrease == [][BeanCount > 1 => BeanCount' < BeanCount]_<<can>>
+MonotonicDecrease == [][BeanCount' < BeanCount]_can
 
 \* Liveness property: we eventually end up with one bean left
 EventuallyTerminates == <>(ENABLED Termination)
 
-\* Loop invariant: white bean count mod 2 is always preserved
-LoopInvariant == [][can.white % 2 = 0 <=> can'.white % 2 = 0]_<<can>>
+\* Loop invariant: every step preserves white bean count mod 2
+LoopInvariant == [][can.white % 2 = 0 <=> can'.white % 2 = 0]_can
 
 \* Hypothesis: If we start out with an even number of white beans, we end up
 \* with a single black bean. Otherwise, we end up with a single white bean.
@@ -102,8 +102,8 @@ TerminationHypothesis ==
 \* stutter indefinitely: we eventually take some beans out of the can.
 Spec ==
     /\ Init
-    /\ [][Next]_<<can>>
-    /\ WF_<<can>>(Next)
+    /\ [][Next]_can
+    /\ WF_can(Next)
 
 \* What we want to show: that if our system follows the rules set out by the
 \* Spec operator, then all our properties and assumptions will be satisfied.

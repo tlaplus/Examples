@@ -1,4 +1,12 @@
 --------------------------- MODULE KeyValueStore ---------------------------
+(**************************************************************************)
+(* A simple key-value store exhibiting snapshot isolation. If two         *)
+(* concurrent transactions write to the same key, the one merging later   *)
+(* will be rejected. If they write different keys both will succeed. For  *)
+(* a more-detailed specification of snapshot isolation, look at the       *)
+(* specifications/SnapshotIsolation specs in the tlaplus/examples repo.   *)
+(**************************************************************************)
+
 CONSTANTS   Key,            \* The set of all keys.
             Val,            \* The set of all values.
             TxId            \* The set of all transaction IDs.
