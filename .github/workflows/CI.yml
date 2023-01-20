@@ -27,9 +27,9 @@ jobs:
           wget https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/refs/tags/v$TSTLA_VERSION.tar.gz
           tar -xf v$TSTLA_VERSION.tar.gz
       - name: Check manifest.json format
-        run: python check-against-schema.py
-      - name: Check manifest completeness
-        run: python check-manifest-completeness.py
+        run: python ./.github/workflows/scripts/check-against-schema.py
+      - name: Check manifest files
+        run: python ./.github/workflows/scripts/check-manifest-file-correspondence.py
       - name: Check manifest feature flags
         run: python check-manifest-feature-flags.py
       - name: Check TLA⁺ specs parse
