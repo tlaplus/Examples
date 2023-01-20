@@ -1,3 +1,5 @@
+# Checks to ensure manifest.json is valid according to schema
+
 import json
 from jsonschema import validate
 
