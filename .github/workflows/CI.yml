@@ -1,0 +1,39 @@
+name: Metadata Validation
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  validate-metadata:
+    runs-on: ubuntu-latest
+    env:
+      TSTLA_VERSION: 1.0.1
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+      - name: Install python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install packages
+        working-directory: ./.github/workflows/scripts
+        run: pip install -r requirements.txt
+      - name: Get tree-sitter-tlaplus
+        working-directory: ./.github/workflows/scripts
+        run: |
+          wget https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/refs/tags/v$TSTLA_VERSION.tar.gz
+          tar -xf v$TSTLA_VERSION.tar.gz
+      - name: Check manifest.json format
+        run: python check-against-schema.py
+      - name: Check manifest completeness
+        run: python check-manifest-completeness.py
+      - name: Check manifest feature flags
+        run: python check-manifest-feature-flags.py
+      - name: Check TLA⁺ specs parse
+        run: python check-specs-parse.py
+      - name: Check TLC models run
+        run: python check-models-run.py
+
