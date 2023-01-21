@@ -5,8 +5,9 @@ import json
 from os.path import exists, normpath
 import glob
 
-manifest_file = open('manifest.json', 'rt')
-manifest = json.load(manifest_file)
+manifest = None
+with open('manifest.json', 'rt') as manifest_file:
+    manifest = json.load(manifest_file)
 
 module_lists = [spec["modules"] for spec in manifest["specifications"]]
 modules = [module for module_list in module_lists for module in module_list]

@@ -1,10 +1,14 @@
 {
   "type" : "object",
+  "required": ["specifications"],
+  "additionalProperties": false,
   "properties" : {
     "specifications" : {
       "type": "array",
       "items": {
         "type": "object",
+        "required": ["title", "description", "source", "authors", "tags", "modules"],
+        "additionalProperties": false,
         "properties": {
           "title": {"type": "string"},
           "description": {"type": "string"},
@@ -21,6 +25,8 @@
             "type": "array",
             "items": {
               "type": "object",
+              "required": ["path", "communityDependencies", "tlaLanguageVersion", "features", "models"],
+              "additionalProperties": false,
               "properties": {
                 "path": {"type": "string"},
                 "communityDependencies": {
@@ -36,9 +42,15 @@
                   "type": "array",
                   "items": {
                     "type": "object",
+                    "additionalProperties": false,
+                    "required": ["path", "runtime", "size", "features", "result"],
                     "properties": {
                       "path": {"type": "string"},
-                      "runtime": {"type": "string"},
+                      "runtime": {
+                        "type": "string",
+                        "pattern": "^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]$"
+                      },
+                      "size": {"enum": ["small", "medium", "large"]},
                       "features": {
                         "type": "array",
                         "items": {"enum": ["liveness", "symmetry", "view"]}
