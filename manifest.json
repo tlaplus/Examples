@@ -1,6 +1,167 @@
 {
   "specifications": [
     {
+      "title": "",
+      "description": "",
+      "source": "",
+      "authors": [],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "The Boulangerie Algorithm",
+      "description": "Spec of a variant of the Bakery Algorithm",
+      "source": "https://doi.org/10.1007/978-3-319-25258-2_28",
+      "authors": [],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/Bakery-Boulangerie/Bakery.tla",
+          "communityDependencies": ["Leslie Lamport", "Stephan Merz"],
+          "tlaLanguageVersion": 2,
+          "features": ["pluscal", "proof"],
+          "models": []
+        },
+        {
+          "path": "specifications/Bakery-Boulangerie/Boulanger.tla",
+          "communityDependencies": ["Leslie Lamport", "Stephan Merz"],
+          "tlaLanguageVersion": 2,
+          "features": ["pluscal", "proof"],
+          "models": []
+        }
+      ]
+    },
+    {
+      "title": "The Car Talk Puzzle",
+      "description": "Math puzzle involving a farmer, a stone, and a balance scale",
+      "source": "Car Talk radio program, 22 October 2011",
+      "authors": ["Leslie Lamport"],
+      "tags": ["beginner"],
+      "modules": [
+        {
+          "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [],
+        },
+        {
+          "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_1/CarTalkPuzzle.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [],
+        },
+        {
+          "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_1/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_1/MC.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ],
+        },
+        {
+          "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_2/CarTalkPuzzle.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [],
+        },
+        {
+          "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_2/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_2/MC.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ],
+        },
+        {
+          "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_3/CarTalkPuzzle.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [],
+        },
+        {
+          "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_3/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_3/MC.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ],
+        },
+      ]
+    },
+    {
+      "title": "Chameneos, a Concurrency Game",
+      "description": "A concurrency game requiring concurrent & symmetric cooperation",
+      "source": "https://github.com/mryndzionek/tlaplus_specs#chameneostla",
+      "authors": ["Mariusz Ryndzionek"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/Chameneos/Chameneos.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "title": "The Cigarette Smokers Problem",
+      "description": "A concurrency problem described in 1971 by Suhas Patil",
+      "source": "https://github.com/mryndzionek/tlaplus_specs#cigarettesmokerstla",
+      "authors": ["Mariusz Ryndzionek"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/Chameneos/Chameneos.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
       "title": "The Coffee Can Black/White Bean Problem",
       "description": "Math problem published by Dijkstra attributed to Carel Scholten",
       "source": "https://stackoverflow.com/a/66304920/2852699",
@@ -33,6 +194,140 @@
               "size": "medium",
               "features": ["liveness"],
               "result": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "The Die Hard Problem",
+      "description": "Obtain 4 gallons of water using only 3 and 5 gallon jugs",
+      "source": "https://en.wikipedia.org/wiki/Water_pouring_puzzle",
+      "authors": ["Leslie Lamport"],
+      "tags": ["beginner"],
+      "modules": [
+        {
+          "path": "specifications/DieHard/DieHard.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/DieHard/DieHard.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "features": [],
+              "result": "safety failure"
+            }
+          ]
+        },
+        {
+          "path": "specifications/DieHard/DieHarder.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/DieHard/MCDieHarder.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/DieHard/MCDieHarder.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "features": [],
+              "result": "safety failure"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "The Dining Philosophers Problem",
+      "description": "The Chandy-Misra solution to the Dining Philosophers concurrency problem",
+      "source": "https://en.wikipedia.org/wiki/Dining_philosophers_problem#Chandy/Misra_solution",
+      "authors": ["Jeff Hemphill"],
+      "tags": ["beginner"],
+      "modules": [
+        {
+          "path": "specifications/DiningPhilosophers/DiningPhilosophers.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["pluscal"],
+          "models": [
+            {
+              "path": "specifications/DiningPhilosophers/DiningPhilosophers.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": ["liveness"],
+              "result": "unknown"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Einstein's Riddle",
+      "description": "Five houses, five people, various facts, who lives in what house?",
+      "source": "https://en.wikipedia.org/wiki/Zebra_Puzzle",
+      "authors": ["Isaac DeFrain"],
+      "tags": ["beginner"],
+      "modules": [
+        {
+          "path": "specifications/EinsteinRiddle/Einstein.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/EinsteinRiddle/Einstein.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "safety failure"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Conway's Game of Life",
+      "description": "The famous cellular automata simulation",
+      "source": "https://github.com/mryndzionek/tlaplus_specs#gameoflifetla",
+      "authors": ["Mariusz Ryndzionek"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/GameOfLife/GameOfLife.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "title": "Huang's Algorithm",
+      "description": "An algorithm for detecting termination in a distributed system",
+      "source": "https://en.wikipedia.org/wiki/Huang%27s_algorithm",
+      "authors": ["Markus Kuppe"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/Huang/Huang.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Huang/Huang.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": ["liveness", "state constraint", "alias"],
+              "result": "unknown"
             }
           ]
         }
@@ -80,6 +375,90 @@
               "result": "success"
             }
           ]
+        }
+      ]
+    },
+    {
+      "title": "The Knuth-Yao Method",
+      "description": "A method for simulating a fair 6-sided die using only coin flips",
+      "source": "https://old.reddit.com/r/tlaplus/comments/j06ohw/how_do_you_reason_about_a_probabilistic/g6owlxy/",
+      "authors": ["Ron Pressler", "Markus Kuppe"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/KnuthYao/KnuthYao.tla",
+          "communityDependencies": ["DyadicRationals"],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/KnuthYao/Prob.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/KnuthYao/SimKnuthYao.tla",
+          "communityDependencies": ["DyadicRationals", "Functions", "CSV", "TLCExt", "IOUtils", "Statistics"],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/KnuthYao/SimKnuthYao.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": ["state constraint"],
+              "result": "unknown"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "TLA⁺ Level Checking",
+      "description": "Level-checking of TLA⁺ formulas as described in Specifying Systems",
+      "source": "https://github.com/tlaplus/tlaplus/blob/6bc82f7746ccdfbdf49cdef24448666d11e5e218/tlatools/org.lamport.tlatools/src/tla2sany/semantic/LevelNode.java#L354-L2778",
+      "authors": ["Leslie Lamport"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/LevelChecking/LevelSpec.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "title": "Loop Invariance",
+      "description": "Examples of finding and proving loop invariants in PlusCal",
+      "source": "http://lamport.azurewebsites.net/tla/proving-safety.pdf",
+      "authors": ["Leslie Lamport"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/LoopInvariance/BinarySearch.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["pluscal", "proof"],
+          "models": []
+        },
+        {
+          "path": "specifications/LoopInvariance/Quicksort.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["pluscal", "proof"],
+          "models": []
+        },
+        {
+          "path": "specifications/LoopInvariance/SumSequence.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["pluscal", "proof"],
+          "models": []
         }
       ]
     },

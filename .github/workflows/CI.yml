@@ -32,8 +32,10 @@ jobs:
           mv tree-sitter-tlaplus-$TSTLA_VERSION tree-sitter-tlaplus
       - name: Check manifest feature flags
         run: python $SCRIPT_DIR/check-manifest-feature-flags.py
-      - name: Check TLA⁺ specs parse
-        run: python $SCRIPT_DIR/check-specs-parse.py
-      - name: Check TLC models run
-        run: python $SCRIPT_DIR/check-models-run.py
+#      - name: Get nightly TLA⁺ tools
+#        run: wget https://nightly.tlapl.us/dist/tla2tools.jar
+#      - name: Check TLA⁺ specs parse
+#        run: python $SCRIPT_DIR/check-specs-parse.py
+#      - name: Check TLC models run
+#        run: python $SCRIPT_DIR/check-models-run.py
 

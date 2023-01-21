@@ -14,11 +14,9 @@ TLAPLUS_LANGUAGE = Language('build/tree-sitter-languages.so', 'tlaplus')
 parser = Parser()
 parser.set_language(TLAPLUS_LANGUAGE)
 
-pcal_name = 'pluscal'
-proof_name = 'proof'
 query = TLAPLUS_LANGUAGE.query(
-    f'(pcal_algorithm_start) @{pcal_name}'
-    + f'[(terminal_proof) (non_terminal_proof)] @{proof_name}'
+    '(pcal_algorithm_start) @pluscal'
+    + '[(terminal_proof) (non_terminal_proof)] @proof'
 )
 
 success = True
@@ -28,6 +26,9 @@ for spec in manifest['specifications']:
         with open(module['path'], 'rb') as module_file:
             module_text = module_file.read()
         tree = parser.parse(module_text)
+        if tree.root_node.has_error:
+            success = False
+            print(f'Module {module["path"]} contains syntax errors')
         captures = query.captures(tree.root_node)
         expected_features = set([name for _, name in captures])
         actual_features = set(module['features'])
