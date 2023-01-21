@@ -1,4 +1,4 @@
-name: Metadata Validation
+name: Check Specs & Metadata
 on:
   push:
     branches:
@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TSTLA_VERSION: 1.0.1
+      SCRIPT_DIR: ./.github/workflows/scripts
     steps:
       - name: Clone repo
         uses: actions/checkout@v2
@@ -18,22 +19,21 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      - name: Install packages
-        working-directory: ./.github/workflows/scripts
-        run: pip install -r requirements.txt
+      - name: Install python packages
+        run: pip install -r $SCRIPT_DIR/requirements.txt
+      - name: Check manifest.json format
+        run: python $SCRIPT_DIR/check-against-schema.py
+      - name: Check manifest files
+        run: python $SCRIPT_DIR/check-manifest-file-correspondence.py
       - name: Get tree-sitter-tlaplus
-        working-directory: ./.github/workflows/scripts
         run: |
           wget https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/refs/tags/v$TSTLA_VERSION.tar.gz
           tar -xf v$TSTLA_VERSION.tar.gz
-      - name: Check manifest.json format
-        run: python ./.github/workflows/scripts/check-against-schema.py
-      - name: Check manifest files
-        run: python ./.github/workflows/scripts/check-manifest-file-correspondence.py
+          mv tree-sitter-tlaplus-$TSTLA_VERSION tree-sitter-tlaplus
       - name: Check manifest feature flags
-        run: python check-manifest-feature-flags.py
+        run: python $SCRIPT_DIR/check-manifest-feature-flags.py
       - name: Check TLA⁺ specs parse
-        run: python check-specs-parse.py
+        run: python $SCRIPT_DIR/check-specs-parse.py
       - name: Check TLC models run
-        run: python check-models-run.py
+        run: python $SCRIPT_DIR/check-models-run.py
 
