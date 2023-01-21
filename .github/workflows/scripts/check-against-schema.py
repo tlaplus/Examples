@@ -4,7 +4,7 @@ import json
 from jsonschema import validate
 
 schema = None
-with open('.github/workflows/scripts/manifest-schema.json', 'rt') as schema_file:
+with open('manifest-schema.json', 'rt') as schema_file:
     schema = json.load(schema_file)
 
 manifest = None
