@@ -1,46 +1,21 @@
 {
   "specifications": [
     {
-      "title": "",
-      "description": "",
-      "source": "",
-      "authors": [],
-      "tags": [],
-      "modules": [
-        {
-          "path": "specifications/",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": [
-            {
-              "path": "specifications/",
-              "runtime": "unknown",
-              "size": "unknown",
-              "features": [],
-              "result": "unknown"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "title": "The Boulangerie Algorithm",
       "description": "Spec of a variant of the Bakery Algorithm",
-      "source": "https://doi.org/10.1007/978-3-319-25258-2_28",
-      "authors": [],
+      "authors": ["Leslie Lamport", "Stephan Merz"],
       "tags": [],
       "modules": [
         {
           "path": "specifications/Bakery-Boulangerie/Bakery.tla",
-          "communityDependencies": ["Leslie Lamport", "Stephan Merz"],
+          "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": ["pluscal", "proof"],
           "models": []
         },
         {
           "path": "specifications/Bakery-Boulangerie/Boulanger.tla",
-          "communityDependencies": ["Leslie Lamport", "Stephan Merz"],
+          "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": ["pluscal", "proof"],
           "models": []
@@ -50,7 +25,6 @@
     {
       "title": "The Car Talk Puzzle",
       "description": "Math puzzle involving a farmer, a stone, and a balance scale",
-      "source": "Car Talk radio program, 22 October 2011",
       "authors": ["Leslie Lamport"],
       "tags": ["beginner"],
       "modules": [
@@ -202,7 +176,6 @@
     {
       "title": "The Die Hard Problem",
       "description": "Obtain 4 gallons of water using only 3 and 5 gallon jugs",
-      "source": "https://en.wikipedia.org/wiki/Water_pouring_puzzle",
       "authors": ["Leslie Lamport"],
       "tags": ["beginner"],
       "modules": [
@@ -248,7 +221,6 @@
     {
       "title": "The Dining Philosophers Problem",
       "description": "The Chandy-Misra solution to the Dining Philosophers concurrency problem",
-      "source": "https://en.wikipedia.org/wiki/Dining_philosophers_problem#Chandy/Misra_solution",
       "authors": ["Jeff Hemphill"],
       "tags": ["beginner"],
       "modules": [
@@ -272,7 +244,6 @@
     {
       "title": "Einstein's Riddle",
       "description": "Five houses, five people, various facts, who lives in what house?",
-      "source": "https://en.wikipedia.org/wiki/Zebra_Puzzle",
       "authors": ["Isaac DeFrain"],
       "tags": ["beginner"],
       "modules": [
@@ -312,7 +283,6 @@
     {
       "title": "Huang's Algorithm",
       "description": "An algorithm for detecting termination in a distributed system",
-      "source": "https://en.wikipedia.org/wiki/Huang%27s_algorithm",
       "authors": ["Markus Kuppe"],
       "tags": [],
       "modules": [
@@ -336,7 +306,6 @@
     {
       "title": "Key-Value Store with Snapshot Isolation",
       "description": "A simple KVS implementing snapshot isolation",
-      "source": "https://ahelwer.ca",
       "authors": ["Andrew Helwer"],
       "tags": [],
       "modules": [
@@ -459,6 +428,78 @@
           "tlaLanguageVersion": 2,
           "features": ["pluscal", "proof"],
           "models": []
+        }
+      ]
+    },
+    {
+      "title": "Misra Reachability Algorithm",
+      "description": "A sequential algorithm for computing the set of reachable nodes in a directed graph",
+      "authors": ["Leslie Lamport"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/MisraReachability/ParReach.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["pluscal"],
+          "models": []
+        },
+        {
+          "path": "specifications/MisraReachability/ParReachProofs.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["proof"],
+          "models": []
+        },
+        {
+          "path": "specifications/MisraReachability/Reachability.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/MisraReachability/ReachabilityProofs.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["proof"],
+          "models": []
+        },
+        {
+          "path": "specifications/MisraReachability/ReachabilityTest.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/MisraReachability/Reachable.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["pluscal"],
+          "models": []
+        },
+        {
+          "path": "specifications/MisraReachability/ReachableProofs.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["proof"],
+          "models": []
+        }
+      ]
+    },
+    {
+      "title": "Missionaries and Cannibals",
+      "description": "Spec of a river-crossing puzzle",
+      "authors": ["Leslie Lamport"],
+      "tags": ["beginner"],
+      "modules": [
+        {
+          "path": "specifications/MissionariesAndCannibals/MissionariesAndCannibals.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [],
         }
       ]
     },
