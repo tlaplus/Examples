@@ -22,16 +22,16 @@ jobs:
       - name: Install python packages
         run: pip install -r $SCRIPT_DIR/requirements.txt
       - name: Check manifest.json format
-        run: python $SCRIPT_DIR/check-against-schema.py
+        run: python $SCRIPT_DIR/check_manifest_schema.py
       - name: Check manifest files
-        run: python $SCRIPT_DIR/check-manifest-file-correspondence.py
+        run: python $SCRIPT_DIR/check_manifest_files.py
       - name: Get tree-sitter-tlaplus
         run: |
           wget https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/refs/tags/v$TSTLA_VERSION.tar.gz
           tar -xf v$TSTLA_VERSION.tar.gz
           mv tree-sitter-tlaplus-$TSTLA_VERSION tree-sitter-tlaplus
       - name: Check manifest feature flags
-        run: python $SCRIPT_DIR/check-manifest-feature-flags.py
+        run: python $SCRIPT_DIR/check_manifest_features.py
 #      - name: Get nightly TLA⁺ tools
 #        run: wget https://nightly.tlapl.us/dist/tla2tools.jar
 #      - name: Check TLA⁺ specs parse

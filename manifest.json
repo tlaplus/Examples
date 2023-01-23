@@ -3,6 +3,7 @@
     {
       "title": "The Boulangerie Algorithm",
       "description": "Spec of a variant of the Bakery Algorithm",
+      "source": "",
       "authors": ["Leslie Lamport", "Stephan Merz"],
       "tags": [],
       "modules": [
@@ -25,6 +26,7 @@
     {
       "title": "The Car Talk Puzzle",
       "description": "Math puzzle involving a farmer, a stone, and a balance scale",
+      "source": "",
       "authors": ["Leslie Lamport"],
       "tags": ["beginner"],
       "modules": [
@@ -33,14 +35,14 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": [],
+          "models": []
         },
         {
           "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_1/CarTalkPuzzle.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": [],
+          "models": []
         },
         {
           "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_1/MC.tla",
@@ -55,14 +57,14 @@
               "features": [],
               "result": "unknown"
             }
-          ],
+          ]
         },
         {
           "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_2/CarTalkPuzzle.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": [],
+          "models": []
         },
         {
           "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_2/MC.tla",
@@ -77,14 +79,14 @@
               "features": [],
               "result": "unknown"
             }
-          ],
+          ]
         },
         {
           "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_3/CarTalkPuzzle.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": [],
+          "models": []
         },
         {
           "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_3/MC.tla",
@@ -99,8 +101,8 @@
               "features": [],
               "result": "unknown"
             }
-          ],
-        },
+          ]
+        }
       ]
     },
     {
@@ -127,7 +129,7 @@
       "tags": [],
       "modules": [
         {
-          "path": "specifications/Chameneos/Chameneos.tla",
+          "path": "specifications/CigaretteSmokers/CigaretteSmokers.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
@@ -149,21 +151,21 @@
           "features": [],
           "models": [
             {
-              "path": "specifications/CoffeeCan/100BeanCoffeeCan.cfg",
+              "path": "specifications/CoffeeCan/CoffeeCan100Beans.cfg",
               "runtime": "00:00:01",
               "size": "small",
               "features": ["liveness"],
               "result": "success"
             },
             {
-              "path": "specifications/CoffeeCan/1000BeanCoffeeCan.cfg",
+              "path": "specifications/CoffeeCan/CoffeeCan1000Beans.cfg",
               "runtime": "00:00:15",
               "size": "medium",
               "features": ["liveness"],
               "result": "success"
             },
             {
-              "path": "specifications/CoffeeCan/3000BeanCoffeeCan.cfg",
+              "path": "specifications/CoffeeCan/CoffeeCan3000Beans.cfg",
               "runtime": "00:02:30",
               "size": "medium",
               "features": ["liveness"],
@@ -176,6 +178,7 @@
     {
       "title": "The Die Hard Problem",
       "description": "Obtain 4 gallons of water using only 3 and 5 gallon jugs",
+      "source": "",
       "authors": ["Leslie Lamport"],
       "tags": ["beginner"],
       "modules": [
@@ -221,6 +224,7 @@
     {
       "title": "The Dining Philosophers Problem",
       "description": "The Chandy-Misra solution to the Dining Philosophers concurrency problem",
+      "source": "",
       "authors": ["Jeff Hemphill"],
       "tags": ["beginner"],
       "modules": [
@@ -244,6 +248,7 @@
     {
       "title": "Einstein's Riddle",
       "description": "Five houses, five people, various facts, who lives in what house?",
+      "source": "",
       "authors": ["Isaac DeFrain"],
       "tags": ["beginner"],
       "modules": [
@@ -283,6 +288,7 @@
     {
       "title": "Huang's Algorithm",
       "description": "An algorithm for detecting termination in a distributed system",
+      "source": "",
       "authors": ["Markus Kuppe"],
       "tags": [],
       "modules": [
@@ -306,6 +312,7 @@
     {
       "title": "Key-Value Store with Snapshot Isolation",
       "description": "A simple KVS implementing snapshot isolation",
+      "source": "",
       "authors": ["Andrew Helwer"],
       "tags": [],
       "modules": [
@@ -317,27 +324,27 @@
           "models": []
         },
         {
-          "path": "specifications/KeyValueStore/MCKeyValueStore.tla",
+          "path": "specifications/KeyValueStore/MCKVS.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
             {
-              "path": "specifications/KeyValueStore/KVSSafetySmall.cfg",
+              "path": "specifications/KeyValueStore/MCKVSSafetySmall.cfg",
               "runtime": "00:00:40",
               "size": "medium",
               "features": [],
               "result": "success"
             },
             {
-              "path": "specifications/KeyValueStore/KVSSafetyMedium.cfg",
+              "path": "specifications/KeyValueStore/MCKVSSafetyMedium.cfg",
               "runtime": "00:04:30",
               "size": "medium",
               "features": ["symmetry"],
               "result": "success"
             },
             {
-              "path": "specifications/KeyValueStore/KVSSafetyLarge.cfg",
+              "path": "specifications/KeyValueStore/MCKVSSafetyLarge.cfg",
               "runtime": "07:16:00",
               "size": "large",
               "features": ["symmetry"],
@@ -434,6 +441,7 @@
     {
       "title": "Misra Reachability Algorithm",
       "description": "A sequential algorithm for computing the set of reachable nodes in a directed graph",
+      "source": "",
       "authors": ["Leslie Lamport"],
       "tags": [],
       "modules": [
@@ -491,6 +499,7 @@
     {
       "title": "Missionaries and Cannibals",
       "description": "Spec of a river-crossing puzzle",
+      "source": "",
       "authors": ["Leslie Lamport"],
       "tags": ["beginner"],
       "modules": [
@@ -499,7 +508,7 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": [],
+          "models": []
         }
       ]
     },
