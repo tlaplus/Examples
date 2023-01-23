@@ -32,3 +32,6 @@ __tlacache__
 ## Don't ignore READMEs
 !*.md
 
+## Ignore pycache
+__pycache__
+
