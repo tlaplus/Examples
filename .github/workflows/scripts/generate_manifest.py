@@ -1,10 +1,12 @@
-# Generates a best-effort manifest.json from files in the specifications dir
+# Generates a best-effort manifest.json
 
-from check_manifest_features import get_module_features
+from check_manifest_features import get_module_features, get_model_features
 import json
 import os
 from os.path import basename, dirname, join, normpath, splitext
 import glob
+
+# Generate new manifest drawing info from files in specifications dir
 
 def get_tla_files(dir):
     return [normpath(path) for path in glob.glob(f'{dir.path}/**/*.tla', recursive=True)]
@@ -30,6 +32,7 @@ def get_cfg_files(tla_path):
 new_manifest = {
     'specifications': [
         {
+            'path': normpath(dir.path),
             'title': dir.name,
             'description': '',
             'source': '',
@@ -43,10 +46,10 @@ new_manifest = {
                     'features': get_module_features(tla_path),
                     'models': [
                         {
-                            'path': normpath(cfg_path),
+                            'path': cfg_path,
                             'runtime': 'unknown',
                             'size': 'unknown',
-                            'features': [],
+                            'features': list(get_model_features(cfg_path)),
                             'result': 'unknown'
                         }
                         for cfg_path in sorted(get_cfg_files(tla_path))
@@ -61,13 +64,15 @@ new_manifest = {
     ]
 }
 
+# Integrate human-readable info from existing manifest
+
 def find_corresponding_spec(old_spec, new_manifest):
     old_modules = old_spec['modules']
     old_module_paths = set([normpath(module['path']) for module in old_modules])
     return list(filter(
-        lambda spec: any(old_module_paths.intersection(
-            set([normpath(module['path']) for module in spec['modules']])
-        )),
+        lambda new_spec: any(
+            [old_module_path.startswith(new_spec['path']) for old_module_path in old_module_paths]
+        ),
         new_manifest['specifications']
     ))[0]
 
@@ -94,11 +99,10 @@ def find_corresponding_model(old_model, new_module):
     ][0]
 
 def integrate_model_info(old_model, new_model):
-    fields = ['runtime', 'size', 'features', 'result']
+    fields = ['runtime', 'size', 'result']
     for field in fields:
         new_model[field] = old_model[field]
 
-# Integrate human-readable info from existing manifest
 old_manifest = None
 with open('manifest.json', 'rt') as old_manifest_file:
     old_manifest = json.load(old_manifest_file)
@@ -112,6 +116,8 @@ for old_spec in old_manifest['specifications']:
         for old_model in old_module['models']:
             new_model = find_corresponding_model(old_model, new_module)
             integrate_model_info(old_model, new_model)
+
+# Writes generated manifest to file
 
 with open('new-manifest.json', 'w') as new_manifest_file:
     json.dump(new_manifest, new_manifest_file, indent=2)
