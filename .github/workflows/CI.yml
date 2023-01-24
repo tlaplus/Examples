@@ -10,7 +10,7 @@ jobs:
   validate-metadata:
     runs-on: ubuntu-latest
     env:
-      TSTLA_VERSION: 1.0.1
+      TSTLA_VERSION: 1.0.2
       SCRIPT_DIR: ./.github/workflows/scripts
     steps:
       - name: Clone repo

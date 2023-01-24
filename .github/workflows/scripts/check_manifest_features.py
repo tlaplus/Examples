@@ -29,6 +29,31 @@ def get_module_features(path):
     tree, _ = parse_module(path)
     return list(get_tree_features(tree))
 
+model_features = {
+    'PROPERTY': 'liveness',
+    'PROPERTIES': 'liveness',
+    'SYMMETRY': 'symmetry',
+    'ALIAS': 'alias',
+    'VIEW': 'view',
+    'CONSTRAINT': 'state constraint',
+    'CONSTRAINTS': 'state constraint',
+}
+
+def get_model_features(path):
+    """
+    This will be a best-effort text search until a tree-sitter grammar is
+    created for .cfg files.
+    """
+    features = []
+    model_text = None
+    with open(path, 'rt') as model_file:
+        model_text = model_file.read()
+    for line in model_text.split('\n'):
+        tokens = line.split()
+        if len(tokens) > 0 and tokens[0] in model_features:
+            features.append(model_features[tokens[0]])
+    return set(features)
+
 if __name__ == '__main__':
     manifest = None
     with open('manifest.json', 'rt') as manifest_file:
@@ -49,6 +74,15 @@ if __name__ == '__main__':
                     f'Module {module["path"]} has incorrect features in manifest; '
                     + f'expected {list(expected_features)}, actual {list(actual_features)}'
                 )
+            for model in module['models']:
+                expected_features = get_model_features(model['path'])
+                actual_features = set(model['features'])
+                if expected_features != actual_features:
+                    success = False
+                    print(
+                        f'Model {model["path"]} has incorrect features in manifest; '
+                        + f'expected {list(expected_features)}, actual {list(actual_features)}'
+                    )
 
     exit(0 if success else 1)
 
