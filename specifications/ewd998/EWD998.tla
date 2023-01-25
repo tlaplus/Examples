@@ -133,7 +133,6 @@ terminationDetected ==
   /\ token.q + counter[0] = 0
   /\ color[0] = "white"
   /\ ~ active[0]
-  /\ pending[0] = 0
 
 (***************************************************************************)
 (* Sum of the values f[x], for x \in S \subseteq DOMAIN f.                 *)
