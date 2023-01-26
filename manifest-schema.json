@@ -20,7 +20,7 @@
           },
           "tags": {
             "type": "array",
-            "items": {"enum": ["beginner", "blockchain", "probability"]}
+            "items": {"enum": ["beginner"]}
           },
           "modules": {
             "type": "array",

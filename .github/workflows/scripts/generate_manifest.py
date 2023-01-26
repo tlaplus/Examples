@@ -104,7 +104,7 @@ def integrate_model_info(old_model, new_model):
         new_model[field] = old_model[field]
 
 old_manifest = None
-with open('manifest.json', 'rt') as old_manifest_file:
+with open('manifest.json', 'r') as old_manifest_file:
     old_manifest = json.load(old_manifest_file)
 
 for old_spec in old_manifest['specifications']:
@@ -119,6 +119,6 @@ for old_spec in old_manifest['specifications']:
 
 # Writes generated manifest to file
 
-with open('new-manifest.json', 'w') as new_manifest_file:
-    json.dump(new_manifest, new_manifest_file, indent=2)
+with open('manifest.json', 'w') as new_manifest_file:
+    json.dump(new_manifest, new_manifest_file, indent=2, ensure_ascii=False)
 

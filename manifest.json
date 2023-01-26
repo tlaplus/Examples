@@ -1,33 +1,46 @@
 {
   "specifications": [
     {
+      "path": "specifications/Bakery-Boulangerie",
       "title": "The Boulangerie Algorithm",
       "description": "Spec of a variant of the Bakery Algorithm",
       "source": "",
-      "authors": ["Leslie Lamport", "Stephan Merz"],
+      "authors": [
+        "Leslie Lamport",
+        "Stephan Merz"
+      ],
       "tags": [],
       "modules": [
         {
           "path": "specifications/Bakery-Boulangerie/Bakery.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["pluscal", "proof"],
+          "features": [
+            "pluscal",
+            "proof"
+          ],
           "models": []
         },
         {
           "path": "specifications/Bakery-Boulangerie/Boulanger.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["pluscal", "proof"],
+          "features": [
+            "pluscal",
+            "proof"
+          ],
           "models": []
         }
       ]
     },
     {
+      "path": "specifications/CarTalkPuzzle",
       "title": "The Car Talk Puzzle",
       "description": "Math puzzle involving a farmer, a stone, and a balance scale",
       "source": "",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Leslie Lamport"
+      ],
       "tags": ["beginner"],
       "modules": [
         {
@@ -106,10 +119,13 @@
       ]
     },
     {
+      "path": "specifications/Chameneos",
       "title": "Chameneos, a Concurrency Game",
       "description": "A concurrency game requiring concurrent & symmetric cooperation",
       "source": "https://github.com/mryndzionek/tlaplus_specs#chameneostla",
-      "authors": ["Mariusz Ryndzionek"],
+      "authors": [
+        "Mariusz Ryndzionek"
+      ],
       "tags": [],
       "modules": [
         {
@@ -122,10 +138,13 @@
       ]
     },
     {
+      "path": "specifications/CigaretteSmokers",
       "title": "The Cigarette Smokers Problem",
       "description": "A concurrency problem described in 1971 by Suhas Patil",
       "source": "https://github.com/mryndzionek/tlaplus_specs#cigarettesmokerstla",
-      "authors": ["Mariusz Ryndzionek"],
+      "authors": [
+        "Mariusz Ryndzionek"
+      ],
       "tags": [],
       "modules": [
         {
@@ -138,10 +157,13 @@
       ]
     },
     {
+      "path": "specifications/CoffeeCan",
       "title": "The Coffee Can Black/White Bean Problem",
       "description": "Math problem published by Dijkstra attributed to Carel Scholten",
       "source": "https://stackoverflow.com/a/66304920/2852699",
-      "authors": ["Andrew Helwer"],
+      "authors": [
+        "Andrew Helwer"
+      ],
       "tags": ["beginner"],
       "modules": [
         {
@@ -151,24 +173,30 @@
           "features": [],
           "models": [
             {
-              "path": "specifications/CoffeeCan/CoffeeCan100Beans.cfg",
-              "runtime": "00:00:01",
-              "size": "small",
-              "features": ["liveness"],
-              "result": "success"
-            },
-            {
               "path": "specifications/CoffeeCan/CoffeeCan1000Beans.cfg",
               "runtime": "00:00:15",
               "size": "medium",
-              "features": ["liveness"],
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            },
+            {
+              "path": "specifications/CoffeeCan/CoffeeCan100Beans.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "features": [
+                "liveness"
+              ],
               "result": "success"
             },
             {
               "path": "specifications/CoffeeCan/CoffeeCan3000Beans.cfg",
               "runtime": "00:02:30",
               "size": "medium",
-              "features": ["liveness"],
+              "features": [
+                "liveness"
+              ],
               "result": "success"
             }
           ]
@@ -176,10 +204,13 @@
       ]
     },
     {
+      "path": "specifications/DieHard",
       "title": "The Die Hard Problem",
       "description": "Obtain 4 gallons of water using only 3 and 5 gallon jugs",
       "source": "",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Leslie Lamport"
+      ],
       "tags": ["beginner"],
       "modules": [
         {
@@ -222,23 +253,30 @@
       ]
     },
     {
+      "path": "specifications/DiningPhilosophers",
       "title": "The Dining Philosophers Problem",
       "description": "The Chandy-Misra solution to the Dining Philosophers concurrency problem",
       "source": "",
-      "authors": ["Jeff Hemphill"],
+      "authors": [
+        "Jeff Hemphill"
+      ],
       "tags": ["beginner"],
       "modules": [
         {
           "path": "specifications/DiningPhilosophers/DiningPhilosophers.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["pluscal"],
+          "features": [
+            "pluscal"
+          ],
           "models": [
             {
               "path": "specifications/DiningPhilosophers/DiningPhilosophers.cfg",
               "runtime": "unknown",
               "size": "unknown",
-              "features": ["liveness"],
+              "features": [
+                "liveness"
+              ],
               "result": "unknown"
             }
           ]
@@ -246,10 +284,13 @@
       ]
     },
     {
+      "path": "specifications/EinsteinRiddle",
       "title": "Einstein's Riddle",
       "description": "Five houses, five people, various facts, who lives in what house?",
       "source": "",
-      "authors": ["Isaac DeFrain"],
+      "authors": [
+        "Isaac DeFrain"
+      ],
       "tags": ["beginner"],
       "modules": [
         {
@@ -270,10 +311,13 @@
       ]
     },
     {
+      "path": "specifications/GameOfLife",
       "title": "Conway's Game of Life",
       "description": "The famous cellular automata simulation",
       "source": "https://github.com/mryndzionek/tlaplus_specs#gameoflifetla",
-      "authors": ["Mariusz Ryndzionek"],
+      "authors": [
+        "Mariusz Ryndzionek"
+      ],
       "tags": [],
       "modules": [
         {
@@ -286,10 +330,13 @@
       ]
     },
     {
+      "path": "specifications/Huang",
       "title": "Huang's Algorithm",
       "description": "An algorithm for detecting termination in a distributed system",
       "source": "",
-      "authors": ["Markus Kuppe"],
+      "authors": [
+        "Markus Kuppe"
+      ],
       "tags": [],
       "modules": [
         {
@@ -302,7 +349,11 @@
               "path": "specifications/Huang/Huang.cfg",
               "runtime": "unknown",
               "size": "unknown",
-              "features": ["liveness", "state constraint", "alias"],
+              "features": [
+                "state constraint",
+                "liveness",
+                "alias"
+              ],
               "result": "unknown"
             }
           ]
@@ -310,10 +361,13 @@
       ]
     },
     {
+      "path": "specifications/KeyValueStore",
       "title": "Key-Value Store with Snapshot Isolation",
       "description": "A simple KVS implementing snapshot isolation",
       "source": "",
-      "authors": ["Andrew Helwer"],
+      "authors": [
+        "Andrew Helwer"
+      ],
       "tags": [],
       "modules": [
         {
@@ -330,24 +384,28 @@
           "features": [],
           "models": [
             {
-              "path": "specifications/KeyValueStore/MCKVSSafetySmall.cfg",
-              "runtime": "00:00:40",
-              "size": "medium",
-              "features": [],
+              "path": "specifications/KeyValueStore/MCKVSSafetyLarge.cfg",
+              "runtime": "07:16:00",
+              "size": "large",
+              "features": [
+                "symmetry"
+              ],
               "result": "success"
             },
             {
               "path": "specifications/KeyValueStore/MCKVSSafetyMedium.cfg",
               "runtime": "00:04:30",
               "size": "medium",
-              "features": ["symmetry"],
+              "features": [
+                "symmetry"
+              ],
               "result": "success"
             },
             {
-              "path": "specifications/KeyValueStore/MCKVSSafetyLarge.cfg",
-              "runtime": "07:16:00",
-              "size": "large",
-              "features": ["symmetry"],
+              "path": "specifications/KeyValueStore/MCKVSSafetySmall.cfg",
+              "runtime": "00:00:40",
+              "size": "medium",
+              "features": [],
               "result": "success"
             }
           ]
@@ -355,15 +413,21 @@
       ]
     },
     {
+      "path": "specifications/KnuthYao",
       "title": "The Knuth-Yao Method",
       "description": "A method for simulating a fair 6-sided die using only coin flips",
       "source": "https://old.reddit.com/r/tlaplus/comments/j06ohw/how_do_you_reason_about_a_probabilistic/g6owlxy/",
-      "authors": ["Ron Pressler", "Markus Kuppe"],
+      "authors": [
+        "Ron Pressler",
+        "Markus Kuppe"
+      ],
       "tags": [],
       "modules": [
         {
           "path": "specifications/KnuthYao/KnuthYao.tla",
-          "communityDependencies": ["DyadicRationals"],
+          "communityDependencies": [
+            "DyadicRationals"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
@@ -377,7 +441,14 @@
         },
         {
           "path": "specifications/KnuthYao/SimKnuthYao.tla",
-          "communityDependencies": ["DyadicRationals", "Functions", "CSV", "TLCExt", "IOUtils", "Statistics"],
+          "communityDependencies": [
+            "DyadicRationals",
+            "Functions",
+            "CSV",
+            "TLCExt",
+            "IOUtils",
+            "Statistics"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
@@ -385,7 +456,9 @@
               "path": "specifications/KnuthYao/SimKnuthYao.cfg",
               "runtime": "unknown",
               "size": "unknown",
-              "features": ["state constraint"],
+              "features": [
+                "state constraint"
+              ],
               "result": "unknown"
             }
           ]
@@ -393,10 +466,13 @@
       ]
     },
     {
+      "path": "specifications/LevelChecking",
       "title": "TLA⁺ Level Checking",
       "description": "Level-checking of TLA⁺ formulas as described in Specifying Systems",
       "source": "https://github.com/tlaplus/tlaplus/blob/6bc82f7746ccdfbdf49cdef24448666d11e5e218/tlatools/org.lamport.tlatools/src/tla2sany/semantic/LevelNode.java#L354-L2778",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Leslie Lamport"
+      ],
       "tags": [],
       "modules": [
         {
@@ -409,54 +485,73 @@
       ]
     },
     {
+      "path": "specifications/LoopInvariance",
       "title": "Loop Invariance",
       "description": "Examples of finding and proving loop invariants in PlusCal",
       "source": "http://lamport.azurewebsites.net/tla/proving-safety.pdf",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Leslie Lamport"
+      ],
       "tags": [],
       "modules": [
         {
           "path": "specifications/LoopInvariance/BinarySearch.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["pluscal", "proof"],
+          "features": [
+            "pluscal",
+            "proof"
+          ],
           "models": []
         },
         {
           "path": "specifications/LoopInvariance/Quicksort.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["pluscal", "proof"],
+          "features": [
+            "pluscal",
+            "proof"
+          ],
           "models": []
         },
         {
           "path": "specifications/LoopInvariance/SumSequence.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["pluscal", "proof"],
+          "features": [
+            "pluscal",
+            "proof"
+          ],
           "models": []
         }
       ]
     },
     {
+      "path": "specifications/MisraReachability",
       "title": "Misra Reachability Algorithm",
       "description": "A sequential algorithm for computing the set of reachable nodes in a directed graph",
       "source": "",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Leslie Lamport"
+      ],
       "tags": [],
       "modules": [
         {
           "path": "specifications/MisraReachability/ParReach.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["pluscal"],
+          "features": [
+            "pluscal"
+          ],
           "models": []
         },
         {
           "path": "specifications/MisraReachability/ParReachProofs.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["proof"],
+          "features": [
+            "proof"
+          ],
           "models": []
         },
         {
@@ -470,7 +565,9 @@
           "path": "specifications/MisraReachability/ReachabilityProofs.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["proof"],
+          "features": [
+            "proof"
+          ],
           "models": []
         },
         {
@@ -484,23 +581,30 @@
           "path": "specifications/MisraReachability/Reachable.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["pluscal"],
+          "features": [
+            "pluscal"
+          ],
           "models": []
         },
         {
           "path": "specifications/MisraReachability/ReachableProofs.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["proof"],
+          "features": [
+            "proof"
+          ],
           "models": []
         }
       ]
     },
     {
+      "path": "specifications/MissionariesAndCannibals",
       "title": "Missionaries and Cannibals",
       "description": "Spec of a river-crossing puzzle",
       "source": "",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Leslie Lamport"
+      ],
       "tags": ["beginner"],
       "modules": [
         {
@@ -513,10 +617,13 @@
       ]
     },
     {
+      "path": "specifications/MultiCarElevator",
       "title": "Multi-Car Elevator System",
       "description": "A simple multi-car elevator system servicing a multi-floor building",
       "source": "https://groups.google.com/g/tlaplus/c/5Xd8kv288jE/m/IrliJIatBwAJ",
-      "authors": ["Andrew Helwer"],
+      "authors": [
+        "Andrew Helwer"
+      ],
       "tags": [],
       "modules": [
         {
@@ -526,17 +633,21 @@
           "features": [],
           "models": [
             {
-              "path": "specifications/MultiCarElevator/ElevatorLivenessSmall.cfg",
-              "runtime": "00:00:05",
-              "size": "small",
-              "features": ["liveness"],
+              "path": "specifications/MultiCarElevator/ElevatorLivenessLarge.cfg",
+              "runtime": "00:11:00",
+              "size": "large",
+              "features": [
+                "liveness"
+              ],
               "result": "success"
             },
             {
-              "path": "specifications/MultiCarElevator/ElevatorSafetyMedium.cfg",
-              "runtime": "00:03:00",
-              "size": "medium",
-              "features": [],
+              "path": "specifications/MultiCarElevator/ElevatorLivenessSmall.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "features": [
+                "liveness"
+              ],
               "result": "success"
             },
             {
@@ -547,10 +658,10 @@
               "result": "success"
             },
             {
-              "path": "specifications/MultiCarElevator/ElevatorLivenessLarge.cfg",
-              "runtime": "00:11:00",
-              "size": "large",
-              "features": ["liveness"],
+              "path": "specifications/MultiCarElevator/ElevatorSafetyMedium.cfg",
+              "runtime": "00:03:00",
+              "size": "medium",
+              "features": [],
               "result": "success"
             }
           ]
@@ -558,19 +669,89 @@
       ]
     },
     {
-      "title": "The Nano Blockchain Protocol",
-      "description": "A specification of the protocol originally used by the Nano blockchain",
-      "source": "https://docs.nano.org/whitepaper/english/",
-      "authors": ["Andrew Helwer"],
-      "tags": ["blockchain"],
+      "path": "specifications/N-Queens",
+      "title": "The N-Queens Puzzle",
+      "description": "Place N queens on an NxN chess board such that no two queens threaten each other",
+      "source": "",
+      "authors": ["Stephan Merz"],
+      "tags": ["beginner"],
       "modules": [
         {
-          "path": "specifications/NanoBlockchain/Nano.tla",
+          "path": "specifications/N-Queens/Queens.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
         },
+        {
+          "path": "specifications/N-Queens/Queens.toolbox/FourQueens/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/N-Queens/Queens.toolbox/FourQueens/MC.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/N-Queens/Queens.toolbox/FourQueens/Queens.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/N-Queens/QueensPluscal.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/N-Queens/QueensPluscal.toolbox/FourQueens/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/N-Queens/QueensPluscal.toolbox/FourQueens/MC.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/N-Queens/QueensPluscal.toolbox/FourQueens/QueensPluscal.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/NanoBlockchain",
+      "title": "The Nano Blockchain Protocol",
+      "description": "A specification of the protocol originally used by the Nano blockchain",
+      "source": "",
+      "authors": [
+        "Andrew Helwer"
+      ],
+      "tags": [],
+      "modules": [
         {
           "path": "specifications/NanoBlockchain/MCNano.tla",
           "communityDependencies": [],
@@ -578,40 +759,296 @@
           "features": [],
           "models": [
             {
-              "path": "specifications/NanoBlockchain/MCNanoSmall.cfg",
-              "runtime": "00:00:05",
-              "size": "small",
-              "features": ["view"],
-              "result": "success"
-            },
-            {
               "path": "specifications/NanoBlockchain/MCNanoLarge.cfg",
               "runtime": "00:20:00",
               "size": "large",
-              "features": ["view"],
+              "features": [
+                "view"
+              ],
               "result": "success"
+            },
+            {
+              "path": "specifications/NanoBlockchain/MCNanoSmall.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "features": [
+                "view"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/NanoBlockchain/Nano.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/Paxos",
+      "title": "The Paxos Protocol",
+      "description": "A protocol for error-tolerant consensus",
+      "source": "",
+      "authors": ["Leslie Lamport"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/Paxos/Consensus.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/Paxos/MCConsensus.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Paxos/MCConsensus.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/Paxos/MCPaxos.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Paxos/MCPaxos.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness",
+                "symmetry"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/Paxos/MCVoting.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Paxos/MCVoting.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness",
+                "symmetry"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/Paxos/Paxos.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/Paxos/Voting.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/PaxosHowToWinATuringAward",
+      "title": "How to Win a Turing Award",
+      "description": "Exercises from the lecture The Paxos Algorithm - or How to Win a Turing Award",
+      "source": "https://www.youtube.com/watch?v=tw3gsBms-f8",
+      "authors": ["Leslie Lamport"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Consensus.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Paxos.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Voting.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/Prisoners",
+      "title": "The Prisoners & Switches Puzzle",
+      "description": "Given a room containing two switches prisoners enter one by one, they must develop a strategy to free themselves",
+      "source": "",
+      "authors": ["Leslie Lamport"],
+      "tags": ["beginner"],
+      "modules": [
+        {
+          "path": "specifications/Prisoners/MCPrisoners.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/Prisoners/Prisoners.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Prisoners/Prisoners.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
             }
           ]
         }
       ]
     },
     {
+      "path": "specifications/ReadersWriters",
+      "title": "The Readers-Writers Problem",
+      "description": "Controlling concurrent access to a resource",
+      "source": "",
+      "authors": ["Isaac DeFrain"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/ReadersWriters/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ReadersWriters/MC.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ReadersWriters/ReadersWriters.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/SingleLaneBridge",
+      "title": "Single-Lane Bridge Problem",
+      "description": "Controlling cars moving over a single-lange bridge in opposite directions",
+      "source": "",
+      "authors": [],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/SingleLaneBridge/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SingleLaneBridge/MC.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SingleLaneBridge/SingleLaneBridge.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/SlidingPuzzles",
+      "title": "Sliding Block Puzzle",
+      "description": "A spec of the Klotski sliding block puzzle",
+      "source": "",
+      "authors": ["Mariusz Ryndzionek"],
+      "tags": ["beginner"],
+      "modules": [
+        {
+          "path": "specifications/SlidingPuzzles/SlidingPuzzles.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/SlushProtocol",
       "title": "The Slush Probabilistic Consensus Protocol",
       "description": "An attempt to use TLA⁺ to analyze a probabilistic protocol in the Avalanche family",
       "source": "https://github.com/ahelwer/avalanche-analysis",
-      "authors": ["Andrew Helwer"],
-      "tags": ["probability"],
+      "authors": [
+        "Andrew Helwer"
+      ],
+      "tags": [],
       "modules": [
         {
           "path": "specifications/SlushProtocol/Slush.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["pluscal"],
+          "features": [
+            "pluscal"
+          ],
           "models": [
             {
-              "path": "specifications/SlushProtocol/SlushSmall.cfg",
-              "runtime": "00:00:08",
-              "size": "small",
+              "path": "specifications/SlushProtocol/SlushLarge.cfg",
+              "runtime": "00:50:00",
+              "size": "large",
               "features": [],
               "result": "success"
             },
@@ -623,13 +1060,1996 @@
               "result": "success"
             },
             {
-              "path": "specifications/SlushProtocol/SlushLarge.cfg",
-              "runtime": "00:50:00",
-              "size": "large",
+              "path": "specifications/SlushProtocol/SlushSmall.cfg",
+              "runtime": "00:00:08",
+              "size": "small",
               "features": [],
               "result": "success"
             }
           ]
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpanningTree",
+      "title": "Span Tree Exercise",
+      "description": "Simplified algorithm from the Lamport paper *An Assertional Correctness Proof of a Distributed Program*",
+      "source": "",
+      "authors": ["Leslie Lamport"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/SpanningTree/SpanTree.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpanningTree/SpanTreeRandom.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpanningTree/SpanTreeTest.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpecifyingSystems",
+      "title": "Specs from Specifying Systems",
+      "description": "All specs seen in the textbook Specifying Systems by Leslie Lamport",
+      "source": "http://lamport.azurewebsites.net/tla/book.html",
+      "authors": ["Leslie Lamport"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/SpecifyingSystems/AdvancedExamples/BNFGrammars.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/AdvancedExamples/DifferentialEquations.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/AdvancedExamples/Graphs.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/AdvancedExamples/InnerSequential.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/AdvancedExamples/InnerSerial.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/AdvancedExamples/MCInnerSequential.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/AdvancedExamples/MCInnerSequential.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "state constraint",
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/AdvancedExamples/MCInnerSerial.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/AdvancedExamples/MCInnerSerial.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "state constraint",
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/AdvancedExamples/RegisterInterface.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/AdvancedExamples/SerialMemory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/AsynchronousInterface/AsynchInterface.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/AsynchronousInterface/AsynchInterface.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/AsynchronousInterface/Channel.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/AsynchronousInterface/Channel.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/AsynchronousInterface/PrintValues.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/AsynchronousInterface/PrintValues.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/CachingMemory/InternalMemory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/CachingMemory/MCInternalMemory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/CachingMemory/MCInternalMemory.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/CachingMemory/MCWriteThroughCache.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/CachingMemory/MCWriteThroughCache.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/CachingMemory/Memory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/CachingMemory/MemoryInterface.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/CachingMemory/WriteThroughCache.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/CachingMemory/WriteThroughCacheInstanced.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Composing/BinaryHourClock.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Composing/Channel.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Composing/ChannelRefinement.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Composing/CompositeFIFO.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Composing/HourClock.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Composing/InternalMemory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Composing/JointActionMemory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Composing/MemoryInterface.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/FIFO/Channel.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/FIFO/FIFO.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/FIFO/InnerFIFO.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/FIFO/InnerFIFOInstanced.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/FIFO/MCInnerFIFO.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/FIFO/MCInnerFIFO.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "state constraint"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/HourClock/HourClock.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/HourClock/HourClock.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/HourClock/HourClock2.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/HourClock/HourClock2.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Liveness/HourClock.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Liveness/InternalMemory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Liveness/LiveHourClock.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/Liveness/LiveHourClock.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Liveness/LiveInternalMemory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Liveness/LiveWriteThroughCache.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Liveness/MCInternalMemory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Liveness/MCLiveInternalMemory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/Liveness/MCLiveInternalMemory.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Liveness/MCLiveWriteThroughCache.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/Liveness/MCLiveWriteThroughCache.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Liveness/Memory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Liveness/MemoryInterface.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Liveness/WriteThroughCacheInstanced.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/RealTime/HourClock.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/RealTime/InternalMemory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/RealTime/MCRealTime.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/RealTime/MCRealTimeHourClock.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/RealTime/MCRealTimeHourClock.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/RealTime/Memory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/RealTime/MemoryInterface.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/RealTime/RTMemory.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/RealTime/RTWriteThroughCache.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/RealTime/RealTime.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/RealTime/RealTimeHourClock.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/RealTime/WriteThroughCache.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/SimpleMath/SimpleMath.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/SimpleMath/SimpleMath.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Standard/Bags.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Standard/FiniteSets.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Standard/Integers.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Standard/Naturals.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Standard/Peano.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Standard/ProtoReals.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Standard/Reals.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Standard/Sequences.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Syntax/BNFGrammars.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/Syntax/TLAPlusGrammar.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/TLC/ABCorrectness.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/TLC/ABCorrectness.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/TLC/AlternatingBit.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/TLC/BNFGrammars.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/TLC/ConfigFileGrammar.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SpecifyingSystems/TLC/MCAlternatingBit.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpecifyingSystems/TLC/MCAlternatingBit.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "state constraint",
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpecifyingSystems/TLC/TLC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/Stones",
+      "title": "Stone Scale Puzzle",
+      "description": "Alternative implementation of the Car Talk Puzzle",
+      "source": "",
+      "authors": ["Leslie Lamport"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/Stones/Stones.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/TLC",
+      "title": "The TLC Safety Checking Algorithm",
+      "description": "Spec of the safety checking algorithm used by the TLC model-checker",
+      "source": "",
+      "authors": ["Markus Kuppe"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/TLC/TLCMC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/TLC/TestGraphs.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/TLC/TestGraphs.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "specifications/TeachingConcurrency",
+      "title": "Teaching Concurrency",
+      "description": "Simple problem useful for teaching and learning about concurrency",
+      "source": "http://lamport.azurewebsites.net/pubs/teaching-concurrency.pdf",
+      "authors": [],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/TeachingConcurrency/Simple.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/TeachingConcurrency/SimpleRegular.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/TransitiveClosure",
+      "title": "Transitive Closure",
+      "description": "Spec defining the transitive closure of a relation",
+      "source": "",
+      "authors": [],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/TransitiveClosure/TransitiveClosure.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/TransitiveClosure/TransitiveClosure.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "specifications/TwoPhase",
+      "title": "Two-Phase Handshaking",
+      "description": "Specification of a very simple hardware protocol called two-phase handshaking",
+      "source": "",
+      "authors": [
+        "Leslie Lamport",
+        "Stephan Merz"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/TwoPhase/Alternate.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/TwoPhase/TLAPS.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/TwoPhase/TwoPhase.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/aba-asyn-byz",
+      "title": "Asynchronous Byzantine Consensus",
+      "description": "Spec of the protocol from paper *Asynchronous Consensus and Broadcast Protocols* (1985)",
+      "source": "",
+      "authors": [
+        "Thanh Hai Tran",
+        "Igor Konnov",
+        "Josef Widder"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/aba-asyn-byz/aba_asyn_byz.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/allocator",
+      "title": "Resource Allocator",
+      "description": "Specification of a resource allocator",
+      "source": "",
+      "authors": ["Stephan Merz"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/allocator/AllocatorImplementation.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/allocator/AllocatorImplementation.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/allocator/AllocatorRefinement.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/allocator/AllocatorRefinement.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/allocator/SchedulingAllocator.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/allocator/SchedulingAllocator.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/allocator/SimpleAllocator.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/allocator/SimpleAllocator.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "specifications/bcastByz",
+      "title": "Asynchronous Reliable Broadcast",
+      "description": "Algorithm from paper *Simulating authenticated broadcasts to derive simple fault-tolerant algorithms* (1987)",
+      "source": "",
+      "authors": [
+        "Thanh Hai Tran",
+        "Igor Konnov",
+        "Josef Widder"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/bcastByz/bcastByz.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/bcastFolklore",
+      "title": "Folklore Reliable Broadcast",
+      "description": "Algorithm from paper *Unreliable failure detectors for reliable distributed systems* (1996)",
+      "source": "",
+      "authors": [
+        "Thanh Hai Tran",
+        "Igor Konnov",
+        "Josev Widder"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/bcastFolklore/bcastFolklore.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/bosco",
+      "title": "The Bosco Byzantine Consensus Algorithm",
+      "description": "Algorithm from paper *Bosco: One-step byzantine asynchronous consensus* (2008)",
+      "source": "",
+      "authors": [
+        "Thanh Hai Tran",
+        "Igor Konnov",
+        "Josev Widder"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/bosco/bosco.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/c1cs",
+      "title": "Consensus in One Communication Step",
+      "description": "Algorithm from paper *Consensus in one communication step* (2001)",
+      "source": "",
+      "authors": [
+        "Thanh Hai Tran",
+        "Igor Konnov",
+        "Josev Widder"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/c1cs/c1cs.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/cbc_max",
+      "title": "Condition-Based Consensus",
+      "description": "Algorithm from paper *Evaluating the condition-based approach to solve consensus* (2003)",
+      "source": "",
+      "authors": [
+        "Thanh Hai Tran",
+        "Igor Konnov",
+        "Josev Widder"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/cbc_max/cbc_max.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/cf1s-folklore",
+      "title": "One-Step Consensus with Zero-Degradation",
+      "description": "Algorithm from paper *One-step Consensus with Zero-Degradation* (2006)",
+      "source": "",
+      "authors": [
+        "Thanh Hai Tran",
+        "Igor Konnov",
+        "Josev Widder"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/cf1s-folklore/cf1s_folklore.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/chang_roberts",
+      "title": "Chang-Roberts Algorithm for Leader Election in a Ring",
+      "description": "Algorithm from paper *An improved algorithm for decentralized extrema-finding in circular configurations of processes* (1979)",
+      "source": "",
+      "authors": ["Stephan Merz"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/chang_roberts/ChangRoberts.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/detector_chan96",
+      "title": "Failure Detector",
+      "description": "Algorithm from paper *Unreliable failure detectors for reliable distributed systems* (1996)",
+      "source": "",
+      "authors": [
+        "Thanh Hai Tran",
+        "Igor Konnov",
+        "Josev Widder"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/detector_chan96/Age_Channel.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/detector_chan96/EPFailureDetector.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/detector_chan96/EnvironmentController.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/dijkstra-mutex",
+      "title": "Dijkstra's Mutual Exclusion Algorithm",
+      "description": "Algorithm from paper *Solution of a Problem in Concurrent Programming Control* (1965)",
+      "source": "",
+      "authors": ["Leslie Lamport"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/dijkstra-mutex/DijkstraMutex.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/DijkstraMutex.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/MC.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/Safety-4-processors/DijkstraMutex.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/Safety-4-processors/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/Safety-4-processors/MC.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "specifications/diskpaxos",
+      "title": "diskpaxos",
+      "description": "A formalization of the SWMR-Shared-Memory Disk Paxos",
+      "source": "https://github.com/nano-o/MultiPaxos/blob/master/DiskPaxos.tla",
+      "authors": [
+        "Leslie Lamport",
+        "Giuliano Losa"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/diskpaxos/DiskSynod.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/diskpaxos/HDiskSynod.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/diskpaxos/Synod.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/echo",
+      "title": "The Echo Algorithm",
+      "description": "Algorithm for constructing a spanning tree in an undirected graph",
+      "source": "",
+      "authors": ["Stephan Merz"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/echo/Echo.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/echo/MCEcho.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/echo/MCEcho.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/echo/Relation.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd426",
+      "title": "Token Stabilization",
+      "description": "Dijkstra's classical stabilizing token ring algorithm: EWD426",
+      "source": "",
+      "authors": [
+        "Murat Demirbas",
+        "Markus Kuppe"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/ewd426/SimTokenRing.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd426/SimTokenRing.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "state constraint"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd426/TokenRing.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd426/TokenRing.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "alias",
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd687a",
+      "title": "Detecting Termination in Distributed Computations",
+      "description": "Dijkstra's Termination Detection Algorithm",
+      "source": "",
+      "authors": [
+        "Leslie Lamport",
+        "Markus Kuppe",
+        "Stephan Merz"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/ewd687a/EWD687a.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/ewd687a/EWD687aPlusCal.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/ewd687a/EWD687a_anim.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd687a/EWD687a_anim.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "alias",
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd687a/MCEWD687a.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd687a/MCEWD687a.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "state constraint",
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd840",
+      "title": "ewd840",
+      "description": "Termination Detection in a Ring",
+      "source": "Dijkstra's termination detection algorithm for ring topologies",
+      "authors": ["Stephan Merz"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/ewd840/EWD840.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd840/EWD840.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd840/EWD840_anim.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd840/EWD840_anim.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "alias"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd840/EWD840_json.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd840/EWD840_json.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd840/EWD840_proof.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/ewd840/SyncTerminationDetection.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd840/SyncTerminationDetection.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd840/TLAPS.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd998",
+      "title": "Termination Detection in a Ring with Asynchronous Message Delivery",
+      "description": "Variant of EWD 840 given my Shmuel Safra",
+      "source": "",
+      "authors": [
+        "Markus Kuppe",
+        "Stephan Merz"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/ewd998/AsyncTerminationDetection.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd998/AsyncTerminationDetection.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "state constraint"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd998/AsyncTerminationDetection_proof.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": [
+            {
+              "path": "specifications/ewd998/AsyncTerminationDetection_proof.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "state constraint",
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd998/EWD998.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd998/EWD998.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "state constraint"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd998/EWD998Chan.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd998/EWD998Chan.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "state constraint",
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd998/EWD998ChanID.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd998/EWD998ChanID.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "view",
+                "state constraint",
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd998/EWD998ChanID_export.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd998/EWD998ChanID_export.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd998/EWD998ChanID_shiviz.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd998/EWD998ChanID_shiviz.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "alias"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd998/EWD998Chan_opts.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/ewd998/EWD998_anim.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/ewd998/EWD998_opts.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/ewd998/EWD998_optsSC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/ewd998/EWD998_proof.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/ewd998/SmokeEWD998.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd998/SmokeEWD998.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "state constraint",
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd998/SmokeEWD998_SC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd998/SmokeEWD998_SC.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/ewd998/Utils.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/glowingRaccoon",
+      "title": "PCR Testing for Snippets of DNA",
+      "description": "Specification of a PCR test process",
+      "source": "",
+      "authors": ["Martin Harrison"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/glowingRaccoon/clean.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/glowingRaccoon/product.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/glowingRaccoon/stages.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/lamport_mutex",
+      "title": "Distributed Mutual Exclusion",
+      "description": "Specification of Lamport's distributed mutual exclusion algorithm",
+      "source": "",
+      "authors": ["Stephan Merz"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/lamport_mutex/Functions.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/lamport_mutex/LamportMutex.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/lamport_mutex/LamportMutex_proofs.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/lamport_mutex/NaturalsInduction.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/lamport_mutex/SequenceTheorems.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/lamport_mutex/TLAPS.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/lamport_mutex/WellFoundedInduction.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/nbacc_ray97",
+      "title": "Asynchronous Non-Blocking Atomic Commit",
+      "description": "Algorithm from paper *A case study of agreement problems in distributed systems: non-blocking atomic commitment* (1997)",
+      "source": "",
+      "authors": [
+        "Thanh Hai Tran",
+        "Igor Konnov",
+        "Josef Widder"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/nbacc_ray97/nbacc_ray97.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/nbacg_guer01",
+      "title": "Asynchronous Non-Blocking Atomic Commitment with Failure Detectors",
+      "description": "Algorithm from paper *On the hardness of failure-sensitive agreement problems* (2001)",
+      "source": "",
+      "authors": [
+        "Thanh Hai Tran",
+        "Igor Konnov",
+        "Josef Widder"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/nbacg_guer01/nbacg_guer01.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/spanning",
+      "title": "Spanning Tree Broadcast Algorithm",
+      "description": "A spanning tree broadcast algorithm",
+      "source": "",
+      "authors": [
+        "Thanh Hai Tran",
+        "Igor Konnov",
+        "Josef Widder"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/spanning/spanning.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/sums_even",
+      "title": "Proof x+x is Even",
+      "description": "Two proofs that x+x is even for every natural number x",
+      "source": "",
+      "authors": ["Stephan Merz"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/sums_even/TLAPS.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/sums_even/sums_even.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/tower_of_hanoi",
+      "title": "The Tower of Hanoi Puzzle",
+      "description": "Famous puzzle involving stacking disks on towers",
+      "source": "",
+      "authors": [
+        "Alexander Niederbühl",
+        "Markus Kuppe"
+      ],
+      "tags": ["beginner"],
+      "modules": [
+        {
+          "path": "specifications/tower_of_hanoi/Bits.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/tower_of_hanoi/Hanoi.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/tower_of_hanoi/Hanoi.toolbox/Model_1/Bits.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/tower_of_hanoi/Hanoi.toolbox/Model_1/Hanoi.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/tower_of_hanoi/Hanoi.toolbox/Model_1/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/tower_of_hanoi/Hanoi.toolbox/Model_1/MC.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/tower_of_hanoi/HanoiSeq.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/transaction_commit",
+      "title": "Transaction Commit Models",
+      "description": "Ordinary transaction commit, two-phase commit, and Paxos commit",
+      "source": "http://research.microsoft.com/en-us/um/people/lamport/pubs/pubs.html#paxos-commit",
+      "authors": [
+        "Jim Gray",
+        "Leslie Lamport"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/transaction_commit/PaxosCommit.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/transaction_commit/TCommit.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/transaction_commit/TwoPhase.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
         }
       ]
     }
