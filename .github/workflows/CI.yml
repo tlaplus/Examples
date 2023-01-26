@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TSTLA_VERSION: 1.0.2
+      TLAPS_VERSION: 202210041448
+      COMMUNITY_MODULES_VERSION: 202211012231
       SCRIPT_DIR: ./.github/workflows/scripts
     steps:
       - name: Clone repo
@@ -32,4 +34,17 @@ jobs:
           mv tree-sitter-tlaplus-$TSTLA_VERSION tree-sitter-tlaplus
       - name: Check manifest feature flags
         run: python $SCRIPT_DIR/check_manifest_features.py
+      - name: Get nightly TLA⁺ toolset, TLAPS, and community modules
+        run: |
+          wget https://nightly.tlapl.us/dist/tla2tools.jar
+          wget https://github.com/tlaplus/CommunityModules/archive/refs/tags/$COMMUNITY_MODULES_VERSION.tar.gz
+          tar -xf $COMMUNITY_MODULES_VERSION.tar.gz
+          rm $COMMUNITY_MODULES_VERSION.tar.gz
+          mv CommunityModules-$COMMUNITY_MODULES_VERSION CommunityModules
+          wget https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.tar.gz
+          tar -xf $TLAPS_VERSION.tar.gz
+          rm $TLAPS_VERSION.tar.gz
+          mv tlapm-$TLAPS_VERSION tlapm
+      - name: Parse all modules
+        run: python $SCRIPT_DIR/parse_modules.py
 
