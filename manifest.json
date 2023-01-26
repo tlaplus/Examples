@@ -41,7 +41,9 @@
       "authors": [
         "Leslie Lamport"
       ],
-      "tags": ["beginner"],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.tla",
@@ -164,7 +166,9 @@
       "authors": [
         "Andrew Helwer"
       ],
-      "tags": ["beginner"],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/CoffeeCan/CoffeeCan.tla",
@@ -211,7 +215,9 @@
       "authors": [
         "Leslie Lamport"
       ],
-      "tags": ["beginner"],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/DieHard/DieHard.tla",
@@ -260,7 +266,9 @@
       "authors": [
         "Jeff Hemphill"
       ],
-      "tags": ["beginner"],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/DiningPhilosophers/DiningPhilosophers.tla",
@@ -291,7 +299,9 @@
       "authors": [
         "Isaac DeFrain"
       ],
-      "tags": ["beginner"],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/EinsteinRiddle/Einstein.tla",
@@ -341,7 +351,11 @@
       "modules": [
         {
           "path": "specifications/Huang/Huang.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "DyadicRationals",
+            "Functions",
+            "SequencesExt"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
@@ -350,9 +364,9 @@
               "runtime": "unknown",
               "size": "unknown",
               "features": [
-                "state constraint",
+                "alias",
                 "liveness",
-                "alias"
+                "state constraint"
               ],
               "result": "unknown"
             }
@@ -418,8 +432,8 @@
       "description": "A method for simulating a fair 6-sided die using only coin flips",
       "source": "https://old.reddit.com/r/tlaplus/comments/j06ohw/how_do_you_reason_about_a_probabilistic/g6owlxy/",
       "authors": [
-        "Ron Pressler",
-        "Markus Kuppe"
+        "Markus Kuppe",
+        "Ron Pressler"
       ],
       "tags": [],
       "modules": [
@@ -442,10 +456,8 @@
         {
           "path": "specifications/KnuthYao/SimKnuthYao.tla",
           "communityDependencies": [
-            "DyadicRationals",
-            "Functions",
             "CSV",
-            "TLCExt",
+            "Functions",
             "IOUtils",
             "Statistics"
           ],
@@ -605,7 +617,9 @@
       "authors": [
         "Leslie Lamport"
       ],
-      "tags": ["beginner"],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/MissionariesAndCannibals/MissionariesAndCannibals.tla",
@@ -673,8 +687,12 @@
       "title": "The N-Queens Puzzle",
       "description": "Place N queens on an NxN chess board such that no two queens threaten each other",
       "source": "",
-      "authors": ["Stephan Merz"],
-      "tags": ["beginner"],
+      "authors": [
+        "Stephan Merz"
+      ],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/N-Queens/Queens.tla",
@@ -792,7 +810,9 @@
       "title": "The Paxos Protocol",
       "description": "A protocol for error-tolerant consensus",
       "source": "",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Leslie Lamport"
+      ],
       "tags": [],
       "modules": [
         {
@@ -878,7 +898,9 @@
       "title": "How to Win a Turing Award",
       "description": "Exercises from the lecture The Paxos Algorithm - or How to Win a Turing Award",
       "source": "https://www.youtube.com/watch?v=tw3gsBms-f8",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Leslie Lamport"
+      ],
       "tags": [],
       "modules": [
         {
@@ -913,8 +935,12 @@
       "title": "The Prisoners & Switches Puzzle",
       "description": "Given a room containing two switches prisoners enter one by one, they must develop a strategy to free themselves",
       "source": "",
-      "authors": ["Leslie Lamport"],
-      "tags": ["beginner"],
+      "authors": [
+        "Leslie Lamport"
+      ],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/Prisoners/MCPrisoners.tla",
@@ -947,7 +973,9 @@
       "title": "The Readers-Writers Problem",
       "description": "Controlling concurrent access to a resource",
       "source": "",
-      "authors": ["Isaac DeFrain"],
+      "authors": [
+        "Isaac DeFrain"
+      ],
       "tags": [],
       "modules": [
         {
@@ -981,7 +1009,9 @@
       "title": "Single-Lane Bridge Problem",
       "description": "Controlling cars moving over a single-lange bridge in opposite directions",
       "source": "",
-      "authors": [],
+      "authors": [
+        "Younes Aka"
+      ],
       "tags": [],
       "modules": [
         {
@@ -1015,8 +1045,12 @@
       "title": "Sliding Block Puzzle",
       "description": "A spec of the Klotski sliding block puzzle",
       "source": "",
-      "authors": ["Mariusz Ryndzionek"],
-      "tags": ["beginner"],
+      "authors": [
+        "Mariusz Ryndzionek"
+      ],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/SlidingPuzzles/SlidingPuzzles.tla",
@@ -1075,7 +1109,9 @@
       "title": "Span Tree Exercise",
       "description": "Simplified algorithm from the Lamport paper *An Assertional Correctness Proof of a Distributed Program*",
       "source": "",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Leslie Lamport"
+      ],
       "tags": [],
       "modules": [
         {
@@ -1106,7 +1142,9 @@
       "title": "Specs from Specifying Systems",
       "description": "All specs seen in the textbook Specifying Systems by Leslie Lamport",
       "source": "http://lamport.azurewebsites.net/tla/book.html",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Leslie Lamport"
+      ],
       "tags": [],
       "modules": [
         {
@@ -1155,8 +1193,8 @@
               "runtime": "unknown",
               "size": "unknown",
               "features": [
-                "state constraint",
-                "liveness"
+                "liveness",
+                "state constraint"
               ],
               "result": "unknown"
             }
@@ -1173,8 +1211,8 @@
               "runtime": "unknown",
               "size": "unknown",
               "features": [
-                "state constraint",
-                "liveness"
+                "liveness",
+                "state constraint"
               ],
               "result": "unknown"
             }
@@ -1765,8 +1803,8 @@
               "runtime": "unknown",
               "size": "unknown",
               "features": [
-                "state constraint",
-                "liveness"
+                "liveness",
+                "state constraint"
               ],
               "result": "unknown"
             }
@@ -1786,7 +1824,9 @@
       "title": "Stone Scale Puzzle",
       "description": "Alternative implementation of the Car Talk Puzzle",
       "source": "",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Leslie Lamport"
+      ],
       "tags": [],
       "modules": [
         {
@@ -1803,7 +1843,9 @@
       "title": "The TLC Safety Checking Algorithm",
       "description": "Spec of the safety checking algorithm used by the TLC model-checker",
       "source": "",
-      "authors": ["Markus Kuppe"],
+      "authors": [
+        "Markus Kuppe"
+      ],
       "tags": [],
       "modules": [
         {
@@ -1839,7 +1881,9 @@
       "title": "Teaching Concurrency",
       "description": "Simple problem useful for teaching and learning about concurrency",
       "source": "http://lamport.azurewebsites.net/pubs/teaching-concurrency.pdf",
-      "authors": [],
+      "authors": [
+        "Leslie Lamport"
+      ],
       "tags": [],
       "modules": [
         {
@@ -1869,7 +1913,9 @@
       "title": "Transitive Closure",
       "description": "Spec defining the transitive closure of a relation",
       "source": "",
-      "authors": [],
+      "authors": [
+        "Stephan Merz"
+      ],
       "tags": [],
       "modules": [
         {
@@ -1933,9 +1979,9 @@
       "description": "Spec of the protocol from paper *Asynchronous Consensus and Broadcast Protocols* (1985)",
       "source": "",
       "authors": [
-        "Thanh Hai Tran",
         "Igor Konnov",
-        "Josef Widder"
+        "Josef Widder",
+        "Thanh Hai Tran"
       ],
       "tags": [],
       "modules": [
@@ -1953,7 +1999,9 @@
       "title": "Resource Allocator",
       "description": "Specification of a resource allocator",
       "source": "",
-      "authors": ["Stephan Merz"],
+      "authors": [
+        "Stephan Merz"
+      ],
       "tags": [],
       "modules": [
         {
@@ -2032,9 +2080,9 @@
       "description": "Algorithm from paper *Simulating authenticated broadcasts to derive simple fault-tolerant algorithms* (1987)",
       "source": "",
       "authors": [
-        "Thanh Hai Tran",
         "Igor Konnov",
-        "Josef Widder"
+        "Josef Widder",
+        "Thanh Hai Tran"
       ],
       "tags": [],
       "modules": [
@@ -2055,9 +2103,9 @@
       "description": "Algorithm from paper *Unreliable failure detectors for reliable distributed systems* (1996)",
       "source": "",
       "authors": [
-        "Thanh Hai Tran",
         "Igor Konnov",
-        "Josev Widder"
+        "Josev Widder",
+        "Thanh Hai Tran"
       ],
       "tags": [],
       "modules": [
@@ -2076,9 +2124,9 @@
       "description": "Algorithm from paper *Bosco: One-step byzantine asynchronous consensus* (2008)",
       "source": "",
       "authors": [
-        "Thanh Hai Tran",
         "Igor Konnov",
-        "Josev Widder"
+        "Josev Widder",
+        "Thanh Hai Tran"
       ],
       "tags": [],
       "modules": [
@@ -2097,9 +2145,9 @@
       "description": "Algorithm from paper *Consensus in one communication step* (2001)",
       "source": "",
       "authors": [
-        "Thanh Hai Tran",
         "Igor Konnov",
-        "Josev Widder"
+        "Josev Widder",
+        "Thanh Hai Tran"
       ],
       "tags": [],
       "modules": [
@@ -2118,9 +2166,9 @@
       "description": "Algorithm from paper *Evaluating the condition-based approach to solve consensus* (2003)",
       "source": "",
       "authors": [
-        "Thanh Hai Tran",
         "Igor Konnov",
-        "Josev Widder"
+        "Josev Widder",
+        "Thanh Hai Tran"
       ],
       "tags": [],
       "modules": [
@@ -2139,9 +2187,9 @@
       "description": "Algorithm from paper *One-step Consensus with Zero-Degradation* (2006)",
       "source": "",
       "authors": [
-        "Thanh Hai Tran",
         "Igor Konnov",
-        "Josev Widder"
+        "Josev Widder",
+        "Thanh Hai Tran"
       ],
       "tags": [],
       "modules": [
@@ -2159,7 +2207,9 @@
       "title": "Chang-Roberts Algorithm for Leader Election in a Ring",
       "description": "Algorithm from paper *An improved algorithm for decentralized extrema-finding in circular configurations of processes* (1979)",
       "source": "",
-      "authors": ["Stephan Merz"],
+      "authors": [
+        "Stephan Merz"
+      ],
       "tags": [],
       "modules": [
         {
@@ -2179,9 +2229,9 @@
       "description": "Algorithm from paper *Unreliable failure detectors for reliable distributed systems* (1996)",
       "source": "",
       "authors": [
-        "Thanh Hai Tran",
         "Igor Konnov",
-        "Josev Widder"
+        "Josev Widder",
+        "Thanh Hai Tran"
       ],
       "tags": [],
       "modules": [
@@ -2213,7 +2263,9 @@
       "title": "Dijkstra's Mutual Exclusion Algorithm",
       "description": "Algorithm from paper *Solution of a Problem in Concurrent Programming Control* (1965)",
       "source": "",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Leslie Lamport"
+      ],
       "tags": [],
       "modules": [
         {
@@ -2283,8 +2335,8 @@
       "description": "A formalization of the SWMR-Shared-Memory Disk Paxos",
       "source": "https://github.com/nano-o/MultiPaxos/blob/master/DiskPaxos.tla",
       "authors": [
-        "Leslie Lamport",
-        "Giuliano Losa"
+        "Giuliano Losa",
+        "Leslie Lamport"
       ],
       "tags": [],
       "modules": [
@@ -2316,7 +2368,9 @@
       "title": "The Echo Algorithm",
       "description": "Algorithm for constructing a spanning tree in an undirected graph",
       "source": "",
-      "authors": ["Stephan Merz"],
+      "authors": [
+        "Stephan Merz"
+      ],
       "tags": [],
       "modules": [
         {
@@ -2358,14 +2412,17 @@
       "description": "Dijkstra's classical stabilizing token ring algorithm: EWD426",
       "source": "",
       "authors": [
-        "Murat Demirbas",
-        "Markus Kuppe"
+        "Markus Kuppe",
+        "Murat Demirbas"
       ],
       "tags": [],
       "modules": [
         {
           "path": "specifications/ewd426/SimTokenRing.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "CSV",
+            "IOUtils"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
@@ -2414,7 +2471,9 @@
       "modules": [
         {
           "path": "specifications/ewd687a/EWD687a.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "Graphs"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
@@ -2430,7 +2489,10 @@
         },
         {
           "path": "specifications/ewd687a/EWD687a_anim.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "IOUtils",
+            "SVG"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
@@ -2457,8 +2519,8 @@
               "runtime": "unknown",
               "size": "unknown",
               "features": [
-                "state constraint",
-                "liveness"
+                "liveness",
+                "state constraint"
               ],
               "result": "unknown"
             }
@@ -2471,7 +2533,9 @@
       "title": "ewd840",
       "description": "Termination Detection in a Ring",
       "source": "Dijkstra's termination detection algorithm for ring topologies",
-      "authors": ["Stephan Merz"],
+      "authors": [
+        "Stephan Merz"
+      ],
       "tags": [],
       "modules": [
         {
@@ -2491,7 +2555,9 @@
         },
         {
           "path": "specifications/ewd840/EWD840_anim.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "SVG"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
@@ -2599,8 +2665,8 @@
               "runtime": "unknown",
               "size": "unknown",
               "features": [
-                "state constraint",
-                "liveness"
+                "liveness",
+                "state constraint"
               ],
               "result": "unknown"
             }
@@ -2608,7 +2674,10 @@
         },
         {
           "path": "specifications/ewd998/EWD998.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "Functions",
+            "SequencesExt"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
@@ -2634,8 +2703,8 @@
               "runtime": "unknown",
               "size": "unknown",
               "features": [
-                "state constraint",
-                "liveness"
+                "liveness",
+                "state constraint"
               ],
               "result": "unknown"
             }
@@ -2652,9 +2721,9 @@
               "runtime": "unknown",
               "size": "unknown",
               "features": [
-                "view",
+                "liveness",
                 "state constraint",
-                "liveness"
+                "view"
               ],
               "result": "unknown"
             }
@@ -2662,7 +2731,9 @@
         },
         {
           "path": "specifications/ewd998/EWD998ChanID_export.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "IOUtils"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
@@ -2694,28 +2765,40 @@
         },
         {
           "path": "specifications/ewd998/EWD998Chan_opts.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "CSV",
+            "IOUtils"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
         },
         {
           "path": "specifications/ewd998/EWD998_anim.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "IOUtils",
+            "SVG"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
         },
         {
           "path": "specifications/ewd998/EWD998_opts.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "CSV",
+            "IOUtils"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
         },
         {
           "path": "specifications/ewd998/EWD998_optsSC.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "CSV",
+            "IOUtils"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
@@ -2731,7 +2814,10 @@
         },
         {
           "path": "specifications/ewd998/SmokeEWD998.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "CSV",
+            "IOUtils"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
@@ -2740,8 +2826,8 @@
               "runtime": "unknown",
               "size": "unknown",
               "features": [
-                "state constraint",
-                "liveness"
+                "liveness",
+                "state constraint"
               ],
               "result": "unknown"
             }
@@ -2749,7 +2835,10 @@
         },
         {
           "path": "specifications/ewd998/SmokeEWD998_SC.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "CSV",
+            "IOUtils"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
@@ -2764,7 +2853,10 @@
         },
         {
           "path": "specifications/ewd998/Utils.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "Functions",
+            "SequencesExt"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
@@ -2776,7 +2868,9 @@
       "title": "PCR Testing for Snippets of DNA",
       "description": "Specification of a PCR test process",
       "source": "",
-      "authors": ["Martin Harrison"],
+      "authors": [
+        "Martin Harrison"
+      ],
       "tags": [],
       "modules": [
         {
@@ -2807,7 +2901,9 @@
       "title": "Distributed Mutual Exclusion",
       "description": "Specification of Lamport's distributed mutual exclusion algorithm",
       "source": "",
-      "authors": ["Stephan Merz"],
+      "authors": [
+        "Stephan Merz"
+      ],
       "tags": [],
       "modules": [
         {
@@ -2871,9 +2967,9 @@
       "description": "Algorithm from paper *A case study of agreement problems in distributed systems: non-blocking atomic commitment* (1997)",
       "source": "",
       "authors": [
-        "Thanh Hai Tran",
         "Igor Konnov",
-        "Josef Widder"
+        "Josef Widder",
+        "Thanh Hai Tran"
       ],
       "tags": [],
       "modules": [
@@ -2892,9 +2988,9 @@
       "description": "Algorithm from paper *On the hardness of failure-sensitive agreement problems* (2001)",
       "source": "",
       "authors": [
-        "Thanh Hai Tran",
         "Igor Konnov",
-        "Josef Widder"
+        "Josef Widder",
+        "Thanh Hai Tran"
       ],
       "tags": [],
       "modules": [
@@ -2913,9 +3009,9 @@
       "description": "A spanning tree broadcast algorithm",
       "source": "",
       "authors": [
-        "Thanh Hai Tran",
         "Igor Konnov",
-        "Josef Widder"
+        "Josef Widder",
+        "Thanh Hai Tran"
       ],
       "tags": [],
       "modules": [
@@ -2933,7 +3029,9 @@
       "title": "Proof x+x is Even",
       "description": "Two proofs that x+x is even for every natural number x",
       "source": "",
-      "authors": ["Stephan Merz"],
+      "authors": [
+        "Stephan Merz"
+      ],
       "tags": [],
       "modules": [
         {
@@ -2965,7 +3063,9 @@
         "Alexander Niederbühl",
         "Markus Kuppe"
       ],
-      "tags": ["beginner"],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/tower_of_hanoi/Bits.tla",
@@ -3055,4 +3155,3 @@
     }
   ]
 }
-

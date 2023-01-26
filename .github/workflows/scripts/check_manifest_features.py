@@ -29,7 +29,7 @@ def get_tree_features(tree):
 
 def get_module_features(path):
     tree, _, _ = parse_module(path)
-    return list(get_tree_features(tree))
+    return get_tree_features(tree)
 
 model_features = {
     'PROPERTY': 'liveness',
@@ -128,7 +128,7 @@ def get_community_module_imports(path):
     tree, text, _ = parse_module(path)
     dir = dirname(path)
     has_proof = 'proof' in get_tree_features(tree)
-    return list(get_community_imports(tree, text, dir, has_proof))
+    return get_community_imports(tree, text, dir, has_proof)
 
 if __name__ == '__main__':
     manifest = None
@@ -137,6 +137,15 @@ if __name__ == '__main__':
 
     success = True
     for spec in manifest['specifications']:
+        if spec['title'] == '':
+            success = False
+            print(f'Spec {spec["path"]} does not have a title')
+        if spec['description'] == '':
+            success = False
+            print(f'Spec {spec["path"]} does not have a description')
+        if not any(spec['authors']):
+            success = False
+            print(f'Spec {spec["path"]} does not have any listed authors')
         for module in spec['modules']:
             tree, text, parse_err = parse_module(module['path'])
             if parse_err:
