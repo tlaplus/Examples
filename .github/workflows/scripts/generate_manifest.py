@@ -38,15 +38,15 @@ new_manifest = {
             'modules': [
                 {
                     'path': tla_path,
-                    'communityDependencies': get_community_module_imports(tla_path),
+                    'communityDependencies': sorted(list(get_community_module_imports(tla_path))),
                     'tlaLanguageVersion': 2,
-                    'features': get_module_features(tla_path),
+                    'features': sorted(list(get_module_features(tla_path))),
                     'models': [
                         {
                             'path': cfg_path,
                             'runtime': 'unknown',
                             'size': 'unknown',
-                            'features': list(get_model_features(cfg_path)),
+                            'features': sorted(list(get_model_features(cfg_path))),
                             'result': 'unknown'
                         }
                         for cfg_path in sorted(get_cfg_files(tla_path))
@@ -64,19 +64,16 @@ new_manifest = {
 # Integrate human-readable info from existing manifest
 
 def find_corresponding_spec(old_spec, new_manifest):
-    old_modules = old_spec['modules']
-    old_module_paths = set([normpath(module['path']) for module in old_modules])
-    return list(filter(
-        lambda new_spec: any(
-            [old_module_path.startswith(new_spec['path']) for old_module_path in old_module_paths]
-        ),
-        new_manifest['specifications']
-    ))[0]
+    return [
+        spec for spec in new_manifest['specifications']
+        if normpath(spec['path']) == old_spec['path']
+    ][0]
 
 def integrate_spec_info(old_spec, new_spec):
-    fields = ['title', 'description', 'source', 'authors', 'tags']
+    fields = ['title', 'description', 'source', 'tags']
     for field in fields:
         new_spec[field] = old_spec[field]
+    new_spec['authors'] = sorted(old_spec['authors'])
 
 def find_corresponding_module(old_module, new_spec):
     return [
