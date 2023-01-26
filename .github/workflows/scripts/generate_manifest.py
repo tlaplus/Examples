@@ -1,4 +1,11 @@
-# Generates a best-effort manifest.json
+"""
+Generates a best-effort manifest.json file. This is done by scanning all
+.tla and .cfg files in the specifications dir then attempting to sort them
+into a spec/module/model hierarchy. Files are parsed to check for features
+and imports. Human-written fields (title/description/source/authors for
+specs, runtime/size/result for models) are either taken from any existing
+manifest.json file or set as blank/unknown as appropriate.
+"""
 
 from check_manifest_features import get_community_module_imports, get_module_features, get_module_names_in_dir, get_model_features
 import json
@@ -6,13 +13,15 @@ import os
 from os.path import basename, dirname, join, normpath, splitext
 import glob
 
-# Generate new manifest drawing info from files in specifications dir
-
 def get_tla_files(dir):
+    """
+    Gets paths of all .tla files in the given directory.
+    """
     return [normpath(path) for path in glob.glob(f'{dir.path}/**/*.tla', recursive=True)]
 
 def get_cfg_files(tla_path):
-    """Assume a .cfg file in the same directory as the .tla file and with the
+    """
+    Assume a .cfg file in the same directory as the .tla file and with the
     same name is a model of that .tla file; also assume this of any .cfg
     files where the .tla file name is only a prefix of the .cfg file name,
     unless there are other .tla file names in the directory that exactly
@@ -26,6 +35,7 @@ def get_cfg_files(tla_path):
         if splitext(basename(path))[0] not in other_module_names
     ]
 
+# Generate new base manifest.json from files in specifications dir
 new_manifest = {
     'specifications': [
         {
@@ -61,7 +71,7 @@ new_manifest = {
     ]
 }
 
-# Integrate human-readable info from existing manifest
+# Integrate human-written info from existing manifest.json
 
 def find_corresponding_spec(old_spec, new_manifest):
     return [
@@ -111,8 +121,7 @@ for old_spec in old_manifest['specifications']:
             new_model = find_corresponding_model(old_model, new_module)
             integrate_model_info(old_model, new_model)
 
-# Writes generated manifest to file
-
+# Write generated manifest to file
 with open('manifest.json', 'w') as new_manifest_file:
     json.dump(new_manifest, new_manifest_file, indent=2, ensure_ascii=False)
 

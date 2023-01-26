@@ -1,5 +1,8 @@
-# Checks to ensure all files in manifest.json exist, and that all .tla and
-# .cfg files in repo are recorded in manifest.json
+"""
+Checks to ensure all files in manifest.json exist, that all .tla and .cfg
+files in repo are recorded in manifest.json, and that no files are present
+twice in the manifest.
+"""
 
 from collections import Counter
 import json
@@ -14,13 +17,13 @@ module_lists = [spec["modules"] for spec in manifest["specifications"]]
 modules = [module for module_list in module_lists for module in module_list]
 model_lists = [module["models"] for module in modules]
 
-# All paths in the manifest
+# Get all .tla and .cfg paths from the manifest
 tla_mf_paths_cnt = Counter([normpath(module["path"]) for module in modules])
 tla_mf_paths = set(tla_mf_paths_cnt)
 cfg_mf_paths_cnt = Counter([normpath(model["path"]) for model_list in model_lists for model in model_list])
 cfg_mf_paths = set(cfg_mf_paths_cnt)
 
-# All paths on the filesystem
+# Get paths of all .tla and .cfg files in the specifications dir
 tla_fs_paths = set([normpath(path) for path in glob.glob(f"./specifications/**/*.tla", recursive=True)])
 cfg_fs_paths = set([normpath(path) for path in glob.glob(f"./specifications/**/*.cfg", recursive=True)])
 
