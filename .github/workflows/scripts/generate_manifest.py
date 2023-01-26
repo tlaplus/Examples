@@ -1,6 +1,6 @@
 # Generates a best-effort manifest.json
 
-from check_manifest_features import get_module_features, get_model_features
+from check_manifest_features import get_community_module_imports, get_module_features, get_module_names_in_dir, get_model_features
 import json
 import os
 from os.path import basename, dirname, join, normpath, splitext
@@ -20,10 +20,7 @@ def get_cfg_files(tla_path):
     """
     parent_dir = dirname(tla_path)
     module_name, _ = splitext(basename(tla_path))
-    other_module_names = set(filter(
-        lambda other_module_name: other_module_name != module_name,
-        [splitext(basename(path))[0] for path in glob.glob(f'{join(parent_dir, module_name)}*.tla')]
-    ))
+    other_module_names = [other for other in get_module_names_in_dir(parent_dir) if other != module_name]
     return [
         normpath(path) for path in glob.glob(f'{join(parent_dir, module_name)}*.cfg')
         if splitext(basename(path))[0] not in other_module_names
@@ -41,7 +38,7 @@ new_manifest = {
             'modules': [
                 {
                     'path': tla_path,
-                    'communityDependencies': [],
+                    'communityDependencies': get_community_module_imports(tla_path),
                     'tlaLanguageVersion': 2,
                     'features': get_module_features(tla_path),
                     'models': [
@@ -88,7 +85,7 @@ def find_corresponding_module(old_module, new_spec):
     ][0]
 
 def integrate_module_info(old_module, new_module):
-    fields = ['communityDependencies', 'tlaLanguageVersion']
+    fields = ['tlaLanguageVersion']
     for field in fields:
         new_module[field] = old_module[field]
 
