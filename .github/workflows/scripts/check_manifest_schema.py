@@ -1,4 +1,9 @@
-# Checks to ensure manifest.json is valid according to schema
+"""
+Checks to ensure manifest.json is valid according to schema; this can also
+be done manually at https://www.jsonschemavalidator.net/
+Learn about the JSON schema format at
+https://json-schema.org/understanding-json-schema/
+"""
 
 import json
 from jsonschema import validate
