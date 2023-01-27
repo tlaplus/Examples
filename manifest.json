@@ -656,9 +656,9 @@
               "result": "success"
             },
             {
-              "path": "specifications/MultiCarElevator/ElevatorLivenessSmall.cfg",
-              "runtime": "00:00:05",
-              "size": "small",
+              "path": "specifications/MultiCarElevator/ElevatorLivenessMedium.cfg",
+              "runtime": "00:00:30",
+              "size": "medium",
               "features": [
                 "liveness"
               ],
@@ -675,6 +675,13 @@
               "path": "specifications/MultiCarElevator/ElevatorSafetyMedium.cfg",
               "runtime": "00:03:00",
               "size": "medium",
+              "features": [],
+              "result": "success"
+            },
+            {
+              "path": "specifications/MultiCarElevator/ElevatorSafetySmall.cfg",
+              "runtime": "00:00:10",
+              "size": "small",
               "features": [],
               "result": "success"
             }
@@ -780,6 +787,15 @@
               "path": "specifications/NanoBlockchain/MCNanoLarge.cfg",
               "runtime": "00:20:00",
               "size": "large",
+              "features": [
+                "view"
+              ],
+              "result": "success"
+            },
+            {
+              "path": "specifications/NanoBlockchain/MCNanoMedium.cfg",
+              "runtime": "00:00:30",
+              "size": "medium",
               "features": [
                 "view"
               ],
