@@ -217,6 +217,8 @@ Next == \E S \in SUBSET who_is_on_bank[bank_of_boat] :
 (* This problem was proposed to me by Jay Misra, who then suggested        *)
 (* improvements to my first version of the spec.                           *)
 (***************************************************************************)                  
+Solution == who_is_on_bank["E"] /= {}
+
 =============================================================================
 \* Modification History
 \* Last modified Sat Dec 22 14:17:18 PST 2018 by lamport
