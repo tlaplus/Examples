@@ -19,6 +19,7 @@ small_models = [
     for model in module['models'] if model['size'] == 'small'
 ]
 
+success = True
 for module_path, model_path, expected_result in small_models:
     print(model_path)
     tlc = subprocess.run([
@@ -34,9 +35,10 @@ for module_path, model_path, expected_result in small_models:
         '-config', model_path,
         module_path
     ], capture_output=True)
-    tlc_output = tlc.stdout.decode('utf-8')
+    if (tlc.returncode == 0 and expected_result != 'success') or (tlc.returncode != 0 and expected_result == 'success'):
+        success = False
+        print(f'Model {model_path} expected result {expected_result} but returned error code {tlc.returncode}')
+        print(tlc.stdout.decode('utf-8'))
 
-    print(tlc_output)
-    print(tlc.returncode)
-
+exit(0 if success else 1)
 
