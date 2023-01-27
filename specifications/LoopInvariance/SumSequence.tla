@@ -9,7 +9,7 @@
 (*                                                                         *)
 (*    http://lamport.azurewebsites.net/tla/proving-safety.pdf              *)
 (***************************************************************************)
-EXTENDS Integers, SequenceTheorems, NaturalsInduction, TLAPS
+EXTENDS Integers, SequenceTheorems, SequencesExtTheorems, NaturalsInduction, TLAPS
 
 (***************************************************************************)
 (* To facilitate model checking, we assume that the sequence to be summed  *)
@@ -214,9 +214,18 @@ THEOREM Spec => []PCorrect
                       [Next]_vars
                PROVE  Inv'
     OBVIOUS
+  <2> USE ValAssump DEF Inv, TypeOK
   <2>1. CASE a
     <3>1. TypeOK'
-      BY <2>1 DEF a, Inv, TypeOK
+      <4>1. sum' \in Int
+        <5>1. CASE n <= Len(seq)
+          <6>. seq[n] \in Values
+            BY <5>1
+          <6>. QED  BY <5>1, <2>1 DEF a
+        <5>2. CASE ~(n <= Len(seq))
+          BY <5>2, <2>1 DEF a
+        <5>. QED  BY <5>1, <5>2
+      <4>. QED  BY <4>1, <2>1 DEF a
     <3>2. (sum = SeqSum([i \in 1..(n-1) |-> seq[i]]))'
       <4>1. CASE n > Len(seq)
         <5> ~(n =< Len(seq))
@@ -246,8 +255,10 @@ THEOREM Spec => []PCorrect
             BY <6>2, <4>2
           <6>4. s \in Seq(Int)
             BY <6>3, <5>2, <4>2
+          <6>5. Front(s) = [i \in 1 .. Len(s)-1 |-> s[i]]
+            BY <5>1 DEF Front
           <6> QED
-            BY <6>4,  <5>1, <4>2, Lemma5 DEF Front
+            BY <6>4, <6>5, <5>1, <4>2, Lemma5 
         <5>5. curseq = [i \in 1..(Len(s)-1) |-> s[i]]
           BY <5>1, <5>2             
         <5>6. sum = SeqSum(curseq)                                 
@@ -327,7 +338,19 @@ LEMMA Lemma2 ==
     BY FrontDef
   <1>3. QED
     BY <1>1, <1>2
-                   
+
+LEMMA Lemma2a ==
+  ASSUME NEW S, NEW s \in Seq(S), Len(s) > 1
+  PROVE  Tail(s) = [i \in 1..(Len(s) - 1) |-> s[i+1]]
+<1>. DEFINE t == [i \in 1..(Len(s) - 1) |-> s[i+1]]
+<1>1. Tail(s) \in Seq(S) /\ t \in Seq(S)
+  OBVIOUS
+<1>2. Len(Tail(s)) = Len(t)
+  OBVIOUS
+<1>3. \A i \in 1 .. Len(Tail(s)) : Tail(s)[i] = t[i]
+  OBVIOUS
+<1>. QED  BY <1>1, <1>2, <1>3, SeqEqual, Zenon
+
                    
 LEMMA Lemma3 ==
   \A S : \A s \in Seq(S) :
@@ -348,13 +371,7 @@ LEMMA Lemma3 ==
      <2>3. Front(s) # << >>
       BY <2>1, <2>2
     <2>4. Tail(Front(s)) = [i \in 1..(Len(Front(s))-1) |-> Front(s)[i+1]]
-      <3> DEFINE t == Front(s)
-      <3>1. t \in Seq(S) /\ t # << >>
-        BY <2>1, <2>3
-      <3>2  Tail(t) = [i \in 1..(Len(t)-1) |-> t[i+1]]
-        BY <3>1
-      <3>3. QED
-        BY <3>2
+      BY <2>1, <2>3, Lemma2a
     <2>5. \A i \in 0..(Len(s)-2) : Front(s)[i+1] = s[i+1]
       BY <2>1
     <2>6. Len(Front(s))-1 = Len(s) - 2
@@ -366,10 +383,7 @@ LEMMA Lemma3 ==
     <2>9. QED
       BY <2>7, <2>8
   <1>2. Front(Tail(s)) = [i \in 1..(Len(s) - 2) |-> s[i+1]]
-    <2>1. Tail(s) = [i \in 1..(Len(s) - 1) |-> s[i+1]]
-       OBVIOUS
-    <2>2. QED
-      BY <2>1, Len(s) \in Nat DEF Front
+    BY Len(s) \in Nat, Lemma2a DEF Front
   <1>3. QED
     BY <1>1, <1>2
 
@@ -447,7 +461,7 @@ LEMMA Lemma5_Proof ==
     OBVIOUS
   <2>1. /\ Front(s) \in Seq(Int)
         /\ Len(Front(s)) = N
-    BY Lemma2
+    BY Lemma2, N+1 > 0, (N+1)-1 = N, Zenon
   <2> DEFINE t == Tail(s)
   <2> USE FrontDef 
   <2>2. /\ t \in Seq(Int) 
@@ -543,6 +557,7 @@ LEMMA Lemma5_Proof ==
   BY <1>3
 =============================================================================
 \* Modification History
+\* Last modified Fri Jan 27 10:03:14 CET 2023 by merz
 \* Last modified Tue Aug 27 12:59:10 PDT 2019 by loki
 \* Last modified Fri May 03 16:40:42 PDT 2019 by lamport
 \* Created Fri Apr 19 14:13:06 PDT 2019 by lamport
