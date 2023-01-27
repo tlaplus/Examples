@@ -120,7 +120,6 @@ tlaps_modules = {
     'FiniteSetTheorems',
     'FunctionTheorems',
     'NaturalsInduction',
-    'SequencesExt',
     'SequencesExtTheorems',
     'SequenceTheorems',
     'TLAPS',

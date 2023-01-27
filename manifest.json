@@ -795,7 +795,7 @@
             {
               "path": "specifications/NanoBlockchain/MCNanoMedium.cfg",
               "runtime": "00:00:30",
-              "size": "medium",
+              "size": "small",
               "features": [
                 "view"
               ],
