@@ -109,6 +109,7 @@ Do you have your own case study that you like to share with the community? Send 
 | 96 | Nano Blockchain Protocol | <a href="specifications/NanoBlockchain">Directory</a> | Andrew Helwer | | &#10004; | Naturals, Bags | | |
 | 97 | Coffee Can White/Black Bean Problem | <a href="specifications/CoffeeCan">Directory</a> | Andrew Helwer | | &#10004; | Naturals | | |
 | 98 | The Slush Protocol | <a href="specifications/SlushProtocol">Directory</a> | Andrew Helwer | | &#10004; | Naturals, FiniteSets, Sequences | &#10004; | |
+| 99 | SDP (Software Defined Perimeter) | <a href="https://github.com/10227694/SDP_Verification">Specifying and Verifying SDP Protocol based Zero Trust Architecture</a> | Luming Dong, Zhi Niu | | &#10004;| FiniteSets, Sequences, Naturals |  |
 
 ## License
 
