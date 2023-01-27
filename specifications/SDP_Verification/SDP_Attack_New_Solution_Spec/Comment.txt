@@ -1,0 +1,5 @@
+The figure Model_Config_for_NAT.PNG illustrates the TLC model configuration for NAT scenario.
+
+The figure Model_Config_without_NAT.PNG illustrates the TLC model configuration for scenario without NAT.
+
+SPA_Attack_New.tla is the main sepc file.
