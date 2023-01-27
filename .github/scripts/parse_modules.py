@@ -43,7 +43,7 @@ with open('manifest.json', 'rt') as manifest_file:
 
 # Skip these specs and modules as they do not currently parse
 skip_specs = ['specifications/ewd998']
-skip_modules = ['specifications/LoopInvariance/SumSequence.tla']
+skip_modules = []
 
 # List of all modules to parse and whether they should use TLAPS imports
 modules = [
