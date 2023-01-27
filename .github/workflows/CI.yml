@@ -37,6 +37,7 @@ jobs:
       - name: Get nightly TLA⁺ toolset, TLAPS, and community modules
         run: |
           wget https://nightly.tlapl.us/dist/tla2tools.jar
+          wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
           wget https://github.com/tlaplus/CommunityModules/archive/refs/tags/$COMMUNITY_MODULES_VERSION.tar.gz
           tar -xf $COMMUNITY_MODULES_VERSION.tar.gz
           rm $COMMUNITY_MODULES_VERSION.tar.gz
