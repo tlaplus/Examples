@@ -1005,6 +1005,73 @@
       ]
     },
     {
+      "path": "specifications/SDP_Verification",
+      "title": "Software-Defined Perimeter",
+      "description": "Specifying and verifying SDP-protocol-based zero trust architecture",
+      "source": "https://github.com/10227694/SDP_Verification",
+      "authors": [
+        "Luming Dong",
+        "Zhi Niu"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/MC.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/SPA_Attack_New.tla",
+          "communityDependencies": [
+            "Bitwise",
+            "Functions"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/SDP_Verification/SDP_Attack_Spec/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SDP_Verification/SDP_Attack_Spec/MC.cfg",
+              "runtime": "unknown",
+              "size": "unknown",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SDP_Verification/SDP_Attack_Spec/SPA_Attack.tla",
+          "communityDependencies": [
+            "Bitwise",
+            "Functions"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
       "path": "specifications/SingleLaneBridge",
       "title": "Single-Lane Bridge Problem",
       "description": "Controlling cars moving over a single-lange bridge in opposite directions",
