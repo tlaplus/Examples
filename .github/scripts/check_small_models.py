@@ -6,7 +6,6 @@ machines.
 
 import json
 from os import cpu_count
-from os.path import dirname
 import subprocess
 
 manifest = None
@@ -31,7 +30,7 @@ for module_path, model_path, expected_result in small_models:
         'tlc2.TLC',
         '-workers', str(cpu_count()),
         '-lncheck', 'final',
-        #'-tool',
+        '-tool',
         '-config', model_path,
         module_path
     ], capture_output=True)

@@ -13,7 +13,7 @@ jobs:
       TSTLA_VERSION: 1.0.2
       TLAPS_VERSION: 202210041448
       COMMUNITY_MODULES_VERSION: 202211012231
-      SCRIPT_DIR: ./.github/workflows/scripts
+      SCRIPT_DIR: .github/scripts
     steps:
       - name: Clone repo
         uses: actions/checkout@v2
@@ -34,7 +34,7 @@ jobs:
           mv tree-sitter-tlaplus-$TSTLA_VERSION tree-sitter-tlaplus
       - name: Check manifest feature flags
         run: python $SCRIPT_DIR/check_manifest_features.py
-      - name: Get nightly TLA⁺ toolset, TLAPS, and community modules
+      - name: Get TLA⁺ toolset, TLAPS, and community modules
         run: |
           wget https://nightly.tlapl.us/dist/tla2tools.jar
           wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
@@ -48,4 +48,6 @@ jobs:
           mv tlapm-$TLAPS_VERSION tlapm
       - name: Parse all modules
         run: python $SCRIPT_DIR/parse_modules.py
+      - name: Check all small models
+        run: python $SCRIPT_DIR/check_small_models.py
 
