@@ -48,6 +48,6 @@ jobs:
           mv tlapm-$TLAPS_VERSION tlapm
       - name: Parse all modules
         run: python $SCRIPT_DIR/parse_modules.py
-      - name: Check all small models
+      - name: Check small models
         run: python $SCRIPT_DIR/check_small_models.py
 

@@ -67,10 +67,10 @@
           "models": [
             {
               "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_1/MC.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -89,10 +89,10 @@
           "models": [
             {
               "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_2/MC.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -112,7 +112,7 @@
             {
               "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_3/MC.cfg",
               "runtime": "unknown",
-              "size": "unknown",
+              "size": "large",
               "features": [],
               "result": "unknown"
             }
@@ -280,12 +280,12 @@
           "models": [
             {
               "path": "specifications/DiningPhilosophers/DiningPhilosophers.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         }
@@ -299,9 +299,7 @@
       "authors": [
         "Isaac DeFrain"
       ],
-      "tags": [
-        "beginner"
-      ],
+      "tags": [],
       "modules": [
         {
           "path": "specifications/EinsteinRiddle/Einstein.tla",
@@ -312,7 +310,7 @@
             {
               "path": "specifications/EinsteinRiddle/Einstein.cfg",
               "runtime": "unknown",
-              "size": "unknown",
+              "size": "large",
               "features": [],
               "result": "safety failure"
             }
@@ -626,7 +624,15 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/MissionariesAndCannibals/MissionariesAndCannibals.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "features": [],
+              "result": "safety failure"
+            }
+          ]
         }
       ]
     },
@@ -716,10 +722,10 @@
           "models": [
             {
               "path": "specifications/N-Queens/Queens.toolbox/FourQueens/MC.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "safety failure"
             }
           ]
         },
@@ -747,12 +753,12 @@
           "models": [
             {
               "path": "specifications/N-Queens/QueensPluscal.toolbox/FourQueens/MC.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "safety failure"
             }
           ]
         },
@@ -795,7 +801,7 @@
             {
               "path": "specifications/NanoBlockchain/MCNanoMedium.cfg",
               "runtime": "00:00:30",
-              "size": "small",
+              "size": "medium",
               "features": [
                 "view"
               ],
@@ -973,12 +979,12 @@
           "models": [
             {
               "path": "specifications/Prisoners/Prisoners.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         }
@@ -1131,16 +1137,22 @@
       "authors": [
         "Mariusz Ryndzionek"
       ],
-      "tags": [
-        "beginner"
-      ],
+      "tags": [],
       "modules": [
         {
           "path": "specifications/SlidingPuzzles/SlidingPuzzles.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/SlidingPuzzles/SlidingPuzzles.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "features": [],
+              "result": "safety failure"
+            }
+          ]
         }
       ]
     },
@@ -3186,10 +3198,10 @@
           "models": [
             {
               "path": "specifications/tower_of_hanoi/Hanoi.toolbox/Model_1/MC.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "safety failure"
             }
           ]
         },
