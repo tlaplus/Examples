@@ -44,7 +44,7 @@
                   "items": {
                     "type": "object",
                     "additionalProperties": false,
-                    "required": ["path", "runtime", "size", "features", "result"],
+                    "required": ["path", "runtime", "size", "config", "features", "result"],
                     "properties": {
                       "path": {"type": "string"},
                       "runtime": {
@@ -52,6 +52,10 @@
                         "pattern": "^(([0-9][0-9]:[0-9][0-9]:[0-9][0-9])|unknown)$"
                       },
                       "size": {"enum": ["small", "medium", "large", "unknown"]},
+                      "config": {
+                        "type": "array",
+                        "items": {"enum": ["ignore deadlock", "simulate", "generate"]}
+                      },
                       "features": {
                         "type": "array",
                         "items": {"enum": ["liveness", "symmetry", "view", "alias", "state constraint"]}

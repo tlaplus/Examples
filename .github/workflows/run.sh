@@ -17,4 +17,6 @@ echo Simulate EWD687a_anim
 $TLC_COMMAND -simulate num=100 -note specifications/ewd687a/EWD687a_anim || (($? == 12))  ## Expect a safety violation
 echo Simulate KnuthYao
 $TLC_COMMAND -generate specifications/KnuthYao/SimKnuthYao
+echo Check Dijkstra Mutext
+$TLC_COMMAND specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/MC
 
