@@ -54,13 +54,34 @@
                       "size": {"enum": ["small", "medium", "large", "unknown"]},
                       "config": {
                         "type": "array",
-                        "items": {"enum": ["ignore deadlock", "simulate", "generate"]}
+                        "items": {
+                          "oneOf": [
+                            {
+                              "enum": ["ignore deadlock", "generate"]
+                            },
+                            {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": ["simulate"],
+                              "properties": {
+                                "simulate": {
+                                  "type": "object",
+                                  "additionalProperties": false,
+                                  "required": ["traceCount"],
+                                  "properties": {
+                                    "traceCount": {"type": "number"}
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
                       },
                       "features": {
                         "type": "array",
                         "items": {"enum": ["liveness", "symmetry", "view", "alias", "state constraint"]}
                       },
-                      "result": {"enum": ["success", "safety failure", "stuttering failure", "liveness failure", "deadlock failure", "unknown"]}
+                      "result": {"enum": ["success", "safety failure", "liveness failure", "deadlock failure", "unknown"]}
                     }
                   }
                 }

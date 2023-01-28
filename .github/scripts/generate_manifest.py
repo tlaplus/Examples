@@ -56,6 +56,7 @@ new_manifest = {
                             'path': cfg_path,
                             'runtime': 'unknown',
                             'size': 'unknown',
+                            'config': [],
                             'features': sorted(list(get_model_features(cfg_path))),
                             'result': 'unknown'
                         }
@@ -103,7 +104,7 @@ def find_corresponding_model(old_model, new_module):
     ][0]
 
 def integrate_model_info(old_model, new_model):
-    fields = ['runtime', 'size', 'result']
+    fields = ['runtime', 'size', 'config', 'result']
     for field in fields:
         new_model[field] = old_model[field]
 
