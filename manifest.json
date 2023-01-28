@@ -187,7 +187,7 @@
             },
             {
               "path": "specifications/CoffeeCan/CoffeeCan100Beans.cfg",
-              "runtime": "00:00:01",
+              "runtime": "00:00:05",
               "size": "small",
               "features": [
                 "liveness"
@@ -1147,7 +1147,7 @@
           "models": [
             {
               "path": "specifications/SlidingPuzzles/SlidingPuzzles.cfg",
-              "runtime": "00:00:01",
+              "runtime": "00:00:10",
               "size": "small",
               "features": [],
               "result": "safety failure"
@@ -1190,7 +1190,7 @@
             },
             {
               "path": "specifications/SlushProtocol/SlushSmall.cfg",
-              "runtime": "00:00:08",
+              "runtime": "00:00:30",
               "size": "small",
               "features": [],
               "result": "success"
@@ -1649,7 +1649,7 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/Liveness/MCLiveWriteThroughCache.cfg",
-              "runtime": "00:00:01",
+              "runtime": "00:00:10",
               "size": "small",
               "features": [
                 "liveness"
@@ -1960,7 +1960,7 @@
           "models": [
             {
               "path": "specifications/TLC/TestGraphs.cfg",
-              "runtime": "00:00:01",
+              "runtime": "00:00:05",
               "size": "small",
               "features": [
                 "liveness"
@@ -2021,7 +2021,7 @@
           "models": [
             {
               "path": "specifications/TransitiveClosure/TransitiveClosure.cfg",
-              "runtime": "00:00:01",
+              "runtime": "00:00:05",
               "size": "small",
               "features": [],
               "result": "success"
@@ -2107,7 +2107,7 @@
           "models": [
             {
               "path": "specifications/allocator/AllocatorImplementation.cfg",
-              "runtime": "00:00:10",
+              "runtime": "00:00:30",
               "size": "small",
               "features": [
                 "liveness"
@@ -2124,7 +2124,7 @@
           "models": [
             {
               "path": "specifications/allocator/AllocatorRefinement.cfg",
-              "runtime": "00:00:01",
+              "runtime": "00:00:05",
               "size": "small",
               "features": [
                 "liveness"
@@ -2141,7 +2141,7 @@
           "models": [
             {
               "path": "specifications/allocator/SchedulingAllocator.cfg",
-              "runtime": "00:00:01",
+              "runtime": "00:00:10",
               "size": "small",
               "features": [
                 "liveness"
@@ -2158,7 +2158,7 @@
           "models": [
             {
               "path": "specifications/allocator/SimpleAllocator.cfg",
-              "runtime": "00:00:01",
+              "runtime": "00:00:05",
               "size": "small",
               "features": [
                 "liveness"
@@ -2389,8 +2389,8 @@
           "models": [
             {
               "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/MC.cfg",
-              "runtime": "00:00:30",
-              "size": "small",
+              "runtime": "00:00:50",
+              "size": "medium",
               "features": [
                 "liveness"
               ],

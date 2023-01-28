@@ -4,12 +4,15 @@ models should finish executing in less than ten seconds on the GitHub CI
 machines.
 """
 
-from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
 import json
 import logging
-from os import cpu_count
 import subprocess
 from timeit import default_timer as timer
+
+def parse_timespan(unparsed):
+    pattern = '%H:%M:%S'
+    return datetime.strptime(unparsed, pattern) - datetime.strptime('00:00:00', pattern)
 
 tlc_result = {
     0   : 'success',
@@ -19,9 +22,8 @@ tlc_result = {
     13  : 'liveness failure'
 }
 
-def check_model(model_tuple):
+def check_model(module_path, model_path, expected_result, expected_runtime):
     start_time = timer()
-    module_path, model_path, expected_result = model_tuple
     tlc = subprocess.run([
         'java',
         '-Dtlc2.TLC.stopAfter=60',
@@ -30,14 +32,14 @@ def check_model(model_tuple):
         '-XX:+UseParallelGC',
         '-cp', 'tla2tools.jar',
         'tlc2.TLC',
-        '-workers', '1',
+        '-workers', 'auto',
         '-lncheck', 'final',
         '-tool',
         '-config', model_path,
         module_path
     ], capture_output=True)
     end_time = timer()
-    logging.info(f'{model_path} in {end_time - start_time:.1f}s')
+    logging.info(f'{model_path} in {end_time - start_time:.1f}s vs. {expected_runtime.seconds}s expected')
     actual_result = tlc_result[tlc.returncode] if tlc.returncode in tlc_result else str(tlc.returncode)
     if expected_result != actual_result or '687' in model_path:
         logging.error(f'Model {model_path} expected result {expected_result} but got {actual_result}')
@@ -51,19 +53,18 @@ manifest = None
 with open('manifest.json', 'rt') as manifest_file:
     manifest = json.load(manifest_file)
 
-small_models = [
-    (module['path'], model['path'], model['result'])
-    for spec in manifest['specifications']
-    for module in spec['modules']
-    for model in module['models'] if model['size'] == 'small'
-]
+# Ensure longest-running modules go first
+small_models = sorted(
+    [
+        (module['path'], model['path'], model['result'], parse_timespan(model['runtime']))
+        for spec in manifest['specifications']
+        for module in spec['modules']
+        for model in module['models'] if model['size'] == 'small'
+    ],
+    key = lambda m: m[3],
+    reverse=True
+)
 
-# Since these models are small we parallelize by checking multiple files at
-# once instead of parallelizing state computation and exploration for each
-# individual model.
-thread_count = cpu_count()
-logging.info(f'Checking models using {thread_count} threads')
-with ThreadPoolExecutor(thread_count) as executor:
-    results = executor.map(check_model, small_models)
-    exit(0 if all(results) else 1)
+success = all([check_model(*model) for model in small_models])
+exit(0 if success else 0)
 
