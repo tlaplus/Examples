@@ -359,14 +359,14 @@
           "models": [
             {
               "path": "specifications/Huang/Huang.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "alias",
                 "liveness",
                 "state constraint"
               ],
-              "result": "unknown"
+              "result": "deadlock failure"
             }
           ]
         }
@@ -725,7 +725,7 @@
               "runtime": "00:00:01",
               "size": "small",
               "features": [],
-              "result": "safety failure"
+              "result": "deadlock failure"
             }
           ]
         },
@@ -854,10 +854,10 @@
           "models": [
             {
               "path": "specifications/Paxos/MCConsensus.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "deadlock failure"
             }
           ]
         },
@@ -869,13 +869,13 @@
           "models": [
             {
               "path": "specifications/Paxos/MCPaxos.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness",
                 "symmetry"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -887,13 +887,13 @@
           "models": [
             {
               "path": "specifications/Paxos/MCVoting.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness",
                 "symmetry"
               ],
-              "result": "unknown"
+              "result": "deadlock failure"
             }
           ]
         },
@@ -1008,12 +1008,12 @@
           "models": [
             {
               "path": "specifications/ReadersWriters/MC.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:05",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1045,12 +1045,12 @@
           "models": [
             {
               "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/MC.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "deadlock failure"
             }
           ]
         },
@@ -1072,12 +1072,12 @@
           "models": [
             {
               "path": "specifications/SDP_Verification/SDP_Attack_Spec/MC.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "deadlock failure"
             }
           ]
         },
@@ -1285,13 +1285,13 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/AdvancedExamples/MCInnerSequential.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness",
                 "state constraint"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1335,10 +1335,10 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/AsynchronousInterface/AsynchInterface.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1350,10 +1350,10 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/AsynchronousInterface/Channel.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1365,10 +1365,10 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/AsynchronousInterface/PrintValues.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1387,10 +1387,10 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/CachingMemory/MCInternalMemory.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1402,12 +1402,12 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/CachingMemory/MCWriteThroughCache.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1531,12 +1531,12 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/FIFO/MCInnerFIFO.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "state constraint"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1548,10 +1548,10 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/HourClock/HourClock.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1563,12 +1563,12 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/HourClock/HourClock2.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1594,12 +1594,12 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/Liveness/LiveHourClock.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1632,12 +1632,12 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/Liveness/MCLiveInternalMemory.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1649,12 +1649,12 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/Liveness/MCLiveWriteThroughCache.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1708,12 +1708,12 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/RealTime/MCRealTimeHourClock.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "liveness failure"
             }
           ]
         },
@@ -1774,10 +1774,10 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/SimpleMath/SimpleMath.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1859,10 +1859,10 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/TLC/ABCorrectness.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1895,13 +1895,13 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/TLC/MCAlternatingBit.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness",
                 "state constraint"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1960,12 +1960,12 @@
           "models": [
             {
               "path": "specifications/TLC/TestGraphs.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         }
@@ -2021,10 +2021,10 @@
           "models": [
             {
               "path": "specifications/TransitiveClosure/TransitiveClosure.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         }
@@ -2107,12 +2107,12 @@
           "models": [
             {
               "path": "specifications/allocator/AllocatorImplementation.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:10",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -2124,12 +2124,12 @@
           "models": [
             {
               "path": "specifications/allocator/AllocatorRefinement.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -2141,12 +2141,12 @@
           "models": [
             {
               "path": "specifications/allocator/SchedulingAllocator.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -2158,12 +2158,12 @@
           "models": [
             {
               "path": "specifications/allocator/SimpleAllocator.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         }
@@ -2389,12 +2389,12 @@
           "models": [
             {
               "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/MC.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:30",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -2415,10 +2415,10 @@
           "models": [
             {
               "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/Safety-4-processors/MC.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:02:00",
+              "size": "medium",
               "features": [],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         }
@@ -2485,10 +2485,10 @@
           "models": [
             {
               "path": "specifications/echo/MCEcho.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -2594,12 +2594,12 @@
             {
               "path": "specifications/ewd687a/EWD687a_anim.cfg",
               "runtime": "unknown",
-              "size": "unknown",
+              "size": "large",
               "features": [
                 "alias",
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "safety failure"
             }
           ]
         },
@@ -2611,13 +2611,13 @@
           "models": [
             {
               "path": "specifications/ewd687a/MCEWD687a.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:01:00",
+              "size": "medium",
               "features": [
                 "liveness",
                 "state constraint"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         }
@@ -2641,10 +2641,10 @@
           "models": [
             {
               "path": "specifications/ewd840/EWD840.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [],
-              "result": "unknown"
+              "result": "deadlock failure"
             }
           ]
         },
@@ -2699,12 +2699,12 @@
           "models": [
             {
               "path": "specifications/ewd840/SyncTerminationDetection.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -2722,7 +2722,7 @@
     {
       "path": "specifications/ewd998",
       "title": "Termination Detection in a Ring with Asynchronous Message Delivery",
-      "description": "Variant of EWD 840 given my Shmuel Safra",
+      "description": "Variant of EWD 840 given by Shmuel Safra",
       "source": "",
       "authors": [
         "Markus Kuppe",
@@ -2738,12 +2738,12 @@
           "models": [
             {
               "path": "specifications/ewd998/AsyncTerminationDetection.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:01",
+              "size": "small",
               "features": [
                 "state constraint"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -2778,12 +2778,12 @@
           "models": [
             {
               "path": "specifications/ewd998/EWD998.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:05",
+              "size": "small",
               "features": [
                 "state constraint"
               ],
-              "result": "unknown"
+              "result": "deadlock failure"
             }
           ]
         },
@@ -2795,13 +2795,13 @@
           "models": [
             {
               "path": "specifications/ewd998/EWD998Chan.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:05",
+              "size": "small",
               "features": [
                 "liveness",
                 "state constraint"
               ],
-              "result": "unknown"
+              "result": "deadlock failure"
             }
           ]
         },
@@ -2814,7 +2814,7 @@
             {
               "path": "specifications/ewd998/EWD998ChanID.cfg",
               "runtime": "unknown",
-              "size": "unknown",
+              "size": "large",
               "features": [
                 "liveness",
                 "state constraint",
@@ -2835,7 +2835,7 @@
             {
               "path": "specifications/ewd998/EWD998ChanID_export.cfg",
               "runtime": "unknown",
-              "size": "unknown",
+              "size": "large",
               "features": [],
               "result": "unknown"
             }
@@ -2850,7 +2850,7 @@
             {
               "path": "specifications/ewd998/EWD998ChanID_shiviz.cfg",
               "runtime": "unknown",
-              "size": "unknown",
+              "size": "large",
               "features": [
                 "alias"
               ],

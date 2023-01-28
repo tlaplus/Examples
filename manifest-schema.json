@@ -56,7 +56,7 @@
                         "type": "array",
                         "items": {"enum": ["liveness", "symmetry", "view", "alias", "state constraint"]}
                       },
-                      "result": {"enum": ["success", "safety failure", "liveness failure", "deadlock", "unknown"]}
+                      "result": {"enum": ["success", "safety failure", "stuttering failure", "liveness failure", "deadlock failure", "unknown"]}
                     }
                   }
                 }
