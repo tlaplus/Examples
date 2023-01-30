@@ -37,7 +37,7 @@ skip_models = [
     'specifications/SpecifyingSystems/AdvancedExamples/MCInnerSerial.cfg',
     # Attempted to select nonexistent field "traces" from record
     'specifications/ewd426/SimTokenRing.cfg',
-    # Cannot find TLAPS
+    # Initial error cannot find TLAPS; if fixed, cannot find property "Stable"
     'specifications/ewd998/AsyncTerminationDetection_proof.cfg',
     # Property is violated by the initial state
     'specifications/ewd998/SmokeEWD998.cfg'
