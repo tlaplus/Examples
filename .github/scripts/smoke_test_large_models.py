@@ -9,12 +9,10 @@ import logging
 import tla_utils
 
 def check_model(module_path, model_path, config):
-    tlc, timeout = tla_utils.check_model(module_path, model_path, config, 5, 10)
-    if timeout:
-        # Return True here; see https://github.com/tlaplus/tlaplus/issues/788
-        logging.info(f'{model_path} hit hard timeout')
-        return True
     logging.info(model_path)
+    tlc, hit_timeout = tla_utils.check_model('tla2tools.jar', module_path, model_path, config, 5)
+    if hit_timeout:
+        return True
     if 0 != tlc.returncode:
         logging.error(f'Model {model_path} expected error code 0 but got {tlc.returncode}')
         logging.error(tlc.stdout.decode('utf-8'))
@@ -32,11 +30,16 @@ skip_models = [
     # before termination or else it fails. This makes it not amenable to
     # smoke testing.
     'specifications/KnuthYao/SimKnuthYao.cfg',
-    # These should all work; it is a bug that they do not
+
+    # The following are bugs that should be fixed:
+
+    # Attempted to access index 0 of tuple <<>>
     'specifications/SpecifyingSystems/AdvancedExamples/MCInnerSerial.cfg',
+    # Attempted to select nonexistent field "traces" from record
     'specifications/ewd426/SimTokenRing.cfg',
-    'specifications/ewd840/EWD840_json.cfg',
+    # Cannot find TLAPS
     'specifications/ewd998/AsyncTerminationDetection_proof.cfg',
+    # Property is violated by the initial state
     'specifications/ewd998/SmokeEWD998.cfg'
 ]
 
