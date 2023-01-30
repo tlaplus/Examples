@@ -1928,7 +1928,7 @@
               "path": "specifications/SpecifyingSystems/TLC/ABCorrectness.cfg",
               "runtime": "00:00:01",
               "size": "small",
-              "config": ["skip trace spec gen"],
+              "config": [],
               "features": [],
               "result": "success"
             }
@@ -1965,7 +1965,7 @@
               "path": "specifications/SpecifyingSystems/TLC/MCAlternatingBit.cfg",
               "runtime": "00:00:01",
               "size": "small",
-              "config": ["skip trace spec gen"],
+              "config": [],
               "features": [
                 "liveness",
                 "state constraint"

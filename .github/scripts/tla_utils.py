@@ -28,8 +28,6 @@ def check_model(module_path, model_path, config, soft_timeout, hard_timeout):
                 '-lncheck', 'final',
                 '-cleanup'
             ] + (['-deadlock'] if 'ignore deadlock' in config else [])
-            # Remove when fixed: https://github.com/tlaplus/tlaplus/issues/785
-            + (['-noGenerateSpecTE'] if 'skip trace spec gen' in config else [])
             + (['-generate'] if 'generate' in config else [])
             + (['-simulate', f'num={trace_count}'] if is_simulate else []),
             capture_output=True,
