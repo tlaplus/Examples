@@ -39,6 +39,7 @@ jobs:
 
   validate-specs-and-models:
     name: Spec & Model Validation
+    needs: validate-metadata
     runs-on: ${{ matrix.os }}
     env:
       TLAPS_VERSION: 202210041448
@@ -64,11 +65,12 @@ jobs:
         with:
           distribution: adopt
           java-version: 17
-      - uses: msys2/setup-msys2@v2
+      - name: Install MSYS2 on Windows
+        uses: msys2/setup-msys2@v2
         if: matrix.os == 'windows-latest'
       - name: Get TLA⁺ toolset, TLAPS, and community modules
         run: |
-          wget https://nightly.tlapl.us/dist/tla2tools.jar
+          wget http://nightly.tlapl.us/dist/tla2tools.jar
           wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
           wget https://github.com/tlaplus/CommunityModules/archive/master.tar.gz
           tar -xf master.tar.gz
