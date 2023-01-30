@@ -6,12 +6,14 @@ on:
   pull_request:
     branches:
       - master
+
+env:
+  SCRIPT_DIR: .github/scripts
+
 jobs:
+
   validate-metadata:
     runs-on: ubuntu-latest
-    env:
-      TLAPS_VERSION: 202210041448
-      SCRIPT_DIR: .github/scripts
     steps:
       - name: Clone repo
         uses: actions/checkout@v2
@@ -33,6 +35,16 @@ jobs:
           mv tree-sitter-tlaplus-main tree-sitter-tlaplus
       - name: Check manifest feature flags
         run: python $SCRIPT_DIR/check_manifest_features.py
+
+  validate-specs-and-models:
+    runs-on: ${{ matrix.os }}
+    env:
+      TLAPS_VERSION: 202210041448
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+      fail-fast: false
+    steps:
       - name: Get TLA⁺ toolset, TLAPS, and community modules
         run: |
           wget https://nightly.tlapl.us/dist/tla2tools.jar
