@@ -47,6 +47,9 @@ jobs:
         - { os: ubuntu-latest,  shell: bash  }
         - { os: macos-latest,   shell: bash  }
       fail-fast: false
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
     steps:
       - name: Clone repo
         uses: actions/checkout@v2
@@ -60,7 +63,6 @@ jobs:
           distribution: adopt
           java-version: 17
       - name: Get TLA⁺ toolset, TLAPS, and community modules
-        shell: ${{ matrix.shell }}
         run: |
           wget https://nightly.tlapl.us/dist/tla2tools.jar
           wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
