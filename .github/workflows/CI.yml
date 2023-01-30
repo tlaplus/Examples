@@ -45,6 +45,12 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
       fail-fast: false
     steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+      - name: Install python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
       - name: Get TLA⁺ toolset, TLAPS, and community modules
         run: |
           wget https://nightly.tlapl.us/dist/tla2tools.jar
