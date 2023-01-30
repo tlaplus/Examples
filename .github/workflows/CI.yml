@@ -70,6 +70,7 @@ jobs:
         if: matrix.os == 'windows-latest'
       - name: Get TLA⁺ toolset, TLAPS, and community modules
         run: |
+          export MSYS=winsymlinks:lnk
           wget http://nightly.tlapl.us/dist/tla2tools.jar
           wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
           wget https://github.com/tlaplus/CommunityModules/archive/master.tar.gz

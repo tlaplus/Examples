@@ -5,7 +5,7 @@ Parse all modules in the manifest with SANY.
 from concurrent.futures import ThreadPoolExecutor
 import logging
 import json
-from os import cpu_count
+from os import cpu_count, pathsep
 from os.path import dirname
 import subprocess
 
@@ -20,7 +20,7 @@ def parse_module(module_tuple):
     path, using_proofs = module_tuple
     logging.info(path)
     # If using proofs, TLAPS modules override community modules
-    search_paths = ':'.join(
+    search_paths = pathsep.join(
         [dirname(path)]
         + ([tlaps_modules] if using_proofs else [])
         + [community_modules]
