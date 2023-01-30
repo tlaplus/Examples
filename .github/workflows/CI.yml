@@ -13,6 +13,7 @@ env:
 jobs:
 
   validate-metadata:
+    name: Metadata Validation
     runs-on: ubuntu-latest
     steps:
       - name: Clone repo
@@ -37,6 +38,7 @@ jobs:
         run: python $SCRIPT_DIR/check_manifest_features.py
 
   validate-specs-and-models:
+    name: Spec & Model Validation
     runs-on: ${{ matrix.os }}
     env:
       TLAPS_VERSION: 202210041448
@@ -62,6 +64,8 @@ jobs:
         with:
           distribution: adopt
           java-version: 17
+      - uses: msys2/setup-msys2@v2
+        if: matrix.os == 'windows-latest'
       - name: Get TLA⁺ toolset, TLAPS, and community modules
         run: |
           wget https://nightly.tlapl.us/dist/tla2tools.jar
