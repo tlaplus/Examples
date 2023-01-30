@@ -24,8 +24,13 @@ cfg_mf_paths_cnt = Counter([normpath(model["path"]) for model_list in model_list
 cfg_mf_paths = set(cfg_mf_paths_cnt)
 
 # Get paths of all .tla and .cfg files in the specifications dir
-tla_fs_paths = set([normpath(path) for path in glob.glob(f"./specifications/**/*.tla", recursive=True)])
-cfg_fs_paths = set([normpath(path) for path in glob.glob(f"./specifications/**/*.cfg", recursive=True)])
+tla_fs_paths = set([
+    normpath(path) for path in glob.glob(f"./specifications/**/*.tla", recursive=True)
+    if '_TTrace_' not in path
+])
+cfg_fs_paths = set([
+    normpath(path) for path in glob.glob(f"./specifications/**/*.cfg", recursive=True)
+])
 
 success = True
 

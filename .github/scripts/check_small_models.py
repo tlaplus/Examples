@@ -34,10 +34,10 @@ tlc_result = {
 
 def check_model(module_path, model_path, expected_result, expected_runtime, config):
     start_time = timer()
-    tlc, timeout = tla_utils.check_model(module_path, model_path, config, 60, 70)
+    tlc, hit_timeout = tla_utils.check_model('tla2tools.jar', module_path, model_path, config, 60)
     end_time = timer()
-    if timeout:
-        logging.error(f'{model_path} hit hard timeout')
+    if hit_timeout:
+        logging.error(f'{model_path} timed out')
         return False
     logging.info(f'{model_path} in {end_time - start_time:.1f}s vs. {expected_runtime.seconds}s expected')
     actual_result = tlc_result[tlc.returncode] if tlc.returncode in tlc_result else str(tlc.returncode)

@@ -11,16 +11,15 @@ def is_simulate_config(config):
     else:
         return (False, 0)
 
-def check_model(module_path, model_path, config, soft_timeout, hard_timeout):
+def check_model(jar_path, module_path, model_path, config, timeout):
     is_simulate, trace_count = is_simulate_config(config)
     try:
         tlc = subprocess.run([
                 'java',
-                f'-Dtlc2.TLC.stopAfter={soft_timeout}',
                 '-Dtlc2.TLC.ide=Github',
                 '-Dutil.ExecutionStatisticsCollector.id=abcdef60f238424fa70d124d0c77ffff',
                 '-XX:+UseParallelGC',
-                '-cp', 'tla2tools.jar',
+                '-cp', jar_path,
                 'tlc2.TLC',
                 module_path,
                 '-config', model_path,
@@ -31,7 +30,7 @@ def check_model(module_path, model_path, config, soft_timeout, hard_timeout):
             + (['-generate'] if 'generate' in config else [])
             + (['-simulate', f'num={trace_count}'] if is_simulate else []),
             capture_output=True,
-            timeout=hard_timeout
+            timeout=timeout
         )
         return (tlc, False)
     except subprocess.TimeoutExpired:

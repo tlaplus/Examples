@@ -1158,13 +1158,13 @@
           "models": [
             {
               "path": "specifications/SingleLaneBridge/MC.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:10",
+              "size": "small",
               "config": [],
               "features": [
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -1973,13 +1973,6 @@
               "result": "success"
             }
           ]
-        },
-        {
-          "path": "specifications/SpecifyingSystems/TLC/TLC.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
         }
       ]
     },
@@ -2773,11 +2766,11 @@
           "models": [
             {
               "path": "specifications/ewd840/EWD840_json.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
-              "config": [],
+              "runtime": "00:00:01",
+              "size": "small",
+              "config": ["ignore deadlock"],
               "features": [],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
