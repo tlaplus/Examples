@@ -8,6 +8,7 @@ from datetime import datetime
 import json
 import logging
 import subprocess
+import sys
 from timeit import default_timer as timer
 
 def parse_timespan(unparsed):
@@ -46,10 +47,12 @@ def check_model(module_path, model_path, expected_result, expected_runtime, conf
             'tlc2.TLC',
             module_path,
             '-config', model_path,
-            '-noGenerateSpecTE', # Remove when fixed: https://github.com/tlaplus/tlaplus/issues/785
             '-workers', 'auto',
-            '-lncheck', 'final'
+            '-lncheck', 'final',
+            '-cleanup'
         ] + (['-deadlock'] if 'ignore deadlock' in config else [])
+        # Remove when fixed: https://github.com/tlaplus/tlaplus/issues/785
+        + (['-noGenerateSpecTE'] if 'skip trace spec gen' in config else [])
         + (['-simulate', f'num={trace_count}'] if is_simulate else []),
     capture_output=True)
     end_time = timer()

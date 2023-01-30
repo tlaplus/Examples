@@ -10,9 +10,7 @@ jobs:
   validate-metadata:
     runs-on: ubuntu-latest
     env:
-      TSTLA_VERSION: 1.0.2
       TLAPS_VERSION: 202210041448
-      COMMUNITY_MODULES_VERSION: 202211012231
       SCRIPT_DIR: .github/scripts
     steps:
       - name: Clone repo
@@ -29,19 +27,20 @@ jobs:
         run: python $SCRIPT_DIR/check_manifest_files.py
       - name: Get tree-sitter-tlaplus
         run: |
-          wget https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/refs/tags/v$TSTLA_VERSION.tar.gz
-          tar -xf v$TSTLA_VERSION.tar.gz
-          mv tree-sitter-tlaplus-$TSTLA_VERSION tree-sitter-tlaplus
+          wget https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.tar.gz
+          tar -xf main.tar.gz
+          rm main.tar.gz
+          mv tree-sitter-tlaplus-main tree-sitter-tlaplus
       - name: Check manifest feature flags
         run: python $SCRIPT_DIR/check_manifest_features.py
       - name: Get TLA⁺ toolset, TLAPS, and community modules
         run: |
           wget https://nightly.tlapl.us/dist/tla2tools.jar
           wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
-          wget https://github.com/tlaplus/CommunityModules/archive/refs/tags/$COMMUNITY_MODULES_VERSION.tar.gz
-          tar -xf $COMMUNITY_MODULES_VERSION.tar.gz
-          rm $COMMUNITY_MODULES_VERSION.tar.gz
-          mv CommunityModules-$COMMUNITY_MODULES_VERSION CommunityModules
+          wget https://github.com/tlaplus/CommunityModules/archive/master.tar.gz
+          tar -xf master.tar.gz
+          rm master.tar.gz
+          mv CommunityModules-master CommunityModules
           wget https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.tar.gz
           tar -xf $TLAPS_VERSION.tar.gz
           rm $TLAPS_VERSION.tar.gz
@@ -50,4 +49,6 @@ jobs:
         run: python $SCRIPT_DIR/parse_modules.py
       - name: Check small models
         run: python $SCRIPT_DIR/check_small_models.py
+      - name: Smoke test large models
+        run: python $SCRIPT_DIR/smoke_test_large_models.py
 
