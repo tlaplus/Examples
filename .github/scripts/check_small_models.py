@@ -7,9 +7,8 @@ machines.
 from datetime import datetime
 import json
 import logging
-import subprocess
-import sys
 from timeit import default_timer as timer
+import tla_utils
 
 def parse_timespan(unparsed):
     pattern = '%H:%M:%S'
@@ -34,28 +33,12 @@ tlc_result = {
 }
 
 def check_model(module_path, model_path, expected_result, expected_runtime, config):
-    is_simulate, trace_count = is_simulate_config(config)
     start_time = timer()
-    tlc = subprocess.run(
-        [
-            'java',
-            '-Dtlc2.TLC.stopAfter=60',
-            '-Dtlc2.TLC.ide=Github',
-            '-Dutil.ExecutionStatisticsCollector.id=abcdef60f238424fa70d124d0c77ffff',
-            '-XX:+UseParallelGC',
-            '-cp', 'tla2tools.jar',
-            'tlc2.TLC',
-            module_path,
-            '-config', model_path,
-            '-workers', 'auto',
-            '-lncheck', 'final',
-            '-cleanup'
-        ] + (['-deadlock'] if 'ignore deadlock' in config else [])
-        # Remove when fixed: https://github.com/tlaplus/tlaplus/issues/785
-        + (['-noGenerateSpecTE'] if 'skip trace spec gen' in config else [])
-        + (['-simulate', f'num={trace_count}'] if is_simulate else []),
-    capture_output=True)
+    tlc, timeout = tla_utils.check_model(module_path, model_path, config, 60, 70)
     end_time = timer()
+    if timeout:
+        logging.error(f'{model_path} hit hard timeout')
+        return False
     logging.info(f'{model_path} in {end_time - start_time:.1f}s vs. {expected_runtime.seconds}s expected')
     actual_result = tlc_result[tlc.returncode] if tlc.returncode in tlc_result else str(tlc.returncode)
     if expected_result != actual_result:
@@ -83,5 +66,5 @@ small_models = sorted(
 )
 
 success = all([check_model(*model) for model in small_models])
-exit(0 if success else 0)
+exit(0 if success else 1)
 

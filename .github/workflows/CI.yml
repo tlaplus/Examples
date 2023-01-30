@@ -49,6 +49,6 @@ jobs:
         run: python $SCRIPT_DIR/parse_modules.py
       - name: Check small models
         run: python $SCRIPT_DIR/check_small_models.py
-      - name: Smoke test large models
+      - name: Smoke-test large models
         run: python $SCRIPT_DIR/smoke_test_large_models.py
 
