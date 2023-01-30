@@ -42,7 +42,10 @@ jobs:
       TLAPS_VERSION: 202210041448
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        include:
+        - { os: windows-latest, shell: msys2 }
+        - { os: ubuntu-latest,  shell: bash  }
+        - { os: macos-latest,   shell: bash  }
       fail-fast: false
     steps:
       - name: Clone repo
@@ -57,7 +60,7 @@ jobs:
           distribution: adopt
           java-version: 17
       - name: Get TLA⁺ toolset, TLAPS, and community modules
-        shell: bash
+        shell: ${{ matrix.shell }}
         run: |
           wget https://nightly.tlapl.us/dist/tla2tools.jar
           wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
