@@ -57,7 +57,7 @@
                         "items": {
                           "oneOf": [
                             {
-                              "enum": ["ignore deadlock", "generate"]
+                              "enum": ["ignore deadlock", "generate", "skip trace spec gen"]
                             },
                             {
                               "type": "object",

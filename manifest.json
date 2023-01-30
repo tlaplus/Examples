@@ -371,7 +371,9 @@
               "path": "specifications/Huang/Huang.cfg",
               "runtime": "00:00:30",
               "size": "small",
-              "config": ["ignore deadlock"],
+              "config": [
+                "ignore deadlock"
+              ],
               "features": [
                 "alias",
                 "liveness",
@@ -380,7 +382,7 @@
               "result": "success"
             }
           ]
-        },
+        }
       ]
     },
     {
@@ -480,7 +482,9 @@
               "path": "specifications/KnuthYao/SimKnuthYao.cfg",
               "runtime": "unknown",
               "size": "unknown",
-              "config": ["generate"],
+              "config": [
+                "generate"
+              ],
               "features": [
                 "state constraint"
               ],
@@ -745,7 +749,9 @@
               "path": "specifications/N-Queens/Queens.toolbox/FourQueens/MC.cfg",
               "runtime": "00:00:01",
               "size": "small",
-              "config": ["ignore deadlock"],
+              "config": [
+                "ignore deadlock"
+              ],
               "features": [],
               "result": "safety failure"
             }
@@ -882,7 +888,9 @@
               "path": "specifications/Paxos/MCConsensus.cfg",
               "runtime": "00:00:01",
               "size": "small",
-              "config": ["ignore deadlock"],
+              "config": [
+                "ignore deadlock"
+              ],
               "features": [],
               "result": "success"
             }
@@ -917,7 +925,9 @@
               "path": "specifications/Paxos/MCVoting.cfg",
               "runtime": "00:00:01",
               "size": "small",
-              "config": ["ignore deadlock"],
+              "config": [
+                "ignore deadlock"
+              ],
               "features": [
                 "liveness",
                 "symmetry"
@@ -1078,7 +1088,9 @@
               "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/MC.cfg",
               "runtime": "00:00:01",
               "size": "small",
-              "config": ["ignore deadlock"],
+              "config": [
+                "ignore deadlock"
+              ],
               "features": [
                 "liveness"
               ],
@@ -1106,7 +1118,9 @@
               "path": "specifications/SDP_Verification/SDP_Attack_Spec/MC.cfg",
               "runtime": "00:00:05",
               "size": "small",
-              "config": ["ignore deadlock"],
+              "config": [
+                "ignore deadlock"
+              ],
               "features": [
                 "liveness"
               ],
@@ -1914,7 +1928,7 @@
               "path": "specifications/SpecifyingSystems/TLC/ABCorrectness.cfg",
               "runtime": "00:00:01",
               "size": "small",
-              "config": [],
+              "config": ["skip trace spec gen"],
               "features": [],
               "result": "success"
             }
@@ -1951,7 +1965,7 @@
               "path": "specifications/SpecifyingSystems/TLC/MCAlternatingBit.cfg",
               "runtime": "00:00:01",
               "size": "small",
-              "config": [],
+              "config": ["skip trace spec gen"],
               "features": [
                 "liveness",
                 "state constraint"
@@ -2717,7 +2731,9 @@
               "path": "specifications/ewd840/EWD840.cfg",
               "runtime": "00:00:01",
               "size": "small",
-              "config": ["ignore deadlock"],
+              "config": [
+                "ignore deadlock"
+              ],
               "features": [],
               "result": "success"
             }
@@ -2863,20 +2879,24 @@
           "features": [],
           "models": [
             {
-              "path": "specifications/ewd998/EWD998Small.cfg",
-              "runtime": "00:00:30",
-              "size": "small",
-              "config": ["ignore deadlock"],
+              "path": "specifications/ewd998/EWD998.cfg",
+              "runtime": "00:50:00",
+              "size": "large",
+              "config": [
+                "ignore deadlock"
+              ],
               "features": [
                 "state constraint"
               ],
               "result": "success"
             },
             {
-              "path": "specifications/ewd998/EWD998.cfg",
-              "runtime": "00:50:00",
-              "size": "large",
-              "config": ["ignore deadlock"],
+              "path": "specifications/ewd998/EWD998Small.cfg",
+              "runtime": "00:00:30",
+              "size": "small",
+              "config": [
+                "ignore deadlock"
+              ],
               "features": [
                 "state constraint"
               ],
@@ -2894,7 +2914,9 @@
               "path": "specifications/ewd998/EWD998Chan.cfg",
               "runtime": "00:05:00",
               "size": "medium",
-              "config": ["ignore deadlock"],
+              "config": [
+                "ignore deadlock"
+              ],
               "features": [
                 "liveness",
                 "state constraint"
