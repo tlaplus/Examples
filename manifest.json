@@ -90,7 +90,7 @@
           "models": [
             {
               "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_2/MC.cfg",
-              "runtime": "00:00:01",
+              "runtime": "00:00:05",
               "size": "small",
               "config": [],
               "features": [],
@@ -369,8 +369,8 @@
           "models": [
             {
               "path": "specifications/Huang/Huang.cfg",
-              "runtime": "00:00:30",
-              "size": "small",
+              "runtime": "00:00:40",
+              "size": "medium",
               "config": [
                 "ignore deadlock"
               ],
@@ -710,7 +710,7 @@
             },
             {
               "path": "specifications/MultiCarElevator/ElevatorSafetySmall.cfg",
-              "runtime": "00:00:10",
+              "runtime": "00:00:15",
               "size": "small",
               "config": [],
               "features": [],
@@ -1195,7 +1195,7 @@
           "models": [
             {
               "path": "specifications/SlidingPuzzles/SlidingPuzzles.cfg",
-              "runtime": "00:00:10",
+              "runtime": "00:00:05",
               "size": "small",
               "config": [],
               "features": [],
@@ -1241,7 +1241,7 @@
             },
             {
               "path": "specifications/SlushProtocol/SlushSmall.cfg",
-              "runtime": "00:00:30",
+              "runtime": "00:00:15",
               "size": "small",
               "config": [],
               "features": [],
@@ -1405,7 +1405,7 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/AsynchronousInterface/Channel.cfg",
-              "runtime": "00:00:10",
+              "runtime": "00:00:01",
               "size": "small",
               "config": [],
               "features": [],
@@ -1713,7 +1713,7 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/Liveness/MCLiveWriteThroughCache.cfg",
-              "runtime": "00:00:10",
+              "runtime": "00:00:05",
               "size": "small",
               "config": [],
               "features": [
@@ -2178,7 +2178,7 @@
           "models": [
             {
               "path": "specifications/allocator/AllocatorImplementation.cfg",
-              "runtime": "00:00:30",
+              "runtime": "00:00:15",
               "size": "small",
               "config": [],
               "features": [
@@ -2678,7 +2678,7 @@
               "config": [
                 {
                   "simulate": {
-                    "traceCount": 1
+                    "traceCount": 100
                   }
                 }
               ],
