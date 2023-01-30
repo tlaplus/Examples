@@ -381,20 +381,6 @@
             }
           ]
         },
-        {
-          "path": "specifications/Huang/Huang_TTrace_1674862545.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/Huang/Huang_TTrace_1674914150.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        }
       ]
     },
     {
@@ -1101,13 +1087,6 @@
           ]
         },
         {
-          "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/MC_TTrace_1674864840.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
           "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/SPA_Attack_New.tla",
           "communityDependencies": [
             "Bitwise",
@@ -1134,27 +1113,6 @@
               "result": "safety failure"
             }
           ]
-        },
-        {
-          "path": "specifications/SDP_Verification/SDP_Attack_Spec/MC_TTrace_1674864912.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/SDP_Verification/SDP_Attack_Spec/MC_TTrace_1674864941.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/SDP_Verification/SDP_Attack_Spec/MC_TTrace_1674914119.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
         },
         {
           "path": "specifications/SDP_Verification/SDP_Attack_Spec/SPA_Attack.tla",
@@ -3002,32 +2960,11 @@
           ]
         },
         {
-          "path": "specifications/ewd998/EWD998Chan_TTrace_1674863100.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/ewd998/EWD998Chan_TTrace_1674863118.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
           "path": "specifications/ewd998/EWD998Chan_opts.tla",
           "communityDependencies": [
             "CSV",
             "IOUtils"
           ],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/ewd998/EWD998_TTrace_1674863819.tla",
-          "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []

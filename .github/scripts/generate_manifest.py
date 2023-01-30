@@ -15,9 +15,14 @@ import glob
 
 def get_tla_files(dir):
     """
-    Gets paths of all .tla files in the given directory.
+    Gets paths of all .tla files in the given directory, except for error
+    trace specs.
     """
-    return [normpath(path) for path in glob.glob(f'{dir.path}/**/*.tla', recursive=True)]
+    return [
+        normpath(path)
+        for path in glob.glob(f'{dir.path}/**/*.tla', recursive=True)
+        if '_TTrace_' not in path
+    ]
 
 def get_cfg_files(tla_path):
     """
