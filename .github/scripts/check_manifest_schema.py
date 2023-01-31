@@ -7,14 +7,10 @@ https://json-schema.org/understanding-json-schema/
 
 import json
 from jsonschema import validate
+import tla_utils
 
-schema = None
-with open('manifest-schema.json', 'rt') as schema_file:
-    schema = json.load(schema_file)
-
-manifest = None
-with open('manifest.json', 'rt') as manifest_file:
-    manifest = json.load(manifest_file)
+schema = tla_utils.load_schema()
+manifest = tla_utils.load_manifest()
 
 result = validate(instance=manifest, schema=schema)
 if None == result:

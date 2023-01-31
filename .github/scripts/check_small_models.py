@@ -5,7 +5,6 @@ machines.
 """
 
 from datetime import datetime
-import json
 import logging
 from timeit import default_timer as timer
 import tla_utils
@@ -49,9 +48,7 @@ def check_model(module_path, model_path, expected_result, expected_runtime, conf
 
 logging.basicConfig(level=logging.INFO)
 
-manifest = None
-with open('manifest.json', 'rt') as manifest_file:
-    manifest = json.load(manifest_file)
+manifest = tla_utils.load_manifest()
 
 # Ensure longest-running modules go first
 small_models = sorted(
