@@ -44,7 +44,7 @@
                   "items": {
                     "type": "object",
                     "additionalProperties": false,
-                    "required": ["path", "runtime", "size", "config", "features", "result"],
+                    "required": ["path", "runtime", "size", "mode", "config", "features", "result"],
                     "properties": {
                       "path": {"type": "string"},
                       "runtime": {
@@ -52,30 +52,31 @@
                         "pattern": "^(([0-9][0-9]:[0-9][0-9]:[0-9][0-9])|unknown)$"
                       },
                       "size": {"enum": ["small", "medium", "large", "unknown"]},
-                      "config": {
-                        "type": "array",
-                        "items": {
-                          "oneOf": [
-                            {
-                              "enum": ["ignore deadlock", "generate"]
-                            },
-                            {
-                              "type": "object",
-                              "additionalProperties": false,
-                              "required": ["simulate"],
-                              "properties": {
-                                "simulate": {
-                                  "type": "object",
-                                  "additionalProperties": false,
-                                  "required": ["traceCount"],
-                                  "properties": {
-                                    "traceCount": {"type": "number"}
-                                  }
+                      "mode": {
+                        "oneOf": [
+                          {
+                            "enum": ["exhaustive search", "generate"]
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": ["simulate"],
+                            "properties": {
+                              "simulate": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": ["traceCount"],
+                                "properties": {
+                                  "traceCount": {"type": "number"}
                                 }
                               }
                             }
-                          ]
-                        }
+                          }
+                        ]
+                      },
+                      "config": {
+                        "type": "array",
+                        "items": {"enum": ["ignore deadlock"]}
                       },
                       "features": {
                         "type": "array",

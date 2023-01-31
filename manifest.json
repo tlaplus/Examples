@@ -69,6 +69,7 @@
               "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_1/MC.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -92,6 +93,7 @@
               "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_2/MC.cfg",
               "runtime": "00:00:05",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -115,6 +117,7 @@
               "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_3/MC.cfg",
               "runtime": "unknown",
               "size": "large",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "unknown"
@@ -183,6 +186,7 @@
               "path": "specifications/CoffeeCan/CoffeeCan1000Beans.cfg",
               "runtime": "00:00:15",
               "size": "medium",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -193,6 +197,7 @@
               "path": "specifications/CoffeeCan/CoffeeCan100Beans.cfg",
               "runtime": "00:00:05",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -203,6 +208,7 @@
               "path": "specifications/CoffeeCan/CoffeeCan3000Beans.cfg",
               "runtime": "00:02:30",
               "size": "medium",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -235,6 +241,7 @@
               "path": "specifications/DieHard/DieHard.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "safety failure"
@@ -258,6 +265,7 @@
               "path": "specifications/DieHard/MCDieHarder.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "safety failure"
@@ -290,6 +298,7 @@
               "path": "specifications/DiningPhilosophers/DiningPhilosophers.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -320,6 +329,7 @@
               "path": "specifications/EinsteinRiddle/Einstein.cfg",
               "runtime": "unknown",
               "size": "large",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "safety failure"
@@ -371,6 +381,7 @@
               "path": "specifications/Huang/Huang.cfg",
               "runtime": "00:00:40",
               "size": "medium",
+              "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
               ],
@@ -412,6 +423,7 @@
               "path": "specifications/KeyValueStore/MCKVSSafetyLarge.cfg",
               "runtime": "07:16:00",
               "size": "large",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "symmetry"
@@ -422,6 +434,7 @@
               "path": "specifications/KeyValueStore/MCKVSSafetyMedium.cfg",
               "runtime": "00:04:30",
               "size": "medium",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "symmetry"
@@ -432,6 +445,7 @@
               "path": "specifications/KeyValueStore/MCKVSSafetySmall.cfg",
               "runtime": "00:00:40",
               "size": "medium",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -482,9 +496,8 @@
               "path": "specifications/KnuthYao/SimKnuthYao.cfg",
               "runtime": "unknown",
               "size": "unknown",
-              "config": [
-                "generate"
-              ],
+              "mode": "generate",
+              "config": [],
               "features": [
                 "state constraint"
               ],
@@ -648,6 +661,7 @@
               "path": "specifications/MissionariesAndCannibals/MissionariesAndCannibals.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "safety failure"
@@ -676,6 +690,7 @@
               "path": "specifications/MultiCarElevator/ElevatorLivenessLarge.cfg",
               "runtime": "00:11:00",
               "size": "large",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -686,6 +701,7 @@
               "path": "specifications/MultiCarElevator/ElevatorLivenessMedium.cfg",
               "runtime": "00:00:30",
               "size": "medium",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -696,6 +712,7 @@
               "path": "specifications/MultiCarElevator/ElevatorSafetyLarge.cfg",
               "runtime": "00:10:00",
               "size": "large",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -704,6 +721,7 @@
               "path": "specifications/MultiCarElevator/ElevatorSafetyMedium.cfg",
               "runtime": "00:03:00",
               "size": "medium",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -712,6 +730,7 @@
               "path": "specifications/MultiCarElevator/ElevatorSafetySmall.cfg",
               "runtime": "00:00:15",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -749,6 +768,7 @@
               "path": "specifications/N-Queens/Queens.toolbox/FourQueens/MC.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
               ],
@@ -783,6 +803,7 @@
               "path": "specifications/N-Queens/QueensPluscal.toolbox/FourQueens/MC.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -822,6 +843,7 @@
               "path": "specifications/NanoBlockchain/MCNanoLarge.cfg",
               "runtime": "00:20:00",
               "size": "large",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "view"
@@ -832,6 +854,7 @@
               "path": "specifications/NanoBlockchain/MCNanoMedium.cfg",
               "runtime": "00:00:30",
               "size": "medium",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "view"
@@ -842,6 +865,7 @@
               "path": "specifications/NanoBlockchain/MCNanoSmall.cfg",
               "runtime": "00:00:05",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "view"
@@ -888,6 +912,7 @@
               "path": "specifications/Paxos/MCConsensus.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
               ],
@@ -906,6 +931,7 @@
               "path": "specifications/Paxos/MCPaxos.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness",
@@ -925,6 +951,7 @@
               "path": "specifications/Paxos/MCVoting.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
               ],
@@ -1020,6 +1047,7 @@
               "path": "specifications/Prisoners/Prisoners.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -1050,6 +1078,7 @@
               "path": "specifications/ReadersWriters/MC.cfg",
               "runtime": "00:00:05",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -1088,6 +1117,7 @@
               "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/MC.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
               ],
@@ -1118,6 +1148,7 @@
               "path": "specifications/SDP_Verification/SDP_Attack_Spec/MC.cfg",
               "runtime": "00:00:05",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
               ],
@@ -1160,6 +1191,7 @@
               "path": "specifications/SingleLaneBridge/MC.cfg",
               "runtime": "00:00:10",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -1197,6 +1229,7 @@
               "path": "specifications/SlidingPuzzles/SlidingPuzzles.cfg",
               "runtime": "00:00:05",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "safety failure"
@@ -1227,6 +1260,7 @@
               "path": "specifications/SlushProtocol/SlushLarge.cfg",
               "runtime": "00:50:00",
               "size": "large",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -1235,6 +1269,7 @@
               "path": "specifications/SlushProtocol/SlushMedium.cfg",
               "runtime": "00:01:00",
               "size": "medium",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -1243,6 +1278,7 @@
               "path": "specifications/SlushProtocol/SlushSmall.cfg",
               "runtime": "00:00:15",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -1339,6 +1375,7 @@
               "path": "specifications/SpecifyingSystems/AdvancedExamples/MCInnerSequential.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness",
@@ -1358,6 +1395,7 @@
               "path": "specifications/SpecifyingSystems/AdvancedExamples/MCInnerSerial.cfg",
               "runtime": "unknown",
               "size": "unknown",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness",
@@ -1391,6 +1429,7 @@
               "path": "specifications/SpecifyingSystems/AsynchronousInterface/AsynchInterface.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -1407,6 +1446,7 @@
               "path": "specifications/SpecifyingSystems/AsynchronousInterface/Channel.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -1423,6 +1463,7 @@
               "path": "specifications/SpecifyingSystems/AsynchronousInterface/PrintValues.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -1446,6 +1487,7 @@
               "path": "specifications/SpecifyingSystems/CachingMemory/MCInternalMemory.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -1462,6 +1504,7 @@
               "path": "specifications/SpecifyingSystems/CachingMemory/MCWriteThroughCache.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -1592,6 +1635,7 @@
               "path": "specifications/SpecifyingSystems/FIFO/MCInnerFIFO.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "state constraint"
@@ -1610,6 +1654,7 @@
               "path": "specifications/SpecifyingSystems/HourClock/HourClock.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -1626,6 +1671,7 @@
               "path": "specifications/SpecifyingSystems/HourClock/HourClock2.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -1658,6 +1704,7 @@
               "path": "specifications/SpecifyingSystems/Liveness/LiveHourClock.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -1697,6 +1744,7 @@
               "path": "specifications/SpecifyingSystems/Liveness/MCLiveInternalMemory.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -1715,6 +1763,7 @@
               "path": "specifications/SpecifyingSystems/Liveness/MCLiveWriteThroughCache.cfg",
               "runtime": "00:00:05",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -1775,6 +1824,7 @@
               "path": "specifications/SpecifyingSystems/RealTime/MCRealTimeHourClock.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -1842,6 +1892,7 @@
               "path": "specifications/SpecifyingSystems/SimpleMath/SimpleMath.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -1928,6 +1979,7 @@
               "path": "specifications/SpecifyingSystems/TLC/ABCorrectness.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -1965,6 +2017,7 @@
               "path": "specifications/SpecifyingSystems/TLC/MCAlternatingBit.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness",
@@ -2024,6 +2077,7 @@
               "path": "specifications/TLC/TestGraphs.cfg",
               "runtime": "00:00:05",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -2086,6 +2140,7 @@
               "path": "specifications/TransitiveClosure/TransitiveClosure.cfg",
               "runtime": "00:00:05",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -2173,6 +2228,7 @@
               "path": "specifications/allocator/AllocatorImplementation.cfg",
               "runtime": "00:00:15",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -2191,6 +2247,7 @@
               "path": "specifications/allocator/AllocatorRefinement.cfg",
               "runtime": "00:00:05",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -2209,6 +2266,7 @@
               "path": "specifications/allocator/SchedulingAllocator.cfg",
               "runtime": "00:00:10",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -2227,6 +2285,7 @@
               "path": "specifications/allocator/SimpleAllocator.cfg",
               "runtime": "00:00:05",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -2459,6 +2518,7 @@
               "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/MC.cfg",
               "runtime": "00:00:50",
               "size": "medium",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -2486,6 +2546,7 @@
               "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/Safety-4-processors/MC.cfg",
               "runtime": "00:02:00",
               "size": "medium",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -2557,6 +2618,7 @@
               "path": "specifications/echo/MCEcho.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "success"
@@ -2596,6 +2658,7 @@
               "path": "specifications/ewd426/SimTokenRing.cfg",
               "runtime": "unknown",
               "size": "unknown",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "state constraint"
@@ -2614,6 +2677,7 @@
               "path": "specifications/ewd426/TokenRing.cfg",
               "runtime": "unknown",
               "size": "unknown",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "alias",
@@ -2668,13 +2732,12 @@
               "path": "specifications/ewd687a/EWD687a_anim.cfg",
               "runtime": "00:00:01",
               "size": "small",
-              "config": [
-                {
-                  "simulate": {
-                    "traceCount": 100
-                  }
+              "mode": {
+                "simulate": {
+                  "traceCount": 100
                 }
-              ],
+              },
+              "config": [],
               "features": [
                 "alias",
                 "liveness"
@@ -2693,6 +2756,7 @@
               "path": "specifications/ewd687a/MCEWD687a.cfg",
               "runtime": "00:01:00",
               "size": "medium",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness",
@@ -2724,6 +2788,7 @@
               "path": "specifications/ewd840/EWD840.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
               ],
@@ -2744,13 +2809,12 @@
               "path": "specifications/ewd840/EWD840_anim.cfg",
               "runtime": "00:00:01",
               "size": "small",
-              "config": [
-                {
-                  "simulate": {
-                    "traceCount": 100
-                  }
+              "mode": {
+                "simulate": {
+                  "traceCount": 100
                 }
-              ],
+              },
+              "config": [],
               "features": [
                 "alias"
               ],
@@ -2768,6 +2832,7 @@
               "path": "specifications/ewd840/EWD840_json.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
               ],
@@ -2795,6 +2860,7 @@
               "path": "specifications/ewd840/SyncTerminationDetection.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness"
@@ -2835,6 +2901,7 @@
               "path": "specifications/ewd998/AsyncTerminationDetection.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "state constraint"
@@ -2855,6 +2922,7 @@
               "path": "specifications/ewd998/AsyncTerminationDetection_proof.cfg",
               "runtime": "unknown",
               "size": "unknown",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness",
@@ -2877,6 +2945,7 @@
               "path": "specifications/ewd998/EWD998.cfg",
               "runtime": "00:50:00",
               "size": "large",
+              "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
               ],
@@ -2889,6 +2958,7 @@
               "path": "specifications/ewd998/EWD998Small.cfg",
               "runtime": "00:00:30",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
               ],
@@ -2909,6 +2979,7 @@
               "path": "specifications/ewd998/EWD998Chan.cfg",
               "runtime": "00:05:00",
               "size": "medium",
+              "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
               ],
@@ -2930,6 +3001,7 @@
               "path": "specifications/ewd998/EWD998ChanID.cfg",
               "runtime": "unknown",
               "size": "large",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness",
@@ -2952,6 +3024,7 @@
               "path": "specifications/ewd998/EWD998ChanID_export.cfg",
               "runtime": "unknown",
               "size": "large",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "unknown"
@@ -2968,6 +3041,7 @@
               "path": "specifications/ewd998/EWD998ChanID_shiviz.cfg",
               "runtime": "unknown",
               "size": "large",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "alias"
@@ -3038,6 +3112,7 @@
               "path": "specifications/ewd998/SmokeEWD998.cfg",
               "runtime": "unknown",
               "size": "unknown",
+              "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness",
@@ -3060,6 +3135,7 @@
               "path": "specifications/ewd998/SmokeEWD998_SC.cfg",
               "runtime": "unknown",
               "size": "unknown",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "unknown"
@@ -3320,6 +3396,7 @@
               "path": "specifications/tower_of_hanoi/Hanoi.toolbox/Model_1/MC.cfg",
               "runtime": "00:00:01",
               "size": "small",
+              "mode": "exhaustive search",
               "config": [],
               "features": [],
               "result": "safety failure"
