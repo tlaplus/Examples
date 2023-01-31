@@ -17,6 +17,7 @@ Follow these instructions:
 1. Ensure your spec is released under MIT or a similarly-permissive license
 1. Fork this repository and create a new directory under `specifications` with the name of your spec
 1. Place all TLA<sup>+</sup> files in the directory, along with their `.cfg` model files; you are encouraged to include at least one model that completes execution in less than 10 seconds
+1. Ensure name of each `.cfg` file matches the `.tla` file it models, or has its name as a prefix; for example `SpecName.tla` can have the models `SpecName.cfg` and `SpecNameLiveness.cfg`, etc.
 1. Consider including a `README.md` explaining the significance of the spec with links to any relevant websites or publications, or integrate this info as comments in the spec itself
 1. Add an entry to the below table in this top-level `README.md` summarizing your spec and its attributes
 1. Update the `manifest.json` file with machine-readable records of your spec files, either manually or with a script as follows:
