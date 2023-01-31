@@ -3,7 +3,7 @@ from os.path import normpath
 import subprocess
 
 def load_json(path):
-    with open(normpath(path), 'r', encoding='utf8') as file:
+    with open(normpath(path), 'r', encoding='utf-8') as file:
         return json.load(file)
 
 def load_manifest():

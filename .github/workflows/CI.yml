@@ -17,7 +17,7 @@ jobs:
         - { os: windows-latest, shell: msys2 }
         - { os: ubuntu-latest,  shell: bash  }
         - { os: macos-latest,   shell: bash  }
-      fail-fast: false
+      fail-fast: true
     env:
       SCRIPT_DIR: .github/scripts
       TLAPS_VERSION: 202210041448
@@ -42,12 +42,6 @@ jobs:
       - name: Install python packages
         shell: bash
         run: pip install -r $SCRIPT_DIR/requirements.txt
-      - name: Check manifest.json format
-        shell: bash
-        run: python $SCRIPT_DIR/check_manifest_schema.py
-      - name: Check manifest files
-        shell: bash
-        run: python $SCRIPT_DIR/check_manifest_files.py
       - name: Get tree-sitter-tlaplus
         run: |
           # Fix tar symbolic link issues on Windows; see:
@@ -57,6 +51,17 @@ jobs:
           tar -xf main.tar.gz
           rm main.tar.gz
           mv tree-sitter-tlaplus-main tree-sitter-tlaplus
+      - name: Smoke-test manifest generation script
+        shell: bash
+        run: |
+          python --version
+          python $SCRIPT_DIR/generate_manifest.py
+      - name: Check manifest.json format
+        shell: bash
+        run: python $SCRIPT_DIR/check_manifest_schema.py
+      - name: Check manifest files
+        shell: bash
+        run: python $SCRIPT_DIR/check_manifest_files.py
       - name: Check manifest feature flags
         shell: bash
         run: python $SCRIPT_DIR/check_manifest_features.py
@@ -82,7 +87,4 @@ jobs:
       - name: Smoke-test large models
         shell: bash
         run: python $SCRIPT_DIR/smoke_test_large_models.py
-      - name: Smoke-test manifest generation script
-        shell: bash
-        run: python $SCRIPT_DIR/generate_manifest.py
 
