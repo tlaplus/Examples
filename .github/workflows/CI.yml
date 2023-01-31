@@ -43,16 +43,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       TLAPS_VERSION: 202210041448
+      TOOL_INSTALL_SHELL: ${{ matrix.shell }} {0}
     strategy:
       matrix:
         include:
         - { os: windows-latest, shell: msys2 }
         - { os: ubuntu-latest,  shell: bash  }
         - { os: macos-latest,   shell: bash  }
-      fail-fast: false
+      fail-fast: true
     defaults:
       run:
-        shell: ${{ matrix.shell }} {0}
+        shell: bash
     steps:
       - name: Clone repo
         uses: actions/checkout@v2
@@ -69,7 +70,10 @@ jobs:
         uses: msys2/setup-msys2@v2
         if: matrix.os == 'windows-latest'
       - name: Get TLA⁺ toolset, TLAPS, and community modules
+        shell: $TOOL_INSTALL_SHELL
         run: |
+          # Fix tar symbolic link issues on Windows; see:
+          # https://github.com/msys2/MSYS2-packages/issues/1216
           export MSYS=winsymlinks:lnk
           wget http://nightly.tlapl.us/dist/tla2tools.jar
           wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
