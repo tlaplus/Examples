@@ -1,8 +1,9 @@
 import json
+from os.path import normpath
 import subprocess
 
 def load_json(path):
-    with open(path, 'r', encoding='utf8') as file:
+    with open(normpath(path), 'r', encoding='utf8') as file:
         return json.load(file)
 
 def load_manifest():
@@ -23,6 +24,9 @@ def is_simulate_config(config):
         return (False, 0)
 
 def check_model(jar_path, module_path, model_path, config, timeout):
+    jar_path = normpath(jar_path)
+    module_path = normpath(module_path)
+    model_path = normpath(model_path)
     is_simulate, trace_count = is_simulate_config(config)
     try:
         tlc = subprocess.run([

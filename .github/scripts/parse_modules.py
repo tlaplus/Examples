@@ -5,12 +5,12 @@ Parse all modules in the manifest with SANY.
 from concurrent.futures import ThreadPoolExecutor
 import logging
 from os import cpu_count, pathsep
-from os.path import dirname
+from os.path import dirname, normpath
 import subprocess
 import tla_utils
 
-tlaps_modules = 'tlapm/library'
-community_modules = 'CommunityModules/modules'
+tlaps_modules = normpath('tlapm/library')
+community_modules = normpath('CommunityModules/modules')
 logging.basicConfig(level=logging.INFO)
 
 def parse_module(module_tuple):
@@ -46,7 +46,7 @@ skip_modules = []
 
 # List of all modules to parse and whether they should use TLAPS imports
 modules = [
-    (module['path'], any(['proof' in module['features'] for module in spec['modules']]))
+    (normpath(module['path']), any(['proof' in module['features'] for module in spec['modules']]))
     for spec in manifest['specifications'] if spec['path'] not in skip_specs
     for module in spec['modules'] if module['path'] not in skip_modules
 ]
