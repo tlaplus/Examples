@@ -4,7 +4,6 @@ entails running them for five seconds to ensure they can actually start
 and work with the spec they're supposed to be modeling.
 """
 
-import json
 import logging
 import tla_utils
 
@@ -21,9 +20,7 @@ def check_model(module_path, model_path, config):
 
 logging.basicConfig(level=logging.INFO)
 
-manifest = None
-with open('manifest.json', 'rt') as manifest_file:
-    manifest = json.load(manifest_file)
+manifest = tla_utils.load_manifest()
 
 skip_models = [
     # SimKnuthYao requires certain number of states to have been generated

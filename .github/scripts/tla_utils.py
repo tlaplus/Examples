@@ -1,4 +1,15 @@
+import json
 import subprocess
+
+def load_json(path):
+    with open(path, 'r', encoding='utf8') as file:
+        return json.load(file)
+
+def load_manifest():
+    return load_json('manifest.json')
+
+def load_schema():
+    return load_json('manifest-schema.json')
 
 def is_simulate_config(config):
     sim_options = [

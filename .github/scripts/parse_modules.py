@@ -4,10 +4,10 @@ Parse all modules in the manifest with SANY.
 
 from concurrent.futures import ThreadPoolExecutor
 import logging
-import json
 from os import cpu_count, pathsep
 from os.path import dirname
 import subprocess
+import tla_utils
 
 tlaps_modules = 'tlapm/library'
 community_modules = 'CommunityModules/modules'
@@ -38,9 +38,7 @@ def parse_module(module_tuple):
         return False
     return True
 
-manifest = None
-with open('manifest.json', 'rt') as manifest_file:
-    manifest = json.load(manifest_file)
+manifest = tla_utils.load_manifest()
 
 # Skip these specs and modules as they do not currently parse
 skip_specs = ['specifications/ewd998']

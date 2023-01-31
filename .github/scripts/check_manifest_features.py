@@ -10,6 +10,7 @@ the manifest.json file. Prominent checks include:
 import glob
 import json
 from os.path import basename, dirname, splitext
+import tla_utils
 from tree_sitter import Language, Parser
 
 # Builds the tree-sitter-tlaplus grammar and constructs the parser
@@ -173,9 +174,7 @@ def get_community_module_imports(path):
     return get_community_imports(tree, text, dir, has_proof)
 
 if __name__ == '__main__':
-    manifest = None
-    with open('manifest.json', 'rt') as manifest_file:
-        manifest = json.load(manifest_file)
+    manifest = tla_utils.load_manifest()
 
     # Validates every field of the manifest that can be validated.
     success = True

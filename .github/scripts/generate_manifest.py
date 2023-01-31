@@ -12,6 +12,7 @@ import json
 import os
 from os.path import basename, dirname, join, normpath, splitext
 import glob
+import tla_utils
 
 def get_tla_files(dir):
     """
@@ -113,9 +114,7 @@ def integrate_model_info(old_model, new_model):
     for field in fields:
         new_model[field] = old_model[field]
 
-old_manifest = None
-with open('manifest.json', 'r') as old_manifest_file:
-    old_manifest = json.load(old_manifest_file)
+old_manifest = tla_utils.load_manifest()
 
 for old_spec in old_manifest['specifications']:
     new_spec = find_corresponding_spec(old_spec, new_manifest)
