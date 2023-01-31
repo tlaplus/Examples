@@ -69,6 +69,7 @@ new_manifest = {
                             'path': to_posix(cfg_path),
                             'runtime': 'unknown',
                             'size': 'unknown',
+                            'mode': 'exhaustive search',
                             'config': [],
                             'features': sorted(list(get_model_features(cfg_path))),
                             'result': 'unknown'
@@ -117,7 +118,7 @@ def find_corresponding_model(old_model, new_module):
     ][0]
 
 def integrate_model_info(old_model, new_model):
-    fields = ['runtime', 'size', 'config', 'result']
+    fields = ['runtime', 'size', 'mode', 'config', 'result']
     for field in fields:
         new_model[field] = old_model[field]
 
@@ -134,6 +135,6 @@ for old_spec in old_manifest['specifications']:
             integrate_model_info(old_model, new_model)
 
 # Write generated manifest to file
-with open('manifest.json', 'w') as new_manifest_file:
+with open('manifest.json', 'w', encoding='utf8') as new_manifest_file:
     json.dump(new_manifest, new_manifest_file, indent=2, ensure_ascii=False)
 

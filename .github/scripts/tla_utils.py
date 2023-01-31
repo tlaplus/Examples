@@ -12,24 +12,30 @@ def load_manifest():
 def load_schema():
     return load_json('manifest-schema.json')
 
-def is_simulate_config(config):
-    sim_options = [
-        option for option in config
-        if type(option) is dict
-        and 'simulate' in option
-    ]
-    if any(sim_options):
-        return (True, sim_options[0]['simulate']['traceCount'])
+def get_run_mode(mode):
+    if type(mode) is dict:
+        if 'simulate' in mode:
+            trace_count = mode['simulate']['traceCount']
+            return ['-simulate', f'num={trace_count}']
+        else:
+            raise NotImplementedError(f'Undefined model-check mode {mode}')
+    elif 'generate' == mode:
+        return ['-generate']
+    elif 'exhaustive search' == mode:
+        return []
     else:
-        return (False, 0)
+        raise NotImplementedError(f'Undefined model-check mode {mode}')
 
-def check_model(jar_path, module_path, model_path, config, timeout):
+def get_config(config):
+    return ['-deadlock'] if 'ignore deadlock' in config else []
+
+def check_model(jar_path, module_path, model_path, mode, config, timeout):
     jar_path = normpath(jar_path)
     module_path = normpath(module_path)
     model_path = normpath(model_path)
-    is_simulate, trace_count = is_simulate_config(config)
     try:
-        tlc = subprocess.run([
+        tlc = subprocess.run(
+            [
                 'java',
                 '-Dtlc2.TLC.ide=Github',
                 '-Dutil.ExecutionStatisticsCollector.id=abcdef60f238424fa70d124d0c77ffff',
@@ -41,9 +47,7 @@ def check_model(jar_path, module_path, model_path, config, timeout):
                 '-workers', 'auto',
                 '-lncheck', 'final',
                 '-cleanup'
-            ] + (['-deadlock'] if 'ignore deadlock' in config else [])
-            + (['-generate'] if 'generate' in config else [])
-            + (['-simulate', f'num={trace_count}'] if is_simulate else []),
+            ] + get_config(config) + get_run_mode(mode),
             capture_output=True,
             timeout=timeout
         )

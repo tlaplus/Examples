@@ -13,17 +13,6 @@ def parse_timespan(unparsed):
     pattern = '%H:%M:%S'
     return datetime.strptime(unparsed, pattern) - datetime.strptime('00:00:00', pattern)
 
-def is_simulate_config(config):
-    sim_options = [
-        option for option in config
-        if type(option) is dict
-        and 'simulate' in option
-    ]
-    if any(sim_options):
-        return (True, sim_options[0]['simulate']['traceCount'])
-    else:
-        return (False, 0)
-
 tlc_result = {
     0   : 'success',
     11  : 'deadlock failure',
@@ -31,9 +20,19 @@ tlc_result = {
     13  : 'liveness failure'
 }
 
-def check_model(module_path, model_path, expected_result, expected_runtime, config):
+def check_model(module_path, model, expected_runtime):
+    model_path = model['path']
+    logging.info(model_path)
+    expected_result = model['result']
     start_time = timer()
-    tlc, hit_timeout = tla_utils.check_model('tla2tools.jar', module_path, model_path, config, 60)
+    tlc, hit_timeout = tla_utils.check_model(
+        'tla2tools.jar',
+        module_path,
+        model_path,
+        model['mode'],
+        model['config'],
+        60
+    )
     end_time = timer()
     if hit_timeout:
         logging.error(f'{model_path} timed out')
@@ -53,13 +52,13 @@ manifest = tla_utils.load_manifest()
 # Ensure longest-running modules go first
 small_models = sorted(
     [
-        (module['path'], model['path'], model['result'], parse_timespan(model['runtime']), model['config'])
+        (module['path'], model, parse_timespan(model['runtime']))
         for spec in manifest['specifications']
         for module in spec['modules']
         for model in module['models'] if model['size'] == 'small'
     ],
-    key = lambda m: m[3],
-    reverse=True
+    key = lambda m: m[2],
+    #reverse=True
 )
 
 success = all([check_model(*model) for model in small_models])

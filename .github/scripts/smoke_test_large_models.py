@@ -7,9 +7,17 @@ and work with the spec they're supposed to be modeling.
 import logging
 import tla_utils
 
-def check_model(module_path, model_path, config):
+def check_model(module_path, model):
+    model_path = model['path']
     logging.info(model_path)
-    tlc, hit_timeout = tla_utils.check_model('tla2tools.jar', module_path, model_path, config, 5)
+    tlc, hit_timeout = tla_utils.check_model(
+        'tla2tools.jar',
+        module_path,
+        model_path,
+        model['mode'],
+        model['config'],
+        5
+    )
     if hit_timeout:
         return True
     if 0 != tlc.returncode:
@@ -41,7 +49,7 @@ skip_models = [
 ]
 
 large_models = [
-    (module['path'], model['path'], model['config'])
+    (module['path'], model)
     for spec in manifest['specifications']
     for module in spec['modules']
     for model in module['models']
