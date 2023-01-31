@@ -17,7 +17,7 @@ jobs:
         - { os: windows-latest, shell: msys2 }
         - { os: ubuntu-latest,  shell: bash  }
         - { os: macos-latest,   shell: bash  }
-      fail-fast: true
+      fail-fast: false
     env:
       SCRIPT_DIR: .github/scripts
       TLAPS_VERSION: 202210041448
@@ -42,20 +42,29 @@ jobs:
       - name: Install python packages
         shell: bash
         run: pip install -r $SCRIPT_DIR/requirements.txt
-      - name: Get tree-sitter-tlaplus
+      - name: Download TLA⁺ dependencies
         run: |
           # Fix tar symbolic link issues on Windows; see:
           # https://github.com/msys2/MSYS2-packages/issues/1216
           export MSYS=winsymlinks:lnk
+          # Get tree-sitter-tlaplus
           wget https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.tar.gz
           tar -xf main.tar.gz
           rm main.tar.gz
           mv tree-sitter-tlaplus-main tree-sitter-tlaplus
-      - name: Smoke-test manifest generation script
-        shell: bash
-        run: |
-          python --version
-          python $SCRIPT_DIR/generate_manifest.py
+          # Get TLA⁺ tools
+          wget http://nightly.tlapl.us/dist/tla2tools.jar
+          # Get TLA⁺ community modules
+          wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
+          wget https://github.com/tlaplus/CommunityModules/archive/master.tar.gz
+          tar -xf master.tar.gz
+          rm master.tar.gz
+          mv CommunityModules-master CommunityModules
+          # Get TLAPS
+          wget https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.tar.gz
+          tar -xf $TLAPS_VERSION.tar.gz
+          rm $TLAPS_VERSION.tar.gz
+          mv tlapm-$TLAPS_VERSION tlapm
       - name: Check manifest.json format
         shell: bash
         run: python $SCRIPT_DIR/check_manifest_schema.py
@@ -65,19 +74,6 @@ jobs:
       - name: Check manifest feature flags
         shell: bash
         run: python $SCRIPT_DIR/check_manifest_features.py
-      - name: Get TLA⁺ toolset, TLAPS, and community modules
-        run: |
-          export MSYS=winsymlinks:lnk
-          wget http://nightly.tlapl.us/dist/tla2tools.jar
-          wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
-          wget https://github.com/tlaplus/CommunityModules/archive/master.tar.gz
-          tar -xf master.tar.gz
-          rm master.tar.gz
-          mv CommunityModules-master CommunityModules
-          wget https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.tar.gz
-          tar -xf $TLAPS_VERSION.tar.gz
-          rm $TLAPS_VERSION.tar.gz
-          mv tlapm-$TLAPS_VERSION tlapm
       - name: Parse all modules
         shell: bash
         run: python $SCRIPT_DIR/parse_modules.py
@@ -87,4 +83,9 @@ jobs:
       - name: Smoke-test large models
         shell: bash
         run: python $SCRIPT_DIR/smoke_test_large_models.py
+      - name: Smoke-test manifest generation script
+        shell: bash
+        run: |
+          python $SCRIPT_DIR/generate_manifest.py
+          git diff -a
 
