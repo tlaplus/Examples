@@ -2737,7 +2737,7 @@
                   "traceCount": 100
                 }
               },
-              "config": [],
+              "config": ["ignore deadlock"],
               "features": [
                 "alias",
                 "liveness"
