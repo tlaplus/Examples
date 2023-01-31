@@ -29,11 +29,12 @@ def parse_module(module_tuple):
         'java',
         f'-DTLA-Library={search_paths}',
         '-cp', 'tla2tools.jar',
-        'tla2sany.SANY', path,
+        'tla2sany.SANY',
+        '-error-codes',
+        path
     ], capture_output=True)
-    sany_output = sany.stdout.decode('utf-8')
-    if sany.returncode != 0 or 'Error' in sany_output or 'error' in sany_output:
-        logging.error(sany_output)
+    if sany.returncode != 0:
+        logging.error(sany.stdout.decode('utf-8'))
         return False
     return True
 
