@@ -7,42 +7,10 @@ on:
     branches:
       - master
 
-env:
-  SCRIPT_DIR: .github/scripts
-
 jobs:
-
-  validate-metadata:
-    name: Metadata Validation
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clone repo
-        uses: actions/checkout@v2
-      - name: Install python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - name: Install python packages
-        run: pip install -r $SCRIPT_DIR/requirements.txt
-      - name: Check manifest.json format
-        run: python $SCRIPT_DIR/check_manifest_schema.py
-      - name: Check manifest files
-        run: python $SCRIPT_DIR/check_manifest_files.py
-      - name: Get tree-sitter-tlaplus
-        run: |
-          wget https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.tar.gz
-          tar -xf main.tar.gz
-          rm main.tar.gz
-          mv tree-sitter-tlaplus-main tree-sitter-tlaplus
-      - name: Check manifest feature flags
-        run: python $SCRIPT_DIR/check_manifest_features.py
-
-  validate-specs-and-models:
-    name: Spec & Model Validation
-    needs: validate-metadata
+  validate:
+    name: Validate Manifest, Specs, & Models
     runs-on: ${{ matrix.os }}
-    env:
-      TLAPS_VERSION: 202210041448
     strategy:
       matrix:
         include:
@@ -50,13 +18,16 @@ jobs:
         - { os: ubuntu-latest,  shell: bash  }
         - { os: macos-latest,   shell: bash  }
       fail-fast: false
+    env:
+      SCRIPT_DIR: .github/scripts
+      TLAPS_VERSION: 202210041448
     defaults:
       run:
         shell: ${{ matrix.shell }} {0}
     steps:
       - name: Clone repo
         uses: actions/checkout@v2
-      - name: Install Python
+      - name: Install python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
@@ -68,10 +39,29 @@ jobs:
       - name: Install MSYS2 on Windows
         uses: msys2/setup-msys2@v2
         if: matrix.os == 'windows-latest'
-      - name: Get TLA⁺ toolset, TLAPS, and community modules
+      - name: Install python packages
+        shell: bash
+        run: pip install -r $SCRIPT_DIR/requirements.txt
+      - name: Check manifest.json format
+        shell: bash
+        run: python $SCRIPT_DIR/check_manifest_schema.py
+      - name: Check manifest files
+        shell: bash
+        run: python $SCRIPT_DIR/check_manifest_files.py
+      - name: Get tree-sitter-tlaplus
         run: |
           # Fix tar symbolic link issues on Windows; see:
           # https://github.com/msys2/MSYS2-packages/issues/1216
+          export MSYS=winsymlinks:lnk
+          wget https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.tar.gz
+          tar -xf main.tar.gz
+          rm main.tar.gz
+          mv tree-sitter-tlaplus-main tree-sitter-tlaplus
+      - name: Check manifest feature flags
+        shell: bash
+        run: python $SCRIPT_DIR/check_manifest_features.py
+      - name: Get TLA⁺ toolset, TLAPS, and community modules
+        run: |
           export MSYS=winsymlinks:lnk
           wget http://nightly.tlapl.us/dist/tla2tools.jar
           wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
@@ -92,4 +82,7 @@ jobs:
       - name: Smoke-test large models
         shell: bash
         run: python $SCRIPT_DIR/smoke_test_large_models.py
+      - name: Smoke-test manifest generation script
+        shell: bash
+        run: python $SCRIPT_DIR/generate_manifest.py
 
