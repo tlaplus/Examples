@@ -11,8 +11,16 @@ from check_manifest_features import get_community_module_imports, get_module_fea
 import json
 import os
 from os.path import basename, dirname, join, normpath, splitext
+from pathlib import PureWindowsPath
 import glob
 import tla_utils
+
+def to_posix(path):
+    """
+    Converts paths to normalized Posix format.
+    https://stackoverflow.com/q/75291812/2852699
+    """
+    return PureWindowsPath(normpath(path)).as_posix()
 
 def get_tla_files(dir):
     """
@@ -20,8 +28,7 @@ def get_tla_files(dir):
     trace specs.
     """
     return [
-        normpath(path)
-        for path in glob.glob(f'{dir.path}/**/*.tla', recursive=True)
+        path for path in glob.glob(f'{dir.path}/**/*.tla', recursive=True)
         if '_TTrace_' not in path
     ]
 
@@ -37,7 +44,7 @@ def get_cfg_files(tla_path):
     module_name, _ = splitext(basename(tla_path))
     other_module_names = [other for other in get_module_names_in_dir(parent_dir) if other != module_name]
     return [
-        normpath(path) for path in glob.glob(f'{join(parent_dir, module_name)}*.cfg')
+        path for path in glob.glob(f'{join(parent_dir, module_name)}*.cfg')
         if splitext(basename(path))[0] not in other_module_names
     ]
 
@@ -45,7 +52,7 @@ def get_cfg_files(tla_path):
 new_manifest = {
     'specifications': [
         {
-            'path': normpath(dir.path),
+            'path': to_posix(dir.path),
             'title': dir.name,
             'description': '',
             'source': '',
@@ -53,13 +60,13 @@ new_manifest = {
             'tags': [],
             'modules': [
                 {
-                    'path': tla_path,
+                    'path': to_posix(tla_path),
                     'communityDependencies': sorted(list(get_community_module_imports(tla_path))),
                     'tlaLanguageVersion': 2,
                     'features': sorted(list(get_module_features(tla_path))),
                     'models': [
                         {
-                            'path': cfg_path,
+                            'path': to_posix(cfg_path),
                             'runtime': 'unknown',
                             'size': 'unknown',
                             'config': [],
@@ -83,7 +90,7 @@ new_manifest = {
 def find_corresponding_spec(old_spec, new_manifest):
     return [
         spec for spec in new_manifest['specifications']
-        if normpath(spec['path']) == old_spec['path']
+        if to_posix(spec['path']) == old_spec['path']
     ][0]
 
 def integrate_spec_info(old_spec, new_spec):
@@ -95,7 +102,7 @@ def integrate_spec_info(old_spec, new_spec):
 def find_corresponding_module(old_module, new_spec):
     return [
         module for module in new_spec['modules']
-        if normpath(module['path']) == normpath(old_module['path'])
+        if to_posix(module['path']) == to_posix(old_module['path'])
     ][0]
 
 def integrate_module_info(old_module, new_module):
@@ -106,7 +113,7 @@ def integrate_module_info(old_module, new_module):
 def find_corresponding_model(old_model, new_module):
     return [
         model for model in new_module['models']
-        if normpath(model['path']) == normpath(old_model['path'])
+        if to_posix(model['path']) == to_posix(old_model['path'])
     ][0]
 
 def integrate_model_info(old_model, new_model):
