@@ -8,6 +8,8 @@ It serves as:
 - a diverse corpus facilitating development & testing of TLA<sup>+</sup> language tools
 - a collection of case studies in the application of formal specification in TLA<sup>+</sup>
 
+All TLA<sup>+</sup> specs can be found in the `specifications` directory.
+
 ## Contributing
 
 Do you have your own case study or TLA<sup>+</sup> specification you'd like to share with the community?
@@ -52,8 +54,8 @@ All specs and models are also checked for parsing and execution by the CI script
 
 ## List of Examples
 
-| # | Name | Description | Authors | TLAPS Proof | TLC Model | Module Dependencies | PlusCal  | Apalache |
-|:-:|------|-------------|---------|:-----------:|:---------:|---------------------|:--------:|:--------:|
+| # | Name | Description | Authors | TLAPS Proof? | TLC Model? | Module Dependencies | PlusCal? | Apalache? |
+|:-:|------|-------------|---------|:------------:|:----------:|---------------------|:--------:|:---------:|
 |  1  | 2PCwithBTM                        | <a href="https://github.com/tlaplus/Examples/tree/master/specifications/2PCwithBTM">A modified version of P2TCommit (Gray & Lamport, 2006)</a>                                                                                  | Murat Demirbas                                                                 |             |                                                   &#10004;                                                    | FinSet, Int, Seq                                                      | &#10004; | |
 |  2  | 802.16                            | <a href="https://github.com/tlaplus/Examples/tree/master/specifications/802.16">IEEE 802.16 WiMAX Protocols</a>                                                                                                                 | Prasad Narayana, Ruiming Chen, Yao Zhao, Yan Chen, Zhi (Judy) Fu, and Hai Zhou |             |                                                   &#10004;                                                    | Int, Seq, FinSet                                                      |          | |
 |  3  | aba-asyn-byz                      | <a href="https://github.com/tlaplus/Examples/tree/master/specifications/aba-asyn-byz">Asynchronous Byzantine agreement (Bracha & Toueg, 1985)</a>                                                                               | Thanh Hai Tran, Igor Konnov, Josef Widder                                      |             |                                                   &#10004;                                                    | Nat                                                                   |          | |
@@ -160,5 +162,6 @@ The repository is under the MIT license. However, we can upload your benchmarks 
 
 ## Support or Contact
 
-Do you have any questions or comments? Please open an issue or send an email to the [TLA+ group](https://groups.google.com/g/tlaplus).
+Do you have any questions or comments?
+Please open an issue or send an email to the [TLA+ group](https://groups.google.com/g/tlaplus).
 
