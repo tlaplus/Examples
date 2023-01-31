@@ -70,7 +70,7 @@ jobs:
         uses: msys2/setup-msys2@v2
         if: matrix.os == 'windows-latest'
       - name: Get TLA⁺ toolset, TLAPS, and community modules
-        shell: $TOOL_INSTALL_SHELL
+        shell: ${{ env.TOOL_INSTALL_SHELL }}
         run: |
           # Fix tar symbolic link issues on Windows; see:
           # https://github.com/msys2/MSYS2-packages/issues/1216
