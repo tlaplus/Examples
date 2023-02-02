@@ -1,6 +1,9 @@
 ------------------------------- MODULE SmokeEWD998 -------------------------------
 EXTENDS EWD998, TLC, Randomization, IOUtils, CSV, FiniteSets
 
+\* In theory, TLC can check this spec exhaustively, but it is not feasible.
+ASSUME TLCGet("config").mode \in {"generate", "simulate"}
+
 k ==
     10
 
