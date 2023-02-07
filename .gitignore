@@ -25,3 +25,7 @@
 ## See https://github.com/tlaplus/tlapm/issues/16
 __tlacache__
 .tlacache
+
+## Blacklist tools/ folder created by .devcontainer.json
+tools/
+
