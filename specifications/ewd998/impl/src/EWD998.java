@@ -224,6 +224,20 @@ public class EWD998 {
 					color = Color.white;
 
 					tokenColor = null;
+				} else {
+					// This node owns the token and is active; keep the unchanged token.
+					/*
+						Deactivate(i) ==
+							    /\ ...
+							    /\ UNCHANGED <<..., token>>
+						SendMsg(i) ==
+						    /\ ...
+						    /\ UNCHANGED <<..., token>>
+						RecvMsg(i) ==
+						    /\ ...
+						    /\ UNCHANGED <<token>>
+				     */
+					inbox.add(msg);
 				}
 			}
 		}
