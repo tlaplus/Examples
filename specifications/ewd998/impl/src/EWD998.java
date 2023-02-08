@@ -88,7 +88,7 @@ public class EWD998 {
 			inbox.put(pkt);
 		}
 
-		boolean terminationDetected = false;
+		boolean isConclusiveRound = false;
 
 		// --------------------------------------------------------------------------------- //
 		
@@ -162,8 +162,7 @@ public class EWD998 {
 					    /\ ...
 					    /\ UNCHANGED <<active, counter, pending>>                
 					 */
-					terminationDetected = tokenQ + counter == 0 && color == Color.white && tokenColor == Color.white
-							&& !active;
+					isConclusiveRound = tokenQ + counter == 0 && color == Color.white && tokenColor == Color.white;
 				}
 			} else if (msg.get(TYPE).equals(PL)) {
 				/*
@@ -246,7 +245,13 @@ public class EWD998 {
 			// /\ ...
 			// /\ token.pos = i
 			if (tokenColor != null) {
-				if (isInitiator) {
+				if (isInitiator && isConclusiveRound && !active) {
+					// Send the trm message to all nodes (us included).
+					for (Integer n : nodes.keySet()) {
+						sendMsg(myId, n, getTrm());
+					}
+					tokenColor = null;
+				} else if (isInitiator && !isConclusiveRound) {
 					/*
  				       terminationDetected ==
 						  /\ token.pos = 0
@@ -263,14 +268,8 @@ public class EWD998 {
 						    /\ color' = [ color EXCEPT ![0] = "white" ]
 						    /\ UNCHANGED <<active, counter, pending>>                
 					 */
-					if (!terminationDetected) {
-						sendMsg(myId, nodes.size() - 1, getTok(0, Color.white));
-						color = Color.white;
-					} else {
-						for (Integer n : nodes.keySet()) {
-							sendMsg(myId, n, getTrm());
-						}
-					}
+					sendMsg(myId, nodes.size() - 1, getTok(0, Color.white));
+					color = Color.white;
 					tokenColor = null;
 				} else if (!active) {
 					/*
