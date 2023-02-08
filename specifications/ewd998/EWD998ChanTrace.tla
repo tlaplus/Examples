@@ -34,6 +34,17 @@ TraceLog ==
 
 -----------------------------------------------------------------------------
 
+TraceSpec ==
+    \* Because of  [A]_v <=> A \/ v=v'  , the following formula is logically
+     \* equivalent to the (canonical) Spec formual  Init /\ [][Next]_vars  .  
+     \* However, TLC's breadth-first algorithm does not explore successor
+     \* states of a *seen* state.  Since one or more states may appear one or 
+     \* more times in the the trace, the  UNCHANGED vars  combined with the
+     \*  TraceView  that includes  TLCGet("level")  is our workaround. 
+    Init /\ [][Next \/ UNCHANGED vars]_vars
+
+-----------------------------------------------------------------------------
+
 TraceInitConstraint ==
     \* The implementation's initial state is deterministic and known.
     TLCGet("level") = 1 => \A n \in Node: 
@@ -91,6 +102,23 @@ IsPassToken(l) ==
         \* Sender has to be inactive to pass the token, i.e
         /\ ~active[snd]
         /\ UNCHANGED <<active, counter>>                            
+    
+IsRecvToken(l) ==
+    \* Log statement was printed by the receiver.
+    /\ l.event = "<"
+    /\ LET msg == l.pkt.msg 
+           rcv == l.pkt.rcv IN
+        \* Log statement is about a token message.
+        /\ msg.type = "tok"
+        \* The number of payload messages in the node's inbox do not change.
+        /\ \A n \in Node:
+                SelectSeq(inbox[n], PayloadPred) = SelectSeq(inbox'[n], PayloadPred)
+        \* The receivers's inbox contains a tok message in the next state.
+        /\ \E idx \in DOMAIN inbox'[rcv]:
+            /\ inbox'[rcv][idx].type = "tok"
+            /\ inbox'[rcv][idx].q = msg.q
+            /\ inbox'[rcv][idx].color = msg.color
+        /\ UNCHANGED <<active, counter, color>>
 
 IsSendMsg(l) ==
     \* Log statement was printed by the sender.
@@ -145,8 +173,19 @@ TraceNextConstraint ==
               BP::
                 \/ IsInitiateToken(logline)
                 \/ IsPassToken(logline)
+                \/ IsRecvToken(logline)
                 \/ IsSendMsg(logline)
                 \/ IsRecvMsg(logline)
+
+-----------------------------------------------------------------------------
+
+TraceView ==
+    \* A high-level state  s  can appear multiple times in a system trace.  Including the
+     \* current level in TLC's view ensures that TLC will not stop model checking when  s
+     \* appears the second time in the trace.  Put differently,  TraceView  causes TLC to
+     \* consider  s_i  and s_j  , where  i  and  j  are the positions of  s  in the trace,
+     \* to be different states.
+    <<vars, TLCGet("level")>>
 
 -----------------------------------------------------------------------------
 
