@@ -204,11 +204,15 @@ public class EWD998 {
 			if (active) {
 				// Simulate some work...
 				Thread.sleep(randomWork.nextInt(100));
-				if (randomWork.nextBoolean()) {
+				if (nodes.size() > 1 && randomWork.nextBoolean()) {
 					counter++;
 					
-					// \E rcv \in Node: ... replaced with probabilistic choice.
-					sendMsg(myId, randomWork.nextInt(nodes.size()), getPayload());
+					// \E rcv \in Node \ {i}: ... replaced with probabilistic choice.
+					int receiver;
+					do {
+						receiver = randomWork.nextInt(nodes.size());
+					} while (receiver == myId);
+					sendMsg(myId, receiver, getPayload());
 				}
 			}
 			
