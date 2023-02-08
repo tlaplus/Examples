@@ -165,6 +165,20 @@ IsDeactivate(l) ==
         /\ active' = [active EXCEPT ![node] = FALSE]
         /\ UNCHANGED <<color, inbox, counter>>
 
+IsTrm(l) ==
+    \* "trm" messages are not part of EWD998, and, thus, not modeled in EWD998Chan.  We map
+     \* "trm" messages to (finite) stuttering, essentially, skipping the "trm" messages in
+     \* the log.  One could have also preprocessed/filtered the trace log, but the extra
+     \* step is not necessary.
+    /\ l.event \in {"<", ">"}
+    /\ l.pkt.msg.type = "trm"
+    \* The (mere) existance of a "trm" message implies that *all* nodes have terminated.
+    /\ \A n \in Node: ~active[n]
+    \* Careful! Without UNCHANGED vars, isTrm is true of all states of the high-level spec
+     \* if the current line is a trm message.  In general, it is good practice to constrain
+     \* all spec variables!
+    /\ UNCHANGED vars
+
 TraceNextConstraint ==
     \* We could have used an auxiliary spec variable for i  , but TLCGet("level") has the
      \* advantage that TLC continues to show the high-level action names instead of just  Next.
@@ -186,6 +200,7 @@ TraceNextConstraint ==
                 \/ IsSendMsg(logline)
                 \/ IsRecvMsg(logline)
                 \/ IsDeactivate(logline)
+                \/ IsTrm(logline)
 
 -----------------------------------------------------------------------------
 
