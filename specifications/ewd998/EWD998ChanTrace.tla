@@ -34,6 +34,13 @@ TraceLog ==
 
 -----------------------------------------------------------------------------
 
+DeactivateAndPassToken ==
+    \E i \in Node:
+        /\ PassToken(i)!2
+        /\ PassToken(i)!3
+        /\ active' = [active EXCEPT ![i] = FALSE]
+        /\ UNCHANGED counter
+
 TraceSpec ==
     \* Because of  [A]_v <=> A \/ v=v'  , the following formula is logically
      \* equivalent to the (canonical) Spec formual  Init /\ [][Next]_vars  .  
@@ -41,7 +48,7 @@ TraceSpec ==
      \* states of a *seen* state.  Since one or more states may appear one or 
      \* more times in the the trace, the  UNCHANGED vars  combined with the
      \*  TraceView  that includes  TLCGet("level")  is our workaround. 
-    Init /\ [][Next \/ UNCHANGED vars]_vars
+    Init /\ [][Next \/ UNCHANGED vars \/ DeactivateAndPassToken]_vars
 
 -----------------------------------------------------------------------------
 
@@ -100,8 +107,7 @@ IsPassToken(l) ==
         /\ \A idx \in DOMAIN inbox'[snd]:
                 inbox'[snd][idx].type # "tok"
         \* Sender has to be inactive to pass the token, i.e
-        /\ ~active[snd]
-        /\ UNCHANGED <<active, counter>>                            
+        /\ UNCHANGED <<counter>>                            
     
 IsRecvToken(l) ==
     \* Log statement was printed by the receiver.
@@ -221,6 +227,7 @@ TraceAlias ==
         enabled |-> 
             [
                 InitToken  |-> ENABLED InitiateProbe,
+                DeAndPass  |-> ENABLED DeactivateAndPassToken,
                 PassToken  |-> ENABLED \E i \in Node \ {0} : PassToken(i),
                 SendMsg    |-> ENABLED \E i \in Node : SendMsg(i),
                 RecvMsg    |-> ENABLED \E i \in Node : RecvMsg(i),
