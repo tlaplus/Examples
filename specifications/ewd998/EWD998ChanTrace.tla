@@ -1,5 +1,5 @@
 --------------------------- MODULE EWD998ChanTrace --------------------------
-EXTENDS EWD998Chan, Json, TLC, IOUtils
+EXTENDS EWD998Chan, Json, TLC, IOUtils, VectorClocks
 
 \* Trace validation has been designed for TLC running in default model-checking
  \* mode, i.e., breadth-first search.
@@ -17,9 +17,20 @@ TraceN ==
     JsonLog[1].N
 
 TraceLog ==
-    \* SubSeq starting at 3 to skip the N value and the first log line which 
-     \* corresponds to the initial state.
-    SubSeq(JsonLog, 3, Len(JsonLog))
+    \* SubSeq starting at 2 to skip the N value.
+    LET suffix == SubSeq(JsonLog, 2, Len(JsonLog))
+    \* The JsonLog/Trace has been compiled out of several logs, collected from the
+     \* nodes of the distributed system, and, thus, are unordered.
+    IN CausalOrder(suffix, 
+                    LAMBDA l : l.pkt.vc,
+                    \* ToString is a hack to work around the fact that the Json
+                     \* module deserializes {"0": 42, "1": 23} into the record
+                     \* [ 0 |-> 42, 1 |-> 23 ] with domain {"0","1"} and not into
+                     \* a function with domain {0, 1}.  This is a known issue of
+                     \* the Json module. Consider switching to, e.g., EDN 
+                     \* (https://github.com/edn-format/edn).
+                    LAMBDA l : ToString(l.node), LAMBDA vc : DOMAIN vc)
+
 
 -----------------------------------------------------------------------------
 

@@ -34,6 +34,8 @@ public class EWD998 {
 	private static final JsonPrimitive IN = new JsonPrimitive("<");
 	private static final JsonPrimitive OUT = new JsonPrimitive(">");
 
+	private static final String VC = "vc";
+
 	private enum Color {
 		black,
 		white
@@ -42,8 +44,11 @@ public class EWD998 {
 	private final Random randomWork = new Random();
 	private final Map<Integer, Pair> nodes;
 
+	private final VectorClock vc;
+
 	public EWD998(final Map<Integer, Pair> nodes, final int myId, final boolean isInitiator) throws Exception {
 		this.nodes = nodes;
+		this.vc = new VectorClock(myId, nodes.size());
 
 		// The inbox contains a (json) packet (pkt) with three fields:
 		// "snd": the sender's id of the packet.
@@ -77,6 +82,7 @@ public class EWD998 {
 			pkt.add(SND, new JsonPrimitive(myId));
 			pkt.add(RCV, new JsonPrimitive(myId));
 			pkt.add(MSG, getTok(0, Color.black));
+			pkt.add(VC, vc.toJson());
 			inbox.put(pkt);
 		}
 
@@ -126,6 +132,7 @@ public class EWD998 {
 			// event shows is this is an incoming ("<") or outgoing (">") packet.
 			final JsonObject logline = new JsonObject();
 			logline.add(EVENT, IN);
+			pkt.add(VC, vc.tickAndMerge(pkt.get(VC).getAsJsonObject()));
 			logline.add(PKT, pkt);
 			System.out.println(logline);
 
@@ -306,6 +313,7 @@ public class EWD998 {
 		pkt.add(SND, new JsonPrimitive(sender));
 		pkt.add(RCV, new JsonPrimitive(receiver));
 		pkt.add(MSG, msg);
+		pkt.add(VC, vc.tick());	
 		final JsonObject logline = new JsonObject();
 		logline.add(EVENT, OUT);
 		logline.add(PKT, pkt);
