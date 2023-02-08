@@ -31,6 +31,7 @@ public class EWD998 {
 	private static final JsonPrimitive PL = new JsonPrimitive("pl");
 	
 	private static final String EVENT = "event";
+	private static final String NODE = "node";
 	private static final JsonPrimitive IN = new JsonPrimitive("<");
 	private static final JsonPrimitive OUT = new JsonPrimitive(">");
 
@@ -132,6 +133,7 @@ public class EWD998 {
 			// event shows is this is an incoming ("<") or outgoing (">") packet.
 			final JsonObject logline = new JsonObject();
 			logline.add(EVENT, IN);
+			logline.add(NODE, new JsonPrimitive(myId));
 			pkt.add(VC, vc.tickAndMerge(pkt.get(VC).getAsJsonObject()));
 			logline.add(PKT, pkt);
 			System.out.println(logline);
@@ -316,6 +318,7 @@ public class EWD998 {
 		pkt.add(VC, vc.tick());	
 		final JsonObject logline = new JsonObject();
 		logline.add(EVENT, OUT);
+		logline.add(NODE, new JsonPrimitive(sender));
 		logline.add(PKT, pkt);
 		
 		final Pair p = nodes.get(receiver);
