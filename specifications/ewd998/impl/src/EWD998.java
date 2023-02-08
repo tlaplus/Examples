@@ -34,6 +34,7 @@ public class EWD998 {
 	private static final String NODE = "node";
 	private static final JsonPrimitive IN = new JsonPrimitive("<");
 	private static final JsonPrimitive OUT = new JsonPrimitive(">");
+	private static final JsonPrimitive DEACTIVATE = new JsonPrimitive("d");
 
 	private static final String VC = "vc";
 
@@ -131,7 +132,7 @@ public class EWD998 {
 
 			// A log line is a json object with an "event" and a "pkt" field. The
 			// event shows is this is an incoming ("<") or outgoing (">") packet.
-			final JsonObject logline = new JsonObject();
+			JsonObject logline = new JsonObject();
 			logline.add(EVENT, IN);
 			logline.add(NODE, new JsonPrimitive(myId));
 			pkt.add(VC, vc.tickAndMerge(pkt.get(VC).getAsJsonObject()));
@@ -221,6 +222,16 @@ public class EWD998 {
 			 */
 			if (active) {
 				active = randomWork.nextDouble() < 0.75d;
+				
+				if (!active) {
+					logline = new JsonObject();
+					logline.add(EVENT, DEACTIVATE);
+					logline.add("node", new JsonPrimitive(myId));
+					JsonObject j = new JsonObject();
+					j.add(VC, vc.tick());
+					logline.add(PKT, j);
+					System.out.println(logline);
+				}
 			}
 			
 			// --------------------------------------------------------------------------------- //

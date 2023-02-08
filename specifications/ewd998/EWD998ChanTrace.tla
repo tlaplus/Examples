@@ -34,13 +34,6 @@ TraceLog ==
 
 -----------------------------------------------------------------------------
 
-DeactivateAndPassToken ==
-    \E i \in Node:
-        /\ PassToken(i)!2
-        /\ PassToken(i)!3
-        /\ active' = [active EXCEPT ![i] = FALSE]
-        /\ UNCHANGED counter
-
 TraceSpec ==
     \* Because of  [A]_v <=> A \/ v=v'  , the following formula is logically
      \* equivalent to the (canonical) Spec formual  Init /\ [][Next]_vars  .  
@@ -48,7 +41,7 @@ TraceSpec ==
      \* states of a *seen* state.  Since one or more states may appear one or 
      \* more times in the the trace, the  UNCHANGED vars  combined with the
      \*  TraceView  that includes  TLCGet("level")  is our workaround. 
-    Init /\ [][Next \/ UNCHANGED vars \/ DeactivateAndPassToken]_vars
+    Init /\ [][Next \/ UNCHANGED vars]_vars
 
 -----------------------------------------------------------------------------
 
@@ -106,8 +99,9 @@ IsPassToken(l) ==
         \* The sender's inbox contains no tok message in the next state.
         /\ \A idx \in DOMAIN inbox'[snd]:
                 inbox'[snd][idx].type # "tok"
-        \* Sender has to be inactive to pass the token, i.e
-        /\ UNCHANGED <<counter>>                            
+        \* Sender has to be inactive to pass the token, i.e.,
+        /\ ~active[snd]
+        /\ UNCHANGED <<active, counter>>                            
     
 IsRecvToken(l) ==
     \* Log statement was printed by the receiver.
@@ -162,6 +156,15 @@ IsRecvMsg(l) ==
          \* inbox.  Thus, thee receiver's inbox contains one less pl message in the next state.
         /\ Len(SelectSeq(inbox[rcv], PayloadPred)) > Len(SelectSeq(inbox'[rcv], PayloadPred))
 
+IsDeactivate(l) ==
+    \* Log statement was printed by the receiver.
+    /\ l.event = "d"
+    /\ LET node == l.node IN
+        \* The receiver and only the receiver transitions to inactive.
+        /\ active[node]
+        /\ active' = [active EXCEPT ![node] = FALSE]
+        /\ UNCHANGED <<color, inbox, counter>>
+
 TraceNextConstraint ==
     \* We could have used an auxiliary spec variable for i  , but TLCGet("level") has the
      \* advantage that TLC continues to show the high-level action names instead of just  Next.
@@ -182,6 +185,7 @@ TraceNextConstraint ==
                 \/ IsRecvToken(logline)
                 \/ IsSendMsg(logline)
                 \/ IsRecvMsg(logline)
+                \/ IsDeactivate(logline)
 
 -----------------------------------------------------------------------------
 
@@ -227,7 +231,6 @@ TraceAlias ==
         enabled |-> 
             [
                 InitToken  |-> ENABLED InitiateProbe,
-                DeAndPass  |-> ENABLED DeactivateAndPassToken,
                 PassToken  |-> ENABLED \E i \in Node \ {0} : PassToken(i),
                 SendMsg    |-> ENABLED \E i \in Node : SendMsg(i),
                 RecvMsg    |-> ENABLED \E i \in Node : RecvMsg(i),
