@@ -191,13 +191,23 @@ TraceNextConstraint ==
               \* BP:: line below is the first step towards diagnosing a divergence. Once
               \* hit, advance evaluation with step over (F10) and step into (F11).
               BP::
-                \/ IsInitiateToken(logline)
-                \/ IsPassToken(logline)
-                \/ IsRecvToken(logline)
-                \/ IsSendMsg(logline)
-                \/ IsRecvMsg(logline)
-                \/ IsDeactivate(logline)
-                \/ IsTrm(logline)
+              /\ \/ IsInitiateToken(logline)
+                 \/ IsPassToken(logline)
+                 \/ IsRecvToken(logline)
+                 \/ IsSendMsg(logline)
+                 \/ IsRecvMsg(logline)
+                 \/ IsDeactivate(logline)
+                 \/ IsTrm(logline)
+              \* Fail trace validation if the log contains a failure message. As an alternative,
+               \* we could have used  TraceInv below, which would cause TLC to print the current
+               \* trace upon its violation.  For the sake of consistency, we use the 
+               \*  TraceAccepted  approach for all trace validation.
+              /\ "failure" \notin DOMAIN logline
+
+TraceInv ==
+    LET l == TraceLog[TLCGet("level")] IN
+    /\ "failure" \notin DOMAIN l
+    /\ (l.event \in {"<", ">"} /\ l.pkt.msg.type = "trm") => \A n \in Node: ~active[n]
 
 -----------------------------------------------------------------------------
 

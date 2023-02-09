@@ -188,6 +188,8 @@ public class EWD998 {
 				assert inbox.isEmpty();
 				return;
 			} else {
+				logline.add("failure", new JsonPrimitive(String.format("Unknown message type: %s", msg.get(TYPE).getAsString())));
+				System.out.println(logline);
 				throw new IllegalArgumentException("Unknown message type");
 			}
 			
@@ -354,10 +356,13 @@ public class EWD998 {
 				return;
 			} catch (SocketTimeoutException | ConnectException thisIsFineWillRetry) {
 				if (retry > 3) {
-					// Stay silent if it failed less than three times. If it fails more than three
+					// Stay silent if it a transient failure. If it fails more than three
 					// times, the user will likely want to inspect.  Note that EWD998 assumes
 					// reliable message infrastructure and doesn't consider network failure.
 					thisIsFineWillRetry.printStackTrace();
+					logline.add("failure", new JsonPrimitive(thisIsFineWillRetry.toString()));
+					System.out.println(logline);
+					return;
 				}
 				Thread.sleep(500L * retry);
 			}
