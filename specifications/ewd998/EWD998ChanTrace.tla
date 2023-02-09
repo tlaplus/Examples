@@ -34,6 +34,12 @@ TraceLog ==
 
 -----------------------------------------------------------------------------
 
+TraceInit ==
+    /\ Init!1
+    /\ Init!2
+    /\ active \in [Node -> {TRUE}]
+    /\ color \in [Node -> {"white"}]
+
 TraceSpec ==
     \* Because of  [A]_v <=> A \/ v=v'  , the following formula is logically
      \* equivalent to the (canonical) Spec formual  Init /\ [][Next]_vars  .  
@@ -41,16 +47,7 @@ TraceSpec ==
      \* states of a *seen* state.  Since one or more states may appear one or 
      \* more times in the the trace, the  UNCHANGED vars  combined with the
      \*  TraceView  that includes  TLCGet("level")  is our workaround. 
-    Init /\ [][Next \/ UNCHANGED vars]_vars
-
------------------------------------------------------------------------------
-
-TraceInitConstraint ==
-    \* The implementation's initial state is deterministic and known.
-    TLCGet("level") = 1 => \A n \in Node: 
-                                /\ active[n]
-                                /\ color[n] = "white"
-                                /\ counter[n] = 0
+    TraceInit /\ [][Next \/ UNCHANGED vars]_vars
 
 -----------------------------------------------------------------------------
 
