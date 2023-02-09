@@ -76,8 +76,8 @@ IsInitiateToken(l) ==
         /\ \E idx \in DOMAIN inbox[snd]:
                 inbox[snd][idx].type = "tok"
         \* The senders's inbox contains no longer the token in the next state.
-        /\ \A idx \in DOMAIN inbox'[snd]:
-                inbox'[snd][idx].type # "tok"
+        /\ snd # rcv => \A idx \in DOMAIN inbox'[snd]:
+                            inbox'[snd][idx].type # "tok"
         \* Sender has *not* to be inactive to initiate the token!
         /\ UNCHANGED <<active, counter>>                            
     
