@@ -317,3 +317,40 @@ $ while true; do
     sleep 3; 
   done
 
+
+TODOs
+-----
+
+A)
+ Check how useful spec coverage of EWD998Chan is to determine if we've
+ seen enough traces => This would suggest to make it possible to check
+ a set of traces instead of single traces one by one, or make it possible
+ to merge multiple coverage statistics originating from multiple TLC runs
+ (IIRC Jesse requested this one => find Github issue^1).  Fundamentally, a set
+ of traces isn't hard; just add another variable or TLCGet("...") cleverness
+ to the spec that equals the particular trace "id".  However, the json log is 
+ current not set up for this because we wouldn't know where one trace in
+ the log file starts and ends, unless we parse the whole log.  For this,
+ non newline-delim json is probably the better choice.
+ 
+ ^1 TLC should expose coverage statistics via, e.g., TLCGet("stats"). Users
+ can then "dump" its output in a TLC post condition.  Afterward, multiple
+ dumps can be combined either in TLA+ with e.g. a bit of repl'ing or in
+ json.
+
+B)
+ TLC prints the last log line when the trace cannot be mapped to any
+ behavior in the spec's set of behaviors.  This is good enough for now,
+ especially when combined with the TLA+ debugger.  However, users might
+ prefer to see the prefix of the behavior that was mapped, up to the point
+ where it failed.  For long traces, this might be prohibitively expensive,
+ though, in which case we could show a suffix of the prefix.
+
+C)
+ TLC could provide a new mode that would allow to check a set of traces.  Such
+ a mode could eliminate the need for the  TraceAccepted  ,  TraceView  formulas,
+ and allow the removal of a few subformulas elsewhere.  However, a new mode 
+ won't signicantly simplify a trace spec, but TLC could report a proper error
+ trace for the longest trace prefix it accepted.  A simpler "hack" would be
+ to somehow expose the last state, and, thus, trace in the post condition. Also,
+ the mode could warn users if  TraceNextConstraint  does not constrain all variables.
