@@ -47,5 +47,5 @@ RTSpec == /\ RTInit /\ [][RTNext]_vars
           /\ RTnow(vars)
 -----------------------------------------------------------------------------
 RTM == INSTANCE RTMemory 
-THEOREM RTSpec => RTM!Spec
+THEOREM RTSpec => RTM!RTSpec
 =============================================================================

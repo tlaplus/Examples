@@ -41,5 +41,6 @@ AlwaysResponds ==
   /\ \A p \in Proc, r \in Reg :
        (regFile[p][r].op # "Free") ~> (regFile[p][r].op = "Free")
   /\ \A oi \in [proc : Proc, idx : Nat] :
-         (oi \in opId) ~> (opIdQ(oi).reg = Done)
+         (oi \in opId) ~> (oi \in opId /\ opIdQ(oi).reg = Done)
+
 =============================================================================
