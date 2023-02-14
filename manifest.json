@@ -2657,8 +2657,8 @@
             {
               "path": "specifications/ewd426/SimTokenRing.cfg",
               "runtime": "unknown",
-              "size": "unknown",
-              "mode": "exhaustive search",
+              "size": "large",
+              "mode": "generate",
               "config": [],
               "features": [
                 "state constraint"
@@ -2904,6 +2904,7 @@
               "mode": "exhaustive search",
               "config": [],
               "features": [
+                "liveness",
                 "state constraint"
               ],
               "result": "success"
@@ -2917,20 +2918,7 @@
           "features": [
             "proof"
           ],
-          "models": [
-            {
-              "path": "specifications/ewd998/AsyncTerminationDetection_proof.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
-              "mode": "exhaustive search",
-              "config": [],
-              "features": [
-                "liveness",
-                "state constraint"
-              ],
-              "result": "unknown"
-            }
-          ]
+          "models": []
         },
         {
           "path": "specifications/ewd998/EWD998.tla",
@@ -3111,8 +3099,12 @@
             {
               "path": "specifications/ewd998/SmokeEWD998.cfg",
               "runtime": "unknown",
-              "size": "unknown",
-              "mode": "exhaustive search",
+              "size": "large",
+              "mode": {
+                "simulate": {
+                  "traceCount": 100
+                }
+              },
               "config": [],
               "features": [
                 "liveness",

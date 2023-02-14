@@ -58,7 +58,7 @@ small_models = sorted(
         for model in module['models'] if model['size'] == 'small'
     ],
     key = lambda m: m[2],
-    #reverse=True
+    reverse=True
 )
 
 success = all([check_model(*model) for model in small_models])
