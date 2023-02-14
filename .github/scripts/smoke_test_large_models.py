@@ -35,6 +35,9 @@ skip_models = [
     # before termination or else it fails. This makes it not amenable to
     # smoke testing.
     'specifications/KnuthYao/SimKnuthYao.cfg',
+    # SimTokenRing does not work on Windows systems. It doesn't seem worth
+    # it to code special logic handling this case so we just won't check it.
+    'specifications/ewd426/SimTokenRing.cfg',
 ]
 
 large_models = [

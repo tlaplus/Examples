@@ -1393,15 +1393,15 @@
           "models": [
             {
               "path": "specifications/SpecifyingSystems/AdvancedExamples/MCInnerSerial.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:01:30",
+              "size": "medium",
               "mode": "exhaustive search",
               "config": [],
               "features": [
                 "liveness",
                 "state constraint"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
