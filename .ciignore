@@ -1,7 +1,7 @@
 # Every line starting with # is a comment line
 # Every non-blank non-comment line lists a directory to ignore in the CI
 # This will keep parse or model check failures from failing the CI workflow
+# Note that directory names are case-sensitive
 # Example:
 specifications/doesnotexist
-specifications/ewd998
 
