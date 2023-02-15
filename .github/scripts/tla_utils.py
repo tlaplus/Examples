@@ -2,6 +2,20 @@ import json
 from os.path import normpath
 import subprocess
 
+def ignore(ignored_dirs, path):
+    return any([normpath(path).startswith(ignore_dir) for ignore_dir in ignored_dirs])
+
+def is_blank(text):
+    all([c.isspace() for c in text])
+
+def get_ignored_dirs():
+    with open('.ciignore', 'r') as ignore_file:
+        return set([
+            normpath(line.strip())
+            for line in ignore_file.readlines()
+            if not line.startswith('#') and not is_blank(line)
+        ])
+
 def load_json(path):
     with open(normpath(path), 'r', encoding='utf-8') as file:
         return json.load(file)
