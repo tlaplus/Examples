@@ -45,4 +45,3 @@ tree-sitter-tlaplus/
 
 ## Blacklist tools/ folder created by .devcontainer.json
 tools/
-
