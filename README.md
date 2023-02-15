@@ -1,16 +1,71 @@
-## Welcome to TLA<sup>+</sup> Examples [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--spec-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/tlaplus/examples/)
+# TLA<sup>+</sup> Examples
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--spec-908a85?logo=gitpod)](https://gitpod.io/#https://github.com/tlaplus/examples/)
+[![Validate Specs & Models](https://github.com/tlaplus/Examples/actions/workflows/CI.yml/badge.svg)](https://github.com/tlaplus/Examples/actions/workflows/CI.yml)
 
-The page **TLA<sup>+</sup> Examples** is a library of TLA<sup>+</sup> specifications for distributed algorithms. The webpage supplies the TLA<sup>+</sup> community with:
+This is a repository of TLA<sup>+</sup> specifications and models covering applications in a variety of fields.
+It serves as:
+- a comprehensive example library demonstrating how to specify an algorithm in TLA<sup>+</sup>
+- a diverse corpus facilitating development & testing of TLA<sup>+</sup> language tools
+- a collection of case studies in the application of formal specification in TLA<sup>+</sup>
 
-- A comprehensive library of the TLA<sup>+</sup> specifications that are available today, in order to provide an overview of how to specify an algorithm in TLA<sup>+</sup>.
-- A comprehensive list of references and other interesting information for each problem.
+All TLA<sup>+</sup> specs can be found in the `specifications` directory.
+A central manifest of specs with descriptions and accounts of their various models and features can be found in the [`manifest.json`](manifest.json) file.
 
-Do you have your own case study that you like to share with the community? Send a pointer to us and we will include it in the repository. Your specifications will help the community in improving the tools for TLA<sup>+</sup> analysis.
+## Contributing
+
+Do you have your own case study or TLA<sup>+</sup> specification you'd like to share with the community?
+Follow these instructions:
+1. Ensure your spec is released under MIT or a similarly-permissive license
+1. Fork this repository and create a new directory under `specifications` with the name of your spec
+1. Place all TLA<sup>+</sup> files in the directory, along with their `.cfg` model files; you are encouraged to include at least one model that completes execution in less than 10 seconds
+1. Ensure name of each `.cfg` file matches the `.tla` file it models, or has its name as a prefix; for example `SpecName.tla` can have the models `SpecName.cfg` and `SpecNameLiveness.cfg`, etc.
+1. Consider including a `README.md` in the spec directory explaining the significance of the spec with links to any relevant websites or publications, or integrate this info as comments in the spec itself
+1. Add an entry to the below table in this top-level `README.md` summarizing your spec and its attributes
+
+## Adding Spec to Continuous Integration
+
+To combat bitrot, it is important to add your spec and model to the continuous integration system.
+To do this, you'll have to update the `manifest.json` file with machine-readable records of your spec files.
+If this process doesn't work for you, you can alternatively modify the [`.ciignore`](.ciignore) file to exclude your spec from validation.
+Otherwise, follow these directions:
+
+1. Ensure you have Python 3.X installed
+1. Download & extract tree-sitter-tlaplus ([zip](https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/refs/heads/main.zip), [tar.gz](https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/refs/heads/main.tar.gz)) to the root of the repository; ensure the extracted folder is named `tree-sitter-tlaplus`
+1. Open a shell and navigate to the repo root; ensure a C++ compiler is installed and on your path
+    - On Windows, this might entail running the below script from the visual studio developer command prompt
+1. Run `pip install -r .github/scripts/requirements.txt`
+1. Run `python .github/scripts/generate_manifest.py`
+1. Locate your spec's entry in the `manifest.json` file and ensure the following fields are filled out:
+    - Spec title: an appropriate title for your specification
+    - Spec description: a short description of your specification
+    - Spec source: if this spec was first published elsewhere, provide a link to this location
+    - Spec authors: a list of people who authored the spec
+    - Spec tags:
+        - `"beginner"` if your spec is appropriate for TLA<sup>+</sup> newcomers
+    - Model runtime: approximate model runtime on an ordinary workstation, in `"HH:MM:SS"` format
+    - Model size:
+        - `"small"` if the model can be executed in less than 10 seconds
+        - `"medium"` if the model can be executed in less than five minutes
+        - `"large"` if the model takes more than five minutes to execute
+    - Model mode:
+        - `"exhaustive search"` by default
+        - `{"simulate": {"traceCount": N}}` for a simulation model
+        - `"generate"` for model trace generation
+    - Model config:
+        - `"ignore deadlock"` if your model should ignore deadlock
+    - Model result:
+        - `"success"` if the model completes successfully
+        - `"safety failure"` if the model violates an invariant
+        - `"liveness failure"` if the model fails to satisfy a liveness property
+        - `"deadlock failure"` if the model encounters deadlock
+    - Other fields are auto-generated by the script; if you are adding an entry manually, ensure their values are present and correct (see other entries or the `manifest-schema.json` file)
+
+Before submitted your changes to run in the CI, you can quickly check your `manifest.json` for errors and also check it against [`manifest-schema.json`](manifest-schema.json) at https://www.jsonschemavalidator.net/.
 
 ## List of Examples
 
-| No  | Name                              | Short description                                                                                                                                                                                                               | Spec's authors                                                                 | TLAPS Proof |                                                   TLC Check                                                   | Used modules                                                          | PlusCal  | Apalache |
-| :-: | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | :---------: | :-----------------------------------------------------------------------------------------------------------: | --------------------------------------------------------------------- | -------- | -------- |
+| # | Name | Description | Authors | TLAPS Proof? | TLC Model? | Module Dependencies | PlusCal? | Apalache? |
+|:-:|------|-------------|---------|:------------:|:----------:|---------------------|:--------:|:---------:|
 |  1  | 2PCwithBTM                        | <a href="https://github.com/tlaplus/Examples/tree/master/specifications/2PCwithBTM">A modified version of P2TCommit (Gray & Lamport, 2006)</a>                                                                                  | Murat Demirbas                                                                 |             |                                                   &#10004;                                                    | FinSet, Int, Seq                                                      | &#10004; | |
 |  2  | 802.16                            | <a href="https://github.com/tlaplus/Examples/tree/master/specifications/802.16">IEEE 802.16 WiMAX Protocols</a>                                                                                                                 | Prasad Narayana, Ruiming Chen, Yao Zhao, Yan Chen, Zhi (Judy) Fu, and Hai Zhou |             |                                                   &#10004;                                                    | Int, Seq, FinSet                                                      |          | |
 |  3  | aba-asyn-byz                      | <a href="https://github.com/tlaplus/Examples/tree/master/specifications/aba-asyn-byz">Asynchronous Byzantine agreement (Bracha & Toueg, 1985)</a>                                                                               | Thanh Hai Tran, Igor Konnov, Josef Widder                                      |             |                                                   &#10004;                                                    | Nat                                                                   |          | |
@@ -117,4 +172,6 @@ The repository is under the MIT license. However, we can upload your benchmarks 
 
 ## Support or Contact
 
-Do you have any questions or comments? Please open an issue or send an email to the [TLA+ group](https://groups.google.com/g/tlaplus).
+Do you have any questions or comments?
+Please open an issue or send an email to the [TLA+ group](https://groups.google.com/g/tlaplus).
+

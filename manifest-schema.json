@@ -1,0 +1,97 @@
+{
+  "type" : "object",
+  "required": ["specifications"],
+  "additionalProperties": false,
+  "properties" : {
+    "specifications" : {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "description", "source", "authors", "path", "tags", "modules"],
+        "additionalProperties": false,
+        "properties": {
+          "path": {"type": "string"},
+          "title": {"type": "string"},
+          "description": {"type": "string"},
+          "source": {"type": "string"},
+          "authors": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "tags": {
+            "type": "array",
+            "items": {"enum": ["beginner"]}
+          },
+          "modules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["path", "communityDependencies", "tlaLanguageVersion", "features", "models"],
+              "additionalProperties": false,
+              "properties": {
+                "path": {"type": "string"},
+                "communityDependencies": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                },
+                "tlaLanguageVersion": {"type": "number"},
+                "features": {
+                  "type": "array",
+                  "items": {"enum": ["pluscal", "proof"]}
+                },
+                "models": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["path", "runtime", "size", "mode", "config", "features", "result"],
+                    "properties": {
+                      "path": {"type": "string"},
+                      "runtime": {
+                        "type": "string",
+                        "pattern": "^(([0-9][0-9]:[0-9][0-9]:[0-9][0-9])|unknown)$"
+                      },
+                      "size": {"enum": ["small", "medium", "large", "unknown"]},
+                      "mode": {
+                        "oneOf": [
+                          {
+                            "enum": ["exhaustive search", "generate"]
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": ["simulate"],
+                            "properties": {
+                              "simulate": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": ["traceCount"],
+                                "properties": {
+                                  "traceCount": {"type": "number"}
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "config": {
+                        "type": "array",
+                        "items": {"enum": ["ignore deadlock"]}
+                      },
+                      "features": {
+                        "type": "array",
+                        "items": {"enum": ["liveness", "symmetry", "view", "alias", "state constraint"]}
+                      },
+                      "result": {"enum": ["success", "safety failure", "liveness failure", "deadlock failure", "unknown"]}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

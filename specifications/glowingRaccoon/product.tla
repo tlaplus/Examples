@@ -175,9 +175,6 @@ Spec == /\ Init
 TypeOK == 
     /\ tee \in {"Warm", "Hot", "TooHot"}
     /\ primer \in Nat
-    /\ dna \in Nat
-    /\ template \in Nat
-    /\ hybrid \in Nat
     /\ stage \in {"init","ready","annealed","extended","denatured"}
     /\ cycle \in Nat
     /\ longTemplate \in Nat

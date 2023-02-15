@@ -1,31 +1,47 @@
-## Blacklist all files
+## Ignore all files by default
 *
 
-## Whitelist TLA+ files
+## Don't ignore TLA+ files
 !*.tla
 
-## Whitelist TLC model config and results
+## Don't ignore TLC model config and results
 !*.cfg
 !*.out  ## Usually .out files are small
 
-## Whitelist Toolbox model metadata
+## Don't ignore Toolbox model metadata
 !*.launch
 
-## Whitelist Toolbox spec metadata
+## Don't ignore Toolbox spec metadata
 !.project
 !*.prefs
 
-## Whitelist PDFs
+## Don't ignore PDFs
 !*.pdf
 
-## Whitelist all folders
+## Don't ignore all folders
 !*/
 
-## Blacklist TLAPS cache folder
+## Ignore TLAPS cache folder
 ## See https://github.com/tlaplus/tlapm/issues/16
 __tlacache__
 .tlacache
 
+## Don't ignore CI files
+!.github/**
+
+## Don't ignore READMEs
+!*.md
+
+## Ignore pycache
+__pycache__
+
+## Ignore directories used for local CI testing
+CommunityModules/
+tlapm/
+tree-sitter-tlaplus/
+
+# Ignore TTrace specs
+*_TTrace_*.tla
+
 ## Blacklist tools/ folder created by .devcontainer.json
 tools/
-
