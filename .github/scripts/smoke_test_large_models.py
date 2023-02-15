@@ -5,6 +5,7 @@ and work with the spec they're supposed to be modeling.
 """
 
 import logging
+import os
 import tla_utils
 
 def check_model(module_path, model):
@@ -35,10 +36,8 @@ skip_models = [
     # before termination or else it fails. This makes it not amenable to
     # smoke testing.
     'specifications/KnuthYao/SimKnuthYao.cfg',
-    # SimTokenRing does not work on Windows systems. It doesn't seem worth
-    # it to code special logic handling this case so we just won't check it.
-    'specifications/ewd426/SimTokenRing.cfg',
-]
+    # SimTokenRing does not work on Windows systems.
+] + (['specifications/ewd426/SimTokenRing.cfg'] if os.name == 'nt' else [])
 
 large_models = [
     (module['path'], model)
