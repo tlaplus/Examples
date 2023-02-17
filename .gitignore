@@ -37,7 +37,9 @@ __pycache__
 
 ## Ignore directories used for local CI testing
 CommunityModules/
+StandardModules/
 tlapm/
+tlapm-install/
 tree-sitter-tlaplus/
 
 # Ignore TTrace specs
