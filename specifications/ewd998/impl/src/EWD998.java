@@ -88,7 +88,7 @@ public class EWD998 {
 			inbox.put(pkt);
 		}
 
-		boolean isConclusiveRound = false;
+		boolean terminationDetected = false;
 
 		// --------------------------------------------------------------------------------- //
 		
@@ -141,30 +141,8 @@ public class EWD998 {
 
 			final JsonObject msg = pkt.get(MSG).getAsJsonObject();
 
-			int tokenQ = 0;
-			Color tokenColor = null;
-			
 			// --------------------------------------------------------------------------------- //
-
-			// InitiateToken and PassToken
-			if (msg.get(TYPE).equals(TOK)) {
-				tokenQ = msg.get("q").getAsInt();
-				tokenColor = Color.valueOf(msg.get("color").getAsString());
-
-				if (isInitiator) {
-					/*
-					InitiateProbe ==
-					    /\ token.pos = 0
-					    /\ \* previous round inconclusive:
-					        \/ token.color = "black"
-					        \/ color[0] = "black"
-					        \/ counter[0] + token.q > 0
-					    /\ ...
-					    /\ UNCHANGED <<active, counter, pending>>                
-					 */
-					isConclusiveRound = tokenQ + counter == 0 && color == Color.white && tokenColor == Color.white;
-				}
-			} else if (msg.get(TYPE).equals(PL)) {
+			if (msg.get(TYPE).equals(PL)) {
 				/*
 					RecvMsg(i) ==
 					    /\ pending[i] > 0
@@ -186,7 +164,7 @@ public class EWD998 {
 				assert !active;
 				assert inbox.isEmpty();
 				return;
-			} else {
+			} else if (!msg.get(TYPE).equals(TOK)) {
 				logline.add("failure", new JsonPrimitive(String.format("Unknown message type: %s", msg.get(TYPE).getAsString())));
 				System.out.println(logline);
 				throw new IllegalArgumentException("Unknown message type");
@@ -244,33 +222,39 @@ public class EWD998 {
 			// InitiateToken and PassToken actions
 			// /\ ...
 			// /\ token.pos = i
-			if (tokenColor != null) {
-				if (isInitiator && isConclusiveRound && !active) {
-					// Send the trm message to all nodes (us included).
-					for (Integer n : nodes.keySet()) {
-						sendMsg(myId, n, getTrm());
+			if (msg.get(TYPE).equals(TOK)) {
+				final int tokenQ = msg.get("q").getAsInt();
+				final Color tokenColor = Color.valueOf(msg.get("color").getAsString());
+				if (isInitiator) {
+					final boolean isConclusive = 
+							tokenColor == Color.white &&
+							color == Color.white &&
+							tokenQ + counter == 0;
+					if (isConclusive && !active) {
+						// If the previous token round was conclusive and the initiator is inactive,
+						// send termination message to all nodes including myself.
+						for (Integer n : nodes.keySet()) {
+							sendMsg(myId, n, getTrm());
+						}
+					} else if (!isConclusive) {
+						/*
+							InitiateProbe ==
+								/\ token.pos = 0
+								/\ \* previous round inconclusive:
+									\/ token.color = "black"
+									\/ color[0] = "black"
+									\/ counter[0] + token.q > 0
+								/\ ...
+								/\ UNCHANGED <<active, counter, pending>>                
+						 */
+						sendMsg(myId, nodes.size() - 1, getTok(0, Color.white));
+						color = Color.white;
+					} else {
+						// This UNCHANGED token does not expliclty appear in the EWD998Chan spec, but
+						// can be conceptually mapped to the _vars  in  [Next]_vars  ; the InitiateToken
+						// action is *not* enabled.
+						inbox.add(pkt);
 					}
-					tokenColor = null;
-				} else if (isInitiator && !isConclusiveRound) {
-					/*
- 				       terminationDetected ==
-						  /\ token.pos = 0
-						  /\ token.color = "white"
-						  /\ token.q + counter[0] = 0
-						  /\ color[0] = "white"
-						  /\ ~ active[0]
-
-					 */
-					/*
-						InitiateProbe ==
-						    /\ ...
-						    /\ token' = [ pos |-> N-1, q |-> 0, color |-> "white"]
-						    /\ color' = [ color EXCEPT ![0] = "white" ]
-						    /\ UNCHANGED <<active, counter, pending>>                
-					 */
-					sendMsg(myId, nodes.size() - 1, getTok(0, Color.white));
-					color = Color.white;
-					tokenColor = null;
 				} else if (!active) {
 					/*
 						PassToken(i) ==
@@ -284,8 +268,6 @@ public class EWD998 {
  					 */
 					sendMsg(myId, myId - 1, getTok(tokenQ + counter, color == Color.black ? Color.black : tokenColor));
 					color = Color.white;
-
-					tokenColor = null;
 				} else {
 					// This node owns the token and is active; keep the unchanged token.
 					/*
