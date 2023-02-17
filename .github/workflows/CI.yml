@@ -68,6 +68,21 @@ jobs:
           tar -xf $TLAPS_VERSION.tar.gz
           rm $TLAPS_VERSION.tar.gz
           mv tlapm-$TLAPS_VERSION deps/tlapm
+      - name: Install TLAPS (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          wget https://github.com/tlaplus/tlapm/releases/download/$TLAPS_VERSION/tlaps-1.5.0-x86_64-linux-gnu-inst.bin
+          chmod +x tlaps-1.5.0-x86_64-linux-gnu-inst.bin
+          ./tlaps-1.5.0-x86_64-linux-gnu-inst.bin -d tlapm-install
+      - name: Install TLAPS (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          wget https://github.com/tlaplus/tlapm/releases/download/$TLAPS_VERSION/tlaps-1.5.0-i386-darwin-inst.bin
+          chmod +x tlaps-1.5.0-i386-darwin-inst.bin
+          ./tlaps-1.5.0-i386-darwin-inst.bin -d tlapm-install
+      - name: Check Proofs
+        if: matrix.os != 'windows-latest'
+        run: python $SCRIPT_DIR/check_proofs.py
       - name: Check manifest.json format
         shell: bash
         run: |
