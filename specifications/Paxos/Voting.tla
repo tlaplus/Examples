@@ -3,7 +3,7 @@
 (* This is a high-level algorithm in which a set of processes              *)
 (* cooperatively choose a value.                                           *)
 (***************************************************************************)
-EXTENDS Integers 
+EXTENDS Integers, TLAPS
 -----------------------------------------------------------------------------
 CONSTANT Value,     \* The set of choosable values.
          Acceptor,  \* A set of processes that will choose a value.
@@ -190,11 +190,7 @@ THEOREM Spec => C!Spec
 <1>1. Inv /\ Init => C!Init
 <1>2. Inv /\ [Next]_<<votes, maxBal>> => [C!Next]_chosen
 <1>3. QED
-  <2>1. []Inv /\ [][Next]_<<votes, maxBal>> => [][C!Next]_chosen
-    BY <1>2 \* and temporal reasoning
-  <2>2. []Inv /\ Spec => C!Spec
-    BY <2>1, <1>1
-  <2>3. QED
-    BY <2>2, Invariance
+  BY <1>1, <1>2, Invariance, PTL DEF Spec, C!Spec
+
 =============================================================================
 

@@ -1,5 +1,5 @@
 ----------------------------- MODULE Consensus ------------------------------ 
-EXTENDS Naturals, FiniteSets
+EXTENDS Naturals, FiniteSets, TLAPS, FiniteSetTheorems
 
 CONSTANT Value 
   (*************************************************************************)
@@ -38,12 +38,15 @@ Inv == /\ TypeOK
 
 THEOREM Invariance == Spec => []Inv
 <1>1. Init => Inv
+  BY FS_EmptySet DEF Init, Inv, TypeOK
 <1>2. Inv /\ [Next]_chosen => Inv'
-<1>3. QED
-  <2>1. Inv /\ [][Next]_chosen => []Inv
-    BY <1>2 \* and a TLA proof rule
-  <2>2. QED
-    BY <1>1, <2>1  \* and simple logic
+  <2>1. Inv /\ Next => Inv'
+    BY FS_Singleton DEF Inv, TypeOK, Next
+  <2>2. Inv /\ UNCHANGED chosen => Inv'
+    BY DEF Inv, TypeOK
+  <2>. QED  BY <2>1, <2>2
+<1>3. QED   BY <1>1, <1>2, PTL DEF Spec
+
 -----------------------------------------------------------------------------
 (***************************************************************************)
 (* Liveness: A value is eventually chosen.                                 *)

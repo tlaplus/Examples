@@ -15,7 +15,7 @@
 (* eventually chosen.                                                      *)
 (***************************************************************************)
 
-EXTENDS Naturals, FiniteSets
+EXTENDS Naturals, FiniteSets, TLAPS, FiniteSetTheorems
   (*************************************************************************)
   (* Imports standard modules that define operators of arithmetic on       *)
   (* natural numbers and the Cardinality operator, where Cardinality(S) is *)
@@ -75,11 +75,15 @@ Inv == /\ TypeOK
 (***************************************************************************)
 THEOREM Invariance  ==  Spec => []Inv
 <1>1. Init => Inv
-
+  BY FS_EmptySet DEF Init, Inv, TypeOK
 <1>2. Inv /\ [Next]_chosen  => Inv'
-
+  <2>1. Inv /\ Next => Inv'
+    BY FS_Singleton DEF Next, Inv, TypeOK
+  <2>2. Inv /\ UNCHANGED chosen => Inv'
+    BY DEF Inv, TypeOK
+  <2>. QED  BY <2>1, <2>2
 <1>3. QED
-  BY <1>1, <1>2 DEF Spec
+  BY <1>1, <1>2, PTL DEF Spec
   
 (***************************************************************************)
 (* If you are reading this specification in the Toolbox as you should be   *)

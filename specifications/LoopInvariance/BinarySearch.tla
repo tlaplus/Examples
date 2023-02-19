@@ -127,6 +127,8 @@ THEOREM Spec => []resultCorrect
                PROVE  Inv'
     OBVIOUS
   <2>1. CASE a
+    <3>. UNCHANGED <<seq, val>>
+      BY <2>1 DEF a
     <3>1. CASE low =< high /\ result = 0
       <4> DEFINE mid == (low + high) \div 2 
                  mval == seq[mid]  
@@ -210,7 +212,7 @@ THEOREM Spec => []resultCorrect
                     /\ \E j \in 1..Len(seq) : seq[j] = val
                 BY <2>1, <3>1, <5>2, <6>2, <7>5 DEF a, mid
               <8>5. QED
-               BY ONLY <7>2, <8>4, <8>3 \* , <8>5
+               BY <7>2, <8>4, <8>3 \* , <8>5
             <7>6. CASE ~(val < seq[mid])
               <8> HIDE DEF mid 
               <8>1. seq[mid] < seq[i]
@@ -223,7 +225,7 @@ THEOREM Spec => []resultCorrect
                     /\ \E j \in 1..Len(seq) : seq[j] = val
                 BY <2>1, <3>1, <5>2, <6>2, <7>6 DEF a, mid
               <8>5. QED
-               BY ONLY <7>2, <8>4, <8>3 \* , <8>5
+               BY <7>2, <8>4, <8>3 \* , <8>5
             <7>7. QED
               BY <7>5, <7>6            
           <6>3. CASE ~ \E i \in 1..Len(seq) : seq[i] = val
@@ -250,6 +252,7 @@ THEOREM Spec => []resultCorrect
   BY <1>1, <1>2, <1>3, PTL DEF Spec
 =============================================================================
 \* Modification History
+\* Last modified Fri Feb 17 16:12:03 CET 2023 by merz
 \* Last modified Tue Aug 27 12:59:52 PDT 2019 by loki
 \* Last modified Fri May 03 16:28:58 PDT 2019 by lamport
 \* Created Wed Apr 17 15:15:12 PDT 2019 by lamport

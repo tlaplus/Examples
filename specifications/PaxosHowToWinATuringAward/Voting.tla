@@ -9,7 +9,7 @@
 (* mind been distracted by the irrelevant details introduced by having the *)
 (* processes communicate by messages.                                      *)
 (***************************************************************************)
-EXTENDS Integers
+EXTENDS Integers, TLAPS
 
 (***************************************************************************)
 (* For historical reasons, the processes that choose a value are called    *)
@@ -242,7 +242,7 @@ THEOREM  Invariance  ==  Spec => []Inv
 <1>2. Inv /\ [Next]_<<votes, maxBal>> => Inv'
 
 <1>3. QED
-  BY <1>1, <1>2 DEF Spec
+  BY <1>1, <1>2, PTL DEF Spec
 -----------------------------------------------------------------------------
 (***************************************************************************)
 (* This INSTANCE statement imports definitions from module Consensus into  *)
@@ -275,7 +275,7 @@ THEOREM  Implementation  ==  Spec  => C!Spec
 <1>2. Inv /\ Inv' /\ [Next]_<<votes, maxBal>>  => [C!Next]_chosen
 
 <1>3. QED
-  BY <1>1, <1>2, Invariance DEF Spec, C!Spec
+  BY <1>1, <1>2, Invariance, PTL DEF Spec, C!Spec
 
 (***************************************************************************)
 (* This Voting specification comes with a TLC model named SmallModel.      *)
