@@ -1,6 +1,6 @@
 from datetime import datetime
 import json
-from os.path import normpath
+from os.path import normpath, pathsep
 import subprocess
 
 def ignore(ignored_dirs, path):
@@ -92,7 +92,7 @@ def check_model(module_path, model_path, mode, config, timeout):
                 '-Dtlc2.TLC.ide=Github',
                 '-Dutil.ExecutionStatisticsCollector.id=abcdef60f238424fa70d124d0c77ffff',
                 '-XX:+UseParallelGC',
-                '-cp', f'tla2tools.jar:{tlaps_modules}',
+                '-cp', pathsep.join(['tla2tools.jar', tlaps_modules]),
                 'tlc2.TLC',
                 module_path,
                 '-config', model_path,

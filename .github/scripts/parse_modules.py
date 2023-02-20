@@ -5,7 +5,7 @@ Parse all modules in the manifest with SANY.
 from concurrent.futures import ThreadPoolExecutor
 import logging
 from os import cpu_count
-from os.path import dirname, normpath
+from os.path import dirname, normpath, pathsep
 import subprocess
 import tla_utils
 
@@ -18,10 +18,10 @@ def parse_module(path):
     Parse the given module using SANY.
     """
     logging.info(path)
-    search_paths = ':'.join([dirname(path), tlaps_modules, community_modules])
+    search_paths = pathsep.join(['tla2tools.jar', dirname(path), tlaps_modules, community_modules])
     sany = subprocess.run([
         'java',
-        '-cp', f'tla2tools.jar:{search_paths}',
+        '-cp', search_paths,
         'tla2sany.SANY',
         '-error-codes',
         path
