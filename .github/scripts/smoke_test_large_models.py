@@ -12,7 +12,6 @@ def check_model(module_path, model):
     model_path = model['path']
     logging.info(model_path)
     tlc, hit_timeout = tla_utils.check_model(
-        'tla2tools.jar',
         module_path,
         model_path,
         model['mode'],

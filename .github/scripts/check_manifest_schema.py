@@ -5,7 +5,6 @@ Learn about the JSON schema format at
 https://json-schema.org/understanding-json-schema/
 """
 
-import json
 from jsonschema import validate
 import tla_utils
 
