@@ -86,6 +86,7 @@ jobs:
       - name: Smoke-test manifest generation script
         shell: bash
         run: |
+          rm -r build
           python $SCRIPT_DIR/generate_manifest.py
           git diff -a
 

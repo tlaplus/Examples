@@ -6,7 +6,6 @@ no files in .ciignore are in the manifest.json.
 """
 
 from collections import Counter
-import json
 from os.path import normpath
 import glob
 import tla_utils
