@@ -358,7 +358,7 @@ THEOREM Spec => []MutualExclusion
     <3>2. CASE /\ \E i \in {j \in Nat : j > max[self]}:
                        num' = [num EXCEPT ![self] = i]
                /\ pc' = [pc EXCEPT ![self] = "e4"]
-      BY <3>2, Z3 DEF Inv
+      BY <3>2, SMTT(60) DEF Inv
     <3>3. QED  BY <3>1, <3>2, <2>4 DEF e3
   <2>5. ASSUME NEW self \in Procs,
                e4(self)
@@ -456,7 +456,7 @@ ISpec == IInit /\ [][Next]_vars
              
 =============================================================================
 \* Modification History
-\* Last modified Sat Mar 07 08:41:02 CET 2020 by merz
+\* Last modified Mon Mar 06 13:47:10 CET 2023 by merz
 \* Last modified Tue Aug 27 12:23:10 PDT 2019 by loki
 \* Last modified Sat May 19 16:40:23 CEST 2018 by merz
 \* Last modified Thu May 17 07:02:45 PDT 2018 by lamport
