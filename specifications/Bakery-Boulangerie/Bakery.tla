@@ -395,7 +395,7 @@ THEOREM Spec => []MutualExclusion
   <2>7. ASSUME NEW self \in Procs,
                w2(self)
         PROVE  Inv'
-    BY <2>7, Z3 DEF w2, Inv
+    BY <2>7, Z3T(30) DEF w2, Inv
   <2>8. ASSUME NEW self \in Procs,
                cs(self)
         PROVE  Inv'
