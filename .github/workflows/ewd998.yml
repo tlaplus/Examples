@@ -25,7 +25,7 @@ jobs:
         i="0"
         while [ $i -lt 50 ]; do
           java -cp impl/bin/:impl/lib/gson-2.8.6.jar EWD998App 1 > trace.ndjson
-          java -jar ../../tla2tools.jar -noTE EWD998ChanTrace || exit 1
+          JSON=trace.ndjson java -jar ../../tla2tools.jar -noTE EWD998ChanTrace || exit 1
           sleep 3;
           i=$[$i+1]
         done

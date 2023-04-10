@@ -10,7 +10,7 @@ JsonLog ==
      \* Run TLC with (assuming a suitable "tlc" shell alias):
      \* $ JSON=impl/EWD998ChanTrace-01.ndjson tlc -note EWD998ChanTrace
      \* Fall back to trace.ndjson if the JSON environment variable is not set.
-    ndJsonDeserialize(IF "JSON" \in DOMAIN IOEnv THEN IOEnv.JSON ELSE "trace.ndjson")
+    ndJsonDeserialize(IF "JSON" \in DOMAIN IOEnv THEN IOEnv.JSON ELSE "specifications/ewd998/EWD998ChanTrace.ndjson")
 
 TraceN ==
     \* The first line of the log statement has the number of nodes.

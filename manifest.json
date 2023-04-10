@@ -3143,6 +3143,23 @@
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
+        },
+        {
+          "path": "specifications/ewd998/EWD998ChanTrace.tla",
+          "communityDependencies": ["VectorClocks", "IOUtils"],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd998/EWD998ChanTrace.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "config": [],
+              "features": ["alias", "view"],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
