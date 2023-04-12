@@ -114,6 +114,7 @@ A central manifest of specs with descriptions and accounts of their various mode
 | 97 | Coffee Can White/Black Bean Problem | <a href="specifications/CoffeeCan">Directory</a> | Andrew Helwer | | &#10004; | Naturals | | |
 | 98 | The Slush Protocol | <a href="specifications/SlushProtocol">Directory</a> | Andrew Helwer | | &#10004; | Naturals, FiniteSets, Sequences | &#10004; | |
 | 99 | SDP (Software Defined Perimeter) | <a href="https://github.com/10227694/SDP_Verification">Specifying and Verifying SDP Protocol based Zero Trust Architecture</a> | Luming Dong, Zhi Niu | | &#10004;| FiniteSets, Sequences, Naturals |  |
+| 100 | Simplified Fast Paxos | <a href="https://github.com/tlaplus/Examples/tree/master/specifications/SimplifiedFastPaxos">Simplified version of Fast Paxos (Lamport, 2006)</a> | Lim Ngian Xin Terry, Gaurav Gandhi | |&#10004;| TLC, Naturals, FiniteSets, Integers | | |
 
 ## License
 

@@ -1172,6 +1172,56 @@
       ]
     },
     {
+      "path": "specifications/SimplifiedFastPaxos",
+      "title": "SimplifiedFastPaxos",
+      "description": "Simplified Fast Paxos",
+      "source": "",
+      "authors": ["Leslie Lamport"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/SimplifiedFastPaxos/FastPaxos.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SimplifiedFastPaxos/FastPaxos.cfg",
+              "runtime": "unknown",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "config": [],
+              "features": [
+                "liveness",
+                "symmetry"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SimplifiedFastPaxos/Paxos.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SimplifiedFastPaxos/Paxos.cfg",
+              "runtime": "unknown",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "config": [],
+              "features": [
+                "liveness",
+                "symmetry"
+              ],
+              "result": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "path": "specifications/SingleLaneBridge",
       "title": "Single-Lane Bridge Problem",
       "description": "Controlling cars moving over a single-lange bridge in opposite directions",
@@ -2737,7 +2787,9 @@
                   "traceCount": 100
                 }
               },
-              "config": ["ignore deadlock"],
+              "config": [
+                "ignore deadlock"
+              ],
               "features": [
                 "alias",
                 "liveness"
@@ -2814,7 +2866,9 @@
                   "traceCount": 100
                 }
               },
-              "config": ["ignore deadlock"],
+              "config": [
+                "ignore deadlock"
+              ],
               "features": [
                 "alias"
               ],
