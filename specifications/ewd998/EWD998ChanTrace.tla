@@ -37,6 +37,7 @@ TraceLog ==
 TraceInit ==
     /\ Init!1
     /\ Init!2
+    \* We happen to know that in the implementation all nodes are initially empty and white.
     /\ active \in [Node -> {TRUE}]
     /\ color \in [Node -> {"white"}]
 
@@ -61,45 +62,27 @@ PayloadPred(msg) ==
 IsInitiateToken(l) ==
     \* Log statement was printed by the sender (initiator).
     /\ l.event = ">"
-    /\ LET msg == l.pkt.msg 
-           snd == l.pkt.snd 
-           rcv == l.pkt.rcv IN
-        \* Log statement is about a token message.
-        /\ msg.type = "tok"
-        \* Log statement show N-1 to be receiver and 0 to be the sender.
-        /\ rcv = N - 1
-        /\ snd = 0
-        \* The senders's inbox contains a tok message in the current state.
-        /\ \E idx \in DOMAIN inbox[snd]:
-                inbox[snd][idx].type = "tok"
-        \* The senders's inbox contains no longer the token in the next state.
-        /\ snd # rcv => \A idx \in DOMAIN inbox'[snd]:
-                            inbox'[snd][idx].type # "tok"
-        \* Sender has *not* to be inactive to initiate the token!
-        /\ UNCHANGED <<active, counter>>                            
+    \* Log statement is about a token message.
+    /\ l.pkt.msg.type = "tok"
+    \* Log statement show N-1 to be receiver and 0 to be the sender.
+    /\ l.pkt.rcv = N - 1
+    /\ l.pkt.snd = 0
+    /\ <<InitiateProbe>>_vars
     
 IsPassToken(l) ==
     \* Log statement was printed by the sender.
     /\ l.event = ">"
-    /\ LET msg == l.pkt.msg 
-           snd == l.pkt.snd 
-           rcv == l.pkt.rcv IN
-        \* Log statement is about a token message.
-        /\ msg.type = "tok"
-        \* The sender's inbox contains a tok message in the current state.
-        /\ \E idx \in DOMAIN inbox[snd]:
-            /\ inbox[snd][idx].type = "tok"
-            /\ inbox[snd][idx].q + counter[snd] = msg.q
-            /\ msg.color = IF color[snd] = "black" 
-                        THEN "black"
-                        ELSE inbox[snd][idx].color
-        \* The sender's inbox contains no tok message in the next state.
-        /\ \A idx \in DOMAIN inbox'[snd]:
-                inbox'[snd][idx].type # "tok"
-        \* Sender has to be inactive to pass the token, i.e.,
-        /\ ~active[snd]
-        /\ UNCHANGED <<active, counter>>                            
+    \* Log statement is about a token message.
+    /\ l.pkt.msg.type = "tok"
+    /\ LET snd == l.pkt.snd IN
+        \* The high-level spec precludes the initiator from passing the token in the
+         \* the  System  formula by remove the initiator from the set of all nodes.  Here,
+         \* we model this by requiring that the sender is not the initiator. 
+        /\ l.pkt.snd > 0
+        /\ <<PassToken(snd)>>_vars
     
+\* Note that there is no corresponding sub-action in the high-level spec!  This constraint
+ \* is true of any sub-action that appends a tok message to the receiver's inbox. 
 IsRecvToken(l) ==
     \* Log statement was printed by the receiver.
     /\ l.event = "<"
@@ -120,47 +103,26 @@ IsRecvToken(l) ==
 IsSendMsg(l) ==
     \* Log statement was printed by the sender.
     /\ l.event = ">"
-    /\ LET msg == l.pkt.msg 
-           rcv == l.pkt.rcv
-           snd == l.pkt.snd IN
-        \* Log statement is about a payload message. 
-        /\ msg.type = "pl"
-        \* Sender has to be active to send a message.
-        /\ active[snd]
-        \* Sender increments its counter.
-        /\ counter'[snd] = counter[snd] + 1
-        \* The sender's inbox remains unchanged, bu the receivers's inbox contains one more
+    \* Log statement is about a payload message. 
+    /\ l.pkt.msg.type = "pl"
+    /\ <<SendMsg(l.pkt.snd)>>_vars
+    /\ LET rcv == l.pkt.rcv IN
+        \* The sender's inbox remains unchanged, but the receivers's inbox contains one more
          \* pl message.  In the implementation, the message is obviously in flight, i.e. it 
          \* is send via the wire to the receiver.  However, the  SendMsg  action models it
          \* such that the message is atomically appended to the receiver's inbox. 
-        /\ Len(SelectSeq(inbox[rcv], PayloadPred)) < Len(SelectSeq(inbox'[rcv], PayloadPred))
-        /\ UNCHANGED <<active, color>>                            
+        Len(SelectSeq(inbox[rcv], PayloadPred)) < Len(SelectSeq(inbox'[rcv], PayloadPred))
 
 IsRecvMsg(l) ==
     \* Log statement was printed by the receiver.
     /\ l.event = "<"
-    /\ LET msg == l.pkt.msg 
-           rcv == l.pkt.rcv IN
-        \* Log statement is about a payload message.
-        /\ msg.type = "pl"
-        \* Receiving a message activates, decrements the counter, and changes the color of the
-         \* receiver.
-        /\ active' = [active EXCEPT ![rcv] = TRUE]
-        /\ counter' = [counter EXCEPT ![rcv] = @ - 1]
-        /\ color' = [ color EXCEPT ![rcv] = "black" ]
-        \* Even though the name of the action suggests that there is one *more* pl message in
-         \* the receiver's inbox, the action  RecvMsg  removes the pl message from the node's
-         \* inbox.  Thus, thee receiver's inbox contains one less pl message in the next state.
-        /\ Len(SelectSeq(inbox[rcv], PayloadPred)) > Len(SelectSeq(inbox'[rcv], PayloadPred))
+    /\ l.pkt.msg .type = "pl"
+    /\ <<RecvMsg(l.pkt.rcv)>>_vars
 
 IsDeactivate(l) ==
     \* Log statement was printed by the receiver.
     /\ l.event = "d"
-    /\ LET node == l.node IN
-        \* The receiver and only the receiver transitions to inactive.
-        /\ active[node]
-        /\ active' = [active EXCEPT ![node] = FALSE]
-        /\ UNCHANGED <<color, inbox, counter>>
+    /\ <<Deactivate(l.node)>>_vars
 
 IsTrm(l) ==
     \* "trm" messages are not part of EWD998, and, thus, not modeled in EWD998Chan.  We map
