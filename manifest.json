@@ -1331,10 +1331,13 @@
     },
     {
       "path": "specifications/SimplifiedFastPaxos",
-      "title": "SimplifiedFastPaxos",
-      "description": "Simplified Fast Paxos",
+      "title": "Simplified Fast Paxos",
+      "description": "Spec of simplified Fast Paxos from Lamport's 2006 paper Fast Paxos",
       "source": "",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Lim Ngian Xin Terry",
+        "Gaurav Gandhi"
+      ],
       "tags": [],
       "modules": [
         {
@@ -1345,7 +1348,7 @@
           "models": [
             {
               "path": "specifications/SimplifiedFastPaxos/FastPaxos.cfg",
-              "runtime": "unknown",
+              "runtime": "00:00:30",
               "size": "medium",
               "mode": "exhaustive search",
               "config": [],
@@ -1365,8 +1368,8 @@
           "models": [
             {
               "path": "specifications/SimplifiedFastPaxos/Paxos.cfg",
-              "runtime": "unknown",
-              "size": "medium",
+              "runtime": "00:00:05",
+              "size": "small",
               "mode": "exhaustive search",
               "config": [],
               "features": [

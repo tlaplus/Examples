@@ -89,19 +89,7 @@ PROOF
   \* The inductive case; usually requires breaking down Next into disjuncts
   <1>c. TypeOK /\ Next => TypeOK'
     <2>a. TypeOK /\ lb => TypeOK'
-      \* SUFFICES steps transform P => Q goals into Q goals, while assuming P
-      <3> SUFFICES  ASSUME TypeOK, lb
-                    PROVE TypeOK'
-          OBVIOUS
-      \* Making this a non-named step expands TypeOK and lb definitions for
-      \* all subsequent & recursive steps in this sub-proof, without requiring
-      \* the step to explicitly use BY DEFS TypeOK, lb
-      <3> USE DEFS TypeOK, lb
-      <3>a. CASE i <= Len(f) BY DEF max
-      <3>b. CASE ~(i <= Len(f))
-        <4>a. UNCHANGED <<f, h, i>> BY <3>b
-        <4> QED BY <3>b, <4>a DEF lb
-      <3> QED BY <3>a, <3>b
+      BY DEFS TypeOK, lb, max
     <2>b. TypeOK /\ Terminating => TypeOK'
       BY DEFS TypeOK, Terminating, vars
     <2> QED BY <2>a, <2>b DEF Next
@@ -119,37 +107,11 @@ PROOF
     BY DEFS Init, InductiveInvariant
   <1>b. InductiveInvariant /\ UNCHANGED vars => InductiveInvariant'
     BY DEFS InductiveInvariant, vars
-  \* Here we introduce TypeOK and TypeOK' as powerful assumptions, since we
-  \* have already proved that Spec => []TypeOK. Note that TypeOK is a
-  \* separate assumption from TypeOK' - including both can be the difference
-  \* between a proof being impossible or trivial!
   <1>c. InductiveInvariant /\ TypeOK /\ TypeOK' /\ Next => InductiveInvariant'
     <2>a. InductiveInvariant /\ Terminating => InductiveInvariant'
       BY DEFS InductiveInvariant, Terminating, vars
-    <2>b. InductiveInvariant /\ TypeOK /\ TypeOK' /\ lb => InductiveInvariant'
-      <3> SUFFICES  ASSUME InductiveInvariant, TypeOK, TypeOK', lb
-                    PROVE InductiveInvariant'
-          OBVIOUS
-      <3> USE DEF TypeOK
-      <3>a. CASE i <= Len(f)
-        <4>a. f[i] <= h' BY <3>a DEFS lb, max
-        <4>b. h <= h' BY <3>a DEFS lb, max
-        <4>c. \A idx \in 1..i : f[idx] <= h'
-          BY <4>a, <4>b DEF InductiveInvariant
-        <4>d. i = i' - 1 BY <3>a DEF lb
-        <4>e. UNCHANGED f
-          BY DEF lb
-        \* These steps are annotated to use the Zenon prover, which succeeds
-        \* immediately; otherwise we have to wait for other solvers to have
-        \* their turn and fail.
-        <4>f. \A idx \in 1..(i' - 1) : f'[idx] <= h'
-          BY Zenon, <4>c, <4>d, <4>e
-        <4> QED
-          BY Zenon, <4>f DEF InductiveInvariant
-      <3>b. CASE ~(i <= Len(f))
-        <4> UNCHANGED <<f, h, i>> BY <3>b DEF lb
-        <4> QED BY DEF InductiveInvariant
-      <3> QED BY <3>a, <3>b DEF lb
+    <2>b. InductiveInvariant /\ TypeOK /\ lb => InductiveInvariant'
+      BY DEFS InductiveInvariant, TypeOK, lb, max
     <2> QED BY <2>a, <2>b DEF Next
   \* We need to note we made use of the type invariant theorem here
   <1> QED BY PTL, <1>a, <1>b, <1>c, TypeInvariantHolds DEF Spec
@@ -167,21 +129,7 @@ PROOF
     <2>a. DoneIndexValue /\ Terminating => DoneIndexValue'
       BY DEFS DoneIndexValue, Terminating, vars
     <2>b. DoneIndexValue /\ TypeOK /\ lb => DoneIndexValue'
-      <3> SUFFICES  ASSUME DoneIndexValue, TypeOK, lb
-                    PROVE DoneIndexValue'
-          OBVIOUS
-      <3> USE DEFS DoneIndexValue, TypeOK, lb
-      <3>a. CASE i <= Len(f)
-        <4>a. pc' /= "Done" BY <3>a
-        <4> QED BY <3>a, <4>a DEF lb
-      <3>b. CASE ~(i <= Len(f))
-        <4>b. i \in 1..(Len(f) + 1) BY DEF TypeOK
-        <4>c. i = Len(f) + 1 BY <3>b, <4>b
-        <4>d. UNCHANGED <<f, i>> BY <3>b
-        <4>e. i' = Len(f') + 1 BY <4>c, <4>d
-        <4>f. pc' = "Done" BY <3>b
-        <4> QED BY <4>e, <4>f DEF DoneIndexValue
-      <3> QED BY <3>a, <3>b DEF lb
+      BY DEFS DoneIndexValue, TypeOK, lb
     <2> QED BY <2>a, <2>b DEF Next
   <1> QED BY PTL, <1>a, <1>b, <1>c, TypeInvariantHolds DEF Spec
 
@@ -210,28 +158,7 @@ PROOF
         /\ DoneIndexValue'
         /\ lb
         => Correctness'
-      <3> SUFFICES ASSUME
-            Correctness,
-            InductiveInvariant',
-            DoneIndexValue',
-            lb
-          PROVE
-            Correctness'
-          OBVIOUS
-      <3>a. CASE i <= Len(f)
-        <4>a. pc' /= "Done" BY <3>a DEF lb
-        <4> QED BY <3>a, <4>a DEFS Correctness, lb
-      <3>b. CASE ~(i <= Len(f))
-        <4>a. pc' = "Done" BY <3>b DEF lb
-        <4>b. i' = Len(f') + 1 BY <4>a DEF DoneIndexValue
-        <4>c. DOMAIN f' = 1..Len(f') BY lb
-        <4>d. DOMAIN f' = 1..(i' - 1) BY <4>b, <4>c
-        <4>e. \A idx \in 1..(i' - 1) : f'[idx] <= h'
-          BY DEF InductiveInvariant
-        <4>f. \A idx \in DOMAIN f' : f'[idx] <= h'
-          BY <4>d, <4>e
-        <4> QED BY <4>f DEF Correctness
-      <3> QED BY <3>a, <3>b, lb
+      BY DEFS Correctness, InductiveInvariant, DoneIndexValue, lb
     <2> QED BY <2>a, <2>b DEF Next
   <1> QED
     BY
