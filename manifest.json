@@ -146,6 +146,57 @@
       ]
     },
     {
+      "path": "specifications/CheckpointCoordination",
+      "title": "Distributed Checkpoint/Snapshot Coordination",
+      "description": "An algorithm for controlling checkpoint leases in a Paxos ring",
+      "source": "https://github.com/Azure/RingMaster",
+      "authors": [
+        "Andrew Helwer"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/CheckpointCoordination/CheckpointCoordination.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/CheckpointCoordination/MCCheckpointCoordination.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/CheckpointCoordination/MCCheckpointCoordination.cfg",
+              "runtime": "00:01:00",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "config": [],
+              "features": [
+                "state constraint",
+                "symmetry"
+              ],
+              "result": "success"
+            },
+            {
+              "path": "specifications/CheckpointCoordination/MCCheckpointCoordinationFailure.cfg",
+              "runtime": "00:00:10",
+              "size": "small",
+              "mode": "exhaustive search",
+              "config": [],
+              "features": [
+                "state constraint",
+                "symmetry"
+              ],
+              "result": "safety failure"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "path": "specifications/CigaretteSmokers",
       "title": "The Cigarette Smokers Problem",
       "description": "A concurrency problem described in 1971 by Suhas Patil",
@@ -504,6 +555,113 @@
               "result": "unknown"
             }
           ]
+        }
+      ]
+    },
+    {
+      "path": "specifications/LearnProofs",
+      "title": "Learn TLA⁺ Proofs",
+      "description": "Some specs of very simple algorithms & formal proofs of their correctness",
+      "source": "",
+      "authors": [
+        "Andrew Helwer"
+      ],
+      "tags": [
+        "beginner"
+      ],
+      "modules": [
+        {
+          "path": "specifications/LearnProofs/AddTwo.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/LearnProofs/FindHighest.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/LearnProofs/MCFindHighest.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/LearnProofs/MCFindHighest.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "config": [],
+              "features": [
+                "state constraint"
+              ],
+              "result": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "specifications/LeastCircularSubstring",
+      "title": "Lexicographically-Least Circular Substring",
+      "description": "Booth's 1980 algorithm to find the lexicographically-least circular substring",
+      "source": "",
+      "authors": [
+        "Andrew Helwer"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/LeastCircularSubstring/LeastCircularSubstring.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/LeastCircularSubstring/MCLeastCircularSubstring.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/LeastCircularSubstring/MCLeastCircularSubstringMedium.cfg",
+              "runtime": "00:01:00",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "config": [],
+              "features": [],
+              "result": "success"
+            },
+            {
+              "path": "specifications/LeastCircularSubstring/MCLeastCircularSubstringSmall.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "config": [],
+              "features": [],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/LeastCircularSubstring/ZSequences.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
         }
       ]
     },
@@ -1173,10 +1331,13 @@
     },
     {
       "path": "specifications/SimplifiedFastPaxos",
-      "title": "SimplifiedFastPaxos",
-      "description": "Simplified Fast Paxos",
+      "title": "Simplified Fast Paxos",
+      "description": "Spec of simplified Fast Paxos from Lamport's 2006 paper Fast Paxos",
       "source": "",
-      "authors": ["Leslie Lamport"],
+      "authors": [
+        "Lim Ngian Xin Terry",
+        "Gaurav Gandhi"
+      ],
       "tags": [],
       "modules": [
         {
@@ -1187,7 +1348,7 @@
           "models": [
             {
               "path": "specifications/SimplifiedFastPaxos/FastPaxos.cfg",
-              "runtime": "unknown",
+              "runtime": "00:00:30",
               "size": "medium",
               "mode": "exhaustive search",
               "config": [],
@@ -1207,8 +1368,8 @@
           "models": [
             {
               "path": "specifications/SimplifiedFastPaxos/Paxos.cfg",
-              "runtime": "unknown",
-              "size": "medium",
+              "runtime": "00:00:05",
+              "size": "small",
               "mode": "exhaustive search",
               "config": [],
               "features": [

@@ -113,8 +113,11 @@ A central manifest of specs with descriptions and accounts of their various mode
 | 96 | Nano Blockchain Protocol | <a href="specifications/NanoBlockchain">Directory</a> | Andrew Helwer | | &#10004; | Naturals, Bags | | |
 | 97 | Coffee Can White/Black Bean Problem | <a href="specifications/CoffeeCan">Directory</a> | Andrew Helwer | | &#10004; | Naturals | | |
 | 98 | The Slush Protocol | <a href="specifications/SlushProtocol">Directory</a> | Andrew Helwer | | &#10004; | Naturals, FiniteSets, Sequences | &#10004; | |
-| 99 | SDP (Software Defined Perimeter) | <a href="https://github.com/10227694/SDP_Verification">Specifying and Verifying SDP Protocol based Zero Trust Architecture</a> | Luming Dong, Zhi Niu | | &#10004;| FiniteSets, Sequences, Naturals |  |
+| 99 | SDP (Software Defined Perimeter) | <a href="https://github.com/10227694/SDP_Verification">Specifying and Verifying SDP Protocol based Zero Trust Architecture</a> | Luming Dong, Zhi Niu | | &#10004;| FiniteSets, Sequences, Naturals | | |
 | 100 | Simplified Fast Paxos | <a href="https://github.com/tlaplus/Examples/tree/master/specifications/SimplifiedFastPaxos">Simplified version of Fast Paxos (Lamport, 2006)</a> | Lim Ngian Xin Terry, Gaurav Gandhi | |&#10004;| TLC, Naturals, FiniteSets, Integers | | |
+| 101 | Learn TLA⁺ Proofs | <a href="specifications/LearnProofs">Basic PlusCal algorithms and formal proofs of their correctness</a> | Andrew Helwer | &#10004; | &#10004; | Sequences, Naturals, Integers, TLAPS | &#10004; | |
+| 102 | Lexicographically-Least Circular Substring | <a href="specifications/LeastCircularSubstring">Booth's 1980 algorithm to find the lexicographically-least circular substring</a> | Andrew Helwer | | &#10004; | FiniteSets, Integers, Naturals, Sequences | &#10004; | |
+| 103 | Distributed Checkpoint Coordination | <a href="specifications/LeastCircularSubstring">Algorithm for coordinating checkpoint/snapshot leases in a Paxos ring</a> | Andrew Helwer | | &#10004; | FiniteSets, Naturals, Sequences, TLC | | |
 
 ## License
 
