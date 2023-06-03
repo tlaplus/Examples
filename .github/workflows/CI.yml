@@ -41,10 +41,7 @@ jobs:
         if: matrix.os == 'windows-latest'
       - name: Install python packages
         shell: bash
-        run: |
-          python -m venv .
-          source ./bin/activate
-          pip install -r $SCRIPT_DIR/requirements.txt
+        run: pip install -r $SCRIPT_DIR/requirements.txt
       - name: Download TLA⁺ dependencies
         run: |
           # Fix tar symbolic link issues on Windows; see:
@@ -70,38 +67,25 @@ jobs:
           mv tlapm-$TLAPS_VERSION tlapm
       - name: Check manifest.json format
         shell: bash
-        run: |
-          source ./bin/activate
-          python $SCRIPT_DIR/check_manifest_schema.py
+        run: python $SCRIPT_DIR/check_manifest_schema.py
       - name: Check manifest files
         shell: bash
-        run: |
-          source ./bin/activate
-          python $SCRIPT_DIR/check_manifest_files.py
+        run: python $SCRIPT_DIR/check_manifest_files.py
       - name: Check manifest feature flags
         shell: bash
-        run: |
-          source ./bin/activate
-          python $SCRIPT_DIR/check_manifest_features.py
+        run: python $SCRIPT_DIR/check_manifest_features.py
       - name: Parse all modules
         shell: bash
-        run: |
-          source ./bin/activate
-          python $SCRIPT_DIR/parse_modules.py
+        run: python $SCRIPT_DIR/parse_modules.py
       - name: Check small models
         shell: bash
-        run: |
-          source ./bin/activate
-          python $SCRIPT_DIR/check_small_models.py
+        run: python $SCRIPT_DIR/check_small_models.py
       - name: Smoke-test large models
         shell: bash
-        run: |
-          source ./bin/activate
-          python $SCRIPT_DIR/smoke_test_large_models.py
+        run: python $SCRIPT_DIR/smoke_test_large_models.py
       - name: Smoke-test manifest generation script
         shell: bash
         run: |
-          source ./bin/activate
           rm -r build
           python $SCRIPT_DIR/generate_manifest.py
           git diff -a
