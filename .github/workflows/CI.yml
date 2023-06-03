@@ -84,10 +84,20 @@ jobs:
             --manifest_path manifest.json
       - name: Check small models
         shell: bash
-        run: python $SCRIPT_DIR/check_small_models.py
+        run: |
+          python $SCRIPT_DIR/check_small_models.py                  \
+            --tools_jar_path tla2tools.jar                          \
+            --tlapm_lib_path tlapm/library                          \
+            --community_modules_jar_path CommunityModules-deps.jar  \
+            --manifest_path manifest.json
       - name: Smoke-test large models
         shell: bash
-        run: python $SCRIPT_DIR/smoke_test_large_models.py
+        run: |
+          python $SCRIPT_DIR/smoke_test_large_models.py             \
+            --tools_jar_path tla2tools.jar                          \
+            --tlapm_lib_path tlapm/library                          \
+            --community_modules_jar_path CommunityModules-deps.jar  \
+            --manifest_path manifest.json
       - name: Smoke-test manifest generation script
         shell: bash
         run: |
