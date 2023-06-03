@@ -78,13 +78,15 @@ def get_config(config):
     """
     return ['-deadlock'] if 'ignore deadlock' in config else []
 
-def check_model(module_path, model_path, mode, config, timeout):
+def check_model(tools_jar_path, module_path, model_path, tlapm_lib_path, community_jar_path, mode, config, timeout):
     """
     Model-checks the given model against the given module.
     """
+    tools_jar_path = normpath(tools_jar_path)
     module_path = normpath(module_path)
     model_path = normpath(model_path)
-    tlaps_modules = normpath('tlapm/library')
+    tlapm_lib_path = normpath(tlapm_lib_path)
+    community_jar_path = normpath(community_jar_path)
     try:
         tlc = subprocess.run(
             [
@@ -92,7 +94,7 @@ def check_model(module_path, model_path, mode, config, timeout):
                 '-Dtlc2.TLC.ide=Github',
                 '-Dutil.ExecutionStatisticsCollector.id=abcdef60f238424fa70d124d0c77ffff',
                 '-XX:+UseParallelGC',
-                '-cp', pathsep.join(['tla2tools.jar', tlaps_modules]),
+                '-cp', pathsep.join([tools_jar_path, community_jar_path, tlapm_lib_path]),
                 'tlc2.TLC',
                 module_path,
                 '-config', model_path,
