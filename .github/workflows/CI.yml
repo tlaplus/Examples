@@ -76,7 +76,12 @@ jobs:
         run: python $SCRIPT_DIR/check_manifest_features.py
       - name: Parse all modules
         shell: bash
-        run: python $SCRIPT_DIR/parse_modules.py
+        run: |
+          python $SCRIPT_DIR/parse_modules.py                 \
+            --tools_jar_path tla2tools.jar                    \
+            --tlapm_lib_path tlapm/library                    \
+            --community_modules_path CommunityModules/modules \
+            --manifest_path manifest.json
       - name: Check small models
         shell: bash
         run: python $SCRIPT_DIR/check_small_models.py

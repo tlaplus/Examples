@@ -36,13 +36,13 @@ def load_json(path):
 
 def load_manifest():
     """
-    Loads the manifest.json file.
+    Loads the manifest.json file at the default path.
     """
     return load_json('manifest.json')
 
 def load_schema():
     """
-    Loads the schema for the manifest.json file.
+    Loads the schema for the manifest.json file at the default path.
     """
     return load_json('manifest-schema.json')
 
