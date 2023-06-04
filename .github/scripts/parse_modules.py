@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 from concurrent.futures import ThreadPoolExecutor
 import logging
 from os import cpu_count
-from os.path import dirname, normpath, pathsep, join
+from os.path import dirname, normpath, pathsep
 import subprocess
 import tla_utils
 
@@ -21,6 +21,7 @@ tools_jar_path = normpath(args.tools_jar_path)
 tlaps_modules = normpath(args.tlapm_lib_path)
 community_modules = normpath(args.community_modules_jar_path)
 manifest_path = normpath(args.manifest_path)
+examples_root = dirname(manifest_path)
 logging.basicConfig(level=logging.INFO)
 
 def parse_module(path):
@@ -52,7 +53,7 @@ skip_modules = []
 
 # List of all modules to parse and whether they should use TLAPS imports
 modules = [
-    normpath(join(dirname(manifest_path), normpath(module['path'])))
+    tla_utils.from_cwd(examples_root, module['path'])
     for spec in manifest['specifications'] if spec['path'] not in skip_specs
     for module in spec['modules'] if module['path'] not in skip_modules
 ]

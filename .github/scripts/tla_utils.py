@@ -1,7 +1,15 @@
 from datetime import datetime
 import json
-from os.path import normpath, pathsep
+from os.path import join, normpath, pathsep
 import subprocess
+
+def from_cwd(root, path):
+    """
+    Given the path from the current working directory (cwd) to a root
+    directory, and a path from that root directory to some file, derives
+    the path from the cwd to that file.
+    """
+    return normpath(join(root, normpath(path)))
 
 def ignore(ignored_dirs, path):
     """
@@ -12,15 +20,15 @@ def ignore(ignored_dirs, path):
 
 def is_blank(text):
     """
-    Whether the given string is composed entirely of space character.
+    Whether the given string is composed entirely of space characters.
     """
     all([c.isspace() for c in text])
 
-def get_ignored_dirs():
+def get_ignored_dirs(ci_ignore_path):
     """
     Parses the .ciignore file to get the set of ignored directories.
     """
-    with open('.ciignore', 'r') as ignore_file:
+    with open(ci_ignore_path, 'r') as ignore_file:
         return set([
             normpath(line.strip())
             for line in ignore_file.readlines()
@@ -33,18 +41,6 @@ def load_json(path):
     """
     with open(normpath(path), 'r', encoding='utf-8') as file:
         return json.load(file)
-
-def load_manifest():
-    """
-    Loads the manifest.json file at the default path.
-    """
-    return load_json('manifest.json')
-
-def load_schema():
-    """
-    Loads the schema for the manifest.json file at the default path.
-    """
-    return load_json('manifest-schema.json')
 
 def parse_timespan(unparsed):
     """

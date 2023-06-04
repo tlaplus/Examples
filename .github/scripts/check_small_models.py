@@ -6,7 +6,7 @@ machines.
 
 from argparse import ArgumentParser
 import logging
-from os.path import dirname, join, normpath
+from os.path import dirname, normpath
 from timeit import default_timer as timer
 import tla_utils
 
@@ -30,11 +30,11 @@ tools_jar_path = normpath(args.tools_jar_path)
 tlapm_lib_path = normpath(args.tlapm_lib_path)
 community_jar_path = normpath(args.community_modules_jar_path)
 manifest_path = normpath(args.manifest_path)
-examples_root_path = dirname(manifest_path)
+examples_root = dirname(manifest_path)
 
 def check_model(module_path, model, expected_runtime):
-    module_path = normpath(join(examples_root_path, module_path))
-    model_path = normpath(join(examples_root_path, model['path']))
+    module_path = tla_utils.from_cwd(examples_root, module_path)
+    model_path = tla_utils.from_cwd(examples_root, model['path'])
     logging.info(model_path)
     expected_result = model['result']
     start_time = timer()
