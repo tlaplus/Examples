@@ -7,7 +7,7 @@ and work with the spec they're supposed to be modeling.
 from argparse import ArgumentParser
 import logging
 import os
-from os.path import dirname, join, normpath
+from os.path import dirname, normpath
 import tla_utils
 
 parser = ArgumentParser(description='Smoke-tests all larger TLA+ models in the tlaplus/examples repo using TLC.')
@@ -21,11 +21,11 @@ tools_jar_path = normpath(args.tools_jar_path)
 tlapm_lib_path = normpath(args.tlapm_lib_path)
 community_jar_path = normpath(args.community_modules_jar_path)
 manifest_path = normpath(args.manifest_path)
-examples_root_path = dirname(manifest_path)
+examples_root = dirname(manifest_path)
 
 def check_model(module_path, model):
-    module_path = normpath(join(examples_root_path, module_path))
-    model_path = normpath(join(examples_root_path, model['path']))
+    module_path = tla_utils.from_cwd(examples_root, module_path)
+    model_path = tla_utils.from_cwd(examples_root, model['path'])
     logging.info(model_path)
     tlc, hit_timeout = tla_utils.check_model(
         tools_jar_path,
