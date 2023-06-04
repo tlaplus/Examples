@@ -58,10 +58,6 @@ jobs:
           wget http://nightly.tlapl.us/dist/tla2tools.jar
           # Get TLA⁺ community modules
           wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
-          wget https://github.com/tlaplus/CommunityModules/archive/master.tar.gz
-          tar -xf master.tar.gz
-          rm master.tar.gz
-          mv CommunityModules-master CommunityModules
           # Get TLAPS
           wget https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.tar.gz
           tar -xf $TLAPS_VERSION.tar.gz
@@ -79,10 +75,10 @@ jobs:
       - name: Parse all modules
         shell: bash
         run: |
-          python $SCRIPT_DIR/parse_modules.py                 \
-            --tools_jar_path tla2tools.jar                    \
-            --tlapm_lib_path tlapm/library                    \
-            --community_modules_path CommunityModules/modules \
+          python $SCRIPT_DIR/parse_modules.py                       \
+            --tools_jar_path tla2tools.jar                          \
+            --tlapm_lib_path tlapm/library                          \
+            --community_modules_jar_path CommunityModules-deps.jar  \
             --manifest_path manifest.json
       - name: Check small models
         shell: bash
