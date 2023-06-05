@@ -80,10 +80,11 @@ def get_tree_features(tree, queries):
     """
     return set([name for _, name in queries.features.captures(tree.root_node)])
 
-def get_module_features(parser, path, queries):
+def get_module_features(root_dir, path, parser, queries):
     """
     Gets notable features for the .tla file at the given path
     """
+    path = tla_utils.from_cwd(root_dir, path)
     tree, _, _ = parse_module(parser, path)
     return get_tree_features(tree, queries)
 
@@ -98,12 +99,13 @@ model_features = {
     'CONSTRAINTS': 'state constraint',
 }
 
-def get_model_features(path):
+def get_model_features(examples_root, path):
     """
     Finds features present in the given .cfg model file.
     This will be a best-effort text search until a tree-sitter grammar is
     created for .cfg files.
     """
+    path = tla_utils.from_cwd(examples_root, path)
     features = []
     model_text = None
     with open(path, 'rt') as model_file:
@@ -179,29 +181,20 @@ def get_community_imports(tree, text, dir, has_proof, queries):
     )
     return imports - tlaps_module_overloads if has_proof else imports
  
-def get_community_module_imports(parser, path, queries):
+def get_community_module_imports(examples_root, parser, path, queries):
     """
     Gets all community modules imported by the .tla file at the given path.
     """
+    path = tla_utils.from_cwd(examples_root, path)
     tree, text, _ = parse_module(parser, path)
     dir = dirname(path)
     has_proof = 'proof' in get_tree_features(tree, queries)
     return get_community_imports(tree, text, dir, has_proof, queries)
 
-if __name__ == '__main__':
-    parser = ArgumentParser(description='Checks metadata in tlaplus/examples manifest.json against module and model files in repository.')
-    parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
-    parser.add_argument('--ts_path', help='Path to tree-sitter-tlaplus directory', required=True)
-    args = parser.parse_args()
-
-    manifest_path = normpath(args.manifest_path)
-    manifest = tla_utils.load_json(manifest_path)
-    examples_root = dirname(manifest_path)
-
-    (TLAPLUS_LANGUAGE, parser) = build_ts_grammar(normpath(args.ts_path))
-    queries = build_queries(TLAPLUS_LANGUAGE)
-
-    # Validates every field of the manifest that can be validated.
+def check_features(parser, queries, manifest, examples_root):
+    """
+    Validates every field of the manifest that can be validated.
+    """
     success = True
     for spec in manifest['specifications']:
         if spec['title'] == '':
@@ -237,8 +230,7 @@ if __name__ == '__main__':
                     + f'expected {list(expected_imports)}, actual {list(actual_imports)}'
                 )
             for model in module['models']:
-                model_path = tla_utils.from_cwd(examples_root, model['path'])
-                expected_features = get_model_features(model_path)
+                expected_features = get_model_features(examples_root, model['path'])
                 actual_features = set(model['features'])
                 if expected_features != actual_features:
                     success = False
@@ -246,6 +238,25 @@ if __name__ == '__main__':
                         f'ERROR: Model {model["path"]} has incorrect features in manifest; '
                         + f'expected {list(expected_features)}, actual {list(actual_features)}'
                     )
+    return success
 
-    exit(0 if success else 1)
+if __name__ == '__main__':
+    parser = ArgumentParser(description='Checks metadata in tlaplus/examples manifest.json against module and model files in repository.')
+    parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+    parser.add_argument('--ts_path', help='Path to tree-sitter-tlaplus directory', required=True)
+    args = parser.parse_args()
+
+    manifest_path = normpath(args.manifest_path)
+    manifest = tla_utils.load_json(manifest_path)
+    examples_root = dirname(manifest_path)
+
+    (TLAPLUS_LANGUAGE, parser) = build_ts_grammar(normpath(args.ts_path))
+    queries = build_queries(TLAPLUS_LANGUAGE)
+
+    if check_features(parser, queries, manifest, examples_root):
+        print('SUCCESS: metadata in manifest is correct')
+        exit(0)
+    else:
+        print("ERROR: metadata in manifest is incorrect")
+        exit(1)
 

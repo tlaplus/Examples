@@ -82,7 +82,10 @@ jobs:
             --ci_ignore_path .ciignore
       - name: Check manifest feature flags
         shell: bash
-        run: python $SCRIPT_DIR/check_manifest_features.py
+        run: |
+          python $SCRIPT_DIR/check_manifest_features.py \
+            --manifest_path manifest.json               \
+            --ts_path deps/tree-sitter-tlaplus
       - name: Parse all modules
         shell: bash
         run: |

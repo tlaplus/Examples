@@ -29,6 +29,7 @@ def parse_module(path):
     Parse the given module using SANY.
     """
     logging.info(path)
+    # Jar paths must go first
     search_paths = pathsep.join([tools_jar_path, community_modules, dirname(path), tlaps_modules])
     sany = subprocess.run([
         'java',
