@@ -90,6 +90,7 @@ def check_model(tools_jar_path, module_path, model_path, tlapm_lib_path, communi
                 '-Dtlc2.TLC.ide=Github',
                 '-Dutil.ExecutionStatisticsCollector.id=abcdef60f238424fa70d124d0c77ffff',
                 '-XX:+UseParallelGC',
+                # Jar paths must go first
                 '-cp', pathsep.join([tools_jar_path, community_jar_path, tlapm_lib_path]),
                 'tlc2.TLC',
                 module_path,
