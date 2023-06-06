@@ -57,22 +57,24 @@ def build_queries(language):
 
     return Queries(import_query, module_name_query, feature_query)
 
-def parse_module(parser, path):
+def parse_module(examples_root, parser, path):
     """
     Parses a .tla file; returns the parse tree along with whether a parse
     error was detected.
     """
     module_text = None
+    path = tla_utils.from_cwd(examples_root, path)
     with open(path, 'rb') as module_file:
         module_text = module_file.read()
     tree = parser.parse(module_text)
     return (tree, module_text, tree.root_node.has_error)
 
-def get_module_names_in_dir(dir):
+def get_module_names_in_dir(examples_root, dir):
     """
     Gets the module names of all .tla files in the given directory.
     """
-    return set([splitext(basename(path))[0] for path in glob.glob(f'{dir}/*.tla')])
+    module_paths = glob.glob(f'{dir}/*.tla', root_dir=examples_root)
+    return set([splitext(basename(path))[0] for path in module_paths])
 
 def get_tree_features(tree, queries):
     """
@@ -80,12 +82,11 @@ def get_tree_features(tree, queries):
     """
     return set([name for _, name in queries.features.captures(tree.root_node)])
 
-def get_module_features(root_dir, path, parser, queries):
+def get_module_features(examples_root, path, parser, queries):
     """
     Gets notable features for the .tla file at the given path
     """
-    path = tla_utils.from_cwd(root_dir, path)
-    tree, _, _ = parse_module(parser, path)
+    tree, _, _ = parse_module(examples_root, parser, path)
     return get_tree_features(tree, queries)
 
 # Keywords mapping to features for models
@@ -154,7 +155,7 @@ tlaps_module_overloads = {
     'SequencesExt'
 }
 
-def get_community_imports(tree, text, dir, has_proof, queries):
+def get_community_imports(examples_root, tree, text, dir, has_proof, queries):
     """
     Gets all modules imported by a given .tla file that are not standard
     modules or modules in the same file or directory. Community module
@@ -177,7 +178,7 @@ def get_community_imports(tree, text, dir, has_proof, queries):
         - modules_in_file
         - tlc_modules
         - tlaps_modules
-        - get_module_names_in_dir(dir)
+        - get_module_names_in_dir(examples_root, dir)
     )
     return imports - tlaps_module_overloads if has_proof else imports
  
@@ -185,11 +186,9 @@ def get_community_module_imports(examples_root, parser, path, queries):
     """
     Gets all community modules imported by the .tla file at the given path.
     """
-    path = tla_utils.from_cwd(examples_root, path)
-    tree, text, _ = parse_module(parser, path)
-    dir = dirname(path)
+    tree, text, _ = parse_module(examples_root, parser, path)
     has_proof = 'proof' in get_tree_features(tree, queries)
-    return get_community_imports(tree, text, dir, has_proof, queries)
+    return get_community_imports(examples_root, tree, text, dirname(path), has_proof, queries)
 
 def check_features(parser, queries, manifest, examples_root):
     """
@@ -207,8 +206,8 @@ def check_features(parser, queries, manifest, examples_root):
             success = False
             print(f'ERROR: Spec {spec["path"]} does not have any listed authors')
         for module in spec['modules']:
-            module_path = tla_utils.from_cwd(examples_root, module['path'])
-            tree, text, parse_err = parse_module(parser, module_path)
+            module_path = module['path']
+            tree, text, parse_err = parse_module(examples_root, parser, module_path)
             if parse_err:
                 success = False
                 print(f'ERROR: Module {module["path"]} contains syntax errors')
@@ -220,8 +219,7 @@ def check_features(parser, queries, manifest, examples_root):
                     f'ERROR: Module {module["path"]} has incorrect features in manifest; '
                     + f'expected {list(expected_features)}, actual {list(actual_features)}'
                 )
-            module_dir = tla_utils.from_cwd(examples_root, dirname(module['path']))
-            expected_imports = get_community_imports(tree, text, module_dir, 'proof' in expected_features, queries)
+            expected_imports = get_community_imports(examples_root, tree, text, dirname(module_path), 'proof' in expected_features, queries)
             actual_imports = set(module['communityDependencies'])
             if expected_imports != actual_imports:
                 success = False

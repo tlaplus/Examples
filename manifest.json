@@ -1335,8 +1335,8 @@
       "description": "Spec of simplified Fast Paxos from Lamport's 2006 paper Fast Paxos",
       "source": "",
       "authors": [
-        "Gaurav Gandhi",
-        "Lim Ngian Xin Terry"
+        "Lim Ngian Xin Terry",
+        "Gaurav Gandhi"
       ],
       "tags": [],
       "modules": [
