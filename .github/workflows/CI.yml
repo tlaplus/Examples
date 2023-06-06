@@ -63,26 +63,29 @@ jobs:
           mkdir deps/community
           wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar \
                 -O deps/community/modules.jar
-          # Get TLAPS
+          # Get TLAPS modules
           wget https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.tar.gz
           tar -xf $TLAPS_VERSION.tar.gz
           rm $TLAPS_VERSION.tar.gz
           mv tlapm-$TLAPS_VERSION deps/tlapm
-      - name: Install TLAPS (Linux)
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          wget https://github.com/tlaplus/tlapm/releases/download/$TLAPS_VERSION/tlaps-1.5.0-x86_64-linux-gnu-inst.bin
-          chmod +x tlaps-1.5.0-x86_64-linux-gnu-inst.bin
-          ./tlaps-1.5.0-x86_64-linux-gnu-inst.bin -d tlapm-install
-      - name: Install TLAPS (macOS)
-        if: matrix.os == 'macos-latest'
-        run: |
-          wget https://github.com/tlaplus/tlapm/releases/download/$TLAPS_VERSION/tlaps-1.5.0-i386-darwin-inst.bin
-          chmod +x tlaps-1.5.0-i386-darwin-inst.bin
-          ./tlaps-1.5.0-i386-darwin-inst.bin -d tlapm-install
-      - name: Check Proofs
+          # Install TLAPS on non-Windows environments
+          if [[ "${{ runner.os }}" != "Windows" ]]; then
+            if [[ "${{ runner.os }}" == "Linux" ]]; then
+              TLAPM_BIN_TYPE=x86_64-linux-gnu
+            elif [[ "${{ runner.os }}" == "macOS" ]]; then
+              TLAPM_BIN_TYPE=i386-darwin
+            fi
+            TLAPM_BIN="tlaps-1.5.0-$TLAPM_BIN_TYPE-inst.bin"
+            wget https://github.com/tlaplus/tlapm/releases/download/$TLAPS_VERSION/$TLAPM_BIN
+            chmod +x $TLAPM_BIN
+            ./$TLAPM_BIN -d deps/tlapm-install
+          fi
+      - name: Check proofs
         if: matrix.os != 'windows-latest'
-        run: python $SCRIPT_DIR/check_proofs.py
+        run: |
+          python $SCRIPT_DIR/check_proofs.py  \
+            --tlapm_path deps/tlapm-install   \
+            --manifest_path manifest.json
       - name: Check manifest.json format
         shell: bash
         run: |

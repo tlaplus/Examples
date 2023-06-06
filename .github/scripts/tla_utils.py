@@ -74,11 +74,6 @@ def get_config(config):
     """
     return ['-deadlock'] if 'ignore deadlock' in config else []
 
-def check_proof(module_path):
-    tlaps_path = join('tlapm-install', 'bin', 'tlapm')
-    parent_dir = dirname(module_path)
-    return subprocess.run([tlaps_path, module_path, '-I', parent_dir], capture_output=True)
-
 def check_model(tools_jar_path, module_path, model_path, tlapm_lib_path, community_jar_path, mode, config, timeout):
     """
     Model-checks the given model against the given module.
