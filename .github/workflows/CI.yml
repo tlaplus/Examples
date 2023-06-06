@@ -114,6 +114,9 @@ jobs:
         shell: bash
         run: |
           rm -r deps/tree-sitter-tlaplus/build
-          python $SCRIPT_DIR/generate_manifest.py
+          python $SCRIPT_DIR/generate_manifest.py \
+            --manifest_path manifest.json         \
+            --ci_ignore_path .ciignore            \
+            --ts_path deps/tree-sitter-tlaplus
           git diff -a
 
