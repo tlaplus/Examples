@@ -80,12 +80,24 @@ jobs:
             chmod +x $TLAPM_BIN
             ./$TLAPM_BIN -d deps/tlapm-install
           fi
+      - name: Get proof fingerprint cache
+        if: matrix.os != 'windows-latest'
+        uses: actions/cache/restore@v3
+        with:
+          path: .tlacache
+          key: ${{ runner.os }}-proof-fingerprints
       - name: Check proofs
         if: matrix.os != 'windows-latest'
         run: |
           python $SCRIPT_DIR/check_proofs.py  \
             --tlapm_path deps/tlapm-install   \
             --manifest_path manifest.json
+      - name: Store proof fingerprint cache
+        if: matrix.os != 'windows-latest'
+        uses: actions/cache/save@v3
+        with:
+          path: .tlacache
+          key: ${{ runner.os }}-proof-fingerprints
       - name: Check manifest.json format
         shell: bash
         run: |

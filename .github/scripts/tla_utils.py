@@ -1,6 +1,6 @@
 from datetime import datetime
 import json
-from os.path import dirname, join, normpath, pathsep
+from os.path import join, normpath, pathsep
 import subprocess
 
 def from_cwd(root, path):

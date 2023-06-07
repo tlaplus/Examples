@@ -32,15 +32,12 @@ __tlacache__
 ## Don't ignore READMEs
 !*.md
 
-## Ignore pycache
+## Ignore Python artifacts
 __pycache__
+pyvenv.cfg
 
 ## Ignore directories used for local CI testing
-CommunityModules/
-StandardModules/
-tlapm/
-tlapm-install/
-tree-sitter-tlaplus/
+deps/
 
 # Ignore TTrace specs
 *_TTrace_*.tla
