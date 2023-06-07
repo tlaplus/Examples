@@ -2379,6 +2379,15 @@
           "models": []
         },
         {
+          "path": "specifications/TwoPhase/TLAPS.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
           "path": "specifications/TwoPhase/TwoPhase.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
@@ -3074,6 +3083,15 @@
               "result": "success"
             }
           ]
+        },
+        {
+          "path": "specifications/ewd840/TLAPS.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
         }
       ]
     },
@@ -3424,6 +3442,15 @@
           "models": []
         },
         {
+          "path": "specifications/lamport_mutex/TLAPS.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
           "path": "specifications/lamport_mutex/WellFoundedInduction.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
@@ -3505,6 +3532,15 @@
       ],
       "tags": [],
       "modules": [
+        {
+          "path": "specifications/sums_even/TLAPS.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
         {
           "path": "specifications/sums_even/sums_even.tla",
           "communityDependencies": [],
