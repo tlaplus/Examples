@@ -122,25 +122,12 @@ jobs:
             --tlapm_lib_path deps/tlapm/library                     \
             --community_modules_jar_path deps/community/modules.jar \
             --manifest_path manifest.json
-      - name: Get proof fingerprint cache
-        if: matrix.os != 'windows-latest'
-        id: cache-proofs-restore
-        uses: actions/cache/restore@v3
-        with:
-          path: .tlacache
-          key: ${{ runner.os }}-proof-fingerprints
       - name: Check proofs
         if: matrix.os != 'windows-latest'
         run: |
           python $SCRIPT_DIR/check_proofs.py  \
             --tlapm_path deps/tlapm-install   \
             --manifest_path manifest.json
-      - name: Store proof fingerprint cache
-        if: matrix.os != 'windows-latest'
-        uses: actions/cache/save@v3
-        with:
-          path: .tlacache
-          key: ${{ steps.cache-proofs-restore.outputs.cache-primary-key }}
       - name: Smoke-test manifest generation script
         shell: bash
         run: |
