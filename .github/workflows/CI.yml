@@ -124,6 +124,7 @@ jobs:
             --manifest_path manifest.json
       - name: Get proof fingerprint cache
         if: matrix.os != 'windows-latest'
+        id: cache-proofs-restore
         uses: actions/cache/restore@v3
         with:
           path: .tlacache
@@ -139,7 +140,7 @@ jobs:
         uses: actions/cache/save@v3
         with:
           path: .tlacache
-          key: ${{ runner.os }}-proof-fingerprints
+          key: ${{ steps.cache-proofs-restore.outputs.cache-primary-key }}
       - name: Smoke-test manifest generation script
         shell: bash
         run: |
