@@ -7,10 +7,10 @@ specs, runtime/size/result for models) are either taken from any existing
 manifest.json file or set as blank/unknown as appropriate.
 """
 
-from check_manifest_features import get_community_module_imports, get_module_features, get_module_names_in_dir, get_model_features
+from check_manifest_features import *
 import json
 import os
-from os.path import basename, dirname, join, normpath, splitext
+from os.path import basename, dirname, join, normpath, relpath, splitext
 from pathlib import PureWindowsPath
 import glob
 import tla_utils
@@ -23,17 +23,32 @@ def to_posix(path):
     """
     return PureWindowsPath(normpath(path)).as_posix()
 
-def get_tla_files(dir):
+def get_spec_dirs(examples_root, ignored_dirs):
+    """
+    Get all directories under the specifications dir, sorted alphabetically.
+    """
+    ignore = lambda path : tla_utils.ignore(ignored_dirs, path)
+    return [
+        (path, name) for (path, name) in [
+            (relpath(dir.path, start=examples_root), dir.name)
+            for dir in sorted(os.scandir(tla_utils.from_cwd(examples_root, 'specifications')), key=lambda d: d.name)
+            if dir.is_dir()
+        ]
+        if any(get_tla_files(examples_root, path))
+        and not ignore(path)
+    ]
+
+def get_tla_files(examples_root, dir_path):
     """
     Gets paths of all .tla files in the given directory, except for error
     trace specs.
     """
     return [
-        path for path in glob.glob(f'{dir.path}/**/*.tla', recursive=True)
+        path for path in glob.glob(f'{dir_path}/**/*.tla', root_dir=examples_root, recursive=True)
         if '_TTrace_' not in path
     ]
 
-def get_cfg_files(tla_path):
+def get_cfg_files(examples_root, tla_path):
     """
     Assume a .cfg file in the same directory as the .tla file and with the
     same name is a model of that .tla file; also assume this of any .cfg
@@ -43,57 +58,50 @@ def get_cfg_files(tla_path):
     """
     parent_dir = dirname(tla_path)
     module_name, _ = splitext(basename(tla_path))
-    other_module_names = [other for other in get_module_names_in_dir(parent_dir) if other != module_name]
+    other_module_names = [other for other in get_module_names_in_dir(examples_root, parent_dir) if other != module_name]
     return [
-        path for path in glob.glob(f'{join(parent_dir, module_name)}*.cfg')
+        path for path in glob.glob(f'{join(parent_dir, module_name)}*.cfg', root_dir=examples_root)
         if splitext(basename(path))[0] not in other_module_names
     ]
 
-Language.build_library(
-  'build/tree-sitter-languages.so',
-  ['tree-sitter-tlaplus']
-)
-
-ignored_dirs = tla_utils.get_ignored_dirs()
-ignore = lambda path : tla_utils.ignore(ignored_dirs, path)
-
-# Generate new base manifest.json from files in specifications dir
-new_manifest = {
-    'specifications': [
-        {
-            'path': to_posix(dir.path),
-            'title': dir.name,
-            'description': '',
-            'source': '',
-            'authors': [],
-            'tags': [],
-            'modules': [
-                {
-                    'path': to_posix(tla_path),
-                    'communityDependencies': sorted(list(get_community_module_imports(tla_path))),
-                    'tlaLanguageVersion': 2,
-                    'features': sorted(list(get_module_features(tla_path))),
-                    'models': [
-                        {
-                            'path': to_posix(cfg_path),
-                            'runtime': 'unknown',
-                            'size': 'unknown',
-                            'mode': 'exhaustive search',
-                            'config': [],
-                            'features': sorted(list(get_model_features(cfg_path))),
-                            'result': 'unknown'
-                        }
-                        for cfg_path in sorted(get_cfg_files(tla_path))
-                    ]
-                }
-                for tla_path in sorted(get_tla_files(dir))
-            ]
-        }
-        for dir in sorted(
-            os.scandir('specifications'), key=lambda d: d.name
-        ) if dir.is_dir() and any(get_tla_files(dir)) and not ignore(dir.path)
-    ]
-}
+def generate_new_manifest(examples_root, ignored_dirs, parser, queries):
+    """
+    Generate new base manifest.json from files in specifications dir.
+    """
+    return {
+        'specifications': [
+            {
+                'path': to_posix(spec_path),
+                'title': spec_name,
+                'description': '',
+                'source': '',
+                'authors': [],
+                'tags': [],
+                'modules': [
+                    {
+                        'path': to_posix(tla_path),
+                        'communityDependencies': sorted(list(get_community_module_imports(examples_root, parser, tla_path, queries))),
+                        'tlaLanguageVersion': 2,
+                        'features': sorted(list(get_module_features(examples_root, tla_path, parser, queries))),
+                        'models': [
+                            {
+                                'path': to_posix(cfg_path),
+                                'runtime': 'unknown',
+                                'size': 'unknown',
+                                'mode': 'exhaustive search',
+                                'config': [],
+                                'features': sorted(list(get_model_features(examples_root, cfg_path))),
+                                'result': 'unknown'
+                            }
+                            for cfg_path in sorted(get_cfg_files(examples_root, tla_path))
+                        ]
+                    }
+                    for tla_path in sorted(get_tla_files(examples_root, spec_path))
+                ]
+            }
+            for (spec_path, spec_name) in get_spec_dirs(examples_root, ignored_dirs)
+        ]
+    }
 
 # Integrate human-written info from existing manifest.json
 
@@ -108,7 +116,7 @@ def integrate_spec_info(old_spec, new_spec):
     fields = ['title', 'description', 'source', 'tags']
     for field in fields:
         new_spec[field] = old_spec[field]
-    new_spec['authors'] = sorted(old_spec['authors'])
+    new_spec['authors'] = old_spec['authors']
 
 def find_corresponding_module(old_module, new_spec):
     modules = [
@@ -134,25 +142,43 @@ def integrate_model_info(old_model, new_model):
     for field in fields:
         new_model[field] = old_model[field]
 
-old_manifest = tla_utils.load_manifest()
-
-for old_spec in old_manifest['specifications']:
-    new_spec = find_corresponding_spec(old_spec, new_manifest)
-    if new_spec is None:
-        continue
-    integrate_spec_info(old_spec, new_spec)
-    for old_module in old_spec['modules']:
-        new_module = find_corresponding_module(old_module, new_spec)
-        if new_module is None:
+def integrate_old_manifest_into_new(old_manifest, new_manifest):
+    for old_spec in old_manifest['specifications']:
+        new_spec = find_corresponding_spec(old_spec, new_manifest)
+        if new_spec is None:
             continue
-        integrate_module_info(old_module, new_module)
-        for old_model in old_module['models']:
-            new_model = find_corresponding_model(old_model, new_module)
-            if new_model is None:
+        integrate_spec_info(old_spec, new_spec)
+        for old_module in old_spec['modules']:
+            new_module = find_corresponding_module(old_module, new_spec)
+            if new_module is None:
                 continue
-            integrate_model_info(old_model, new_model)
+            integrate_module_info(old_module, new_module)
+            for old_model in old_module['models']:
+                new_model = find_corresponding_model(old_model, new_module)
+                if new_model is None:
+                    continue
+                integrate_model_info(old_model, new_model)
 
-# Write generated manifest to file
-with open('manifest.json', 'w', encoding='utf-8') as new_manifest_file:
-    json.dump(new_manifest, new_manifest_file, indent=2, ensure_ascii=False)
+if __name__ == '__main__':
+    parser = ArgumentParser(description='Generates a new manifest.json derived from files in the repo.')
+    parser.add_argument('--manifest_path', help='Path to the current tlaplus/examples manifest.json file', default='manifest.json')
+    parser.add_argument('--ci_ignore_path', help='Path to the CI ignore file', default='.ciignore')
+    parser.add_argument('--ts_path', help='Path to tree-sitter-tlaplus directory', default='tree-sitter-tlaplus')
+    args = parser.parse_args()
+
+    manifest_path = normpath(args.manifest_path)
+    examples_root = dirname(manifest_path)
+    ci_ignore_path = normpath(args.ci_ignore_path)
+    ignored_dirs = tla_utils.get_ignored_dirs(ci_ignore_path)
+
+    (TLAPLUS_LANGUAGE, parser) = build_ts_grammar(normpath(args.ts_path))
+    queries = build_queries(TLAPLUS_LANGUAGE)
+
+    old_manifest = tla_utils.load_json(manifest_path)
+    new_manifest = generate_new_manifest(examples_root, ignored_dirs, parser, queries)
+    integrate_old_manifest_into_new(old_manifest, new_manifest)
+
+    # Write generated manifest to file
+    with open(manifest_path, 'w', encoding='utf-8') as new_manifest_file:
+        json.dump(new_manifest, new_manifest_file, indent=2, ensure_ascii=False)
 

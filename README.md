@@ -113,7 +113,11 @@ A central manifest of specs with descriptions and accounts of their various mode
 | 96 | Nano Blockchain Protocol | <a href="specifications/NanoBlockchain">Directory</a> | Andrew Helwer | | &#10004; | Naturals, Bags | | |
 | 97 | Coffee Can White/Black Bean Problem | <a href="specifications/CoffeeCan">Directory</a> | Andrew Helwer | | &#10004; | Naturals | | |
 | 98 | The Slush Protocol | <a href="specifications/SlushProtocol">Directory</a> | Andrew Helwer | | &#10004; | Naturals, FiniteSets, Sequences | &#10004; | |
-| 99 | SDP (Software Defined Perimeter) | <a href="https://github.com/10227694/SDP_Verification">Specifying and Verifying SDP Protocol based Zero Trust Architecture</a> | Luming Dong, Zhi Niu | | &#10004;| FiniteSets, Sequences, Naturals |  |
+| 99 | SDP (Software Defined Perimeter) | <a href="https://github.com/10227694/SDP_Verification">Specifying and Verifying SDP Protocol based Zero Trust Architecture</a> | Luming Dong, Zhi Niu | | &#10004;| FiniteSets, Sequences, Naturals | | |
+| 100 | Simplified Fast Paxos | <a href="https://github.com/tlaplus/Examples/tree/master/specifications/SimplifiedFastPaxos">Simplified version of Fast Paxos (Lamport, 2006)</a> | Lim Ngian Xin Terry, Gaurav Gandhi | |&#10004;| TLC, Naturals, FiniteSets, Integers | | |
+| 101 | Learn TLA⁺ Proofs | <a href="specifications/LearnProofs">Basic PlusCal algorithms and formal proofs of their correctness</a> | Andrew Helwer | &#10004; | &#10004; | Sequences, Naturals, Integers, TLAPS | &#10004; | |
+| 102 | Lexicographically-Least Circular Substring | <a href="specifications/LeastCircularSubstring">Booth's 1980 algorithm to find the lexicographically-least circular substring</a> | Andrew Helwer | | &#10004; | FiniteSets, Integers, Naturals, Sequences | &#10004; | |
+| 103 | Distributed Checkpoint Coordination | <a href="specifications/CheckpointCoordination">Algorithm for coordinating checkpoint/snapshot leases in a Paxos ring</a> | Andrew Helwer | | &#10004; | FiniteSets, Naturals, Sequences, TLC | | |
 
 ## License
 
@@ -142,10 +146,11 @@ To do this, you'll have to update the [`manifest.json`](manifest.json) file with
 If this process doesn't work for you, you can alternatively modify the [`.ciignore`](.ciignore) file to exclude your spec from validation.
 Otherwise, follow these directions:
 
-1. Ensure you have Python 3.X installed
+1. Ensure you have Python 3.11+ installed
 1. Download & extract tree-sitter-tlaplus ([zip](https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/refs/heads/main.zip), [tar.gz](https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/refs/heads/main.tar.gz)) to the root of the repository; ensure the extracted folder is named `tree-sitter-tlaplus`
 1. Open a shell and navigate to the repo root; ensure a C++ compiler is installed and on your path
     - On Windows, this might entail running the below script from the visual studio developer command prompt
+1. It is considered best practice to create & initialize a Python virtual environment to preserve your system package store; run `python -m venv .` then `source ./bin/activate` on Linux & macOS or `.\Scripts\activate.bat` on Windows (run `deactivate` to exit)
 1. Run `pip install -r .github/scripts/requirements.txt`
 1. Run `python .github/scripts/generate_manifest.py`
 1. Locate your spec's entry in the [`manifest.json`](manifest.json) file and ensure the following fields are filled out:

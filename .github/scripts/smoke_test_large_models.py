@@ -4,16 +4,35 @@ entails running them for five seconds to ensure they can actually start
 and work with the spec they're supposed to be modeling.
 """
 
+from argparse import ArgumentParser
 import logging
 import os
+from os.path import dirname, normpath
 import tla_utils
 
+parser = ArgumentParser(description='Smoke-tests all larger TLA+ models in the tlaplus/examples repo using TLC.')
+parser.add_argument('--tools_jar_path', help='Path to the tla2tools.jar file', required=True)
+parser.add_argument('--tlapm_lib_path', help='Path to the TLA+ proof manager module directory; .tla files should be in this directory', required=True)
+parser.add_argument('--community_modules_jar_path', help='Path to the CommunityModules-deps.jar file', required=True)
+parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+args = parser.parse_args()
+
+tools_jar_path = normpath(args.tools_jar_path)
+tlapm_lib_path = normpath(args.tlapm_lib_path)
+community_jar_path = normpath(args.community_modules_jar_path)
+manifest_path = normpath(args.manifest_path)
+examples_root = dirname(manifest_path)
+
 def check_model(module_path, model):
-    model_path = model['path']
+    module_path = tla_utils.from_cwd(examples_root, module_path)
+    model_path = tla_utils.from_cwd(examples_root, model['path'])
     logging.info(model_path)
     tlc, hit_timeout = tla_utils.check_model(
+        tools_jar_path,
         module_path,
         model_path,
+        tlapm_lib_path,
+        community_jar_path,
         model['mode'],
         model['config'],
         5
@@ -28,7 +47,7 @@ def check_model(module_path, model):
 
 logging.basicConfig(level=logging.INFO)
 
-manifest = tla_utils.load_manifest()
+manifest = tla_utils.load_json(manifest_path)
 
 skip_models = [
     # SimKnuthYao requires certain number of states to have been generated

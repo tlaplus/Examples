@@ -5,12 +5,21 @@ and that no files are present twice in the manifest. Also checks to ensure
 no files in .ciignore are in the manifest.json.
 """
 
+from argparse import ArgumentParser
 from collections import Counter
-from os.path import normpath
+from os.path import dirname, normpath
 import glob
 import tla_utils
 
-manifest = tla_utils.load_manifest()
+parser = ArgumentParser(description='Checks tlaplus/examples manifest.json against module and model files in repository.')
+parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+parser.add_argument('--ci_ignore_path', help='Path to the .ciignore file', required=True)
+args = parser.parse_args()
+
+manifest_path = normpath(args.manifest_path)
+ci_ignore_path = normpath(args.ci_ignore_path)
+examples_root = dirname(manifest_path)
+manifest = tla_utils.load_json(manifest_path)
 
 module_lists = [spec["modules"] for spec in manifest["specifications"]]
 modules = [module for module_list in module_lists for module in module_list]
@@ -23,16 +32,16 @@ cfg_mf_paths_cnt = Counter([normpath(model["path"]) for model_list in model_list
 cfg_mf_paths = set(cfg_mf_paths_cnt)
 
 # Get ignored directories
-ignored_dirs = tla_utils.get_ignored_dirs()
+ignored_dirs = tla_utils.get_ignored_dirs(ci_ignore_path)
 ignore = lambda path : tla_utils.ignore(ignored_dirs, path)
 
 # Get paths of all non-ignored .tla and .cfg files in the specifications dir
 tla_fs_paths = set([
-    normpath(path) for path in glob.glob(f"./specifications/**/*.tla", recursive=True)
+    normpath(path) for path in glob.glob('./specifications/**/*.tla', root_dir=examples_root, recursive=True)
     if '_TTrace_' not in path and not ignore(path)
 ])
 cfg_fs_paths = set([
-    normpath(path) for path in glob.glob(f"./specifications/**/*.cfg", recursive=True)
+    normpath(path) for path in glob.glob('./specifications/**/*.cfg', root_dir=examples_root, recursive=True)
     if not ignore(path)
 ])
 
@@ -43,11 +52,11 @@ ignored_tla_in_manifest = set(filter(ignore, tla_mf_paths))
 ignored_cfg_in_manifest = set(filter(ignore, cfg_mf_paths))
 if any(ignored_tla_in_manifest):
     success = False
-    print('Ignored .tla paths present in manifest:\n' + '\n'.join(ignored_tla_in_manifest))
+    print('ERROR: Ignored .tla paths present in manifest:\n' + '\n'.join(ignored_tla_in_manifest))
     tla_mf_paths = tla_mf_paths - ignored_tla_in_manifest
 if any(ignored_cfg_in_manifest):
     success = False
-    print('Ignored .cfg paths present in manifest:\n' + '\n'.join(ignored_cfg_in_manifest))
+    print('ERROR: Ignored .cfg paths present in manifest:\n' + '\n'.join(ignored_cfg_in_manifest))
     cfg_mf_paths = cfg_mf_paths - ignored_cfg_in_manifest
 
 # Check for duplicate paths in manifest
@@ -55,24 +64,29 @@ duplicate_tla_paths = [k for k, v in tla_mf_paths_cnt.items() if v > 1]
 duplicate_cfg_paths = [k for k, v in cfg_mf_paths_cnt.items() if v > 1]
 if any(duplicate_tla_paths):
     success = False
-    print('.tla file paths duplicated in manifest:\n' + '\n'.join(duplicate_tla_paths))
+    print('ERROR: .tla file paths duplicated in manifest:\n' + '\n'.join(duplicate_tla_paths))
 if any(duplicate_cfg_paths):
     success = False
-    print('.cfg file paths duplicated in manifest:\n' + '\n'.join(duplicate_cfg_paths))
+    print('ERROR: .cfg file paths duplicated in manifest:\n' + '\n'.join(duplicate_cfg_paths))
 
 # Check paths in manifest match paths on filesystem
 if tla_mf_paths < tla_fs_paths:
     success = False
-    print('.tla files not recorded in manifest:\n' + '\n'.join(tla_fs_paths - tla_mf_paths))
+    print('ERROR: .tla files not recorded in manifest:\n' + '\n'.join(tla_fs_paths - tla_mf_paths))
 if tla_fs_paths < tla_mf_paths:
     success = False
-    print('Manifest .tla files not found in specifications dir:\n' + '\n'.join(tla_mf_paths - tla_fs_paths))
+    print('ERROR: Manifest .tla files not found in specifications dir:\n' + '\n'.join(tla_mf_paths - tla_fs_paths))
 if cfg_mf_paths < cfg_fs_paths:
     success = False
-    print('.cfg files not recorded in manifest:\n' + '\n'.join(cfg_fs_paths - cfg_mf_paths))
+    print('ERROR: .cfg files not recorded in manifest:\n' + '\n'.join(cfg_fs_paths - cfg_mf_paths))
 if cfg_fs_paths < cfg_mf_paths:
     success = False
-    print('Manifest .cfg files not found in specifications dir:\n' + '\n'.join(cfg_mf_paths - cfg_fs_paths))
+    print('ERROR: Manifest .cfg files not found in specifications dir:\n' + '\n'.join(cfg_mf_paths - cfg_fs_paths))
 
-exit(0 if success else 1)
+if success:
+    print('SUCCESS: manifest.json concords with files in repo')
+    exit(0)
+else:
+    print('ERROR: differences exist between manifest.json and files in repo; see above error messages')
+    exit(1)
 
