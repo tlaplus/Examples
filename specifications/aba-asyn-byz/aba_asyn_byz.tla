@@ -59,9 +59,13 @@ Init1 ==
   /\ nByz = 0
   /\ pc \in [ i \in Proc |-> "V1" ]  
   
-(* If there are less than F Byzantine processes, process i becomes faulty.*)
+(* If there are less than F Byzantine processes, process i becomes faulty. *)
+(* We requite i to be in an initial state (V0 or V1) to not break the      *)
+(* message counting abstraction.                                           *)
 BecomeByzantine(i) ==
   /\ nByz < F
+  /\ \/ pc[i] = "V1"
+     \/ pc[i] = "V0"
   /\ nByz' = nByz + 1  
   /\ pc' = [ pc EXCEPT ![i] = "BYZ" ]  
   /\ UNCHANGED << nSntE, nSntR, nRcvdE, nRcvdR >>
