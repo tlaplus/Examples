@@ -67,7 +67,7 @@ jobs:
                 -O deps/community/modules.jar
           # Get TLAPS modules
           wget -nv https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.tar.gz
-          tar -xf $TLAPS_VERSION.tar.gz
+          tar --delay-directory-restore -xf $TLAPS_VERSION.tar.gz
           rm $TLAPS_VERSION.tar.gz
           mv tlapm-$TLAPS_VERSION deps/tlapm
           # Install TLAPS on non-Windows environments
