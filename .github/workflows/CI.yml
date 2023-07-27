@@ -16,16 +16,16 @@ jobs:
     strategy:
       matrix:
         include:
-        - { os: windows-latest }
-        - { os: ubuntu-latest }
-        - { os: macos-latest }
+        - { os: windows-latest, shell: msys2 }
+        - { os: ubuntu-latest,  shell: bash  }
+        - { os: macos-latest,   shell: bash  }
       fail-fast: false
     env:
       SCRIPT_DIR: .github/scripts
       TLAPS_VERSION: 202210041448
     defaults:
       run:
-        shell: bash
+        shell: ${{ matrix.shell }} {0}
     steps:
       - name: Clone repo
         uses: actions/checkout@v2
@@ -38,7 +38,11 @@ jobs:
         with:
           distribution: adopt
           java-version: 17
+      - name: Install MSYS2 on Windows
+        uses: msys2/setup-msys2@v2
+        if: matrix.os == 'windows-latest'
       - name: Install python packages
+        shell: bash
         run: pip install -r $SCRIPT_DIR/requirements.txt
       - name: Download TLA⁺ dependencies
         run: |
@@ -80,7 +84,7 @@ jobs:
             elif [[ "${{ runner.os }}" == "macOS" ]]; then
               TLAPM_BIN_TYPE=i386-darwin
             else
-              echo "Unknown OS ${{ runner.os }}"
+              echo "Unknown OS"
               exit 1
             fi
             TLAPM_BIN="tlaps-1.5.0-$TLAPM_BIN_TYPE-inst.bin"
