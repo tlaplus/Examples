@@ -41,6 +41,8 @@ jobs:
       - name: Install MSYS2 on Windows
         uses: msys2/setup-msys2@v2
         if: matrix.os == 'windows-latest'
+        with:
+          msystem: UCRT64
       - name: Install python packages
         shell: bash
         run: pip install -r $SCRIPT_DIR/requirements.txt
@@ -53,7 +55,7 @@ jobs:
           export MSYS=winsymlinks:lnk
           # Get tree-sitter-tlaplus
           wget -nv https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.tar.gz
-          tar --no-overwrite-dir -xf main.tar.gz
+          tar -xf main.tar.gz
           rm main.tar.gz
           mv tree-sitter-tlaplus-main deps/tree-sitter-tlaplus
           # Get TLA⁺ tools
@@ -65,7 +67,7 @@ jobs:
                 -O deps/community/modules.jar
           # Get TLAPS modules
           wget -nv https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.tar.gz
-          tar --no-overwrite-dir -xf $TLAPS_VERSION.tar.gz
+          tar -xf $TLAPS_VERSION.tar.gz
           rm $TLAPS_VERSION.tar.gz
           mv tlapm-$TLAPS_VERSION deps/tlapm
           # Install TLAPS on non-Windows environments
@@ -76,7 +78,7 @@ jobs:
               TLAPM_BIN_TYPE=i386-darwin
             fi
             TLAPM_BIN="tlaps-1.5.0-$TLAPM_BIN_TYPE-inst.bin"
-            wget https://github.com/tlaplus/tlapm/releases/download/$TLAPS_VERSION/$TLAPM_BIN
+            wget -nv https://github.com/tlaplus/tlapm/releases/download/$TLAPS_VERSION/$TLAPM_BIN
             chmod +x $TLAPM_BIN
             ./$TLAPM_BIN -d deps/tlapm-install
           fi
