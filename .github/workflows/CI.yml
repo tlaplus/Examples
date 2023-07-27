@@ -52,20 +52,20 @@ jobs:
           # https://github.com/msys2/MSYS2-packages/issues/1216
           export MSYS=winsymlinks:lnk
           # Get tree-sitter-tlaplus
-          wget https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.tar.gz
-          tar -xf main.tar.gz
+          wget -nv https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.tar.gz
+          tar --no-overwrite-dir -xf main.tar.gz
           rm main.tar.gz
           mv tree-sitter-tlaplus-main deps/tree-sitter-tlaplus
           # Get TLA⁺ tools
           mkdir deps/tools
-          wget http://nightly.tlapl.us/dist/tla2tools.jar -O deps/tools/tla2tools.jar
+          wget -nv http://nightly.tlapl.us/dist/tla2tools.jar -O deps/tools/tla2tools.jar
           # Get TLA⁺ community modules
           mkdir deps/community
-          wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar \
+          wget -nv https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar \
                 -O deps/community/modules.jar
           # Get TLAPS modules
-          wget https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.tar.gz
-          tar -xf $TLAPS_VERSION.tar.gz
+          wget -nv https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.tar.gz
+          tar --no-overwrite-dir -xf $TLAPS_VERSION.tar.gz
           rm $TLAPS_VERSION.tar.gz
           mv tlapm-$TLAPS_VERSION deps/tlapm
           # Install TLAPS on non-Windows environments
