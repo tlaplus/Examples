@@ -46,20 +46,20 @@ jobs:
           # Put all dependencies in their own directory to ensure they aren't included implicitly
           mkdir deps
           # Get tree-sitter-tlaplus
-          curl https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.zip
+          curl -O https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.zip
           7z x main.zip
           rm main.zip
           mv tree-sitter-tlaplus-main deps/tree-sitter-tlaplus
           # Get TLA⁺ tools
           mkdir deps/tools
-          curl http://nightly.tlapl.us/dist/tla2tools.jar
+          curl -O http://nightly.tlapl.us/dist/tla2tools.jar
           mv tla2tools.jar deps/tools/tla2tools.jar
           # Get TLA⁺ community modules
           mkdir deps/community
-          curl https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
+          curl -O https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
           mv CommunityModules-deps.jar deps/community/modules.jar
           # Get TLAPS modules
-          curl https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.zip
+          curl -O https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.zip
           7z x $TLAPS_VERSION.zip
           rm $TLAPS_VERSION.zip
           mv tlapm-$TLAPS_VERSION deps/tlapm
