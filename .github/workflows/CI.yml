@@ -16,16 +16,16 @@ jobs:
     strategy:
       matrix:
         include:
-        - { os: windows-latest, shell: msys2 }
-        - { os: ubuntu-latest,  shell: bash  }
-        - { os: macos-latest,   shell: bash  }
+        - { os: windows-latest }
+        - { os: ubuntu-latest }
+        - { os: macos-latest }
       fail-fast: false
     env:
       SCRIPT_DIR: .github/scripts
       TLAPS_VERSION: 202210041448
     defaults:
       run:
-        shell: ${{ matrix.shell }} {0}
+        shell: bash
     steps:
       - name: Clone repo
         uses: actions/checkout@v2
@@ -38,11 +38,7 @@ jobs:
         with:
           distribution: adopt
           java-version: 17
-      - name: Install MSYS2 on Windows
-        uses: msys2/setup-msys2@v2
-        if: matrix.os == 'windows-latest'
       - name: Install python packages
-        shell: bash
         run: pip install -r $SCRIPT_DIR/requirements.txt
       - name: Download TLA⁺ dependencies
         run: |
@@ -51,7 +47,7 @@ jobs:
           # Get tree-sitter-tlaplus
           if [[ "${{ runner.os }}" == "Windows" ]]; then
             wget -nv https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.zip
-            unzip main.zip
+            7z x main.zip
             rm main.zip
           else
             wget -nv https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.tar.gz
@@ -69,7 +65,7 @@ jobs:
           # Get TLAPS modules
           if [[ "${{ runner.os }}" == "Windows" ]]; then
             wget -nv https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.zip
-            unzip $TLAPS_VERSION.zip
+            7z x $TLAPS_VERSION.zip
             rm $TLAPS_VERSION.zip
           else
             wget -nv https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.tar.gz
@@ -83,6 +79,9 @@ jobs:
               TLAPM_BIN_TYPE=x86_64-linux-gnu
             elif [[ "${{ runner.os }}" == "macOS" ]]; then
               TLAPM_BIN_TYPE=i386-darwin
+            else
+              echo "Unknown OS ${{ runner.os }}"
+              exit 1
             fi
             TLAPM_BIN="tlaps-1.5.0-$TLAPM_BIN_TYPE-inst.bin"
             wget -nv https://github.com/tlaplus/tlapm/releases/download/$TLAPS_VERSION/$TLAPM_BIN
