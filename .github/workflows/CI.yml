@@ -48,9 +48,6 @@ jobs:
         run: |
           # Put all dependencies in their own directory to ensure they aren't included implicitly
           mkdir deps
-          # Fix tar symbolic link issues on Windows; see:
-          # https://github.com/msys2/MSYS2-packages/issues/1216
-          export MSYS=winsymlinks:lnk
           # Get tree-sitter-tlaplus
           wget -nv https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.tar.gz
           tar -xf main.tar.gz || tar -xf main.tar.gz
