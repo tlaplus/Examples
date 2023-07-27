@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         include:
-        - { os: windows-latest, shell: msys2 }
+        - { os: windows-latest, shell: bash }
         - { os: ubuntu-latest,  shell: bash  }
         - { os: macos-latest,   shell: bash  }
       fail-fast: false
@@ -38,19 +38,24 @@ jobs:
         with:
           distribution: adopt
           java-version: 17
-      - name: Install MSYS2 on Windows
-        uses: msys2/setup-msys2@v2
-        if: matrix.os == 'windows-latest'
       - name: Install python packages
         shell: bash
         run: pip install -r $SCRIPT_DIR/requirements.txt
+      - name: Download TLA⁺ dependencies
+        if: matrix.os == 'windows-latest'
+        run: |
+          # Put all dependencies in their own directory to ensure they aren't included implicitly
+          mkdir deps
+          curl https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.zip
+          7z x main.zip
+          rm main.zip
       - name: Download TLA⁺ dependencies
         run: |
           # Put all dependencies in their own directory to ensure they aren't included implicitly
           mkdir deps
           # Get tree-sitter-tlaplus
           if [[ "${{ runner.os }}" == "Windows" ]]; then
-            wget -nv https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.zip
+            curl -nv https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.zip
             7z x main.zip
             rm main.zip
           else
