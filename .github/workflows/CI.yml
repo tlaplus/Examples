@@ -41,6 +41,7 @@ jobs:
       - name: Download TLA⁺ dependencies
         if: matrix.os == 'windows-latest'
         run: |
+          java --version
           # Install python packages
           pip install -r $SCRIPT_DIR/requirements.txt
           # Put all dependencies in their own directory to ensure they aren't included implicitly
