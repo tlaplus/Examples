@@ -50,17 +50,19 @@ vars == <<active, color, counter, inbox, clock>>
 ------------------------------------------------------------------------------
  
 Init ==
+  (* Each node maintains a (local) vector clock *)
+  (* https://en.wikipedia.org/wiki/Vector_clock *)
+  /\ clock = [ n \in Node |-> IF n = Initiator 
+                THEN [ m \in Node |-> IF m = Initiator THEN 1 ELSE 0 ]
+                ELSE [ m \in Node |-> 0 ] ]
   (* Rule 0 *)
   /\ counter = [n \in Node |-> 0] \* c properly initialized
   /\ inbox = [n \in Node |-> IF n = Initiator 
-                              THEN << [type |-> "tok", q |-> 0, color |-> "black" ] >> 
+                              THEN << [type |-> "tok", q |-> 0, color |-> "black", vc |-> clock[n] ] >> 
                               ELSE <<>>] \* with empty channels.
   (* EWD840 *) 
   /\ active \in [Node -> BOOLEAN]
   /\ color \in [Node -> Color]
-  (* Each node maintains a (local) vector clock *)
-  (* https://en.wikipedia.org/wiki/Vector_clock *)
-  /\ clock = [n \in Node |-> [m \in Node |-> IF m = Initiator THEN 1 ELSE 0] ]
 
 InitiateProbe(n) ==
   /\ n = Initiator
@@ -68,6 +70,7 @@ InitiateProbe(n) ==
   /\ \E j \in 1..Len(inbox[Initiator]):
       \* Token is at node the Initiator.
       /\ inbox[Initiator][j].type = "tok"
+      /\ clock' = [clock EXCEPT ![n] = Merge(n, inbox[n][j].vc, @)]
       /\ \* Previous round inconsistent, if:
          \/ inbox[Initiator][j].color = "black"
          \/ color[Initiator] = "black"
@@ -78,13 +81,10 @@ InitiateProbe(n) ==
       /\ inbox' = [inbox EXCEPT ![RingOfNodes[Initiator]] = Append(@, 
            [type |-> "tok", q |-> 0,
              (* Rule 6 *)
-             color |-> "white"]), 
+             color |-> "white", vc |-> clock[n]']), 
              ![Initiator] = RemoveAt(@, j) ] \* consume token message from inbox[0]. 
   (* Rule 6 *)
   /\ color' = [ color EXCEPT ![Initiator] = "white" ]
-  \* TODO: Do we attach i's vector clock along with the token?  For now, token-
-   \* TODO: related actions are treated as internal events.
-  /\ clock' = [ clock EXCEPT ![Initiator][Initiator] = @ + 1 ]
   \* The state of the nodes remains unchanged by token-related actions.
   /\ UNCHANGED <<active, counter>>                            
   
@@ -94,18 +94,18 @@ PassToken(n) ==
   /\ ~ active[n] \* If machine i is active, keep the token.
   /\ \E j \in 1..Len(inbox[n]) : 
           /\ inbox[n][j].type = "tok"
+          /\ clock' = [clock EXCEPT ![n] = Merge(n, inbox[n][j].vc, @)]
           \* the machine nr.i+1 transmits the token to machine nr.i under q := q + c[i+1]
           /\ LET tkn == inbox[n][j]
              IN  inbox' = [inbox EXCEPT ![RingOfNodes[n]] = 
                                        Append(@, [tkn EXCEPT !.q = tkn.q + counter[n],
                                                              !.color = IF color[n] = "black"
                                                                        THEN "black"
-                                                                       ELSE tkn.color]),
+                                                                       ELSE tkn.color,
+                                                             !.vc = clock[n]' ]),
                                     ![n] = RemoveAt(@, j) ] \* pass on the token.
   (* Rule 7 *)
   /\ color' = [ color EXCEPT ![n] = "white" ]
-  \* Just increment the node's local clock on token messages.
-  /\ clock' = [ clock EXCEPT ![n][n] = @ + 1 ]
   \* The state of the nodes remains unchanged by token-related actions.
   /\ UNCHANGED <<active, counter>>                            
 
@@ -187,7 +187,9 @@ EWD998ChanInbox ==
             LAMBDA m: 
             IF m.type = "pl" 
             THEN [type |-> "pl"] 
-            ELSE m) 
+            ELSE IF m.type = "tok"
+                 THEN [type |-> "tok", q |-> m.q, color |-> m.color]
+                 ELSE m) 
     ]
 
 (***************************************************************************)
