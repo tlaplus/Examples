@@ -208,6 +208,10 @@ EWD998ChanSpec == EWD998Chan!Spec
 
 THEOREM Spec => EWD998ChanSpec
 
+EWD998Safe == EWD998Chan!EWD998!TD!Safe
+EWD998Live == EWD998Chan!EWD998!TD!Live
+
+THEOREM Spec => EWD998Safe /\ EWD998Live
 -----------------------------------------------------------------------------
 
 \* The (vector) clock is not relevant for the correctness of the algorithm.
