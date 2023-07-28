@@ -35,6 +35,12 @@ Initiator == CHOOSE n \in Node : TRUE
 \* Organize Nodes in a ring. 
 RingOfNodes == 
   CHOOSE r \in [ Node -> Node ]: IsSimpleCycle(Node, r)
+  
+nat2node[ i \in 0..N-1 ] ==
+    IF i = 0 THEN Initiator ELSE AntiFunction(RingOfNodes)[nat2node[i-1]]
+
+node2nat ==
+    AntiFunction(nat2node)
 
 Color == {"white", "black"}
 
@@ -78,16 +84,20 @@ Init ==
                 ELSE [ m \in Node |-> 0 ] ]
   (* Rule 0 *)
   /\ counter = [n \in Node |-> 0] \* c properly initialized
-  /\ inbox = [n \in Node |-> IF n = Initiator 
-                              THEN << [type |-> "tok", q |-> 0, color |-> "black", vc |-> clock[n] ] >> 
-                              ELSE <<>>] \* with empty channels.
+\*   /\ inbox = [n \in Node |-> IF n = Initiator 
+\*                               THEN << [type |-> "tok", q |-> 0, color |-> "black", vc |-> clock[n] ] >> 
+\*                               ELSE <<>>] \* with empty channels.
 \* The token may be at any node of the ring initially.
 \*   /\ inbox \in { f \in 
-\*                     [ Node -> {<<>>, <<[type |-> "tok", q |-> 0, color |-> "black", vc |-> clock[n] ]>> } ] : 
+\*                     [ Node -> {<<>>, <<[type |-> "tok", q |-> 0, color |-> "black", vc |-> clock[Initiator] ]>> } ] : 
 \*                         Cardinality({ i \in DOMAIN f: f[i] # <<>> }) = 1 }
+\* Worst-case WRT Max3TokenRounds, token is at node N-2.
+  /\ inbox = [n \in Node |-> IF n = nat2node[N-2] 
+                              THEN << [type |-> "tok", q |-> 0, color |-> "black", vc |-> clock[n] ] >> 
+                              ELSE <<>>] \* with empty channels.
   (* EWD840 *) 
-  /\ active \in [Node -> BOOLEAN]
-  /\ color \in [Node -> Color]
+  /\ active \in [Node -> {FALSE}]
+  /\ color \in [Node -> {"black"}]
   /\ passes = IF terminated THEN 0 ELSE -1
 
 InitiateProbe(n) ==
@@ -203,12 +213,6 @@ THEOREM Spec => []Max3TokenRounds
 \* The definitions of the refinement mapping below this line will be
 \* ignored by PlusPy.  It can thus make use of RECURSIVE.
 \*++:Spec
-  
-nat2node[ i \in 0..N-1 ] ==
-    IF i = 0 THEN Initiator ELSE AntiFunction(RingOfNodes)[nat2node[i-1]]
-
-node2nat ==
-    AntiFunction(nat2node)
 
 a \prec b ==
     \* True iff node a is a predecessor of node b in the ring.
