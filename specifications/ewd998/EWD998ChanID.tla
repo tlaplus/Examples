@@ -43,9 +43,30 @@ VARIABLES
  color,
  counter,
  inbox,
- clock
+ clock,
+ passes
   
-vars == <<active, color, counter, inbox, clock>>
+vars == <<active, color, counter, inbox, clock, passes>>
+
+terminated ==
+    \A n \in Node :
+        /\ ~ active[n]
+        \* Count the in-flight "pl" messages. The 
+        \* inbox variable represents a node's network
+        \* interface that receives arbitrary messages.
+        \* However, EWD998 only "tracks" payload (pl)
+        \* messages.
+        /\ [m \in Node |-> 
+                Len(SelectSeq(inbox[m], 
+                    LAMBDA msg: msg.type = "pl")) ][n] = 0
+
+terminationDetected ==
+  /\ \E j \in 1..Len(inbox[Initiator]):
+        /\ inbox[Initiator][j].type = "tok"
+        /\ inbox[Initiator][j].color = "white"
+        /\ inbox[Initiator][j].q + counter[Initiator] = 0
+  /\ color[Initiator] = "white"
+  /\ ~ active[Initiator]
 
 ------------------------------------------------------------------------------
  
@@ -67,6 +88,7 @@ Init ==
   (* EWD840 *) 
   /\ active \in [Node -> BOOLEAN]
   /\ color \in [Node -> Color]
+  /\ passes = IF terminated THEN 0 ELSE -1
 
 InitiateProbe(n) ==
   /\ n = Initiator
@@ -90,7 +112,8 @@ InitiateProbe(n) ==
   (* Rule 6 *)
   /\ color' = [ color EXCEPT ![Initiator] = "white" ]
   \* The state of the nodes remains unchanged by token-related actions.
-  /\ UNCHANGED <<active, counter>>                            
+  /\ UNCHANGED <<active, counter>>
+  /\ passes' = IF passes >= 0 THEN passes + 1 ELSE passes
   
 PassToken(n) ==
   /\ n # Initiator
@@ -112,6 +135,7 @@ PassToken(n) ==
   /\ color' = [ color EXCEPT ![n] = "white" ]
   \* The state of the nodes remains unchanged by token-related actions.
   /\ UNCHANGED <<active, counter>>                            
+  /\ passes' = IF passes >= 0 THEN passes + 1 ELSE passes
 
 System(n) == \/ InitiateProbe(n)
              \/ PassToken(n)
@@ -130,7 +154,7 @@ SendMsg(n) ==
           /\ inbox' = [inbox EXCEPT ![j] = Append(@, [type |-> "pl", src |-> n, vc |-> clock[n]' ] ) ]
           \* Note that we don't blacken node i as in EWD840 if node i
           \* sends a message to node j with j > i
-  /\ UNCHANGED <<active, color>>                            
+  /\ UNCHANGED <<active, color, passes>>
 
 \* RecvMsg could write the incoming message to a (Java) buffer from which the (Java) implementation consumes it. 
 RecvMsg(n) ==
@@ -145,13 +169,14 @@ RecvMsg(n) ==
           /\ inbox[n][j].type = "pl"
           /\ inbox' = [inbox EXCEPT ![n] = RemoveAt(@, j) ]
           /\ clock' = [ clock EXCEPT ![n] = Merge(n, inbox[n][j].vc, @) ]
-  /\ UNCHANGED <<>>                           
+  /\ UNCHANGED passes
 
 Deactivate(n) ==
   /\ active[n]
   /\ active' = [active EXCEPT ![n] = FALSE]
   /\ clock' = [ clock EXCEPT ![n][n] = @ + 1 ]
   /\ UNCHANGED <<color, inbox, counter>>
+  /\ passes' = IF terminated' THEN 0 ELSE passes
 
 Environment(n) == 
   \/ SendMsg(n)
@@ -166,6 +191,13 @@ Next(n) ==
 \* Idiomatic/canonical TLA+ has existential quantification down in System and Next.
 Spec == Init /\ [][\E n \in Node: Next(n)]_vars
              /\ \A n \in Node: WF_vars(System(n))
+
+Max3TokenRounds ==
+    \* Termination is detected within a maximum of three token rounds after the
+    \* system is terminated.
+    passes <= 3 * N
+
+THEOREM Spec => []Max3TokenRounds
 
 -----------------------------------------------------------------------------
 \* The definitions of the refinement mapping below this line will be
@@ -233,6 +265,6 @@ THEOREM Spec => EWD998Safe /\ EWD998Live
 
 \* The (vector) clock is not relevant for the correctness of the algorithm.
 View == 
-    <<active, color, counter, EWD998ChanInbox>>
+    <<active, color, counter, EWD998ChanInbox, passes>>
 
 =============================================================================
