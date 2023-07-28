@@ -41,9 +41,13 @@ TypeOK ==
 Init ==
   (* Rule 0 *)
   /\ counter = [i \in Node |-> 0] \* c properly initialized
-  /\ inbox = [i \in Node |-> IF i = 0 
-                             THEN << [type |-> "tok", q |-> 0, color |-> "black" ] >> 
-                             ELSE <<>>] \* with empty channels.
+\*   /\ inbox = [i \in Node |-> IF i = 0 
+\*                              THEN << [type |-> "tok", q |-> 0, color |-> "black" ] >> 
+\*                              ELSE <<>>] \* with empty channels.
+\* The token may be at any node of the ring initially.
+  /\ inbox \in { f \in 
+                    [ Node -> {<<>>, <<[type |-> "tok", q |-> 0, color |-> "black" ]>> } ] : 
+                        Cardinality({ i \in DOMAIN f: f[i] # <<>> }) = 1 }
   (* EWD840 *) 
   /\ active \in [Node -> BOOLEAN]
   /\ color \in [Node -> Color]

@@ -45,7 +45,7 @@ Init ==
   (* Rule 0 *)
   /\ counter = [i \in Node |-> 0] \* c properly initialized
   /\ pending = [i \in Node |-> 0]
-  /\ token \in [ pos: {0}, q: {0}, color: {"black"} ]
+  /\ token \in [ pos: Node, q: {0}, color: {"black"} ]
 
 InitiateProbe ==
   (* Rules 1 + 5 + 6 *)

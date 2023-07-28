@@ -60,6 +60,10 @@ Init ==
   /\ inbox = [n \in Node |-> IF n = Initiator 
                               THEN << [type |-> "tok", q |-> 0, color |-> "black", vc |-> clock[n] ] >> 
                               ELSE <<>>] \* with empty channels.
+\* The token may be at any node of the ring initially.
+\*   /\ inbox \in { f \in 
+\*                     [ Node -> {<<>>, <<[type |-> "tok", q |-> 0, color |-> "black", vc |-> clock[n] ]>> } ] : 
+\*                         Cardinality({ i \in DOMAIN f: f[i] # <<>> }) = 1 }
   (* EWD840 *) 
   /\ active \in [Node -> BOOLEAN]
   /\ color \in [Node -> Color]
