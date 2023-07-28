@@ -210,11 +210,6 @@ THEOREM Spec => EWD998ChanSpec
 
 -----------------------------------------------------------------------------
 
-StateConstraint ==
-    /\ EWD998ChanStateConstraint
-    /\ \A n \in Node:
-            FoldFunctionOnSet(+, 0, clock[n], Node) < 3
-
 \* The (vector) clock is not relevant for the correctness of the algorithm.
 View == 
     <<active, color, counter, EWD998ChanInbox>>
