@@ -56,7 +56,7 @@ Init ==
   /\ color \in [Node -> Color]
   (* Each node maintains a (local) vector clock *)
   (* https://en.wikipedia.org/wiki/Vector_clock *)
-  /\ clock = [n \in Node |-> [m \in Node |-> 0] ]
+  /\ clock = [n \in Node |-> [m \in Node |-> IF m = Initiator THEN 1 ELSE 0] ]
 
 InitiateProbe(n) ==
   /\ n = Initiator

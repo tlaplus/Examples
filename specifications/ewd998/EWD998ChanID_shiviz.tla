@@ -38,7 +38,7 @@ MCInit ==
   /\ color \in [Node -> {"white"}]
   (* Each node maintains a (local) vector clock *)
   (* https://en.wikipedia.org/wiki/Vector_clock *)
-  /\ clock = [n \in Node |-> [m \in Node |-> 0] ]
+  /\ clock = [n \in Node |-> [m \in Node |-> IF m = Initiator THEN 1 ELSE 0] ]
 
 Inv ==
     \* TODO Choose some upper length or a invariant that produces a more
@@ -63,7 +63,7 @@ host ==
     LET None == "--" \* This should be a model value:  CHOOSE n : n \notin Node
         lvl == TLCGet("level")
         trc == Trace
-    IN IF lvl = 1 THEN None
+    IN IF lvl = 1 THEN Initiator
        ELSE CHOOSE n \in Node:
             trc[lvl].clock[n] # trc[lvl-1].clock[n]
 
