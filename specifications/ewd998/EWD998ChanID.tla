@@ -43,9 +43,6 @@ VARIABLES
   
 vars == <<active, color, counter, inbox, clock>>
 
-\* The (vector) clock is not relevant for the correctness of the algorithm.
-View == <<active, color, counter, inbox>>
-
 ------------------------------------------------------------------------------
  
 Init ==
@@ -186,6 +183,16 @@ MapSeq(seq, Op(_)) ==
                                 ELSE Append(F[i - 1], Op(seq[i]))
     IN F[Len(seq)]
 
+EWD998ChanInbox ==
+    \* Drop the src and the vc from the payload message.
+    [n \in DOMAIN inbox |->
+        MapSeq(inbox[n], 
+            LAMBDA m: 
+            IF m.type = "pl" 
+            THEN [type |-> "pl"] 
+            ELSE m) 
+    ]
+
 (***************************************************************************)
 (* EWD998ChanID (identifier) refines EWD998Chan where nodes are modelled   *)
 (* with naturals \in 0..N-1. To check that EWD998ChanID is a correct       *)
@@ -195,16 +202,7 @@ MapSeq(seq, Op(_)) ==
 EWD998Chan == INSTANCE EWD998Chan WITH active <- Node2Nat(active),
                                         color <- Node2Nat(color),
                                       counter <- Node2Nat(counter),
-                                        inbox <- Node2Nat(
-                                            \* Drop the src from the payload
-                                            \* message.
-                                            [n \in DOMAIN inbox |->
-                                                MapSeq(inbox[n], 
-                                                LAMBDA m: 
-                                                IF m.type = "pl" 
-                                                THEN [type |-> "pl"] 
-                                                ELSE m) 
-                                            ])
+                                        inbox <- Node2Nat(EWD998ChanInbox)
 
 EWD998ChanStateConstraint == EWD998Chan!StateConstraint
 EWD998ChanSpec == EWD998Chan!Spec
@@ -217,5 +215,9 @@ StateConstraint ==
     /\ EWD998ChanStateConstraint
     /\ \A n \in Node:
             FoldFunctionOnSet(+, 0, clock[n], Node) < 3
+
+\* The (vector) clock is not relevant for the correctness of the algorithm.
+View == 
+    <<active, color, counter, EWD998ChanInbox>>
 
 =============================================================================
