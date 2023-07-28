@@ -19,6 +19,10 @@
 (***************************************************************************)
 EXTENDS Integers, Sequences, FiniteSets, Naturals, Utils
 
+Merge(n, r, l) ==
+    LET max(a, b) == IF a > b THEN a ELSE b
+    IN [ m \in DOMAIN l |-> IF m = n THEN l[m] + 1 ELSE max(r[m], l[m]) ]
+
 CONSTANT Node
 ASSUME IsFiniteSet(Node) /\ Node # {}
 
@@ -136,10 +140,7 @@ RecvMsg(n) ==
   /\ \E j \in 1..Len(inbox[n]) : 
           /\ inbox[n][j].type = "pl"
           /\ inbox' = [inbox EXCEPT ![n] = RemoveAt(@, j) ]
-          \* This is where the "magic" of the vector clock happens.
-          /\ LET Max(a,b) == IF a < b THEN b ELSE a
-                 Merge(r, l) == [ m \in Node |-> IF m = n THEN l[m] + 1 ELSE Max(r[m], l[m]) ]
-             IN clock' = [ clock EXCEPT ![n] = Merge(inbox[n][j].vc, @) ]
+          /\ clock' = [ clock EXCEPT ![n] = Merge(n, inbox[n][j].vc, @) ]
   /\ UNCHANGED <<>>                           
 
 Deactivate(n) ==
