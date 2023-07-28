@@ -171,6 +171,19 @@ Spec == Init /\ [][\E n \in Node: Next(n)]_vars
 nat2node[ i \in 0..N-1 ] ==
     IF i = 0 THEN Initiator ELSE AntiFunction(RingOfNodes)[nat2node[i-1]]
 
+node2nat ==
+    AntiFunction(nat2node)
+
+a \prec b ==
+    \* True iff node a is a predecessor of node b in the ring.
+    node2nat[a] < node2nat[b]
+
+a ++ b ==
+    \* The set of nodes between node a and node b (inclusive) in the ring.
+    LET i == node2nat[a]
+        j == node2nat[b]
+    IN { nat2node[k] : k \in i..j }
+
 Node2Nat(fcn) ==
   [ i \in 0..N-1 |->  fcn[nat2node[i]] ]
 
