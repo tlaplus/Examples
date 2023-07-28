@@ -167,12 +167,8 @@ Spec == Init /\ [][\E n \in Node: Next(n)]_vars
 \* ignored by PlusPy.  It can thus make use of RECURSIVE.
 \*++:Spec
   
-nat2node[i \in 0..N-1 ] == 
-  LET RECURSIVE Op(_,_,_)
-      Op(p, cnt, nd) ==
-         IF p = cnt THEN nd
-         ELSE Op(p, cnt - 1, RingOfNodes[nd])
-  IN Op(i, N-1, RingOfNodes[Initiator])
+nat2node[ i \in 0..N-1 ] ==
+    IF i = 0 THEN Initiator ELSE AntiFunction(RingOfNodes)[nat2node[i-1]]
 
 Node2Nat(fcn) ==
   [ i \in 0..N-1 |->  fcn[nat2node[i]] ]
