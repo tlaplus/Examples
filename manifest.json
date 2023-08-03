@@ -3159,8 +3159,8 @@
             },
             {
               "path": "specifications/ewd998/EWD998Small.cfg",
-              "runtime": "00:00:30",
-              "size": "small",
+              "runtime": "00:05:00",
+              "size": "medium",
               "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
@@ -3205,8 +3205,10 @@
               "runtime": "unknown",
               "size": "large",
               "mode": "exhaustive search",
-              "config": [],
-              "features": [
+              "config": [
+                "ignore deadlock"
+              ],
+             "features": [
                 "liveness",
                 "state constraint",
                 "view"
