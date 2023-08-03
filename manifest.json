@@ -529,7 +529,21 @@
               "result": "success"
             }
           ]
-        }
+        },
+        {
+          "path": "specifications/KeyValueStore/Util.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/KeyValueStore/ClientCentric.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }                
       ]
     },
     {
