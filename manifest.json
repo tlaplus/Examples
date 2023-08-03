@@ -508,7 +508,7 @@
           "path": "specifications/KeyValueStore/KVsnap.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": [],
+          "features": ["pluscal"],
           "models": []
         },
         {
@@ -524,6 +524,7 @@
               "mode": "exhaustive search",
               "config": [],
               "features": [
+                "liveness",
                 "symmetry"
               ],
               "result": "success"
