@@ -533,7 +533,9 @@
         },
         {
           "path": "specifications/KeyValueStore/Util.tla",
-          "communityDependencies": [],
+          "communityDependencies": [
+            "Functions"
+          ],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
