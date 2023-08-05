@@ -40,7 +40,6 @@ variables
 define {
     \* for instantiating the ClientCentric module
     InitialState == [k \in Key |-> NoVal]   
-    IsInjective(f) == \A a,b \in DOMAIN f : f[a] = f[b] => a = b   
     SetToSeq(S) == CHOOSE f \in [1..Cardinality(S) -> S] : IsInjective(f)
 
     \* snapshot isolation invariant
@@ -101,12 +100,12 @@ COMMIT: \* Commit the transaction to the database if there is no conflict
 }
 *)
 
-\* BEGIN TRANSLATION (chksum(pcal) = "38698f36" /\ chksum(tla) = "2d9d1e7d")
+\* BEGIN TRANSLATION (chksum(pcal) = "2e9a6c18" /\ chksum(tla) = "5ad2eccd")
 VARIABLES store, tx, snapshotStore, written, missed, ops, pc
 
 (* define statement *)
 InitialState == [k \in Key |-> NoVal]
-IsInjective(f) == \A a,b \in DOMAIN f : f[a] = f[b] => a = b
+
 SetToSeq(S) == CHOOSE f \in [1..Cardinality(S) -> S] : IsInjective(f)
 
 

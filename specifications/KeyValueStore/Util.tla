@@ -1,24 +1,20 @@
 -------------------------------- MODULE Util --------------------------------
-EXTENDS Sequences, FiniteSets, Naturals, TLC
+EXTENDS Sequences, FiniteSets, Functions, Naturals, TLC
 \* Simple utility functions
 intersects(a, b) == (Cardinality(a \cap b) > 0)
 max(s) == CHOOSE i \in s : (~\E j \in s : j > i)
 min(s) == CHOOSE i \in s : (~\E j \in s : j < i)
 
-\* Utilies from Practical TLA+
-ReduceSet(op(_, _), set, acc) ==
-  LET f[s \in SUBSET set] == \* here's where the magic is
-    IF s = {} THEN acc
-    ELSE LET x == CHOOSE x \in s: TRUE
-         IN op(x, f[s \ {x}])
-  IN f[set]
-ReduceSeq(op(_, _), seq, acc) == 
-  ReduceSet(LAMBDA i, a: op(seq[i], a), DOMAIN seq, acc)
-\* Pulls an indice of the sequence for elem.
-Index(seq, elem) == CHOOSE i \in 1..Len(seq): seq[i] = elem
-\* end from Practical TLA+
+ReduceSet(op(_, _), set, base) ==
+  LET iter[s \in SUBSET set] ==
+        IF s = {} THEN base
+        ELSE LET x == CHOOSE x \in s: TRUE
+             IN  op(x, iter[s \ {x}])
+  IN  iter[set]
 
-Range(T) == { T[x] : x \in DOMAIN T }
+ReduceSeq(op(_, _), seq, acc) == FoldFunction(op, acc, seq)
+
+Index(seq, e) ==  CHOOSE i \in 1..Len(seq): seq[i] = e
     
 SeqToSet(s) == {s[i] : i \in DOMAIN s}
 Last(seq) == seq[Len(seq)]
