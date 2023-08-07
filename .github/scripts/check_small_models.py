@@ -7,15 +7,9 @@ machines.
 from argparse import ArgumentParser
 import logging
 from os.path import dirname, normpath
+from subprocess import CompletedProcess, TimeoutExpired
 from timeit import default_timer as timer
 import tla_utils
-
-tlc_result = {
-    0   : 'success',
-    11  : 'deadlock failure',
-    12  : 'safety failure',
-    13  : 'liveness failure'
-}
 
 parser = ArgumentParser(description='Checks all small TLA+ models in the tlaplus/examples repo using TLC.')
 parser.add_argument('--tools_jar_path', help='Path to the tla2tools.jar file', required=True)
@@ -36,9 +30,9 @@ def check_model(module_path, model, expected_runtime):
     module_path = tla_utils.from_cwd(examples_root, module_path)
     model_path = tla_utils.from_cwd(examples_root, model['path'])
     logging.info(model_path)
-    expected_result = model['result']
+    hard_timeout_in_seconds = 60
     start_time = timer()
-    tlc, hit_timeout = tla_utils.check_model(
+    tlc_result = tla_utils.check_model(
         tools_jar_path,
         module_path,
         model_path,
@@ -46,19 +40,26 @@ def check_model(module_path, model, expected_runtime):
         community_jar_path,
         model['mode'],
         model['config'],
-        60
+        hard_timeout_in_seconds
     )
     end_time = timer()
-    if hit_timeout:
-        logging.error(f'{model_path} timed out')
-        return False
-    logging.info(f'{model_path} in {end_time - start_time:.1f}s vs. {expected_runtime.seconds}s expected')
-    actual_result = tlc_result[tlc.returncode] if tlc.returncode in tlc_result else str(tlc.returncode)
-    if expected_result != actual_result:
-        logging.error(f'Model {model_path} expected result {expected_result} but got {actual_result}')
-        logging.error(tlc.stdout.decode('utf-8'))
-        return False
-    return True
+    match tlc_result:
+        case CompletedProcess():
+            logging.info(f'{model_path} in {end_time - start_time:.1f}s vs. {expected_runtime.seconds}s expected')
+            expected_result = model['result']
+            actual_result = tla_utils.resolve_tlc_exit_code(tlc_result.returncode)
+            if expected_result != actual_result:
+                logging.error(f'Model {model_path} expected result {expected_result} but got {actual_result}')
+                logging.error(tlc_result.stdout)
+                return False
+            return True
+        case TimeoutExpired():
+            logging.error(f'{model_path} hit hard timeout of {hard_timeout_in_seconds} seconds')
+            logging.error(tlc_result.output.decode('utf-8'))
+            return False
+        case _:
+            logging.error(f'Unhandled TLC result type {type(tlc_result)}: {tlc_result}')
+            return False
 
 # Ensure longest-running modules go first
 manifest = tla_utils.load_json(manifest_path)

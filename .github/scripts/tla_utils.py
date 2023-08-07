@@ -74,7 +74,7 @@ def get_config(config):
     """
     return ['-deadlock'] if 'ignore deadlock' in config else []
 
-def check_model(tools_jar_path, module_path, model_path, tlapm_lib_path, community_jar_path, mode, config, timeout):
+def check_model(tools_jar_path, module_path, model_path, tlapm_lib_path, community_jar_path, mode, config, hard_timeout_in_seconds):
     """
     Model-checks the given model against the given module.
     """
@@ -99,10 +99,26 @@ def check_model(tools_jar_path, module_path, model_path, tlapm_lib_path, communi
                 '-lncheck', 'final',
                 '-cleanup'
             ] + get_config(config) + get_run_mode(mode),
-            capture_output=True,
-            timeout=timeout
+            timeout=hard_timeout_in_seconds,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True
         )
-        return (tlc, False)
-    except subprocess.TimeoutExpired:
-        return (None, True)
+        return tlc
+    except subprocess.TimeoutExpired as e:
+        return e
+
+def resolve_tlc_exit_code(code):
+    """
+    Resolves TLC's exit code to a standardized human-readable form.
+    Returns the stringified exit code number if unknown.
+    """
+    tlc_exit_codes = {
+        0   : 'success',
+        11  : 'deadlock failure',
+        12  : 'safety failure',
+        13  : 'liveness failure'
+    }
+
+    return tlc_exit_codes[code] if code in tlc_exit_codes else str(code)
 
