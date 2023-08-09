@@ -1,7 +1,7 @@
 -------------------------------- MODULE Util --------------------------------
-EXTENDS Sequences, FiniteSets, Functions, Naturals, TLC
+EXTENDS Sequences, Functions, Naturals, TLC
 \* Simple utility functions
-intersects(a, b) == (Cardinality(a \cap b) > 0)
+intersects(a, b) == a \cap b # {}
 max(s) == CHOOSE i \in s : (~\E j \in s : j > i)
 min(s) == CHOOSE i \in s : (~\E j \in s : j < i)
 
@@ -41,5 +41,5 @@ test(lhs, rhs) == lhs /= rhs => Print(<<lhs, " IS NOT ", rhs>>, FALSE)
 
 =============================================================================
 \* Modification History
-\* Last modified Tue Jun 16 12:04:20 CEST 2020 by tim
+\* Last modified Sun Aug 05 16:44:44 ET 2023 by murat
 \* Created Tue Apr 28 16:43:24 CEST 2020 by tim
