@@ -41,7 +41,12 @@ jobs:
       - name: Download TLA⁺ dependencies
         if: matrix.os == 'windows-latest'
         run: |
+          # Print out tool version information
           java --version
+          python --version
+          pip --version
+          cc --version
+          cpp --version
           # Install python packages
           pip install -r $SCRIPT_DIR/requirements.txt
           # Put all dependencies in their own directory to ensure they aren't included implicitly
@@ -67,6 +72,12 @@ jobs:
       - name: Download TLA⁺ dependencies
         if: matrix.os != 'windows-latest'
         run: |
+          # Print out tool version information
+          java --version
+          python --version
+          pip --version
+          cc --version
+          cpp --version
           # Install python packages
           pip install -r $SCRIPT_DIR/requirements.txt
           # Put all dependencies in their own directory to ensure they aren't included implicitly
