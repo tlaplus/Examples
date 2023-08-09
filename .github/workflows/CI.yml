@@ -45,7 +45,6 @@ jobs:
           java --version
           python --version
           pip --version
-          cl
           # Install python packages
           pip install -r $SCRIPT_DIR/requirements.txt
           # Put all dependencies in their own directory to ensure they aren't included implicitly
