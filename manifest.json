@@ -453,7 +453,8 @@
       "description": "A simple KVS implementing snapshot isolation",
       "source": "",
       "authors": [
-        "Andrew Helwer"
+        "Andrew Helwer",
+        "Murat Demirbas"
       ],
       "tags": [],
       "modules": [
@@ -502,7 +503,50 @@
               "result": "success"
             }
           ]
-        }
+        },
+        {
+          "path": "specifications/KeyValueStore/KVsnap.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["pluscal"],
+          "models": []
+        },
+        {
+          "path": "specifications/KeyValueStore/MCKVsnap.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/KeyValueStore/MCKVsnap.cfg",
+              "runtime": "00:00:50",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "config": [],
+              "features": [
+                "liveness",
+                "symmetry"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/KeyValueStore/Util.tla",
+          "communityDependencies": [
+            "Functions"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/KeyValueStore/ClientCentric.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }                
       ]
     },
     {
