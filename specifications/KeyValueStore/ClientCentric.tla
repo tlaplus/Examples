@@ -40,7 +40,7 @@ executionStates(execution) == [ i \in 1..Len(execution) |-> execution[i].parentS
 executionTransactions(execution) == { ep.transaction : ep \in SeqToSet(execution) }
 
 \* "The parent state is the last state in the execution
-\* Definition 1: s -T-> s' ≡ [(k,v) ∈ s ∧ (k,v)􏰍 \notin s'] => k ∈ W_T /\ w(k,v) ∈ Σ_T => (k,v) ∈ s.
+\* Definition 1: s -T-> s' ≡ [(k,v) ∈ s ∧ (k,v) \notin s'] => k ∈ W_T /\ w(k,v) ∈ Σ_T => (k,v) ∈ s.
 \* We refer to s as the parent state of T (denoted as sp,T ); to the
 \* transaction that generated s as Ts ; and to the set of keys in which
 \* s and s′ differ as ∆(s,s′)"
@@ -81,7 +81,7 @@ PrereadAll(execution, transactions) ==
 Complete(execution, transaction, state) == 
   LET setOfAllReadStatesOfOperation(transactionOperations) ==
         { ReadStates(execution, operation, transaction) : operation \in SeqToSet(transactionOperations) }
-     \* also include all states for when the transaction contains no operations
+     \* readStatesForEmptyTransaction contains all previous states, to ensure that empty txns do not incorrectly invalidate the checked isolation level
       readStatesForEmptyTransaction == { s \in SeqToSet(executionStates(execution)) : beforeOrEqualInExecution(execution, s, parentState(execution, transaction)) }
   IN state \in INTERSECTION(setOfAllReadStatesOfOperation(transaction) \union { readStatesForEmptyTransaction } )
 
