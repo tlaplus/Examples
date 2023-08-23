@@ -111,7 +111,7 @@ jobs:
           chmod +x $TLAPM_BIN
           # Workaround for https://github.com/tlaplus/tlapm/issues/88
           for ((attempt = 1; attempt <= 5; attempt++)); do
-            find deps/tlapm-install -mindepth 1 -delete
+            rm -rf deps/tlapm-install
             ./$TLAPM_BIN -d deps/tlapm-install
             if [ $? -eq 0 ]; then
               exit 0
