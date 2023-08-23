@@ -109,7 +109,15 @@ jobs:
           TLAPM_BIN="tlaps-1.5.0-$TLAPM_BIN_TYPE-inst.bin"
           wget -nv https://github.com/tlaplus/tlapm/releases/download/$TLAPS_VERSION/$TLAPM_BIN
           chmod +x $TLAPM_BIN
-          ./$TLAPM_BIN -d deps/tlapm-install
+          # Workaround for https://github.com/tlaplus/tlapm/issues/88
+          for ((attempt = 1; attempt <= 5; attempt++)); do
+            find deps/tlapm-install -mindepth 1 -delete
+            ./$TLAPM_BIN -d deps/tlapm-install
+            if [ $? -eq 0 ]; then
+              exit 0
+            fi
+          done
+          exit 1
       - name: Check manifest.json format
         run: |
           python $SCRIPT_DIR/check_manifest_schema.py \
