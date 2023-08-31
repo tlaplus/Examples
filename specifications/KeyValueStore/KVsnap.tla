@@ -3,6 +3,7 @@
 (* Pluscal algoritm for a simple key-value store with snapshot isolation  *)
 (* This version has atomic updates of store and missed sets of txns       *)
 (**************************************************************************)
+
 EXTENDS Integers, Sequences, FiniteSets, Util
 
 CONSTANTS   Key,            \* The set of all keys.
@@ -94,7 +95,6 @@ Init == (* Global variables *)
         /\ snapshotStore = [self \in TxId |-> [k \in Key |-> NoVal]]
         /\ read_keys = [self \in TxId |-> {}]
         /\ write_keys = [self \in TxId |-> {}]
-        /\ ops = [self \in TxId |-> <<>>]
         /\ pc = [self \in ProcSet |-> "START"]
 
 START(self) == /\ pc[self] = "START"
@@ -144,7 +144,6 @@ Spec == /\ Init /\ [][Next]_vars
 Termination == <>(\A self \in ProcSet: pc[self] = "Done")
 
 \* END TRANSLATION 
-
 
 
 \* Snapshot Isolation invariant

@@ -2930,15 +2930,15 @@
           "models": [
             {
               "path": "specifications/ewd426/TokenRing.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:05",
+              "size": "small",
               "mode": "exhaustive search",
               "config": [],
               "features": [
                 "alias",
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         }
@@ -3246,8 +3246,8 @@
           "models": [
             {
               "path": "specifications/ewd998/EWD998ChanID.cfg",
-              "runtime": "unknown",
-              "size": "large",
+              "runtime": "00:00:05",
+              "size": "small",
               "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
@@ -3257,7 +3257,7 @@
                 "state constraint",
                 "view"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -3359,8 +3359,8 @@
           "models": [
             {
               "path": "specifications/ewd998/SmokeEWD998.cfg",
-              "runtime": "unknown",
-              "size": "large",
+              "runtime": "00:00:05",
+              "size": "small",
               "mode": {
                 "simulate": {
                   "traceCount": 100
@@ -3371,7 +3371,7 @@
                 "liveness",
                 "state constraint"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
