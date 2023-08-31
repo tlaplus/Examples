@@ -3,7 +3,7 @@
 (* Pluscal algoritm for a simple key-value store with snapshot isolation  *)
 (* This version has atomic updates of store and missed sets of txns       *)
 (**************************************************************************)
-EXTENDS Integers, Sequences, FiniteSets, TLC, Util
+EXTENDS Integers, Sequences, FiniteSets, Util
 
 CONSTANTS   Key,            \* The set of all keys.
             TxId,           \* The set of all transaction IDs.
@@ -12,9 +12,12 @@ CONSTANTS   Key,            \* The set of all keys.
 \* Instantiating ClientCentric enables us to check transaction isolation guarantees this model satisfies
 \* https://muratbuffalo.blogspot.com/2022/07/automated-validation-of-state-based.html         
 CC == INSTANCE ClientCentric WITH Keys <- Key, Values <- TxId \union {NoVal}          
-
+    
+\* for instantiating the ClientCentric module
 wOp(k,v) == CC!w(k,v)
 rOp(k,v) == CC!r(k,v)
+InitialState == [k \in Key |-> NoVal]   
+SetToSeq(S) == CHOOSE f \in [1..Cardinality(S) -> S] : IsInjective(f)
 
 (* --algorithm KVsnap {
 
@@ -26,40 +29,24 @@ variables
     tx = {},
 
     \* The set of writes invisible to each transaction
-    missed = [t \in TxId |-> {}],
+    missed = [t \in TxId |-> {}];
 
-    \*  reads/writes per txn_id, used for interfacing to CC
-    ops = [ tId \in TxId |-> <<>> ];     
-
-define {
-    \* for instantiating the ClientCentric module
-    InitialState == [k \in Key |-> NoVal]   
-    SetToSeq(S) == CHOOSE f \in [1..Cardinality(S) -> S] : IsInjective(f)
-
-    \* snapshot isolation invariant
-    SnapshotIsolation == CC!SnapshotIsolation(InitialState, Range(ops))
-
-\*    Serialization == CC!Serializability(InitialState, Range(ops))
-    
-    TypeOK == \* type invariant
-        /\ store \in [Key -> TxId \union {NoVal}]
-        /\ tx \subseteq TxId
-        /\ missed \in [TxId -> SUBSET Key] 
-}
+\* See end of file for invariants
 
 
 \* Transaction processing
 fair process (t \in TxId)
 variables
     snapshotStore = [k \in Key |-> NoVal], \* local snapshot of the store
-    read_keys={},    \* read keys for the transaction
-    write_keys={};   \* write keys for the transaction    
+    read_keys  = {},    \* read keys  for the transaction
+    write_keys = {},    \* write keys for the transaction
+    ops = <<>>;   \* a log of reads & writes this transaction executes; used for interfacing to CC
 {
 START: \* Start the transaction
     tx := tx \union {self};
     snapshotStore := store; \* take my snapshot of store
 
-    with (rk \in SUBSET Key; wk \in SUBSET Key \ {}) {
+    with (rk \in SUBSET Key; wk \in SUBSET Key \ { {} }) {
         read_keys := rk;     \* select a random read-key-set  from possible read-keys
         write_keys := wk;    \* select a random write-key-set from possible write-keys  
     };
@@ -67,7 +54,7 @@ START: \* Start the transaction
 
 READ: \* Process reads on my snapshot          
     \* log reads for CC isolation check 
-    ops[self] := ops[self] \o SetToSeq({rOp(k, snapshotStore[k]): k \in read_keys}); 
+    ops := ops \o SetToSeq({rOp(k, snapshotStore[k]): k \in read_keys}); 
     
 UPDATE: \* Process writes on my snapshot, write 'self' as value
     snapshotStore := [k \in Key |-> IF k \in write_keys THEN self ELSE snapshotStore[k] ];    
@@ -84,7 +71,7 @@ COMMIT: \* Commit the transaction to the database if there is no conflict
         store := [k \in Key |-> IF k \in write_keys THEN snapshotStore[k] ELSE store[k] ];  
         
         \* log reads for CC isolation check 
-        ops[self] := ops[self] \o SetToSeq({wOp(k, self): k \in write_keys}); 
+        ops := ops \o SetToSeq({wOp(k, self): k \in write_keys}); 
     }
 }
 
@@ -92,26 +79,10 @@ COMMIT: \* Commit the transaction to the database if there is no conflict
 }
 *)
 
-\* BEGIN TRANSLATION (chksum(pcal) = "5ef5c453" /\ chksum(tla) = "f592c6a0")
-VARIABLES store, tx, missed, ops, pc
+\* BEGIN TRANSLATION (chksum(pcal) = "15348ab3" /\ chksum(tla) = "7613a888")
+VARIABLES store, tx, missed, pc, snapshotStore, read_keys, write_keys, ops
 
-(* define statement *)
-InitialState == [k \in Key |-> NoVal]
-SetToSeq(S) == CHOOSE f \in [1..Cardinality(S) -> S] : IsInjective(f)
-
-
-SnapshotIsolation == CC!SnapshotIsolation(InitialState, Range(ops))
-
-
-
-TypeOK ==
-    /\ store \in [Key -> TxId \union {NoVal}]
-    /\ tx \subseteq TxId
-    /\ missed \in [TxId -> SUBSET Key]
-
-VARIABLES snapshotStore, read_keys, write_keys
-
-vars == << store, tx, missed, ops, pc, snapshotStore, read_keys, write_keys
+vars == << store, tx, missed, pc, snapshotStore, read_keys, write_keys, ops
         >>
 
 ProcSet == (TxId)
@@ -120,18 +91,18 @@ Init == (* Global variables *)
         /\ store = [k \in Key |-> NoVal]
         /\ tx = {}
         /\ missed = [t \in TxId |-> {}]
-        /\ ops = [ tId \in TxId |-> <<>> ]
         (* Process t *)
         /\ snapshotStore = [self \in TxId |-> [k \in Key |-> NoVal]]
         /\ read_keys = [self \in TxId |-> {}]
         /\ write_keys = [self \in TxId |-> {}]
+        /\ ops = [self \in TxId |-> <<>>]
         /\ pc = [self \in ProcSet |-> "START"]
 
 START(self) == /\ pc[self] = "START"
                /\ tx' = (tx \union {self})
                /\ snapshotStore' = [snapshotStore EXCEPT ![self] = store]
                /\ \E rk \in SUBSET Key:
-                    \E wk \in SUBSET Key \ {}:
+                    \E wk \in SUBSET Key \ { {} }:
                       /\ read_keys' = [read_keys EXCEPT ![self] = rk]
                       /\ write_keys' = [write_keys EXCEPT ![self] = wk]
                /\ pc' = [pc EXCEPT ![self] = "READ"]
@@ -146,7 +117,7 @@ READ(self) == /\ pc[self] = "READ"
 UPDATE(self) == /\ pc[self] = "UPDATE"
                 /\ snapshotStore' = [snapshotStore EXCEPT ![self] = [k \in Key |-> IF k \in write_keys[self] THEN self ELSE snapshotStore[self][k] ]]
                 /\ pc' = [pc EXCEPT ![self] = "COMMIT"]
-                /\ UNCHANGED << store, tx, missed, ops, read_keys, write_keys >>
+                /\ UNCHANGED << store, tx, missed, read_keys, write_keys, ops >>
 
 COMMIT(self) == /\ pc[self] = "COMMIT"
                 /\ IF missed[self] \intersect write_keys[self] = {}
@@ -175,6 +146,19 @@ Termination == <>(\A self \in ProcSet: pc[self] = "Done")
 
 \* END TRANSLATION 
 
+
+
+\* Snapshot isolation invariant
+SnapshotIsolation == CC!SnapshotIsolation(InitialState, Range(ops))
+
+TypeOK == \* type invariant
+    /\ store \in [Key -> TxId \union {NoVal}]
+    /\ tx \subseteq TxId
+    /\ missed \in [TxId -> SUBSET Key] 
+
+
+\* Serializability would not be satisfied due to write-skew
+Serialization == CC!Serializability(InitialState, Range(ops))
 
 ===========================================================================
 As an exercise try to add more yield points, make the actions smaller. 
