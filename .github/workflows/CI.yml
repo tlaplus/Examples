@@ -110,6 +110,7 @@ jobs:
           wget -nv https://github.com/tlaplus/tlapm/releases/download/$TLAPS_VERSION/$TLAPM_BIN
           chmod +x $TLAPM_BIN
           # Workaround for https://github.com/tlaplus/tlapm/issues/88
+          set +e
           for ((attempt = 1; attempt <= 5; attempt++)); do
             rm -rf deps/tlapm-install
             ./$TLAPM_BIN -d deps/tlapm-install
