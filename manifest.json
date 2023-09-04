@@ -3733,7 +3733,7 @@
           "models": [
             {
               "path": "specifications/Majority/MCMajority.cfg",
-              "runtime": "unknown",
+              "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
               "config": ["ignore deadlock"],
