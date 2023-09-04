@@ -118,6 +118,7 @@ A central manifest of specs with descriptions and accounts of their various mode
 | 101 | Learn TLA⁺ Proofs | <a href="specifications/LearnProofs">Basic PlusCal algorithms and formal proofs of their correctness</a> | Andrew Helwer | &#10004; | &#10004; | Sequences, Naturals, Integers, TLAPS | &#10004; | |
 | 102 | Lexicographically-Least Circular Substring | <a href="specifications/LeastCircularSubstring">Booth's 1980 algorithm to find the lexicographically-least circular substring</a> | Andrew Helwer | | &#10004; | FiniteSets, Integers, Naturals, Sequences | &#10004; | |
 | 103 | Distributed Checkpoint Coordination | <a href="specifications/CheckpointCoordination">Algorithm for coordinating checkpoint/snapshot leases in a Paxos ring</a> | Andrew Helwer | | &#10004; | FiniteSets, Naturals, Sequences, TLC | | |
+| 104 | Boyer-Moore Majority Vote | <a href="specifications/Majority">Efficient algorithm for finding a majority value</a> | Stephan Merz | &#10004; | &#10004; | Integers, Sequences, FiniteSets, TLAPS | | |
 
 ## License
 
