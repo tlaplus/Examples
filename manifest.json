@@ -3710,15 +3710,6 @@
       "tags": ["beginner"],
       "modules": [
         {
-          "path": "specifications/Majority/TLAPS.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
-          "models": []
-        },
-        {
           "path": "specifications/Majority/Majority.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
