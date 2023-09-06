@@ -546,7 +546,7 @@
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
-        }                
+        }
       ]
     },
     {
@@ -3695,6 +3695,51 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/Majority",
+      "title": "Boyer-Moore majority vote algorithm",
+      "description": "An efficient algorithm for detecting a majority value in a sequence",
+      "source": "",
+      "authors": [
+        "Stephan Merz"
+      ],
+      "tags": ["beginner"],
+      "modules": [
+        {
+          "path": "specifications/Majority/Majority.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/Majority/MCMajority.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Majority/MCMajority.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "config": ["ignore deadlock"],
+              "features": [],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/Majority/MajorityProof.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
           "models": []
         }
       ]
