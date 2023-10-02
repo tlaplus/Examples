@@ -201,7 +201,7 @@ Termination == <>(\A self \in ProcSet: pc[self] = "Done")
 
 (***************************************************************************)
 (* The following formula asserts that no two processes are in their        *)
-(* critcal sections at the same time.  It is the invariant that a mutual   *)
+(* critical sections at the same time.  It is the invariant that a mutual   *)
 (* exclusion algorithm should satisfy.  You can have TLC check that the    *)
 (* algorithm is a mutual exclusion algorithm by checking that this formula *)
 (* is an invariant.                                                        *)

@@ -31,7 +31,7 @@ ExecutionElem == [parentState: State, transaction: Transaction]
 \* resultState is the parentState of the next transaction, but not used in the isolation definitions.
 \* ExecutionElem == [parentState: State, transaction: Transaction, resultState: State]
 \* We represent an `Execution` as a sequence of `Transaction`s with their corresponding parent state.
-\* Note: This execution does therefor not contain the "final state" of the execution, since it is not a parent state of a transaction.
+\* Note: This execution does therefore not contain the "final state" of the execution, since it is not a parent state of a transaction.
 Execution == Seq(ExecutionElem)
 
 \* Seq
@@ -107,12 +107,12 @@ effects(state, transaction) ==
 executions(initialState, transactions) == 
   \* All possible permutations
   LET orderings == PermSeqs(transactions)
-\*      initialState == [k \in Keys |-> InitValue] \* makes it level-1 therefor pass it in
+\*      initialState == [k \in Keys |-> InitValue] \* makes it level-1 therefore pass it in
       accummulator == [ execution |-> <<>>, nextState |-> initialState ]
   IN { LET executionAcc == ReduceSeq(
          \*                                store ExecutionElem in accumulator
                             LAMBDA t, acc: [ execution |-> Append(acc.execution, [parentState |-> acc.nextState, transaction |-> t])
-  \*                                         calcultate next state
+  \*                                         calculate next state
                                            , nextState |-> effects(acc.nextState,t) 
                             ],
                             ordering, accummulator)
@@ -139,7 +139,7 @@ CT_SER(transaction, execution) ==
 Serializability(initialState, transactions) == satisfyIsolationLevel(initialState, transactions, CT_SER)
 
 \*SerializabilityDebug(initialState, transactions) == 
-\*  \* if no executions satify commit test, print all executions
+\*  \* if no executions satisfy commit test, print all executions
 \*  \/ (~\E execution \in executions(initialState, transactions): \A transaction \in transactions:
 \*       CT_SER(transaction, execution)) => \A execution \in executions(initialState, transactions): PrintT(<<"Execution not Serializable:",execution>>)
 \*  \* fall back to normal check

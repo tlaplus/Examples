@@ -19,7 +19,7 @@ Index(seq, e) ==  CHOOSE i \in 1..Len(seq): seq[i] = e
 SeqToSet(s) == {s[i] : i \in DOMAIN s}
 Last(seq) == seq[Len(seq)]
 IsEmpty(seq) == Len(seq) = 0
-\* Remove all occurences of `elem` from `seq`
+\* Remove all occurrences of `elem` from `seq`
 Remove(seq, elem) == SelectSeq(seq, LAMBDA e: e /= elem)
 
 \* Dual to UNION on intersect

@@ -1,11 +1,11 @@
 ------------------------------ MODULE DieHard ------------------------------- 
 (***************************************************************************)
-(* In the movie Die Hard 3, the heros must obtain exactly 4 gallons of     *)
+(* In the movie Die Hard 3, the heroes must obtain exactly 4 gallons of     *)
 (* water using a 5 gallon jug, a 3 gallon jug, and a water faucet.  Our    *)
 (* goal: to get TLC to solve the problem for us.                           *)
 (*                                                                         *)
 (* First, we write a spec that describes all allowable behaviors of our    *)
-(* heros.                                                                  *)
+(* heroes.                                                                  *)
 (***************************************************************************)
 EXTENDS Naturals
   (*************************************************************************)
@@ -76,7 +76,7 @@ EmptyBigJug   == /\ big' = 0
 
 (***************************************************************************)
 (* We now consider pouring water from one jug into another.  Again, since  *)
-(* the jugs are not callibrated, when pouring from jug A to jug B, it      *)
+(* the jugs are not calibrated, when pouring from jug A to jug B, it      *)
 (* makes sense only to either fill B or empty A. And there's no point in   *)
 (* emptying A if this will cause B to overflow, since that could be        *)
 (* accomplished by the two actions of first filling B and then emptying A. *)
@@ -119,7 +119,7 @@ Spec == Init /\ [][Next]_<<big, small>>
 -----------------------------------------------------------------------------
 
 (***************************************************************************)
-(* Remember that our heros must measure out 4 gallons of water.            *)
+(* Remember that our heroes must measure out 4 gallons of water.            *)
 (* Obviously, those 4 gallons must be in the 5 gallon jug.  So, they have  *)
 (* solved their problem when they reach a state with big = 4.  So, we      *)
 (* define NotSolved to be the predicate asserting that big # 4.            *)

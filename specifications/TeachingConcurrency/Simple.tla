@@ -69,7 +69,7 @@ Termination == <>(\A self \in ProcSet: pc[self] = "Done")
 ----------------------------------------------------------------------------
 (***************************************************************************)
 (* The property of this algorithm we want to prove is that, when all the   *)
-(* processses have terminated, y[i] equals 1 for at least one process i.   *)
+(* processes have terminated, y[i] equals 1 for at least one process i.   *)
 (* This property is express by the invariance of the following formula     *)
 (* PCorrect.  In other words, we have to prove the theorem                 *)
 (*                                                                         *)

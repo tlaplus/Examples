@@ -31,7 +31,7 @@ VARIABLES Corr,           (* a set of correct processes *)
 ASSUME N \in Nat /\ T \in Nat /\ F \in Nat
 ASSUME (N > 2 * T) /\ (T >= F) /\ (F >= 0)
 
-Proc == 1 .. N                  (* all processess, including the faulty ones    *)
+Proc == 1 .. N                  (* all processes, including the faulty ones    *)
 M == { "ECHO" }                 (* only ECHO messages are sent in this encoding *)
 
 vars == << pc, rcvd, sent, nCrashed, Corr >>         (* a new variable Corr  *)      

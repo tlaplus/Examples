@@ -6,13 +6,13 @@
    [1] Chandra, Tushar Deepak, and Sam Toueg. "Unreliable failure detectors for 
    reliable distributed systems." Journal of the ACM (JACM) 43.2 (1996): 225-267.
         
-   Igor Konnov, Thanh Hai Tran, Josef Widder, 2018
+   Igor Konnov, Thanh Hai Tran, Josef Wider, 2018
   
    This file is a subject to the license that is bundled together with this package 
    and can be found in the file LICENSE. *) 
    
 (* - This specification instances two other specs, Age_Channel.tla for the communication 
-     system, and EPFailureDetector.tla for behaviors of correct processses.
+     system, and EPFailureDetector.tla for behaviors of correct processes.
      
    - Every message sent by some process is wrapped into a box with an age which shows 
      how long this message have been in transit. Boxes for messages which were sent 
@@ -71,7 +71,7 @@
       2/ Every local lock in this specification has a finite domain, instead of a
       infinite one. Whenever the value of its local clock is greater than SendPoint,
       PredictPoint, and delta[i][j], the local clock is reset to 0. Because of the 
-      constraints about message delay and relative speeds of differnt processes in 
+      constraints about message delay and relative speeds of different processes in
       partial synchrony, the upper bound of local clocks exists.   
                                                                 
       3/ After fromLastHeard[i][j] is greated than delta[i][j], we don't need to 
@@ -108,11 +108,11 @@ CONSTANT
                    partial synchrony. *)
   
                         
-(* Assumptions about the constrants in our system. 
+(* Assumptions about the constraints in our system.
     - SendPoint # PredictPoint: a process cannot both send messages and 
       receive messages in one transition. 
     - PredictPoint % SendPoint # 0 /\ SendPoint % PredictPoint # 0 : 
-      the operation Predict cannot subsume the opration Predict and vice versa. *)  
+      the operation Predict cannot subsume the operation Predict and vice versa. *)
 ASSUME  /\ 0 < PredictPoint /\ 0 < SendPoint 
         /\ PredictPoint % SendPoint # 0 /\ SendPoint % PredictPoint # 0 
           
@@ -170,7 +170,7 @@ envVars == << procPause, moved, failed, F >>
 (* All Names of processes' transitions *)
 Actions == { "NO", "INIT", "SEND", "RECEIVE", "PREDICT", "CRASH" }
 
-(* Intialization *)
+(* Initialization *)
 Init ==
   /\ CommChan!Init
   /\ Detector!Init

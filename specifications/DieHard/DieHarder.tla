@@ -11,7 +11,7 @@ EXTENDS Naturals
 
 CONSTANT Jug,      \* The set of all jugs.
          Capacity, \* A function, where Capacity[j] is the capacity of jug j.
-         Goal      \* The quantity of water our heros must measure.
+         Goal      \* The quantity of water our heroes must measure.
 (***************************************************************************)
 (* We make an assumption about these constants--namely, that Capacity is a *)
 (* function from jugs to positive integers, and Goal is a natural number.  *)

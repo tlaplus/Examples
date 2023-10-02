@@ -18,7 +18,7 @@ SetToSeqs(set, Filter(_)) == UNION {{perm \in [1..Cardinality(set) -> set]:
                             Filter(perm)}}
 
 (***************************************************************************)
-(* Returns a Set of all possible permutations with distinct elemenents     *)
+(* Returns a Set of all possible permutations with distinct elements     *)
 (* created out of the elements of Set set. All elements of set occur in    *)
 (* in the sequence.                                                        *)
 (***************************************************************************)
@@ -38,7 +38,7 @@ IsGraph(G) == /\ {"states", "initials", "actions"} = DOMAIN G
               /\ G.initials \subseteq G.states
 
 (***************************************************************************)
-(* A set of all permutations of the inital states of G.                    *)
+(* A set of all permutations of the initial states of G.                    *)
 (***************************************************************************)
 SetOfAllPermutationsOfInitials(G) == SetToDistSeqs(G.initials)
 
@@ -91,7 +91,7 @@ The PlusCal code of the model checker algorithm
               T = <<>>;
     {
        (* Check initial states for violations. We could
-          be clever and check the inital states as part
+          be clever and check the initial states as part
           of the second while loop. However, we then
           either check all states twice or add unchecked
           states to S. *)
@@ -101,7 +101,7 @@ The PlusCal code of the model checker algorithm
              state := S[i]; 
              \* state is now fully explored,
              \* thus exclude it from any
-             \* futher exploration if graph
+             \* further exploration if graph
              \* exploration visits it again
              \* due to a cycle. 
              C := C \cup {state};
