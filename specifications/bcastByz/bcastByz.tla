@@ -53,7 +53,7 @@ VARIABLE rcvd           (* the messages received by each process *)
 VARIABLE sent           (* the messages sent by all correct processes *)
 ASSUME NTF == N \in Nat /\ T \in Nat /\ F \in Nat /\ (N > 3 * T) /\ (T >= F) /\ (F >= 0)
 
-Proc == 1 .. N          (* all processess, including the faulty ones    *)
+Proc == 1 .. N          (* all processes, including the faulty ones    *)
 M == { "ECHO" }
 (* ByzMsgs == { <<p, "ECHO">> : p \in Faulty }: quite complicated to write a TLAPS proof 
    for the cardinality of the expression { e : x \in S}
@@ -111,7 +111,7 @@ UponV1(self) ==
    Since processes send only ECHO messages, the number of messages in rcvd[self] equals the   
    number of distinct processes from which process self received ECHO messages. 
   
-   The 3rd conjuction "Cardinality(rcvd'[self]) < N - T" ensures that process p cannot accept 
+   The 3rd conjunction "Cardinality(rcvd'[self]) < N - T" ensures that process p cannot accept
    or not execute the 2nd if-then expression in Fig. 7 [1]. If process p received ECHO messages
    from at least N - T distinct processes, the formula UponAcceptNotSentBefore is called.
  *)         

@@ -6,7 +6,7 @@
 (*    organized into a ring.                                               *)
 (*                                                                         *)
 (*  - The initiator of tokens no longer is node 0 but an arbitrarily       *)
-(*    choosen one.                                                         *)
+(*    chosen one.                                                         *)
 (*                                                                         *)
 (*  - The payload message "pl" contains the message sender "src".          *)
 (*                                                                         *)

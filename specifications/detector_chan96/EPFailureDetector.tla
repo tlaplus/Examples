@@ -11,11 +11,11 @@ CONSTANTS
                    PredictPoint ticks of its lock clock. *)
   Messages  
   
-(* Assumptions about the constrants in our system. 
+(* Assumptions about the constraints in our system.
     - SendPoint # PredictPoint: a process cannot both send messages and receive 
       messages in one transition. 
     - PredictPoint % SendPoint # 0 /\ SendPoint % PredictPoint # 0 : the operation 
-      Predict cannot subsume the opration Predict and vice versa. *)
+      Predict cannot subsume the operation Predict and vice versa. *)
 ASSUME  /\ 0 < PredictPoint /\ 0 < SendPoint 
         /\ PredictPoint % SendPoint # 0 /\ SendPoint % PredictPoint # 0 
         
@@ -29,7 +29,7 @@ ASSUME  /\ 0 < PredictPoint /\ 0 < SendPoint
     More information:
       1/ A process p_i make a transition at every tick of its local clock localClock[i].
       2/ At every tick of the global clock, at least one correct processes make a 
-         tranistion. 
+         transition.
       3/ Processes can change their predictions. 
       4/ Correct processes eventually make stable predictions.
       5/ Whenever p_i receives an "alive" message from p_j, p_i increases the time-out 
@@ -60,7 +60,7 @@ Init ==
   
 (*  - Whenever the value of its local clock is greater than SendPoint, PredictPoint, 
       and delta[i][j], the local clock is reset to 0. 
-    - Because of the constraints about message delay and relative speeds of differnt 
+    - Because of the constraints about message delay and relative speeds of different
       processes in partial synchrony, the upper bound of local clocks exists.    *)  
 LocallyTick(i) ==
   localClock' = [ localClock EXCEPT ![i] = 
@@ -75,7 +75,7 @@ LocallyTick(i) ==
     - p_i constructs an "alive" messages for every process by calling MakeAliveMsgs, 
       and put these messages in its outgoingMessages which will be picked up by the 
       environmental controller in the composition action.   
-    - p_i does not know exaclty how the communication system works. *) 
+    - p_i does not know exactly how the communication system works. *)
 SendAlive(i) ==    
   /\ localClock[i] % PredictPoint # 0
   /\ localClock[i] % SendPoint = 0

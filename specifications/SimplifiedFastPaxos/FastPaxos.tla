@@ -103,7 +103,7 @@ ClassicAccept ==
         /\ LET M == {m \in p2bMessages : m.ballot = f /\ m.acceptor \in q}
                V == {w \in Values : \E m \in M : w = m.value}
            IN /\ \A a \in q : \E m \in M : m.acceptor = a
-              /\ 1 < Cardinality(V) \* Collision occured.
+              /\ 1 < Cardinality(V) \* Collision occurred.
               /\ IF \E w \in V : IsMajorityValue(M, w)
                  THEN IsMajorityValue(M, v) \* Choose majority in quorum.
                  ELSE v \in V \* Choose any.

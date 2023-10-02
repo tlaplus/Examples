@@ -1,6 +1,6 @@
 --------------------------- MODULE KVsnap ---------------------------------
 (**************************************************************************)
-(* Pluscal algoritm for a simple key-value store with snapshot isolation  *)
+(* Pluscal algorithm for a simple key-value store with snapshot isolation  *)
 (* This version has atomic updates of store and missed sets of txns       *)
 (**************************************************************************)
 EXTENDS Integers, Sequences, FiniteSets, Util

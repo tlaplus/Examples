@@ -24,7 +24,7 @@ VARIABLES pc,     (* program counters            *)
 
 ASSUME N \in Nat
 
-Proc == 1 .. N    (* all processess, including the crashed ones   *)
+Proc == 1 .. N    (* all processes, including the crashed ones   *)
     
 
 M == { "YES", "NO" }
@@ -61,7 +61,7 @@ UponNo(self) ==
   /\ pc' = [pc EXCEPT ![self] = "SENT"]
   /\ sent' = sent \cup { <<self, "NO">> }
 
-(* - If process self voted and received a NO messges, it aborts. 
+(* - If process self voted and received a NO messages, it aborts.
    - If process self voted and thinks that some process has crashed,
      it aborts. 
    - If process self voted, received only YES messages from all processes, and 

@@ -2,7 +2,7 @@
 (***************************************************************************)
 (* Mathematicians define a relation R to be a set of ordered pairs, and    *)
 (* write `s R t' to mean `<<s, t>> \in R'.  The transitive closure TC(R)   *)
-(* of the relation R is the smallest relation containg R such that,        *)
+(* of the relation R is the smallest relation containing R such that,        *)
 (* `s TC(R) t' and `t TC(R) u' imply `s TC(R) u', for any s, t, and u.     *)
 (* This module shows several ways of defining the operator TC.             *)
 (*                                                                         *)

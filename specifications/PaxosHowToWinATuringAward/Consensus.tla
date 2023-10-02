@@ -49,7 +49,7 @@ Init == chosen = {}
 (***************************************************************************)
 (* The next-state relation describing how 'chosen' can change from one     *)
 (* step to the next.  Note that is enabled (equals true for some next      *)
-(* value chosen' of choseen) if and only if chosen equals the empty set.   *)
+(* value chosen' of chosen) if and only if chosen equals the empty set.   *)
 (***************************************************************************)
 Next == /\ chosen = {}
         /\ \E v \in Value : chosen' = {v}
@@ -69,7 +69,7 @@ Inv == /\ TypeOK
        /\ Cardinality(chosen) \leq 1
 
 (***************************************************************************)
-(* The following theorem asserts the desired safety propert.  Its proof    *)
+(* The following theorem asserts the desired safety property.  Its proof    *)
 (* appears after the theorem.  This proof is easily checked by the TLAPS   *)
 (* prover.                                                                 *)
 (***************************************************************************)

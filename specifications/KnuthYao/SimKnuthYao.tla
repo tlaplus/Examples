@@ -34,7 +34,7 @@ SimInit ==
     /\ flip  \in Flip
 
 SimNext ==
-    \* Need an artifical initial state to be able to model a crooked coin.  Otherwise,
+    \* Need an artificial initial state to be able to model a crooked coin.  Otherwise,
     \* the first flip will always be fair. 
     \/ /\ state = "init"
        /\ state' = "s0"

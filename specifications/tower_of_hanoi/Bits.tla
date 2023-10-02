@@ -32,7 +32,7 @@ LOCAL INSTANCE Integers
 \* @!@!@ENDMSG 1000 @!@!@
 \*
 \*
-\* If TLC shows an error similiar in words to:
+\* If TLC shows an error similar in words to:
 \*
 \* Found a Java class for module Bits, but unable to read
 \* it as a Java class object. Bits : Unsupported major.minor version 52.0
