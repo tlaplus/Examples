@@ -1,4 +1,4 @@
------------------------------- MODULE MC_CRDT -------------------------------
+------------------------- MODULE MC_Constraint_CRDT -------------------------
 EXTENDS Naturals
 
 CONSTANT Node
@@ -42,6 +42,8 @@ Next ==
   \/ Converge
 
 Fairness == \A n, o \in Node : WF_vars(Gossip(n, o))
+
+StateConstraint == \A n, o \in Node : counter[n][o] <= 4
 
 Spec ==
   /\ Init
