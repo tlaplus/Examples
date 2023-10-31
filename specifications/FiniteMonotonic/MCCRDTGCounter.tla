@@ -9,10 +9,6 @@ vars == <<counter, converge>>
 
 S == INSTANCE CRDTGCounter
 
-SetMin(s) ==
-  CHOOSE e \in s :
-    \A o \in s : e <= o
-
 TypeInvariant ==
   /\ counter \in [Node -> [Node -> 0 .. Divergence]]
   /\ converge \in BOOLEAN
@@ -21,17 +17,21 @@ Safety == S!Safety
 
 Liveness == S!Liveness
 
-Monotonicity == S!Monotonicity
+Monotonicity ==
+  \/ S!Monotonicity
+  \/ [][]_vars
 
 Increment(n) ==
   /\ counter[n][n] < Divergence
   /\ S!Increment(n)
 
+SetMin(s) == CHOOSE e \in s : \A o \in s : e <= o
+
 GarbageCollect ==
-  LET allAtLeast == SetMin({counter[n][o] : n, o \in Node}) IN
+  LET transpose == SetMin({counter[n][o] : n, o \in Node}) IN
   /\ counter' = [
       n \in Node |-> [
-        o \in Node |-> counter[n][o] - allAtLeast
+        o \in Node |-> counter[n][o] - transpose
       ]
     ]
   /\ UNCHANGED converge
@@ -51,6 +51,7 @@ THEOREM Spec =>
   /\ TypeInvariant
   /\ Safety
   /\ Liveness
+  /\ Monotonicity
 
 =============================================================================
 
