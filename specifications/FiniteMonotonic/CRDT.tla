@@ -11,7 +11,7 @@ Safety == \A n, o \in Node : counter[n][n] >= counter[o][n]
 
 Monotonicity == [][\A n, o \in Node : counter'[n][o] >= counter[n][o]]_counter
 
-Liveness == []<>(\A n, o \in Node : counter[n] = counter[o])
+Convergence == \A n, o \in Node : counter[n] = counter[o]
 
 Init == counter = [n \in Node |-> [o \in Node |-> 0]]
 
