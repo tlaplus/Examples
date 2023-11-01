@@ -43,7 +43,7 @@ Next ==
 
 Fairness == \A n, o \in Node : WF_vars(Gossip(n, o))
 
-StateConstraint == \A n, o \in Node : counter[n][o] <= 4
+StateConstraint == \A n, o \in Node : counter[n][o] <= 3
 
 Spec ==
   /\ Init

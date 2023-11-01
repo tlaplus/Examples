@@ -9,7 +9,9 @@ TypeOK == counter \in [Node -> [Node -> Nat]]
 
 Safety == \A n, o \in Node : counter[n][n] >= counter[o][n]
 
-Monotonicity == [][\A n, o \in Node : counter'[n][o] >= counter[n][o]]_counter
+Monotonic == \A n, o \in Node : counter'[n][o] >= counter[n][o]
+
+Monotonicity == [][Monotonic]_counter
 
 Convergence == \A n, o \in Node : counter[n] = counter[o]
 

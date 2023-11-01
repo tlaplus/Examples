@@ -10,12 +10,17 @@ vars == <<counter, converge>>
 S == INSTANCE CRDT
 
 TypeOK ==
+  /\ S!TypeOK
   /\ counter \in [Node -> [Node -> 0 .. Divergence]]
   /\ converge \in BOOLEAN
 
 Safety == S!Safety
 
-Monotonicity == S!Monotonicity
+Monotonicity == [][
+  \/ S!Monotonic
+  \/ \A a, b, c, d \in Node :
+    (counter'[a][b] - counter[a][b]) = (counter'[c][d] - counter[c][d])
+]_vars
 
 Liveness == converge ~> S!Convergence
 
