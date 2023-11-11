@@ -163,7 +163,7 @@ jobs:
             --tlapm_lib_path deps/tlapm/library                     \
             --community_modules_jar_path deps/community/modules.jar \
             --manifest_path manifest.json                           \
-            --skip_models "${SKIP[@]}"
+            --skip "${SKIP[@]}"
       - name: Check proofs
         if: matrix.os != 'windows-latest'
         run: |
