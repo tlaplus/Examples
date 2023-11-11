@@ -67,7 +67,7 @@ large_models = [
     for module in spec['modules']
     for model in module['models']
         if model['size'] != 'small'
-        and model['path'] not in skip_models
+        and normpath(model['path']) not in skip_models
 ]
 
 for path in skip_models:
