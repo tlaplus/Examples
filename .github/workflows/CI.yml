@@ -150,11 +150,20 @@ jobs:
             --manifest_path manifest.json
       - name: Smoke-test large models
         run: |
+          # SimKnuthYao requires certain number of states to have been generated
+          # before termination or else it fails. This makes it not amenable to
+          # smoke testing.
+          SKIP=("specifications/KnuthYao/SimKnuthYao.cfg")
+          # SimTokenRing does not work on Windows systems.
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            SKIP+=("specifications/ewd426/SimTokenRing.cfg")
+          fi
           python $SCRIPT_DIR/smoke_test_large_models.py             \
             --tools_jar_path deps/tools/tla2tools.jar               \
             --tlapm_lib_path deps/tlapm/library                     \
             --community_modules_jar_path deps/community/modules.jar \
-            --manifest_path manifest.json
+            --manifest_path manifest.json                           \
+            --skip_models "${SKIP[@]}"
       - name: Check proofs
         if: matrix.os != 'windows-latest'
         run: |
