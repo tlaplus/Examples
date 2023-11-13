@@ -23,7 +23,7 @@ VARIABLES pc, v, dValue, bcastMsg, rcvdMsg
 
 vars == << pc, v, dValue, bcastMsg, rcvdMsg >>
 
-Proc == 1..N      (* all processess, including the faulty ones *)
+Proc == 1..N      (* all processes, including the faulty ones *)
 
 (* for program counters *)
 Location == { "PROPOSE", "DECIDE", "CALL", "CRASH", "DONE" }  

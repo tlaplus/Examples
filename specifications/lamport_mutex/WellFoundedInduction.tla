@@ -273,7 +273,7 @@ THEOREM NatLessThanWellFounded == IsWellFoundedOn(OpToRel(<,Nat), Nat)
 
 (***************************************************************************)
 (* The next definition would be easier to read if we used the TLA+         *)
-(* construct {<<x, y>> \in T : ...  }.  However, TLAPS does not suport     *)
+(* construct {<<x, y>> \in T : ...  }.  However, TLAPS does not support     *)
 (* that notation.  (It's meaning is rather complicated in the general case *)
 (* when T is not a Cartesian product of sets.)                             *)
 (***************************************************************************)

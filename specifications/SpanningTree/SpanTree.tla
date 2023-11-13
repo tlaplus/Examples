@@ -106,7 +106,7 @@ PostCondition ==
 (* only if) there is a step satisfying Next starting in the state.  Thus,  *)
 (* ~ ENABLED Next asserts that the algorithm has terminated.  The safety   *)
 (* property that algorithm should satisfy, that it's always true that if   *)
-(* the algorith has terminated then PostCondition is true, is asserted by  *)
+(* the algorithm has terminated then PostCondition is true, is asserted by  *)
 (* this formula.                                                           *)
 (***************************************************************************)
 Safety == []((~ ENABLED Next) => PostCondition)

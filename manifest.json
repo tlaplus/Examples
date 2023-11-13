@@ -453,7 +453,8 @@
       "description": "A simple KVS implementing snapshot isolation",
       "source": "",
       "authors": [
-        "Andrew Helwer"
+        "Andrew Helwer",
+        "Murat Demirbas"
       ],
       "tags": [],
       "modules": [
@@ -502,6 +503,49 @@
               "result": "success"
             }
           ]
+        },
+        {
+          "path": "specifications/KeyValueStore/KVsnap.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["pluscal"],
+          "models": []
+        },
+        {
+          "path": "specifications/KeyValueStore/MCKVsnap.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/KeyValueStore/MCKVsnap.cfg",
+              "runtime": "00:00:50",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "config": [],
+              "features": [
+                "liveness",
+                "symmetry"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/KeyValueStore/Util.tla",
+          "communityDependencies": [
+            "Functions"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/KeyValueStore/ClientCentric.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
         }
       ]
     },
@@ -2886,15 +2930,15 @@
           "models": [
             {
               "path": "specifications/ewd426/TokenRing.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
+              "runtime": "00:00:05",
+              "size": "small",
               "mode": "exhaustive search",
               "config": [],
               "features": [
                 "alias",
                 "liveness"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         }
@@ -3159,8 +3203,8 @@
             },
             {
               "path": "specifications/ewd998/EWD998Small.cfg",
-              "runtime": "00:00:30",
-              "size": "small",
+              "runtime": "00:05:00",
+              "size": "medium",
               "mode": "exhaustive search",
               "config": [
                 "ignore deadlock"
@@ -3202,16 +3246,18 @@
           "models": [
             {
               "path": "specifications/ewd998/EWD998ChanID.cfg",
-              "runtime": "unknown",
-              "size": "large",
+              "runtime": "00:00:05",
+              "size": "small",
               "mode": "exhaustive search",
-              "config": [],
-              "features": [
+              "config": [
+                "ignore deadlock"
+              ],
+             "features": [
                 "liveness",
                 "state constraint",
                 "view"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -3313,8 +3359,8 @@
           "models": [
             {
               "path": "specifications/ewd998/SmokeEWD998.cfg",
-              "runtime": "unknown",
-              "size": "large",
+              "runtime": "00:00:05",
+              "size": "small",
               "mode": {
                 "simulate": {
                   "traceCount": 100
@@ -3325,7 +3371,7 @@
                 "liveness",
                 "state constraint"
               ],
-              "result": "unknown"
+              "result": "success"
             }
           ]
         },
@@ -3666,6 +3712,51 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/Majority",
+      "title": "Boyer-Moore majority vote algorithm",
+      "description": "An efficient algorithm for detecting a majority value in a sequence",
+      "source": "",
+      "authors": [
+        "Stephan Merz"
+      ],
+      "tags": ["beginner"],
+      "modules": [
+        {
+          "path": "specifications/Majority/Majority.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/Majority/MCMajority.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Majority/MCMajority.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "config": ["ignore deadlock"],
+              "features": [],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/Majority/MajorityProof.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
           "models": []
         }
       ]

@@ -28,7 +28,7 @@ MCInit ==
 
 RealInv ==
     \* Some read-world invariant (here terminationDetected occurs within N steps
-     \* where N has been choosen arbirarily).
+     \* where N has been chosen arbitrarily).
     EWD998Chan!EWD998!terminationDetected => TLCGet("level") < 23
 
 ----------------------------------------------------------------------------

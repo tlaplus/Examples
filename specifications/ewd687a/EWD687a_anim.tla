@@ -51,7 +51,7 @@ ArrowPosOffset ==
 
 GraphNodePos ==
     (* A function from processes to x,y coordinates: [ Procs -> [x: Nat, y: Nat] *)
-    (* The coordinates are choosen according to the given layout algorithm parameterized *)
+    (* The coordinates are chosen according to the given layout algorithm parameterized *)
     (* by the given "options" record. *)
     NodesOfDirectedMultiGraph(Procs, Edges, 
         [algo |-> "Sugiyama",
@@ -182,7 +182,7 @@ CONSTANTS L, P1, P2, P3, P4, P5
 \*                     /\ n[2] # L }
 \*     IN TLCEval(RandomElement(Edgs))
 
-\* \* Print the randomly choosen set of edges.
+\* \* Print the randomly chosen set of edges.
 \* ASSUME PrintT(<<"Edges", Edges>>)
 
 \* A specific network of processes. 

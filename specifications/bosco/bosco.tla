@@ -26,21 +26,21 @@ ASSUME  /\ N \in Nat /\ T \in Nat /\ F \in Nat
     
 ASSUME (N > 3 * T) /\ (T >= F) /\ (F >= 0)
 
-(* auxillary parameter
+(* auxiliary parameter
    "more than (N + 3 * T) / 2 VOTE messages"        
    1st case: if (N + 3 * T) is odd, 2nd case: even
  *)
 ASSUME  \/ 2 * moreNplus3Tdiv2 = N + 3 * T + 1
         \/ 2 * moreNplus3Tdiv2 = N + 3 * T + 2
 
-(* auxillary parameter
+(* auxiliary parameter
    "more than (N - T) / 2 VOTE messages"            
    1st case: if (N - T) is odd, 2nd case: even     
  *)    
 ASSUME  \/ 2 * moreNminusTdiv2 = N - T + 1
         \/ 2 * moreNminusTdiv2 = N - T + 2
 
-P == 1 .. N                 (* all processess, including the faulty ones    *)
+P == 1 .. N                 (* all processes, including the faulty ones    *)
 Corr == 1 .. N - F          (* correct processes                            *)
 Faulty == N - F + 1 .. N    (* the faulty processes                         *)
                             (* the last F processes are faulty              *)

@@ -31,7 +31,6 @@ SomeRingOfNodes ==
 token == EWD998Chan!token
 tpos == EWD998Chan!tpos
 
-node2nat == Inverse(nat2node, EWD998Chan!Node, Node)
 
 ---------------------------------------------------------------------------
 

@@ -153,7 +153,7 @@ AnimInv == terminationDetected => TLCGet("level") < 20
 ## Technical notes:
 ## RSTART+9 removes "toolbox =".  Instead, prefix the match with "tb |->" 
 ## that is expected by the TLA+ trace Animator.  Also, the definition
-## of Messages aboved has been changed to not use SVG's visibility tag that
+## of Messages above has been changed to not use SVG's visibility tag that
 ## causes problems with the TLA+ trace Animator and inkscape (see below).
 
 ----

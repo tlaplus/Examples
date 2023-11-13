@@ -8,7 +8,7 @@
 \* Hybrids are produced by annealing at this lower temperature.
 \* Polymerase attaches to hybrids and extends them to new DNA.
 \* Extension occurs at medium heat, between annealing and denaturing. 
-\* The whole cyle repeats, yield S-curve growth of the product.
+\* The whole cycle repeats, yield S-curve growth of the product.
 \* The goal is to produce more DNA, but just any DNA? No!
 \* See refinements in "stages.tla" and "product.tla".
 

@@ -6,7 +6,7 @@
 (*    organized into a ring.                                               *)
 (*                                                                         *)
 (*  - The initiator of tokens no longer is node 0 but an arbitrarily       *)
-(*    choosen one.                                                         *)
+(*    chosen one.                                                         *)
 (*                                                                         *)
 (*  - The payload message "pl" contains the message sender "src".          *)
 (*                                                                         *)
@@ -18,6 +18,10 @@
 (*    implementation.                                                      *)
 (***************************************************************************)
 EXTENDS Integers, Sequences, FiniteSets, Naturals, Utils
+
+Merge(n, r, l) ==
+    LET max(a, b) == IF a > b THEN a ELSE b
+    IN [ m \in DOMAIN l |-> IF m = n THEN l[m] + 1 ELSE max(r[m], l[m]) ]
 
 CONSTANT Node
 ASSUME IsFiniteSet(Node) /\ Node # {}
@@ -31,6 +35,12 @@ Initiator == CHOOSE n \in Node : TRUE
 \* Organize Nodes in a ring. 
 RingOfNodes == 
   CHOOSE r \in [ Node -> Node ]: IsSimpleCycle(Node, r)
+  
+nat2node[ i \in 0..N-1 ] ==
+    IF i = 0 THEN Initiator ELSE AntiFunction(RingOfNodes)[nat2node[i-1]]
+
+node2nat ==
+    AntiFunction(nat2node)
 
 Color == {"white", "black"}
 
@@ -39,27 +49,56 @@ VARIABLES
  color,
  counter,
  inbox,
- clock
+ clock,
+ passes
   
-vars == <<active, color, counter, inbox, clock>>
+vars == <<active, color, counter, inbox, clock, passes>>
 
-\* The (vector) clock is not relevant for the correctness of the algorithm.
-View == <<active, color, counter, inbox>>
+terminated ==
+    \A n \in Node :
+        /\ ~ active[n]
+        \* Count the in-flight "pl" messages. The 
+        \* inbox variable represents a node's network
+        \* interface that receives arbitrary messages.
+        \* However, EWD998 only "tracks" payload (pl)
+        \* messages.
+        /\ [m \in Node |-> 
+                Len(SelectSeq(inbox[m], 
+                    LAMBDA msg: msg.type = "pl")) ][n] = 0
+
+terminationDetected ==
+  /\ \E j \in 1..Len(inbox[Initiator]):
+        /\ inbox[Initiator][j].type = "tok"
+        /\ inbox[Initiator][j].color = "white"
+        /\ inbox[Initiator][j].q + counter[Initiator] = 0
+  /\ color[Initiator] = "white"
+  /\ ~ active[Initiator]
 
 ------------------------------------------------------------------------------
  
 Init ==
-  (* Rule 0 *)
-  /\ counter = [n \in Node |-> 0] \* c properly initialized
-  /\ inbox = [n \in Node |-> IF n = Initiator 
-                              THEN << [type |-> "tok", q |-> 0, color |-> "black" ] >> 
-                              ELSE <<>>] \* with empty channels.
-  (* EWD840 *) 
-  /\ active \in [Node -> BOOLEAN]
-  /\ color \in [Node -> Color]
   (* Each node maintains a (local) vector clock *)
   (* https://en.wikipedia.org/wiki/Vector_clock *)
-  /\ clock = [n \in Node |-> [m \in Node |-> 0] ]
+  /\ clock = [ n \in Node |-> IF n = Initiator 
+                THEN [ m \in Node |-> IF m = Initiator THEN 1 ELSE 0 ]
+                ELSE [ m \in Node |-> 0 ] ]
+  (* Rule 0 *)
+  /\ counter = [n \in Node |-> 0] \* c properly initialized
+\*   /\ inbox = [n \in Node |-> IF n = Initiator 
+\*                               THEN << [type |-> "tok", q |-> 0, color |-> "black", vc |-> clock[n] ] >> 
+\*                               ELSE <<>>] \* with empty channels.
+\* The token may be at any node of the ring initially.
+\*   /\ inbox \in { f \in 
+\*                     [ Node -> {<<>>, <<[type |-> "tok", q |-> 0, color |-> "black", vc |-> clock[Initiator] ]>> } ] : 
+\*                         Cardinality({ i \in DOMAIN f: f[i] # <<>> }) = 1 }
+\* Worst-case WRT Max3TokenRounds, token is at node N-2.
+  /\ inbox = [n \in Node |-> IF n = nat2node[N-2] 
+                              THEN << [type |-> "tok", q |-> 0, color |-> "black", vc |-> clock[n] ] >> 
+                              ELSE <<>>] \* with empty channels.
+  (* EWD840 *) 
+  /\ active \in [Node -> {FALSE}]
+  /\ color \in [Node -> {"black"}]
+  /\ passes = IF terminated THEN 0 ELSE -1
 
 InitiateProbe(n) ==
   /\ n = Initiator
@@ -67,6 +106,7 @@ InitiateProbe(n) ==
   /\ \E j \in 1..Len(inbox[Initiator]):
       \* Token is at node the Initiator.
       /\ inbox[Initiator][j].type = "tok"
+      /\ clock' = [clock EXCEPT ![n] = Merge(n, inbox[n][j].vc, @)]
       /\ \* Previous round inconsistent, if:
          \/ inbox[Initiator][j].color = "black"
          \/ color[Initiator] = "black"
@@ -77,15 +117,13 @@ InitiateProbe(n) ==
       /\ inbox' = [inbox EXCEPT ![RingOfNodes[Initiator]] = Append(@, 
            [type |-> "tok", q |-> 0,
              (* Rule 6 *)
-             color |-> "white"]), 
+             color |-> "white", vc |-> clock[n]']), 
              ![Initiator] = RemoveAt(@, j) ] \* consume token message from inbox[0]. 
   (* Rule 6 *)
   /\ color' = [ color EXCEPT ![Initiator] = "white" ]
-  \* TODO: Do we attach i's vector clock along with the token?  For now, token-
-   \* TODO: related actions are treated as internal events.
-  /\ clock' = [ clock EXCEPT ![Initiator][Initiator] = @ + 1 ]
   \* The state of the nodes remains unchanged by token-related actions.
-  /\ UNCHANGED <<active, counter>>                            
+  /\ UNCHANGED <<active, counter>>
+  /\ passes' = IF passes >= 0 THEN passes + 1 ELSE passes
   
 PassToken(n) ==
   /\ n # Initiator
@@ -93,20 +131,21 @@ PassToken(n) ==
   /\ ~ active[n] \* If machine i is active, keep the token.
   /\ \E j \in 1..Len(inbox[n]) : 
           /\ inbox[n][j].type = "tok"
+          /\ clock' = [clock EXCEPT ![n] = Merge(n, inbox[n][j].vc, @)]
           \* the machine nr.i+1 transmits the token to machine nr.i under q := q + c[i+1]
           /\ LET tkn == inbox[n][j]
              IN  inbox' = [inbox EXCEPT ![RingOfNodes[n]] = 
                                        Append(@, [tkn EXCEPT !.q = tkn.q + counter[n],
                                                              !.color = IF color[n] = "black"
                                                                        THEN "black"
-                                                                       ELSE tkn.color]),
+                                                                       ELSE tkn.color,
+                                                             !.vc = clock[n]' ]),
                                     ![n] = RemoveAt(@, j) ] \* pass on the token.
   (* Rule 7 *)
   /\ color' = [ color EXCEPT ![n] = "white" ]
-  \* Just increment the node's local clock on token messages.
-  /\ clock' = [ clock EXCEPT ![n][n] = @ + 1 ]
   \* The state of the nodes remains unchanged by token-related actions.
   /\ UNCHANGED <<active, counter>>                            
+  /\ passes' = IF passes >= 0 THEN passes + 1 ELSE passes
 
 System(n) == \/ InitiateProbe(n)
              \/ PassToken(n)
@@ -125,7 +164,7 @@ SendMsg(n) ==
           /\ inbox' = [inbox EXCEPT ![j] = Append(@, [type |-> "pl", src |-> n, vc |-> clock[n]' ] ) ]
           \* Note that we don't blacken node i as in EWD840 if node i
           \* sends a message to node j with j > i
-  /\ UNCHANGED <<active, color>>                            
+  /\ UNCHANGED <<active, color, passes>>
 
 \* RecvMsg could write the incoming message to a (Java) buffer from which the (Java) implementation consumes it. 
 RecvMsg(n) ==
@@ -139,17 +178,15 @@ RecvMsg(n) ==
   /\ \E j \in 1..Len(inbox[n]) : 
           /\ inbox[n][j].type = "pl"
           /\ inbox' = [inbox EXCEPT ![n] = RemoveAt(@, j) ]
-          \* This is where the "magic" of the vector clock happens.
-          /\ LET Max(a,b) == IF a < b THEN b ELSE a
-                 Merge(r, l) == [ m \in Node |-> IF m = n THEN l[m] + 1 ELSE Max(r[m], l[m]) ]
-             IN clock' = [ clock EXCEPT ![n] = Merge(inbox[n][j].vc, @) ]
-  /\ UNCHANGED <<>>                           
+          /\ clock' = [ clock EXCEPT ![n] = Merge(n, inbox[n][j].vc, @) ]
+  /\ UNCHANGED passes
 
 Deactivate(n) ==
   /\ active[n]
   /\ active' = [active EXCEPT ![n] = FALSE]
   /\ clock' = [ clock EXCEPT ![n][n] = @ + 1 ]
   /\ UNCHANGED <<color, inbox, counter>>
+  /\ passes' = IF terminated' THEN 0 ELSE passes
 
 Environment(n) == 
   \/ SendMsg(n)
@@ -165,17 +202,27 @@ Next(n) ==
 Spec == Init /\ [][\E n \in Node: Next(n)]_vars
              /\ \A n \in Node: WF_vars(System(n))
 
+Max3TokenRounds ==
+    \* Termination is detected within a maximum of three token rounds after the
+    \* system is terminated.
+    passes <= 3 * N
+
+THEOREM Spec => []Max3TokenRounds
+
 -----------------------------------------------------------------------------
 \* The definitions of the refinement mapping below this line will be
 \* ignored by PlusPy.  It can thus make use of RECURSIVE.
 \*++:Spec
-  
-nat2node[i \in 0..N-1 ] == 
-  LET RECURSIVE Op(_,_,_)
-      Op(p, cnt, nd) ==
-         IF p = cnt THEN nd
-         ELSE Op(p, cnt - 1, RingOfNodes[nd])
-  IN Op(i, N-1, RingOfNodes[Initiator])
+
+a \prec b ==
+    \* True iff node a is a predecessor of node b in the ring.
+    node2nat[a] < node2nat[b]
+
+a ++ b ==
+    \* The set of nodes between node a and node b (inclusive) in the ring.
+    LET i == node2nat[a]
+        j == node2nat[b]
+    IN { nat2node[k] : k \in i..j }
 
 Node2Nat(fcn) ==
   [ i \in 0..N-1 |->  fcn[nat2node[i]] ]
@@ -186,6 +233,18 @@ MapSeq(seq, Op(_)) ==
                                 ELSE Append(F[i - 1], Op(seq[i]))
     IN F[Len(seq)]
 
+EWD998ChanInbox ==
+    \* Drop the src and the vc from the payload message.
+    [n \in DOMAIN inbox |->
+        MapSeq(inbox[n], 
+            LAMBDA m: 
+            IF m.type = "pl" 
+            THEN [type |-> "pl"] 
+            ELSE IF m.type = "tok"
+                 THEN [type |-> "tok", q |-> m.q, color |-> m.color]
+                 ELSE m) 
+    ]
+
 (***************************************************************************)
 (* EWD998ChanID (identifier) refines EWD998Chan where nodes are modelled   *)
 (* with naturals \in 0..N-1. To check that EWD998ChanID is a correct       *)
@@ -195,27 +254,21 @@ MapSeq(seq, Op(_)) ==
 EWD998Chan == INSTANCE EWD998Chan WITH active <- Node2Nat(active),
                                         color <- Node2Nat(color),
                                       counter <- Node2Nat(counter),
-                                        inbox <- Node2Nat(
-                                            \* Drop the src from the payload
-                                            \* message.
-                                            [n \in DOMAIN inbox |->
-                                                MapSeq(inbox[n], 
-                                                LAMBDA m: 
-                                                IF m.type = "pl" 
-                                                THEN [type |-> "pl"] 
-                                                ELSE m) 
-                                            ])
+                                        inbox <- Node2Nat(EWD998ChanInbox)
 
 EWD998ChanStateConstraint == EWD998Chan!StateConstraint
 EWD998ChanSpec == EWD998Chan!Spec
 
 THEOREM Spec => EWD998ChanSpec
 
+EWD998Safe == EWD998Chan!EWD998!TD!Safe
+EWD998Live == EWD998Chan!EWD998!TD!Live
+
+THEOREM Spec => EWD998Safe /\ EWD998Live
 -----------------------------------------------------------------------------
 
-StateConstraint ==
-    /\ EWD998ChanStateConstraint
-    /\ \A n \in Node:
-            FoldFunctionOnSet(+, 0, clock[n], Node) < 3
+\* The (vector) clock is not relevant for the correctness of the algorithm.
+View == 
+    <<active, color, counter, EWD998ChanInbox, passes>>
 
 =============================================================================

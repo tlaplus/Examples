@@ -8,6 +8,7 @@ from argparse import ArgumentParser
 import logging
 import os
 from os.path import dirname, normpath
+from subprocess import CompletedProcess, TimeoutExpired
 import tla_utils
 
 parser = ArgumentParser(description='Smoke-tests all larger TLA+ models in the tlaplus/examples repo using TLC.')
@@ -27,7 +28,8 @@ def check_model(module_path, model):
     module_path = tla_utils.from_cwd(examples_root, module_path)
     model_path = tla_utils.from_cwd(examples_root, model['path'])
     logging.info(model_path)
-    tlc, hit_timeout = tla_utils.check_model(
+    smoke_test_timeout_in_seconds = 5
+    tlc_result = tla_utils.check_model(
         tools_jar_path,
         module_path,
         model_path,
@@ -35,15 +37,23 @@ def check_model(module_path, model):
         community_jar_path,
         model['mode'],
         model['config'],
-        5
+        smoke_test_timeout_in_seconds
     )
-    if hit_timeout:
-        return True
-    if 0 != tlc.returncode:
-        logging.error(f'Model {model_path} expected error code 0 but got {tlc.returncode}')
-        logging.error(tlc.stdout.decode('utf-8'))
-        return False
-    return True
+    match tlc_result:
+        case TimeoutExpired():
+            return True
+        case CompletedProcess():
+            logging.warning(f'Model {model_path} finished quickly, within {smoke_test_timeout_in_seconds} seconds; consider labeling it a small model')
+            expected_result = model['result']
+            actual_result = tla_utils.resolve_tlc_exit_code(tlc_result.returncode)
+            if expected_result != actual_result:
+                logging.error(f'Model {model_path} expected result {expected_result} but got {actual_result}')
+                logging.error(tlc_result.stdout)
+                return False
+            return True
+        case _:
+            logging.error(f'Unhandled TLC result type {type(tlc_result)}: {tlc_result}')
+            return False
 
 logging.basicConfig(level=logging.INFO)
 

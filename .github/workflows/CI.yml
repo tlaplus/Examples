@@ -16,19 +16,19 @@ jobs:
     strategy:
       matrix:
         include:
-        - { os: windows-latest, shell: msys2 }
-        - { os: ubuntu-latest,  shell: bash  }
-        - { os: macos-latest,   shell: bash  }
+        - { os: windows-latest }
+        - { os: ubuntu-latest }
+        - { os: macos-latest }
       fail-fast: false
     env:
       SCRIPT_DIR: .github/scripts
       TLAPS_VERSION: 202210041448
     defaults:
       run:
-        shell: ${{ matrix.shell }} {0}
+        shell: bash
     steps:
       - name: Clone repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Install python
         uses: actions/setup-python@v4
         with:
@@ -38,68 +38,103 @@ jobs:
         with:
           distribution: adopt
           java-version: 17
-      - name: Install MSYS2 on Windows
-        uses: msys2/setup-msys2@v2
-        if: matrix.os == 'windows-latest'
-      - name: Install python packages
-        shell: bash
-        run: pip install -r $SCRIPT_DIR/requirements.txt
       - name: Download TLA⁺ dependencies
+        if: matrix.os == 'windows-latest'
         run: |
+          # Print out tool version information
+          java --version
+          python --version
+          pip --version
+          # Install python packages
+          pip install -r $SCRIPT_DIR/requirements.txt
           # Put all dependencies in their own directory to ensure they aren't included implicitly
           mkdir deps
-          # Fix tar symbolic link issues on Windows; see:
-          # https://github.com/msys2/MSYS2-packages/issues/1216
-          export MSYS=winsymlinks:lnk
           # Get tree-sitter-tlaplus
-          wget https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.tar.gz
+          curl -LO https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.zip
+          7z x main.zip
+          rm main.zip
+          mv tree-sitter-tlaplus-main deps/tree-sitter-tlaplus
+          # Get TLA⁺ tools
+          mkdir deps/tools
+          curl -LO http://nightly.tlapl.us/dist/tla2tools.jar
+          mv tla2tools.jar deps/tools/tla2tools.jar
+          # Get TLA⁺ community modules
+          mkdir deps/community
+          curl -LO https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
+          mv CommunityModules-deps.jar deps/community/modules.jar
+          # Get TLAPS modules
+          curl -LO https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.zip
+          7z x $TLAPS_VERSION.zip
+          rm $TLAPS_VERSION.zip
+          mv tlapm-$TLAPS_VERSION deps/tlapm
+      - name: Download TLA⁺ dependencies
+        if: matrix.os != 'windows-latest'
+        run: |
+          # Print out tool version information
+          java --version
+          python --version
+          pip --version
+          cc --version
+          cpp --version
+          # Install python packages
+          pip install -r $SCRIPT_DIR/requirements.txt
+          # Put all dependencies in their own directory to ensure they aren't included implicitly
+          mkdir deps
+          # Get tree-sitter-tlaplus
+          wget -nv https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.tar.gz
           tar -xf main.tar.gz
           rm main.tar.gz
           mv tree-sitter-tlaplus-main deps/tree-sitter-tlaplus
           # Get TLA⁺ tools
           mkdir deps/tools
-          wget http://nightly.tlapl.us/dist/tla2tools.jar -O deps/tools/tla2tools.jar
+          wget -nv http://nightly.tlapl.us/dist/tla2tools.jar -O deps/tools/tla2tools.jar
           # Get TLA⁺ community modules
           mkdir deps/community
-          wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar \
+          wget -nv https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar \
                 -O deps/community/modules.jar
           # Get TLAPS modules
-          wget https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.tar.gz
+          wget -nv https://github.com/tlaplus/tlapm/archive/refs/tags/$TLAPS_VERSION.tar.gz
           tar -xf $TLAPS_VERSION.tar.gz
           rm $TLAPS_VERSION.tar.gz
           mv tlapm-$TLAPS_VERSION deps/tlapm
-          # Install TLAPS on non-Windows environments
-          if [[ "${{ runner.os }}" != "Windows" ]]; then
-            if [[ "${{ runner.os }}" == "Linux" ]]; then
-              TLAPM_BIN_TYPE=x86_64-linux-gnu
-            elif [[ "${{ runner.os }}" == "macOS" ]]; then
-              TLAPM_BIN_TYPE=i386-darwin
-            fi
-            TLAPM_BIN="tlaps-1.5.0-$TLAPM_BIN_TYPE-inst.bin"
-            wget https://github.com/tlaplus/tlapm/releases/download/$TLAPS_VERSION/$TLAPM_BIN
-            chmod +x $TLAPM_BIN
-            ./$TLAPM_BIN -d deps/tlapm-install
+          # Install TLAPS
+          if [[ "${{ runner.os }}" == "Linux" ]]; then
+            TLAPM_BIN_TYPE=x86_64-linux-gnu
+          elif [[ "${{ runner.os }}" == "macOS" ]]; then
+            TLAPM_BIN_TYPE=i386-darwin
+          else
+            echo "Unknown OS"
+            exit 1
           fi
+          TLAPM_BIN="tlaps-1.5.0-$TLAPM_BIN_TYPE-inst.bin"
+          wget -nv https://github.com/tlaplus/tlapm/releases/download/$TLAPS_VERSION/$TLAPM_BIN
+          chmod +x $TLAPM_BIN
+          # Workaround for https://github.com/tlaplus/tlapm/issues/88
+          set +e
+          for ((attempt = 1; attempt <= 5; attempt++)); do
+            rm -rf deps/tlapm-install
+            ./$TLAPM_BIN -d deps/tlapm-install
+            if [ $? -eq 0 ]; then
+              exit 0
+            fi
+          done
+          exit 1
       - name: Check manifest.json format
-        shell: bash
         run: |
           python $SCRIPT_DIR/check_manifest_schema.py \
             --manifest_path manifest.json             \
             --schema_path manifest-schema.json
       - name: Check manifest files
-        shell: bash
         run: |
           python $SCRIPT_DIR/check_manifest_files.py  \
             --manifest_path manifest.json             \
             --ci_ignore_path .ciignore
       - name: Check manifest feature flags
-        shell: bash
         run: |
           python $SCRIPT_DIR/check_manifest_features.py \
             --manifest_path manifest.json               \
             --ts_path deps/tree-sitter-tlaplus
       - name: Parse all modules
-        shell: bash
         run: |
           python $SCRIPT_DIR/parse_modules.py                       \
             --tools_jar_path deps/tools/tla2tools.jar               \
@@ -107,7 +142,6 @@ jobs:
             --community_modules_jar_path deps/community/modules.jar \
             --manifest_path manifest.json
       - name: Check small models
-        shell: bash
         run: |
           python $SCRIPT_DIR/check_small_models.py                  \
             --tools_jar_path deps/tools/tla2tools.jar               \
@@ -115,7 +149,6 @@ jobs:
             --community_modules_jar_path deps/community/modules.jar \
             --manifest_path manifest.json
       - name: Smoke-test large models
-        shell: bash
         run: |
           python $SCRIPT_DIR/smoke_test_large_models.py             \
             --tools_jar_path deps/tools/tla2tools.jar               \
@@ -129,7 +162,6 @@ jobs:
             --tlapm_path deps/tlapm-install   \
             --manifest_path manifest.json
       - name: Smoke-test manifest generation script
-        shell: bash
         run: |
           rm -r deps/tree-sitter-tlaplus/build
           python $SCRIPT_DIR/generate_manifest.py \

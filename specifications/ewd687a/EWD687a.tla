@@ -57,7 +57,7 @@
 (* parent).  An induction argument shows that, for such a graph, the       *)
 (* algorithm maintains the following invariant: if a node is neutral, then *)
 (* all its descendants are neutral.  From this it follows that, when the   *)
-(* leader is neutral, all proceses are neutral, which implies that all     *)
+(* leader is neutral, all processes are neutral, which implies that all     *)
 (* processes are idle and all computation messages have been received, so  *)
 (* the computation has terminated.                                         *)
 (*                                                                         *)

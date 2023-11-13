@@ -56,8 +56,8 @@ the termination detection process for six nodes. It was created with
 
 ## Statistics
 
-Because of its simplicity, EWD998 has been choosen to explore the idea
-of infering statistical properties by simulating TLA+ specs (with [TLC’s
+Because of its simplicity, EWD998 has been chosen to explore the idea
+of inferring statistical properties by simulating TLA+ specs (with [TLC’s
 simulator](https://tla.msr-inria.inria.fr/tlatoolbox/doc/model/tlc-options-page.html#checking)).
 In a nutshell, we randomly generates traces for real-world
 configurations (node numbers) or workloads (global state of the system
@@ -270,7 +270,7 @@ simulator choosing `PassTokenOpts` to extend the current trace.)
 Violations found checking
 `SmokeInit /\ [Next]_vars /\ WF_vars(System) => []Inv /\ ATDSpec` with
 randomized state exploration (“simulation”) starting from a small,
-randomly choosen subset of the initial states.
+randomly chosen subset of the initial states.
 
 ![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 

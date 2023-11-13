@@ -193,7 +193,7 @@ Variant pt4 has a slightly better worst-case behavior, but it still requires `((
 
 ## Randomized State Exploration ("Smoke Testing")
 
-Violations found checking `SmokeInit /\ [Next]_vars /\ WF_vars(System) => []Inv /\ ATDSpec` with randomized state exploration ("simulation") starting from a small, randomly choosen subset of the initial states.
+Violations found checking `SmokeInit /\ [Next]_vars /\ WF_vars(System) => []Inv /\ ATDSpec` with randomized state exploration ("simulation") starting from a small, randomly chosen subset of the initial states.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
