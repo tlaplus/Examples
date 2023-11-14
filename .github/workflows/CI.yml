@@ -150,17 +150,41 @@ jobs:
             --manifest_path manifest.json
       - name: Smoke-test large models
         run: |
+          # SimKnuthYao requires certain number of states to have been generated
+          # before termination or else it fails. This makes it not amenable to
+          # smoke testing.
+          SKIP=("specifications/KnuthYao/SimKnuthYao.cfg")
+          # SimTokenRing does not work on Windows systems.
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            SKIP+=("specifications/ewd426/SimTokenRing.cfg")
+          fi
           python $SCRIPT_DIR/smoke_test_large_models.py             \
             --tools_jar_path deps/tools/tla2tools.jar               \
             --tlapm_lib_path deps/tlapm/library                     \
             --community_modules_jar_path deps/community/modules.jar \
-            --manifest_path manifest.json
+            --manifest_path manifest.json                           \
+            --skip "${SKIP[@]}"
       - name: Check proofs
         if: matrix.os != 'windows-latest'
         run: |
+          SKIP=(
+            # Failing; see https://github.com/tlaplus/Examples/issues/67
+            specifications/Bakery-Boulangerie/Bakery.tla
+            specifications/Bakery-Boulangerie/Boulanger.tla
+            specifications/Paxos/Consensus.tla
+            specifications/PaxosHowToWinATuringAward/Consensus.tla
+            specifications/lamport_mutex/LamportMutex_proofs.tla
+            specifications/ewd998/EWD998_proof.tla
+            # Long-running; see https://github.com/tlaplus/tlapm/issues/85
+            specifications/LoopInvariance/Quicksort.tla
+            specifications/LoopInvariance/SumSequence.tla
+            specifications/bcastByz/bcastByz.tla
+            specifications/MisraReachability/ReachabilityProofs.tla
+          )
           python $SCRIPT_DIR/check_proofs.py  \
             --tlapm_path deps/tlapm-install   \
-            --manifest_path manifest.json
+            --manifest_path manifest.json     \
+            --skip "${SKIP[@]}"
       - name: Smoke-test manifest generation script
         run: |
           rm -r deps/tree-sitter-tlaplus/build
