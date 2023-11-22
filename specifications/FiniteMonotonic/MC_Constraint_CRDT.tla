@@ -1,4 +1,5 @@
 ------------------------- MODULE MC_Constraint_CRDT -------------------------
+
 EXTENDS Naturals
 
 CONSTANT Node

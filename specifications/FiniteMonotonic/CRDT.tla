@@ -1,4 +1,5 @@
 ------------------------------- MODULE CRDT ---------------------------------
+
 EXTENDS Naturals
 
 CONSTANT Node

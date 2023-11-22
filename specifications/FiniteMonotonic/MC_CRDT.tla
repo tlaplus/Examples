@@ -1,4 +1,5 @@
 ------------------------------- MODULE MC_CRDT ------------------------------
+
 EXTENDS Naturals
 
 CONSTANTS Node, Divergence
