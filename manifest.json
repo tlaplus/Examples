@@ -392,7 +392,7 @@
     {
       "path": "specifications/FiniteMonotonic",
       "title": "Finite Model-Checking of Monotonic Systems",
-      "description": "Illustration of a technique for making infinite monotonic systems finite for the purposes of model-checking.",
+      "description": "Illustration of technique for making ordinarily-infinite monotonic systems finite for the purposes of model-checking.",
       "source": "https://ahelwer.ca/post/2023-11-01-tla-finite-monotonic/",
       "authors": [
         "Andrew Helwer"
