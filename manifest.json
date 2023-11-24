@@ -398,7 +398,7 @@
         "Andrew Helwer"
       ],
       "tags": [
-        "beginner"
+        "intermediate"
       ],
       "modules": [
         {
@@ -409,13 +409,13 @@
           "models": []
         },
         {
-          "path": "specifications/FiniteMonotonic/MC_CRDT.tla",
+          "path": "specifications/FiniteMonotonic/Finitize_CRDT.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
             {
-              "path": "specifications/FiniteMonotonic/MC_CRDT.cfg",
+              "path": "specifications/FiniteMonotonic/Finitize_CRDT.cfg",
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
@@ -428,13 +428,13 @@
           ]
         },
         {
-          "path": "specifications/FiniteMonotonic/MC_Constraint_CRDT.tla",
+          "path": "specifications/FiniteMonotonic/Constrain_CRDT.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
             {
-              "path": "specifications/FiniteMonotonic/MC_Constraint_CRDT.cfg",
+              "path": "specifications/FiniteMonotonic/Constrain_CRDT.cfg",
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
@@ -448,13 +448,13 @@
           ]
         },
         {
-          "path": "specifications/FiniteMonotonic/MC_ReplicatedLog.tla",
+          "path": "specifications/FiniteMonotonic/Finitize_ReplicatedLog.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
             {
-              "path": "specifications/FiniteMonotonic/MC_ReplicatedLog.cfg",
+              "path": "specifications/FiniteMonotonic/Finitize_ReplicatedLog.cfg",
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",

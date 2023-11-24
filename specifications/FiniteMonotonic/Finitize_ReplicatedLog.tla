@@ -1,4 +1,4 @@
--------------------------- MODULE MC_ReplicatedLog --------------------------
+---------------------- MODULE Finitize_ReplicatedLog ------------------------
 
 EXTENDS Naturals, Sequences
 
