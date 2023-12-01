@@ -390,6 +390,92 @@
       ]
     },
     {
+      "path": "specifications/FiniteMonotonic",
+      "title": "Finite Model-Checking of Monotonic Systems",
+      "description": "Illustration of technique for making ordinarily-infinite monotonic systems finite for the purposes of model-checking.",
+      "source": "https://ahelwer.ca/post/2023-11-01-tla-finite-monotonic/",
+      "authors": [
+        "Andrew Helwer"
+      ],
+      "tags": [
+        "intermediate"
+      ],
+      "modules": [
+        {
+          "path": "specifications/FiniteMonotonic/CRDT.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/FiniteMonotonic/Finitize_CRDT.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/FiniteMonotonic/Finitize_CRDT.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "config": [],
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/FiniteMonotonic/Constrain_CRDT.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/FiniteMonotonic/Constrain_CRDT.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "config": [],
+              "features": [
+                "liveness",
+                "state constraint"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/FiniteMonotonic/Finitize_ReplicatedLog.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/FiniteMonotonic/Finitize_ReplicatedLog.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "config": [],
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/FiniteMonotonic/ReplicatedLog.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
       "path": "specifications/GameOfLife",
       "title": "Conway's Game of Life",
       "description": "The famous cellular automata simulation",
@@ -459,6 +545,22 @@
       "tags": [],
       "modules": [
         {
+          "path": "specifications/KeyValueStore/ClientCentric.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/KeyValueStore/KVsnap.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": []
+        },
+        {
           "path": "specifications/KeyValueStore/KeyValueStore.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
@@ -505,13 +607,6 @@
           ]
         },
         {
-          "path": "specifications/KeyValueStore/KVsnap.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": ["pluscal"],
-          "models": []
-        },
-        {
           "path": "specifications/KeyValueStore/MCKVsnap.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
@@ -536,13 +631,6 @@
           "communityDependencies": [
             "Functions"
           ],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/KeyValueStore/ClientCentric.tla",
-          "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
@@ -764,6 +852,55 @@
           "tlaLanguageVersion": 2,
           "features": [
             "pluscal",
+            "proof"
+          ],
+          "models": []
+        }
+      ]
+    },
+    {
+      "path": "specifications/Majority",
+      "title": "Boyer-Moore majority vote algorithm",
+      "description": "An efficient algorithm for detecting a majority value in a sequence",
+      "source": "",
+      "authors": [
+        "Stephan Merz"
+      ],
+      "tags": [
+        "beginner"
+      ],
+      "modules": [
+        {
+          "path": "specifications/Majority/MCMajority.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Majority/MCMajority.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "config": [
+                "ignore deadlock"
+              ],
+              "features": [],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/Majority/Majority.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/Majority/MajorityProof.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
             "proof"
           ],
           "models": []
@@ -3252,7 +3389,7 @@
               "config": [
                 "ignore deadlock"
               ],
-             "features": [
+              "features": [
                 "liveness",
                 "state constraint",
                 "view"
@@ -3695,51 +3832,6 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
-        }
-      ]
-    },
-    {
-      "path": "specifications/Majority",
-      "title": "Boyer-Moore majority vote algorithm",
-      "description": "An efficient algorithm for detecting a majority value in a sequence",
-      "source": "",
-      "authors": [
-        "Stephan Merz"
-      ],
-      "tags": ["beginner"],
-      "modules": [
-        {
-          "path": "specifications/Majority/Majority.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/Majority/MCMajority.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": [
-            {
-              "path": "specifications/Majority/MCMajority.cfg",
-              "runtime": "00:00:05",
-              "size": "small",
-              "mode": "exhaustive search",
-              "config": ["ignore deadlock"],
-              "features": [],
-              "result": "success"
-            }
-          ]
-        },
-        {
-          "path": "specifications/Majority/MajorityProof.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
           "models": []
         }
       ]

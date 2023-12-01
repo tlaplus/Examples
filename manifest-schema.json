@@ -20,7 +20,7 @@
           },
           "tags": {
             "type": "array",
-            "items": {"enum": ["beginner"]}
+            "items": {"enum": ["beginner", "intermediate"]}
           },
           "modules": {
             "type": "array",
