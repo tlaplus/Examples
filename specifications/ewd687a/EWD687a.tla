@@ -335,14 +335,16 @@ RcvAck(p) == \E e \in OutEdges(p) :
 (***************************************************************************)
 SendAck(p) == /\ \E e \in InEdges(p) :
                      /\ rcvdUnacked[e] > 0
-                     \* 1.
-                     /\ (e = upEdge[p] ) =>
-                        \* 2b.
+                     \* 1. q *not* the parent of p (intentionally vacuously true).
+                     /\ (e = upEdge[p]) =>
+                        \* 2a. q parent and q is expecting more than one ack from p.
                         \/ rcvdUnacked[e] > 1
-                        \* 2c.  (compare neutral(p) with the following).
-                        \/ /\ ~ active[p] 
-                           /\ \A d \in OutEdges(p) : sentUnacked[d] = 0
+                        \* 2b. q parent and p is neutral after sending the ack
+                        \*     (neutral(p)' implied by neutral(p) while e is ignored).
+                        \/ /\ ~ active[p]
                            /\ \A d \in InEdges(p) \ {e} : rcvdUnacked[d] = 0
+                           /\ \A d \in OutEdges(p) : sentUnacked[d] = 0
+                           \* Observe the similarity of the above three conjuncts with neutral(p) above.
                      /\ rcvdUnacked' = [rcvdUnacked EXCEPT ![e] = @ - 1] 
                      /\ acks' = [acks EXCEPT ![e] = @ + 1]
               /\ UNCHANGED <<active, msgs, sentUnacked>>
