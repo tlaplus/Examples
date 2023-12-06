@@ -329,8 +329,9 @@ RcvAck(p) == \E e \in OutEdges(p) :
 (* 2b. The receiver q of the ack is the parent of p in the overlay tree,   *)
 (*     and p is neutral after sending the ack.                             *)
 (*                                                                         *)
-(* If process p is neutral after sending an ack, it removes itself from    *)
-(* the overlay tree by setting the value of upEdge[p] to NotAnEdge.        *)
+(* UP. If process p is neutral after sending an ack (hence netural(p)'),   *)
+(* it removes itself from the overlay tree by setting the value of         *)
+(* upEdge[p] to NotAnEdge.                                                 *)
 (***************************************************************************)
 SendAck(p) == /\ \E e \in InEdges(p) :
                      /\ rcvdUnacked[e] > 0
