@@ -395,14 +395,14 @@ Spec == Init /\ [][Next]_vars /\ WF_vars(Next)
 ----------------------------------------------------------------------------
  
 (***************************************************************************)
-(* Messages are never lost, thus, the difference of msgs[e], acks[e],      *)
-(* sentUnacked[e], and rcvdUnacked[e] for any e in Edges is always zero.   *)
+(* EWd687a assumes messages are not lost.  Thus, the four counters always  *)
+(* have to be consistent, i.e., the sum of msgs[e], acks[e], and           *)
+(* rcvdUnacked[e] equals sentUnacked[e], for any e in Edges.               *)
 (***************************************************************************)
-DifferenceZero ==
-    [] \A e \in Edges:
-        (sentUnacked[e] - msgs[e] - rcvdUnacked[e] - acks[e]) = 0
+CountersConsistent ==
+    [] \A e \in Edges: sentUnacked[e] = rcvdUnacked[e] + acks[e] + msgs[e]
 
-THEOREM Spec => DifferenceZero
+THEOREM Spec => CountersConsistent
 
 (***************************************************************************)
 (* The overlay tree is a tree of non-neutral nodes rooted in the leader,   *)
