@@ -134,6 +134,11 @@ jobs:
           python $SCRIPT_DIR/check_manifest_features.py \
             --manifest_path manifest.json               \
             --ts_path deps/tree-sitter-tlaplus
+      - name: Check README spec table
+        run: |
+          python $SCRIPT_DIR/check_markdown_table.py  \
+            --manifest_path manifest.json             \
+            --readme_path README.md
       - name: Parse all modules
         run: |
           python $SCRIPT_DIR/parse_modules.py                       \
