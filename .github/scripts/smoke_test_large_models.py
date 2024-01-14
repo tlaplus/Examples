@@ -38,7 +38,6 @@ def check_model(module_path, model):
         tlapm_lib_path,
         community_jar_path,
         model['mode'],
-        model['config'],
         smoke_test_timeout_in_seconds
     )
     match tlc_result:

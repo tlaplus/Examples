@@ -67,14 +67,7 @@ def get_run_mode(mode):
     else:
         raise NotImplementedError(f'Undefined model-check mode {mode}')
 
-def get_config(config):
-    """
-    Converts the model config found in manifest.json into TLC CLI
-    parameters.
-    """
-    return ['-deadlock'] if 'ignore deadlock' in config else []
-
-def check_model(tools_jar_path, module_path, model_path, tlapm_lib_path, community_jar_path, mode, config, hard_timeout_in_seconds):
+def check_model(tools_jar_path, module_path, model_path, tlapm_lib_path, community_jar_path, mode, hard_timeout_in_seconds):
     """
     Model-checks the given model against the given module.
     """
@@ -98,7 +91,7 @@ def check_model(tools_jar_path, module_path, model_path, tlapm_lib_path, communi
                 '-workers', 'auto',
                 '-lncheck', 'final',
                 '-cleanup'
-            ] + get_config(config) + get_run_mode(mode),
+            ] + get_run_mode(mode),
             timeout=hard_timeout_in_seconds,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,

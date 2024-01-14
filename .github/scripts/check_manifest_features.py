@@ -12,6 +12,7 @@ from dataclasses import dataclass
 import glob
 from os.path import basename, dirname, join, normpath, splitext
 from typing import Any
+import re
 import tla_utils
 from tree_sitter import Language, Parser
 
@@ -89,21 +90,22 @@ def get_module_features(examples_root, path, parser, queries):
     tree, _, _ = parse_module(examples_root, parser, path)
     return get_tree_features(tree, queries)
 
-# Keywords mapping to features for models
+# Regexes mapping to features for models
 model_features = {
-    'PROPERTY': 'liveness',
-    'PROPERTIES': 'liveness',
-    'SYMMETRY': 'symmetry',
-    'ALIAS': 'alias',
-    'VIEW': 'view',
-    'CONSTRAINT': 'state constraint',
-    'CONSTRAINTS': 'state constraint',
+    re.compile('^PROPERTY', re.MULTILINE) : 'liveness',
+    re.compile('^PROPERTIES', re.MULTILINE): 'liveness',
+    re.compile('^SYMMETRY', re.MULTILINE): 'symmetry',
+    re.compile('^ALIAS', re.MULTILINE): 'alias',
+    re.compile('^VIEW', re.MULTILINE): 'view',
+    re.compile('^CONSTRAINT', re.MULTILINE): 'state constraint',
+    re.compile('^CONSTRAINTS', re.MULTILINE): 'state constraint',
+    re.compile('^CHECK_DEADLOCK\\s+FALSE', re.MULTILINE) : 'ignore deadlock'
 }
 
 def get_model_features(examples_root, path):
     """
     Finds features present in the given .cfg model file.
-    This will be a best-effort text search until a tree-sitter grammar is
+    This will be a best-effort regex search until a tree-sitter grammar is
     created for .cfg files.
     """
     path = tla_utils.from_cwd(examples_root, path)
@@ -111,10 +113,9 @@ def get_model_features(examples_root, path):
     model_text = None
     with open(path, 'rt') as model_file:
         model_text = model_file.read()
-    for line in model_text.split('\n'):
-        tokens = line.split()
-        if len(tokens) > 0 and tokens[0] in model_features:
-            features.append(model_features[tokens[0]])
+    for regex, feature in model_features.items():
+        if regex.search(model_text):
+            features.append(feature)
     return set(features)
 
 # All the standard modules available when using TLC
