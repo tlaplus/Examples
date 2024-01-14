@@ -27,12 +27,12 @@ LISpec == ISpec /\ Liveness2
 
 (***************************************************************************)
 (* The following property asserts that, whenever any processor p has       *)
-(* issued a request, so ctl[p] = "req", then a response eventually occurs, *)
+(* issued a request, so ctl[p] = "busy", then a response eventually occurs,*)
 (* setting ctl[p] to "rdy".                                                *)
 (***************************************************************************)
 
 LivenessProperty == 
-   \A p \in Proc : (ctl[p] = "req") ~> (ctl[p] = "rdy")
+   \A p \in Proc : (ctl[p] = "busy") ~> (ctl[p] = "rdy")
 
 -----------------------------------------------------------------------------
 (***************************************************************************)
