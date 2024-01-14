@@ -14,7 +14,6 @@ from os.path import basename, dirname, join, normpath, relpath, splitext
 from pathlib import PureWindowsPath
 import glob
 import tla_utils
-from tree_sitter import Language, Parser
 
 def to_posix(path):
     """
@@ -89,7 +88,6 @@ def generate_new_manifest(examples_root, ignored_dirs, parser, queries):
                                 'runtime': 'unknown',
                                 'size': 'unknown',
                                 'mode': 'exhaustive search',
-                                'config': [],
                                 'features': sorted(list(get_model_features(examples_root, cfg_path))),
                                 'result': 'unknown'
                             }
@@ -138,7 +136,7 @@ def find_corresponding_model(old_model, new_module):
     return models[0] if any(models) else None
 
 def integrate_model_info(old_model, new_model):
-    fields = ['runtime', 'size', 'mode', 'config', 'result']
+    fields = ['runtime', 'size', 'mode', 'result']
     for field in fields:
         new_model[field] = old_model[field]
 

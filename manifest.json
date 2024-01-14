@@ -70,7 +70,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -94,7 +93,6 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -118,7 +116,6 @@
               "runtime": "unknown",
               "size": "large",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "unknown"
             }
@@ -173,7 +170,6 @@
               "runtime": "00:01:00",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "state constraint",
                 "symmetry"
@@ -185,7 +181,6 @@
               "runtime": "00:00:10",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "state constraint",
                 "symmetry"
@@ -238,7 +233,6 @@
               "runtime": "00:00:15",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -249,7 +243,6 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -260,7 +253,6 @@
               "runtime": "00:02:30",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -293,7 +285,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "safety failure"
             }
@@ -317,7 +308,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "safety failure"
             }
@@ -350,7 +340,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -381,7 +370,6 @@
               "runtime": "unknown",
               "size": "large",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "safety failure"
             }
@@ -409,25 +397,6 @@
           "models": []
         },
         {
-          "path": "specifications/FiniteMonotonic/Finitize_CRDT.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": [
-            {
-              "path": "specifications/FiniteMonotonic/Finitize_CRDT.cfg",
-              "runtime": "00:00:05",
-              "size": "small",
-              "mode": "exhaustive search",
-              "config": [],
-              "features": [
-                "liveness"
-              ],
-              "result": "success"
-            }
-          ]
-        },
-        {
           "path": "specifications/FiniteMonotonic/Constrain_CRDT.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
@@ -438,10 +407,27 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness",
                 "state constraint"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/FiniteMonotonic/Finitize_CRDT.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/FiniteMonotonic/Finitize_CRDT.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
               ],
               "result": "success"
             }
@@ -458,7 +444,6 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -519,11 +504,9 @@
               "runtime": "00:00:40",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [
-                "ignore deadlock"
-              ],
               "features": [
                 "alias",
+                "ignore deadlock",
                 "liveness",
                 "state constraint"
               ],
@@ -578,7 +561,6 @@
               "runtime": "07:16:00",
               "size": "large",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "symmetry"
               ],
@@ -589,7 +571,6 @@
               "runtime": "00:04:30",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "symmetry"
               ],
@@ -600,7 +581,6 @@
               "runtime": "00:00:40",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -617,7 +597,6 @@
               "runtime": "00:00:50",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness",
                 "symmetry"
@@ -680,8 +659,8 @@
               "runtime": "unknown",
               "size": "unknown",
               "mode": "generate",
-              "config": [],
               "features": [
+                "ignore deadlock",
                 "state constraint"
               ],
               "result": "unknown"
@@ -733,7 +712,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "state constraint"
               ],
@@ -773,7 +751,6 @@
               "runtime": "00:01:00",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             },
@@ -782,7 +759,6 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -881,10 +857,9 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [
+              "features": [
                 "ignore deadlock"
               ],
-              "features": [],
               "result": "success"
             }
           ]
@@ -1001,7 +976,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "safety failure"
             }
@@ -1030,7 +1004,6 @@
               "runtime": "00:11:00",
               "size": "large",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -1041,7 +1014,6 @@
               "runtime": "00:00:30",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -1052,7 +1024,6 @@
               "runtime": "00:10:00",
               "size": "large",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             },
@@ -1061,7 +1032,6 @@
               "runtime": "00:03:00",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             },
@@ -1070,7 +1040,6 @@
               "runtime": "00:00:15",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -1108,10 +1077,9 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [
+              "features": [
                 "ignore deadlock"
               ],
-              "features": [],
               "result": "safety failure"
             }
           ]
@@ -1143,7 +1111,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -1183,7 +1150,6 @@
               "runtime": "00:20:00",
               "size": "large",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "view"
               ],
@@ -1194,7 +1160,6 @@
               "runtime": "00:00:30",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "view"
               ],
@@ -1205,7 +1170,6 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "view"
               ],
@@ -1252,10 +1216,9 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [
+              "features": [
                 "ignore deadlock"
               ],
-              "features": [],
               "result": "success"
             }
           ]
@@ -1271,7 +1234,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness",
                 "symmetry"
@@ -1291,10 +1253,8 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [
-                "ignore deadlock"
-              ],
               "features": [
+                "ignore deadlock",
                 "liveness",
                 "symmetry"
               ],
@@ -1387,7 +1347,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -1418,7 +1377,6 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -1457,10 +1415,8 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [
-                "ignore deadlock"
-              ],
               "features": [
+                "ignore deadlock",
                 "liveness"
               ],
               "result": "success"
@@ -1488,10 +1444,8 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [
-                "ignore deadlock"
-              ],
               "features": [
+                "ignore deadlock",
                 "liveness"
               ],
               "result": "safety failure"
@@ -1532,7 +1486,6 @@
               "runtime": "00:00:30",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness",
                 "symmetry"
@@ -1552,7 +1505,6 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness",
                 "symmetry"
@@ -1584,7 +1536,6 @@
               "runtime": "00:00:10",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -1622,7 +1573,6 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "safety failure"
             }
@@ -1653,7 +1603,6 @@
               "runtime": "00:50:00",
               "size": "large",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             },
@@ -1662,7 +1611,6 @@
               "runtime": "00:01:00",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             },
@@ -1671,7 +1619,6 @@
               "runtime": "00:00:15",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -1768,7 +1715,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness",
                 "state constraint"
@@ -1788,7 +1734,6 @@
               "runtime": "00:01:30",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness",
                 "state constraint"
@@ -1822,7 +1767,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -1839,7 +1783,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -1856,7 +1799,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -1880,7 +1822,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -1897,7 +1838,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -2028,7 +1968,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "state constraint"
               ],
@@ -2047,7 +1986,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -2064,7 +2002,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -2097,7 +2034,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -2137,7 +2073,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -2156,7 +2091,6 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -2217,7 +2151,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -2285,7 +2218,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -2372,7 +2304,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -2410,7 +2341,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness",
                 "state constraint"
@@ -2470,7 +2400,6 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -2533,7 +2462,6 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -2621,7 +2549,6 @@
               "runtime": "00:00:15",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -2640,7 +2567,6 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -2659,7 +2585,6 @@
               "runtime": "00:00:10",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -2678,7 +2603,6 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -2911,7 +2835,6 @@
               "runtime": "00:00:50",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -2939,7 +2862,6 @@
               "runtime": "00:02:00",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -3011,7 +2933,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "success"
             }
@@ -3051,8 +2972,8 @@
               "runtime": "unknown",
               "size": "large",
               "mode": "generate",
-              "config": [],
               "features": [
+                "ignore deadlock",
                 "state constraint"
               ],
               "result": "unknown"
@@ -3070,9 +2991,9 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "alias",
+                "ignore deadlock",
                 "liveness"
               ],
               "result": "success"
@@ -3129,11 +3050,9 @@
                   "traceCount": 100
                 }
               },
-              "config": [
-                "ignore deadlock"
-              ],
               "features": [
                 "alias",
+                "ignore deadlock",
                 "liveness"
               ],
               "result": "safety failure"
@@ -3151,8 +3070,8 @@
               "runtime": "00:01:00",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
+                "ignore deadlock",
                 "liveness",
                 "state constraint"
               ],
@@ -3183,10 +3102,9 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [
+              "features": [
                 "ignore deadlock"
               ],
-              "features": [],
               "result": "success"
             }
           ]
@@ -3208,11 +3126,9 @@
                   "traceCount": 100
                 }
               },
-              "config": [
-                "ignore deadlock"
-              ],
               "features": [
-                "alias"
+                "alias",
+                "ignore deadlock"
               ],
               "result": "safety failure"
             }
@@ -3229,10 +3145,9 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [
+              "features": [
                 "ignore deadlock"
               ],
-              "features": [],
               "result": "success"
             }
           ]
@@ -3257,7 +3172,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness"
               ],
@@ -3298,7 +3212,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
                 "liveness",
                 "state constraint"
@@ -3330,10 +3243,8 @@
               "runtime": "00:50:00",
               "size": "large",
               "mode": "exhaustive search",
-              "config": [
-                "ignore deadlock"
-              ],
               "features": [
+                "ignore deadlock",
                 "state constraint"
               ],
               "result": "success"
@@ -3343,10 +3254,8 @@
               "runtime": "00:05:00",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [
-                "ignore deadlock"
-              ],
               "features": [
+                "ignore deadlock",
                 "state constraint"
               ],
               "result": "success"
@@ -3364,10 +3273,8 @@
               "runtime": "00:05:00",
               "size": "medium",
               "mode": "exhaustive search",
-              "config": [
-                "ignore deadlock"
-              ],
               "features": [
+                "ignore deadlock",
                 "liveness",
                 "state constraint"
               ],
@@ -3386,10 +3293,8 @@
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [
-                "ignore deadlock"
-              ],
               "features": [
+                "ignore deadlock",
                 "liveness",
                 "state constraint",
                 "view"
@@ -3411,8 +3316,9 @@
               "runtime": "unknown",
               "size": "large",
               "mode": "exhaustive search",
-              "config": [],
-              "features": [],
+              "features": [
+                "ignore deadlock"
+              ],
               "result": "unknown"
             }
           ]
@@ -3428,9 +3334,9 @@
               "runtime": "unknown",
               "size": "large",
               "mode": "exhaustive search",
-              "config": [],
               "features": [
-                "alias"
+                "alias",
+                "ignore deadlock"
               ],
               "result": "unknown"
             }
@@ -3503,8 +3409,8 @@
                   "traceCount": 100
                 }
               },
-              "config": [],
               "features": [
+                "ignore deadlock",
                 "liveness",
                 "state constraint"
               ],
@@ -3526,7 +3432,6 @@
               "runtime": "unknown",
               "size": "unknown",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "unknown"
             }
@@ -3787,7 +3692,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": [],
               "result": "safety failure"
             }

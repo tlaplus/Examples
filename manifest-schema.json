@@ -44,7 +44,7 @@
                   "items": {
                     "type": "object",
                     "additionalProperties": false,
-                    "required": ["path", "runtime", "size", "mode", "config", "features", "result"],
+                    "required": ["path", "runtime", "size", "mode", "features", "result"],
                     "properties": {
                       "path": {"type": "string"},
                       "runtime": {
@@ -74,13 +74,9 @@
                           }
                         ]
                       },
-                      "config": {
-                        "type": "array",
-                        "items": {"enum": ["ignore deadlock"]}
-                      },
                       "features": {
                         "type": "array",
-                        "items": {"enum": ["liveness", "symmetry", "view", "alias", "state constraint"]}
+                        "items": {"enum": ["liveness", "symmetry", "view", "alias", "state constraint", "ignore deadlock"]}
                       },
                       "result": {"enum": ["success", "safety failure", "liveness failure", "deadlock failure", "unknown"]}
                     }

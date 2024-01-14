@@ -41,7 +41,6 @@ def check_model(module_path, model, expected_runtime):
         tlapm_lib_path,
         community_jar_path,
         model['mode'],
-        model['config'],
         hard_timeout_in_seconds
     )
     end_time = timer()
