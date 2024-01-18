@@ -30,6 +30,42 @@
             "proof"
           ],
           "models": []
+        },
+        {
+          "path": "specifications/Bakery-Boulangerie/MCBakery.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Bakery-Boulangerie/MCBakery.cfg",
+              "runtime": "00:00:10",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/Bakery-Boulangerie/MCBoulanger.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Bakery-Boulangerie/MCBoulanger.cfg",
+              "runtime": "00:01:00",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [
+                "state constraint"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -2370,7 +2406,16 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/Stones/Stones.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -2433,7 +2478,16 @@
             "pluscal",
             "proof"
           ],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/TeachingConcurrency/Simple.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/TeachingConcurrency/SimpleRegular.tla",
@@ -2443,7 +2497,16 @@
             "pluscal",
             "proof"
           ],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/TeachingConcurrency/SimpleRegular.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         }
       ]
     },

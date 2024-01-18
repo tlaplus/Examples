@@ -18,8 +18,8 @@ All specs in this repository are subject to CI validation to ensure quality.
 Here is a list of specs included in this repository, with links to the relevant directory and flags for various features:
 | Name                                                                                                | Author(s)                                  | Beginner | TLAPS Proof | PlusCal | TLC Model | Apalache |
 | --------------------------------------------------------------------------------------------------- | ------------------------------------------ | :------: | :---------: | :-----: | :-------: | :------: |
+| [Teaching Concurrency](specifications/TeachingConcurrency)                                          | Leslie Lamport                             |    ✔     |      ✔      |    ✔    |     ✔     |          |
 | [Learn TLA⁺ Proofs](specifications/LearnProofs)                                                     | Andrew Helwer                              |    ✔     |      ✔      |    ✔    |     ✔     |          |
-| [Teaching Concurrency](specifications/TeachingConcurrency)                                          | Leslie Lamport                             |    ✔     |      ✔      |    ✔    |           |          |
 | [Boyer-Moore Majority Vote](specifications/Majority)                                                | Stephan Merz                               |    ✔     |      ✔      |         |     ✔     |          |
 | [Proof x+x is Even](specifications/sums_even)                                                       | Stephan Merz                               |    ✔     |      ✔      |         |           |          |
 | [The N-Queens Puzzle](specifications/N-Queens)                                                      | Stephan Merz                               |    ✔     |             |    ✔    |     ✔     |          |
@@ -31,8 +31,8 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [The Tower of Hanoi Puzzle](specifications/tower_of_hanoi)                                          | Markus Kuppe, Alexander Niederbühl         |    ✔     |             |         |     ✔     |          |
 | [Missionaries and Cannibals](specifications/MissionariesAndCannibals)                               | Leslie Lamport                             |    ✔     |             |         |     ✔     |          |
 | [The Coffee Can Bean Problem](specifications/CoffeeCan)                                             | Andrew Helwer                              |    ✔     |             |         |     ✔     |          |
-| [Stone Scale Puzzle](specifications/Stones)                                                         | Leslie Lamport                             |    ✔     |             |         |           |          |
-| [The Boulangerie Algorithm](specifications/Bakery-Boulangerie)                                      | Leslie Lamport, Stephan Merz               |          |      ✔      |    ✔    |           |          |
+| [Stone Scale Puzzle](specifications/Stones)                                                         | Leslie Lamport                             |    ✔     |             |         |     ✔     |          |
+| [The Boulangerie Algorithm](specifications/Bakery-Boulangerie)                                      | Leslie Lamport, Stephan Merz               |          |      ✔      |    ✔    |     ✔     |          |
 | [Misra Reachability Algorithm](specifications/MisraReachability)                                    | Leslie Lamport                             |          |      ✔      |    ✔    |           |          |
 | [Loop Invariance](specifications/LoopInvariance)                                                    | Leslie Lamport                             |          |      ✔      |    ✔    |           |          |
 | [EWD840: Termination Detection in a Ring](specifications/ewd840)                                    | Stephan Merz                               |          |      ✔      |         |     ✔     |          |
