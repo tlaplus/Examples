@@ -1,3 +1,4 @@
-jsonschema == 4.17.3
-tree-sitter==0.20.1
+jsonschema == 4.20.0
+tree-sitter==0.20.4
+mistletoe==1.2.1
 

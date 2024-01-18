@@ -144,7 +144,7 @@
     },
     {
       "path": "specifications/CheckpointCoordination",
-      "title": "Distributed Checkpoint/Snapshot Coordination",
+      "title": "Checkpoint Coordination",
       "description": "An algorithm for controlling checkpoint leases in a Paxos ring",
       "source": "https://github.com/Azure/RingMaster",
       "authors": [
@@ -212,7 +212,7 @@
     },
     {
       "path": "specifications/CoffeeCan",
-      "title": "The Coffee Can Black/White Bean Problem",
+      "title": "The Coffee Can Bean Problem",
       "description": "Math problem published by Dijkstra attributed to Carel Scholten",
       "source": "https://stackoverflow.com/a/66304920/2852699",
       "authors": [
@@ -379,7 +379,7 @@
     },
     {
       "path": "specifications/FiniteMonotonic",
-      "title": "Finite Model-Checking of Monotonic Systems",
+      "title": "Finitizing Monotonic Systems",
       "description": "Illustration of technique for making ordinarily-infinite monotonic systems finite for the purposes of model-checking.",
       "source": "https://ahelwer.ca/post/2023-11-01-tla-finite-monotonic/",
       "authors": [
@@ -518,7 +518,7 @@
     },
     {
       "path": "specifications/KeyValueStore",
-      "title": "Key-Value Store with Snapshot Isolation",
+      "title": "Snapshot Key-Value Store",
       "description": "A simple KVS implementing snapshot isolation",
       "source": "",
       "authors": [
@@ -723,7 +723,7 @@
     },
     {
       "path": "specifications/LeastCircularSubstring",
-      "title": "Lexicographically-Least Circular Substring",
+      "title": "Minimal Circular Substring",
       "description": "Booth's 1980 algorithm to find the lexicographically-least circular substring",
       "source": "",
       "authors": [
@@ -836,7 +836,7 @@
     },
     {
       "path": "specifications/Majority",
-      "title": "Boyer-Moore majority vote algorithm",
+      "title": "Boyer-Moore Majority Vote",
       "description": "An efficient algorithm for detecting a majority value in a sequence",
       "source": "",
       "authors": [
@@ -1131,7 +1131,7 @@
     },
     {
       "path": "specifications/NanoBlockchain",
-      "title": "The Nano Blockchain Protocol",
+      "title": "Nano Blockchain Protocol",
       "description": "A specification of the protocol originally used by the Nano blockchain",
       "source": "",
       "authors": [
@@ -1282,7 +1282,7 @@
     },
     {
       "path": "specifications/PaxosHowToWinATuringAward",
-      "title": "How to Win a Turing Award",
+      "title": "Paxos (How to Win a Turing Award)",
       "description": "Exercises from the lecture The Paxos Algorithm - or How to Win a Turing Award",
       "source": "https://www.youtube.com/watch?v=tw3gsBms-f8",
       "authors": [
@@ -1521,7 +1521,7 @@
       "description": "Controlling cars moving over a single-lange bridge in opposite directions",
       "source": "",
       "authors": [
-        "Younes Aka"
+        "Younes Akhouayri"
       ],
       "tags": [],
       "modules": [
@@ -1582,7 +1582,7 @@
     },
     {
       "path": "specifications/SlushProtocol",
-      "title": "The Slush Probabilistic Consensus Protocol",
+      "title": "The Slush Protocol",
       "description": "An attempt to use TLA⁺ to analyze a probabilistic protocol in the Avalanche family",
       "source": "https://github.com/ahelwer/avalanche-analysis",
       "authors": [
@@ -1667,7 +1667,9 @@
       "authors": [
         "Leslie Lamport"
       ],
-      "tags": [],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/SpecifyingSystems/AdvancedExamples/BNFGrammars.tla",
@@ -2359,7 +2361,9 @@
       "authors": [
         "Leslie Lamport"
       ],
-      "tags": [],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/Stones/Stones.tla",
@@ -2417,7 +2421,9 @@
       "authors": [
         "Leslie Lamport"
       ],
-      "tags": [],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/TeachingConcurrency/Simple.tla",
@@ -2642,7 +2648,7 @@
       "source": "",
       "authors": [
         "Igor Konnov",
-        "Josev Widder",
+        "Josef Widder",
         "Thanh Hai Tran"
       ],
       "tags": [],
@@ -2663,7 +2669,7 @@
       "source": "",
       "authors": [
         "Igor Konnov",
-        "Josev Widder",
+        "Josef Widder",
         "Thanh Hai Tran"
       ],
       "tags": [],
@@ -2684,7 +2690,7 @@
       "source": "",
       "authors": [
         "Igor Konnov",
-        "Josev Widder",
+        "Josef Widder",
         "Thanh Hai Tran"
       ],
       "tags": [],
@@ -2705,7 +2711,7 @@
       "source": "",
       "authors": [
         "Igor Konnov",
-        "Josev Widder",
+        "Josef Widder",
         "Thanh Hai Tran"
       ],
       "tags": [],
@@ -2726,7 +2732,7 @@
       "source": "",
       "authors": [
         "Igor Konnov",
-        "Josev Widder",
+        "Josef Widder",
         "Thanh Hai Tran"
       ],
       "tags": [],
@@ -2768,7 +2774,7 @@
       "source": "",
       "authors": [
         "Igor Konnov",
-        "Josev Widder",
+        "Josef Widder",
         "Thanh Hai Tran"
       ],
       "tags": [],
@@ -2804,7 +2810,9 @@
       "authors": [
         "Leslie Lamport"
       ],
-      "tags": [],
+      "tags": [
+        "ewd"
+      ],
       "modules": [
         {
           "path": "specifications/dijkstra-mutex/DijkstraMutex.tla",
@@ -2871,7 +2879,7 @@
     },
     {
       "path": "specifications/diskpaxos",
-      "title": "diskpaxos",
+      "title": "SWMR Shared Memory Disk Paxos",
       "description": "A formalization of the SWMR-Shared-Memory Disk Paxos",
       "source": "https://github.com/nano-o/MultiPaxos/blob/master/DiskPaxos.tla",
       "authors": [
@@ -2949,14 +2957,16 @@
     },
     {
       "path": "specifications/ewd426",
-      "title": "Token Stabilization",
-      "description": "Dijkstra's classical stabilizing token ring algorithm: EWD426",
+      "title": "EWD 426: Token Stabilization",
+      "description": "Dijkstra's classical stabilizing token ring algorithm, EWD426",
       "source": "",
       "authors": [
         "Markus Kuppe",
         "Murat Demirbas"
       ],
-      "tags": [],
+      "tags": [
+        "ewd"
+      ],
       "modules": [
         {
           "path": "specifications/ewd426/SimTokenRing.tla",
@@ -3004,7 +3014,7 @@
     },
     {
       "path": "specifications/ewd687a",
-      "title": "Detecting Termination in Distributed Computations",
+      "title": "EWD687a: Detecting Termination in Distributed Computations",
       "description": "Dijkstra's Termination Detection Algorithm",
       "source": "",
       "authors": [
@@ -3012,7 +3022,9 @@
         "Markus Kuppe",
         "Stephan Merz"
       ],
-      "tags": [],
+      "tags": [
+        "ewd"
+      ],
       "modules": [
         {
           "path": "specifications/ewd687a/EWD687a.tla",
@@ -3083,13 +3095,15 @@
     },
     {
       "path": "specifications/ewd840",
-      "title": "ewd840",
-      "description": "Termination Detection in a Ring",
+      "title": "EWD840: Termination Detection in a Ring",
+      "description": "EWD840: Termination Detection in a Ring",
       "source": "Dijkstra's termination detection algorithm for ring topologies",
       "authors": [
         "Stephan Merz"
       ],
-      "tags": [],
+      "tags": [
+        "ewd"
+      ],
       "modules": [
         {
           "path": "specifications/ewd840/EWD840.tla",
@@ -3192,14 +3206,16 @@
     },
     {
       "path": "specifications/ewd998",
-      "title": "Termination Detection in a Ring with Asynchronous Message Delivery",
+      "title": "EWD998: Termination Detection in a Ring with Asynchronous Message Delivery",
       "description": "Variant of EWD 840 given by Shmuel Safra",
       "source": "",
       "authors": [
         "Markus Kuppe",
         "Stephan Merz"
       ],
-      "tags": [],
+      "tags": [
+        "ewd"
+      ],
       "modules": [
         {
           "path": "specifications/ewd998/AsyncTerminationDetection.tla",
@@ -3618,7 +3634,9 @@
       "authors": [
         "Stephan Merz"
       ],
-      "tags": [],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/sums_even/TLAPS.tla",
