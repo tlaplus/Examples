@@ -3080,6 +3080,24 @@
             "pluscal"
           ],
           "models": []
+        },
+        {
+          "path": "specifications/chang_roberts/MCChangRoberts.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/chang_roberts/MCChangRoberts.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "deadlock failure"
+            }
+          ]
         }
       ]
     },
