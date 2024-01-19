@@ -39,8 +39,8 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [EWD998: Termination Detection in a Ring with Asynchronous Message Delivery](specifications/ewd998) | Stephan Merz, Markus Kuppe                 |          |      ✔      |         |     ✔     |          |
 | [The Paxos Protocol](specifications/Paxos)                                                          | Leslie Lamport                             |          |      ✔      |         |     ✔     |          |
 | [Asynchronous Reliable Broadcast](specifications/bcastByz)                                          | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |      ✔      |         |     ✔     |          |
-| [Distributed Mutual Exclusion](specifications/lamport_mutex)                                        | Stephan Merz                               |          |      ✔      |         |           |          |
-| [Two-Phase Handshaking](specifications/TwoPhase)                                                    | Leslie Lamport, Stephan Merz               |          |      ✔      |         |           |          |
+| [Distributed Mutual Exclusion](specifications/lamport_mutex)                                        | Stephan Merz                               |          |      ✔      |         |     ✔     |          |
+| [Two-Phase Handshaking](specifications/TwoPhase)                                                    | Leslie Lamport, Stephan Merz               |          |      ✔      |         |     ✔     |          |
 | [Paxos (How to Win a Turing Award)](specifications/PaxosHowToWinATuringAward)                       | Leslie Lamport                             |          |      ✔      |         |           |          |
 | [Dijkstra's Mutual Exclusion Algorithm](specifications/dijkstra-mutex)                              | Leslie Lamport                             |          |             |    ✔    |     ✔     |          |
 | [The Echo Algorithm](specifications/echo)                                                           | Stephan Merz                               |          |             |    ✔    |     ✔     |          |

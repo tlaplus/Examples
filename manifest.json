@@ -2595,6 +2595,22 @@
           "models": []
         },
         {
+          "path": "specifications/TwoPhase/MCTwoPhase.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/TwoPhase/MCTwoPhase.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
+        },
+        {
           "path": "specifications/TwoPhase/TLAPS.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
@@ -3652,6 +3668,24 @@
             "proof"
           ],
           "models": []
+        },
+        {
+          "path": "specifications/lamport_mutex/MCLamportMutex.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/lamport_mutex/MCLamportMutex.cfg",
+              "runtime": "00:00:10",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "state constraint"
+              ],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/lamport_mutex/NaturalsInduction.tla",
