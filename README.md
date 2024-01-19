@@ -22,7 +22,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Loop Invariance](specifications/LoopInvariance)                                                    | Leslie Lamport                             |    ✔     |      ✔      |    ✔    |     ✔     |          |
 | [Learn TLA⁺ Proofs](specifications/LearnProofs)                                                     | Andrew Helwer                              |    ✔     |      ✔      |    ✔    |     ✔     |          |
 | [Boyer-Moore Majority Vote](specifications/Majority)                                                | Stephan Merz                               |    ✔     |      ✔      |         |     ✔     |          |
-| [Proof x+x is Even](specifications/sums_even)                                                       | Stephan Merz                               |    ✔     |      ✔      |         |           |          |
+| [Proof x+x is Even](specifications/sums_even)                                                       | Stephan Merz                               |    ✔     |      ✔      |         |     ✔     |          |
 | [The N-Queens Puzzle](specifications/N-Queens)                                                      | Stephan Merz                               |    ✔     |             |    ✔    |     ✔     |          |
 | [The Dining Philosophers Problem](specifications/DiningPhilosophers)                                | Jeff Hemphill                              |    ✔     |             |    ✔    |     ✔     |          |
 | [The Car Talk Puzzle](specifications/CarTalkPuzzle)                                                 | Leslie Lamport                             |    ✔     |             |         |     ✔     |          |

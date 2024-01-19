@@ -78,7 +78,7 @@
                         "type": "array",
                         "items": {"enum": ["liveness", "symmetry", "view", "alias", "state constraint", "ignore deadlock"]}
                       },
-                      "result": {"enum": ["success", "safety failure", "liveness failure", "deadlock failure", "unknown"]}
+                      "result": {"enum": ["success", "assumption failure", "deadlock failure", "safety failure", "liveness failure", "unknown"]}
                     }
                   }
                 }
