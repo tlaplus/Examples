@@ -2738,7 +2738,28 @@
           "features": [
             "proof"
           ],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/bcastByz/bcastByz.cfg",
+              "runtime": "00:00:10",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            },
+            {
+              "path": "specifications/bcastByz/bcastByzNoBcast.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },

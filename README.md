@@ -38,7 +38,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [EWD840: Termination Detection in a Ring](specifications/ewd840)                                    | Stephan Merz                               |          |      ✔      |         |     ✔     |          |
 | [EWD998: Termination Detection in a Ring with Asynchronous Message Delivery](specifications/ewd998) | Stephan Merz, Markus Kuppe                 |          |      ✔      |         |     ✔     |          |
 | [The Paxos Protocol](specifications/Paxos)                                                          | Leslie Lamport                             |          |      ✔      |         |     ✔     |          |
-| [Asynchronous Reliable Broadcast](specifications/bcastByz)                                          | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |      ✔      |         |           |          |
+| [Asynchronous Reliable Broadcast](specifications/bcastByz)                                          | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |      ✔      |         |     ✔     |          |
 | [Distributed Mutual Exclusion](specifications/lamport_mutex)                                        | Stephan Merz                               |          |      ✔      |         |           |          |
 | [Two-Phase Handshaking](specifications/TwoPhase)                                                    | Leslie Lamport, Stephan Merz               |          |      ✔      |         |           |          |
 | [Paxos (How to Win a Turing Award)](specifications/PaxosHowToWinATuringAward)                       | Leslie Lamport                             |          |      ✔      |         |           |          |
