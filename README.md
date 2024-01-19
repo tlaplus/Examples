@@ -41,7 +41,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Asynchronous Reliable Broadcast](specifications/bcastByz)                                          | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |      ✔      |         |     ✔     |          |
 | [Distributed Mutual Exclusion](specifications/lamport_mutex)                                        | Stephan Merz                               |          |      ✔      |         |     ✔     |          |
 | [Two-Phase Handshaking](specifications/TwoPhase)                                                    | Leslie Lamport, Stephan Merz               |          |      ✔      |         |     ✔     |          |
-| [Paxos (How to Win a Turing Award)](specifications/PaxosHowToWinATuringAward)                       | Leslie Lamport                             |          |      ✔      |         |           |          |
+| [Paxos (How to Win a Turing Award)](specifications/PaxosHowToWinATuringAward)                       | Leslie Lamport                             |          |      ✔      |         |     ✔     |          |
 | [Dijkstra's Mutual Exclusion Algorithm](specifications/dijkstra-mutex)                              | Leslie Lamport                             |          |             |    ✔    |     ✔     |          |
 | [The Echo Algorithm](specifications/echo)                                                           | Stephan Merz                               |          |             |    ✔    |     ✔     |          |
 | [The TLC Safety Checking Algorithm](specifications/TLC)                                             | Markus Kuppe                               |          |             |    ✔    |     ✔     |          |

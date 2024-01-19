@@ -1374,6 +1374,40 @@
           "models": []
         },
         {
+          "path": "specifications/PaxosHowToWinATuringAward/Consensus.toolbox/3Values/Consensus.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Consensus.toolbox/3Values/FiniteSets.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Consensus.toolbox/3Values/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/PaxosHowToWinATuringAward/Consensus.toolbox/3Values/MC.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
           "path": "specifications/PaxosHowToWinATuringAward/Paxos.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
@@ -1381,7 +1415,151 @@
           "models": []
         },
         {
+          "path": "specifications/PaxosHowToWinATuringAward/Paxos.toolbox/SmallModel/Consensus.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Paxos.toolbox/SmallModel/FiniteSets.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Paxos.toolbox/SmallModel/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/PaxosHowToWinATuringAward/Paxos.toolbox/SmallModel/MC.cfg",
+              "runtime": "00:01:00",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Paxos.toolbox/SmallModel/Paxos.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Paxos.toolbox/SmallModel/Voting.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Paxos.toolbox/TinyModel/Consensus.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Paxos.toolbox/TinyModel/FiniteSets.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Paxos.toolbox/TinyModel/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/PaxosHowToWinATuringAward/Paxos.toolbox/TinyModel/MC.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Paxos.toolbox/TinyModel/Paxos.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Paxos.toolbox/TinyModel/Voting.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
           "path": "specifications/PaxosHowToWinATuringAward/Voting.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Voting.toolbox/SmallModel/Consensus.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Voting.toolbox/SmallModel/FiniteSets.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Voting.toolbox/SmallModel/MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/PaxosHowToWinATuringAward/Voting.toolbox/SmallModel/MC.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/Voting.toolbox/SmallModel/Voting.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [
