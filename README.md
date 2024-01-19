@@ -137,7 +137,7 @@ Ideally these will be moved into this repo over time.
 
 ## License
 The repository is under the MIT license and you are encouraged to publish your spec under a similarly-permissive license.
-However, your spec can be included in this repo along with you own license if you wish.
+However, your spec can be included in this repo along with your own license if you wish.
 
 ## Support or Contact
 Do you have any questions or comments?

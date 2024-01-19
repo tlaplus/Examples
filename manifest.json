@@ -858,8 +858,8 @@
           "models": [
             {
               "path": "specifications/LoopInvariance/MCBinarySearch.cfg",
-              "runtime": "small",
-              "size": "00:00:05",
+              "runtime": "00:00:05",
+              "size": "small",
               "mode": "exhaustive search",
               "features": [
                 "liveness"

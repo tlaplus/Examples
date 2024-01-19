@@ -30,8 +30,8 @@ THEOREM T1 == \A x \in Nat: Even(x+x)
   <2> QED BY DEF Even, Odd, A
 <1> QED BY <1>1, <1>2, <1>3
 
+
 =============================================================================
 \* Modification History
 \* Last modified Tue Mar 08 11:49:27 CET 2016 by marty
 \* Created Mon Oct 26 15:01:26 CET 2015 by marty
-
