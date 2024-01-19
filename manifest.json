@@ -836,7 +836,9 @@
       "authors": [
         "Leslie Lamport"
       ],
-      "tags": [],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/LoopInvariance/BinarySearch.tla",
@@ -847,6 +849,42 @@
             "proof"
           ],
           "models": []
+        },
+        {
+          "path": "specifications/LoopInvariance/MCBinarySearch.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/LoopInvariance/MCBinarySearch.cfg",
+              "runtime": "small",
+              "size": "00:00:05",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/LoopInvariance/MCQuicksort.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/LoopInvariance/MCQuicksort.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/LoopInvariance/Quicksort.tla",

@@ -157,4 +157,3 @@ THEOREM Spec => []PCorrect
 \* Modification History
 \* Last modified Wed May 15 02:33:18 PDT 2019 by lamport
 \* Created Mon Apr 15 16:25:14 PDT 2019 by lamport
-

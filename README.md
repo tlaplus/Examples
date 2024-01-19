@@ -19,6 +19,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | Name                                                                                                | Author(s)                                  | Beginner | TLAPS Proof | PlusCal | TLC Model | Apalache |
 | --------------------------------------------------------------------------------------------------- | ------------------------------------------ | :------: | :---------: | :-----: | :-------: | :------: |
 | [Teaching Concurrency](specifications/TeachingConcurrency)                                          | Leslie Lamport                             |    ✔     |      ✔      |    ✔    |     ✔     |          |
+| [Loop Invariance](specifications/LoopInvariance)                                                    | Leslie Lamport                             |    ✔     |      ✔      |    ✔    |     ✔     |          |
 | [Learn TLA⁺ Proofs](specifications/LearnProofs)                                                     | Andrew Helwer                              |    ✔     |      ✔      |    ✔    |     ✔     |          |
 | [Boyer-Moore Majority Vote](specifications/Majority)                                                | Stephan Merz                               |    ✔     |      ✔      |         |     ✔     |          |
 | [Proof x+x is Even](specifications/sums_even)                                                       | Stephan Merz                               |    ✔     |      ✔      |         |           |          |
@@ -34,7 +35,6 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Stone Scale Puzzle](specifications/Stones)                                                         | Leslie Lamport                             |    ✔     |             |         |     ✔     |          |
 | [The Boulangerie Algorithm](specifications/Bakery-Boulangerie)                                      | Leslie Lamport, Stephan Merz               |          |      ✔      |    ✔    |     ✔     |          |
 | [Misra Reachability Algorithm](specifications/MisraReachability)                                    | Leslie Lamport                             |          |      ✔      |    ✔    |           |          |
-| [Loop Invariance](specifications/LoopInvariance)                                                    | Leslie Lamport                             |          |      ✔      |    ✔    |           |          |
 | [EWD840: Termination Detection in a Ring](specifications/ewd840)                                    | Stephan Merz                               |          |      ✔      |         |     ✔     |          |
 | [EWD998: Termination Detection in a Ring with Asynchronous Message Delivery](specifications/ewd998) | Stephan Merz, Markus Kuppe                 |          |      ✔      |         |     ✔     |          |
 | [The Paxos Protocol](specifications/Paxos)                                                          | Leslie Lamport                             |          |      ✔      |         |     ✔     |          |
