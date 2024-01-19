@@ -49,7 +49,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [The Slush Protocol](specifications/SlushProtocol)                                                  | Andrew Helwer                              |          |             |    ✔    |     ✔     |          |
 | [Minimal Circular Substring](specifications/LeastCircularSubstring)                                 | Andrew Helwer                              |          |             |    ✔    |     ✔     |          |
 | [Snapshot Key-Value Store](specifications/KeyValueStore)                                            | Andrew Helwer, Murat Demirbas              |          |             |    ✔    |     ✔     |          |
-| [Chang-Roberts Algorithm for Leader Election in a Ring](specifications/chang_roberts)               | Stephan Merz                               |          |             |    ✔    |           |          |
+| [Chang-Roberts Algorithm for Leader Election in a Ring](specifications/chang_roberts)               | Stephan Merz                               |          |             |    ✔    |     ✔     |          |
 | [Resource Allocator](specifications/allocator)                                                      | Stephan Merz                               |          |             |         |     ✔     |          |
 | [Transitive Closure](specifications/TransitiveClosure)                                              | Stephan Merz                               |          |             |         |     ✔     |          |
 | [Sliding Block Puzzle](specifications/SlidingPuzzles)                                               | Mariusz Ryndzionek                         |          |             |         |     ✔     |          |
