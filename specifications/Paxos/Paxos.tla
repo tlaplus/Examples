@@ -17,7 +17,7 @@ Ballot ==  Nat
 
 None == CHOOSE v : v \notin Value
   (*************************************************************************)
-  (* An unspecified value that is not a ballot number.                     *)
+  (* An unspecified value that is not a choosable value.                   *)
   (*************************************************************************)
   
 (***************************************************************************)
