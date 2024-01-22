@@ -1,5 +1,7 @@
----- MODULE MC ----
+---- MODULE MCPaxos ----
 EXTENDS Paxos, TLC
+
+CONSTANT MaxBallot
 
 \* MV CONSTANT declarations@modelParameterConstants
 CONSTANTS
@@ -28,11 +30,11 @@ const_1560336937634607000 ==
 
 \* CONSTANT definition @modelParameterDefinitions:1
 def_ov_1560336937634609000 ==
-0..1
+0..MaxBallot
 ----
 \* CONSTANT definition @modelParameterDefinitions:2
 def_ov_1560336937634610000 ==
-0..1
+0..MaxBallot
 ----
 \* PROPERTY definition @modelCorrectnessProperties:0
 prop_1560336937635612000 ==

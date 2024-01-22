@@ -1,4 +1,4 @@
----- MODULE MC ----
+---- MODULE MCConsensus ----
 EXTENDS Consensus, TLC
 
 \* MV CONSTANT declarations@modelParameterConstants
