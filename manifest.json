@@ -3884,7 +3884,16 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/nbacc_ray97/nbacc_ray97.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -3905,7 +3914,18 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/nbacg_guer01/nbacg_guer01.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
