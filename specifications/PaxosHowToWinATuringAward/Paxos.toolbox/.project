@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Paxos</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>toolbox.builder.TLAParserBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>toolbox.natures.TLANature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>Consensus.tla</name>
+			<type>1</type>
+			<location>PARENT-1-PROJECT_LOC/Consensus.tla</location>
+		</link>
+		<link>
+			<name>Paxos.tla</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Paxos.tla</locationURI>
+		</link>
+		<link>
+			<name>Voting.tla</name>
+			<type>1</type>
+			<location>PARENT-1-PROJECT_LOC/Voting.tla</location>
+		</link>
+	</linkedResources>
+</projectDescription>

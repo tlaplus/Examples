@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.lamport.tla.toolbox.tool.tlc.modelCheck">
+    <stringAttribute key="configurationName" value="3Values"/>
+    <intAttribute key="distributedFPSetCount" value="0"/>
+    <stringAttribute key="distributedNetworkInterface" value="100.64.12.255"/>
+    <intAttribute key="distributedNodesCount" value="1"/>
+    <stringAttribute key="distributedTLC" value="off"/>
+    <intAttribute key="fpIndex" value="0"/>
+    <intAttribute key="maxHeapSize" value="25"/>
+    <stringAttribute key="modelBehaviorInit" value=""/>
+    <stringAttribute key="modelBehaviorNext" value=""/>
+    <stringAttribute key="modelBehaviorSpec" value="Spec"/>
+    <intAttribute key="modelBehaviorSpecType" value="1"/>
+    <stringAttribute key="modelBehaviorVars" value="chosen"/>
+    <stringAttribute key="modelComments" value="A simple model of our trivial spec, in which Value is assigned the value {a, b, c} for unspecified constants a, b, and c. It checks that Inv is an invariant. If 'Deadlock' hadn't been unchecked, TLC would report termination as deadlock."/>
+    <booleanAttribute key="modelCorrectnessCheckDeadlock" value="false"/>
+    <listAttribute key="modelCorrectnessInvariants">
+        <listEntry value="1Inv"/>
+    </listAttribute>
+    <listAttribute key="modelCorrectnessProperties"/>
+    <stringAttribute key="modelExpressionEval" value=""/>
+    <listAttribute key="modelParameterConstants">
+        <listEntry value="Value;;{a, b, c};1;0"/>
+    </listAttribute>
+    <intAttribute key="numberOfWorkers" value="2"/>
+    <stringAttribute key="result.mail.address" value=""/>
+    <stringAttribute key="specName" value="Consensus"/>
+    <stringAttribute key="tlcResourcesProfile" value="local custom"/>
+</launchConfiguration>

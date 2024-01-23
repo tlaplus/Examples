@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.lamport.tla.toolbox.tool.tlc.modelCheck">
+    <stringAttribute key="configurationName" value="TinyModel"/>
+    <intAttribute key="distributedFPSetCount" value="0"/>
+    <stringAttribute key="distributedNetworkInterface" value="100.64.12.255"/>
+    <intAttribute key="distributedNodesCount" value="1"/>
+    <stringAttribute key="distributedTLC" value="off"/>
+    <intAttribute key="fpIndex" value="0"/>
+    <intAttribute key="maxHeapSize" value="40"/>
+    <stringAttribute key="modelBehaviorInit" value=""/>
+    <stringAttribute key="modelBehaviorNext" value=""/>
+    <stringAttribute key="modelBehaviorSpec" value="Spec"/>
+    <intAttribute key="modelBehaviorSpecType" value="1"/>
+    <stringAttribute key="modelBehaviorVars" value="maxVal, maxVBal, msgs, maxBal"/>
+    <stringAttribute key="modelComments" value="Has three acceptors, two values, and two ballots."/>
+    <booleanAttribute key="modelCorrectnessCheckDeadlock" value="true"/>
+    <listAttribute key="modelCorrectnessInvariants">
+        <listEntry value="1Inv"/>
+    </listAttribute>
+    <listAttribute key="modelCorrectnessProperties">
+        <listEntry value="1V!Spec"/>
+    </listAttribute>
+    <intAttribute key="modelEditorOpenTabs" value="2"/>
+    <stringAttribute key="modelExpressionEval" value=""/>
+    <stringAttribute key="modelParameterActionConstraint" value=""/>
+    <listAttribute key="modelParameterConstants">
+        <listEntry value="Acceptor;;{a1, a2, a3};1;0"/>
+        <listEntry value="Quorum;;{{a1, a2}, {a1, a3}, {a2, a3}};0;0"/>
+        <listEntry value="Value;;{v1, v2};1;0"/>
+    </listAttribute>
+    <stringAttribute key="modelParameterContraint" value=""/>
+    <listAttribute key="modelParameterDefinitions">
+        <listEntry value="None;;None;1;0"/>
+        <listEntry value="Ballot;;0..1;0;0"/>
+        <listEntry value="V!Ballot;;0..1;0;0"/>
+    </listAttribute>
+    <stringAttribute key="modelParameterModelValues" value="{}"/>
+    <stringAttribute key="modelParameterNewDefinitions" value=""/>
+    <intAttribute key="numberOfWorkers" value="2"/>
+    <stringAttribute key="result.mail.address" value=""/>
+    <stringAttribute key="specName" value="Paxos"/>
+    <stringAttribute key="tlcResourcesProfile" value="local nomal"/>
+    <listAttribute key="traceExploreExpressions">
+        <listEntry value="1V!chosen"/>
+        <listEntry value="1V!Next"/>
+        <listEntry value="1votes"/>
+    </listAttribute>
+</launchConfiguration>
