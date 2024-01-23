@@ -3073,7 +3073,18 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/detector_chan96/EnvironmentController.cfg",
+              "runtime": "02:00:00",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
