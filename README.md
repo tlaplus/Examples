@@ -68,7 +68,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Asynchronous Byzantine Consensus](specifications/aba-asyn-byz)                                     | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
 | [Folklore Reliable Broadcast](specifications/bcastFolklore)                                         | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
 | [The Bosco Byzantine Consensus Algorithm](specifications/bosco)                                     | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
-| [Consensus in One Communication Step](specifications/c1cs)                                          | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
+| [Consensus in One Communication Step](specifications/c1cs)                                          | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
 | [Condition-Based Consensus](specifications/cbc_max)                                                 | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
 | [One-Step Consensus with Zero-Degradation](specifications/cf1s-folklore)                            | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
 | [Failure Detector](specifications/detector_chan96)                                                  | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |

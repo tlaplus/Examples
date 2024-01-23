@@ -2934,7 +2934,18 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/c1cs/c1cs.cfg",
+              "runtime": "unknown",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
         }
       ]
     },
