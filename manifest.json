@@ -4112,21 +4112,50 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/transaction_commit/PaxosCommit.cfg",
+              "runtime": "00:00:30",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/transaction_commit/TCommit.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/transaction_commit/TCommit.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/transaction_commit/TwoPhase.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/transaction_commit/TwoPhase.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         }
       ]
     }

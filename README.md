@@ -75,14 +75,14 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Asynchronous Non-Blocking Atomic Commitment with Failure Detectors](specifications/nbacg_guer01)   | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
 | [Spanning Tree Broadcast Algorithm](specifications/spanning)                                        | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
 | [SWMR Shared Memory Disk Paxos](specifications/diskpaxos)                                           | Leslie Lamport, Giuliano Losa              |          |             |         |     ✔     |          |
-| [Condition-Based Consensus](specifications/cbc_max)                                                 | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
-| [Transaction Commit Models](specifications/transaction_commit)                                      | Leslie Lamport, Jim Gray                   |          |             |         |           |          |
+| [Transaction Commit Models](specifications/transaction_commit)                                      | Leslie Lamport, Jim Gray                   |          |             |         |     ✔     |          |
 | [Span Tree Exercise](specifications/SpanningTree)                                                   | Leslie Lamport                             |          |             |         |           |          |
 | [The Cigarette Smokers Problem](specifications/CigaretteSmokers)                                    | Mariusz Ryndzionek                         |          |             |         |           |          |
 | [Conway's Game of Life](specifications/GameOfLife)                                                  | Mariusz Ryndzionek                         |          |             |         |           |          |
 | [Chameneos, a Concurrency Game](specifications/Chameneos)                                           | Mariusz Ryndzionek                         |          |             |         |           |          |
 | [TLA⁺ Level Checking](specifications/LevelChecking)                                                 | Leslie Lamport                             |          |             |         |           |          |
 | [PCR Testing for Snippets of DNA](specifications/glowingRaccoon)                                    | Martin Harrison                            |          |             |         |           |          |
+| [Condition-Based Consensus](specifications/cbc_max)                                                 | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
 
 ## Examples Elsewhere
 Here is a list of specs stored in locations outside this repository, including submodules.
