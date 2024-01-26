@@ -52,15 +52,20 @@ def get_cfg_files(examples_root, tla_path):
     Assume a .cfg file in the same directory as the .tla file and with the
     same name is a model of that .tla file; also assume this of any .cfg
     files where the .tla file name is only a prefix of the .cfg file name,
-    unless there are other .tla file names in the directory that exactly
-    match the .cfg file name.
+    unless there are other .tla file names in the directory that are longer
+    prefixes of the .cfg file name.
     """
     parent_dir = dirname(tla_path)
     module_name, _ = splitext(basename(tla_path))
     other_module_names = [other for other in get_module_names_in_dir(examples_root, parent_dir) if other != module_name]
     return [
-        path for path in glob.glob(f'{join(parent_dir, module_name)}*.cfg', root_dir=examples_root)
-        if splitext(basename(path))[0] not in other_module_names
+        path
+        for path in glob.glob(f'{join(parent_dir, module_name)}*.cfg', root_dir=examples_root)
+        if not any([
+            splitext(basename(path))[0].startswith(other_module_name)
+            for other_module_name in other_module_names
+            if len(other_module_name) > len(module_name)
+        ])
     ]
 
 def generate_new_manifest(examples_root, ignored_dirs, parser, queries):

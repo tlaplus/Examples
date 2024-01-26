@@ -1791,7 +1791,33 @@
                 "liveness"
               ],
               "result": "success"
-            },
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpanningTree/SpanTreeRandom.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/SpanningTree/SpanTreeRandom.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/SpanningTree/SpanTreeTest.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
             {
               "path": "specifications/SpanningTree/SpanTreeTest4Nodes.cfg",
               "runtime": "00:00:01",
@@ -1807,55 +1833,6 @@
               "path": "specifications/SpanningTree/SpanTreeTest5Nodes.cfg",
               "runtime": "unknown",
               "size": "large",
-              "mode": "exhaustive search",
-              "features": [
-                "ignore deadlock",
-                "liveness"
-              ],
-              "result": "unknown"
-            }
-          ]
-        },
-        {
-          "path": "specifications/SpanningTree/SpanTreeRandom.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": [
-            {
-              "path": "specifications/SpanningTree/SpanTreeRandom.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
-              "mode": "exhaustive search",
-              "features": [
-                "ignore deadlock",
-                "liveness"
-              ],
-              "result": "unknown"
-            }
-          ]
-        },
-        {
-          "path": "specifications/SpanningTree/SpanTreeTest.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": [
-            {
-              "path": "specifications/SpanningTree/SpanTreeTest4Nodes.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
-              "mode": "exhaustive search",
-              "features": [
-                "ignore deadlock",
-                "liveness"
-              ],
-              "result": "unknown"
-            },
-            {
-              "path": "specifications/SpanningTree/SpanTreeTest5Nodes.cfg",
-              "runtime": "unknown",
-              "size": "unknown",
               "mode": "exhaustive search",
               "features": [
                 "ignore deadlock",

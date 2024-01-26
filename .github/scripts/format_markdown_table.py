@@ -16,10 +16,6 @@ parser = ArgumentParser(description='Formats or modifies the spec table in READM
 parser.add_argument('--readme_path', help='Path to the tlaplus/examples README.md file', required=True)
 args = parser.parse_args()
 
-readme = None
-with open(normpath(args.readme_path), 'r', encoding='utf-8') as readme_file:
-    readme = mistletoe.Document(readme_file)
-
 columns = ['name', 'authors', 'beginner', 'proof', 'tlc', 'pcal', 'apalache']
 
 def get_column(row, index):
@@ -64,11 +60,21 @@ def format_table(table):
     '''
     return
 
-table = next((child for child in readme.children if isinstance(child, Table)))
-format_table(table)
+def format_document(document):
+    '''
+    All document transformations should go here.
+    '''
+    # Gets table of local specs
+    table = next((child for child in document.children if isinstance(child, Table)))
+    format_table(table)
 
-# Write formatted markdown to README.md
-with open(normpath(args.readme_path), 'w', encoding='utf-8') as readme_file:
-    with MarkdownRenderer() as renderer:
+# Read, format, write
+# Need to both parse & render within same MarkdownRenderer context to preserve other formatting
+with MarkdownRenderer() as renderer:
+    readme = None
+    with open(normpath(args.readme_path), 'r', encoding='utf-8') as readme_file:
+        readme = mistletoe.Document(readme_file)
+    format_document(readme)
+    with open(normpath(args.readme_path), 'w', encoding='utf-8') as readme_file:
         readme_file.write(renderer.render(readme))
 
