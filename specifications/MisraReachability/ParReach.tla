@@ -216,7 +216,8 @@ R == INSTANCE Reachable WITH vroot <- vrootBar, pc <- pcBar
 (* it, use models with behavior specification spec that check the temporal *)
 (* property R!Spec.)                                                       *)
 (***************************************************************************)
-THEOREM Spec => R!Spec       
+Refines == R!Spec
+THEOREM Spec => Refines
 
 (***************************************************************************)
 (* By the definition of formula Spec of module Reachable, this theorem     *)

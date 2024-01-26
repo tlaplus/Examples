@@ -34,7 +34,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [The Coffee Can Bean Problem](specifications/CoffeeCan)                                             | Andrew Helwer                              |    ✔     |             |         |     ✔     |          |
 | [Stone Scale Puzzle](specifications/Stones)                                                         | Leslie Lamport                             |    ✔     |             |         |     ✔     |          |
 | [The Boulangerie Algorithm](specifications/Bakery-Boulangerie)                                      | Leslie Lamport, Stephan Merz               |          |      ✔      |    ✔    |     ✔     |          |
-| [Misra Reachability Algorithm](specifications/MisraReachability)                                    | Leslie Lamport                             |          |      ✔      |    ✔    |           |          |
+| [Misra Reachability Algorithm](specifications/MisraReachability)                                    | Leslie Lamport                             |          |      ✔      |    ✔    |     ✔     |          |
 | [EWD840: Termination Detection in a Ring](specifications/ewd840)                                    | Stephan Merz                               |          |      ✔      |         |     ✔     |          |
 | [EWD998: Termination Detection in a Ring with Asynchronous Message Delivery](specifications/ewd998) | Stephan Merz, Markus Kuppe                 |          |      ✔      |         |     ✔     |          |
 | [The Paxos Protocol](specifications/Paxos)                                                          | Leslie Lamport                             |          |      ✔      |         |     ✔     |          |
