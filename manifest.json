@@ -30,6 +30,42 @@
             "proof"
           ],
           "models": []
+        },
+        {
+          "path": "specifications/Bakery-Boulangerie/MCBakery.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Bakery-Boulangerie/MCBakery.cfg",
+              "runtime": "00:00:10",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/Bakery-Boulangerie/MCBoulanger.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Bakery-Boulangerie/MCBoulanger.cfg",
+              "runtime": "00:01:00",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [
+                "state constraint"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -138,7 +174,18 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/Chameneos/Chameneos.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -206,7 +253,16 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/CigaretteSmokers/CigaretteSmokers.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -475,7 +531,16 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/GameOfLife/GameOfLife.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -800,7 +865,9 @@
       "authors": [
         "Leslie Lamport"
       ],
-      "tags": [],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/LoopInvariance/BinarySearch.tla",
@@ -811,6 +878,42 @@
             "proof"
           ],
           "models": []
+        },
+        {
+          "path": "specifications/LoopInvariance/MCBinarySearch.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/LoopInvariance/MCBinarySearch.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/LoopInvariance/MCQuicksort.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/LoopInvariance/MCQuicksort.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/LoopInvariance/Quicksort.tla",
@@ -892,6 +995,66 @@
       ],
       "tags": [],
       "modules": [
+        {
+          "path": "specifications/MisraReachability/MCParReach.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/MisraReachability/MCParReach.cfg",
+              "runtime": "00:00:30",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/MisraReachability/MCReachabilityTest.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/MisraReachability/MCReachabilityTestAllGraphs.cfg",
+              "runtime": "00:00:20",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            },
+            {
+              "path": "specifications/MisraReachability/MCReachabilityTestRandomGraphs.cfg",
+              "runtime": "00:00:10",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/MisraReachability/MCReachable.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/MisraReachability/MCReachable.cfg",
+              "runtime": "00:01:30",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
         {
           "path": "specifications/MisraReachability/ParReach.tla",
           "communityDependencies": [],
@@ -1300,6 +1463,71 @@
           "models": []
         },
         {
+          "path": "specifications/PaxosHowToWinATuringAward/MCConsensus.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/PaxosHowToWinATuringAward/MCConsensus.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/MCPaxos.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/PaxosHowToWinATuringAward/MCPaxosSmall.cfg",
+              "runtime": "00:01:00",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            },
+            {
+              "path": "specifications/PaxosHowToWinATuringAward/MCPaxosTiny.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/MCVoting.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/PaxosHowToWinATuringAward/MCVoting.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
           "path": "specifications/PaxosHowToWinATuringAward/Paxos.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
@@ -1641,21 +1869,67 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/SpanningTree/SpanTree.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/SpanningTree/SpanTreeRandom.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/SpanningTree/SpanTreeRandom.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/SpanningTree/SpanTreeTest.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/SpanningTree/SpanTreeTest4Nodes.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            },
+            {
+              "path": "specifications/SpanningTree/SpanTreeTest5Nodes.cfg",
+              "runtime": "unknown",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
         }
       ]
     },
@@ -2370,7 +2644,16 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/Stones/Stones.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -2433,7 +2716,16 @@
             "pluscal",
             "proof"
           ],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/TeachingConcurrency/Simple.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/TeachingConcurrency/SimpleRegular.tla",
@@ -2443,7 +2735,16 @@
             "pluscal",
             "proof"
           ],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/TeachingConcurrency/SimpleRegular.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -2494,6 +2795,22 @@
           "models": []
         },
         {
+          "path": "specifications/TwoPhase/MCTwoPhase.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/TwoPhase/MCTwoPhase.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
+        },
+        {
           "path": "specifications/TwoPhase/TLAPS.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
@@ -2530,7 +2847,18 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/aba-asyn-byz/aba_asyn_byz.cfg",
+              "runtime": "00:10:00",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -2637,7 +2965,28 @@
           "features": [
             "proof"
           ],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/bcastByz/bcastByz.cfg",
+              "runtime": "00:00:10",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            },
+            {
+              "path": "specifications/bcastByz/bcastByzNoBcast.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -2658,7 +3007,18 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/bcastFolklore/bcastFolklore.cfg",
+              "runtime": "00:30:00",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -2679,7 +3039,16 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/bosco/bosco.cfg",
+              "runtime": "00:03:00",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -2700,7 +3069,18 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/c1cs/c1cs.cfg",
+              "runtime": "unknown",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "unknown"
+            }
+          ]
         }
       ]
     },
@@ -2742,7 +3122,18 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/cf1s-folklore/cf1s_folklore.cfg",
+              "runtime": "00:01:00",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -2764,6 +3155,25 @@
             "pluscal"
           ],
           "models": []
+        },
+        {
+          "path": "specifications/chang_roberts/MCChangRoberts.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/chang_roberts/MCChangRoberts.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -2798,7 +3208,18 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/detector_chan96/EnvironmentController.cfg",
+              "runtime": "02:00:00",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -2901,6 +3322,22 @@
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
+        },
+        {
+          "path": "specifications/diskpaxos/MC_HDiskSynod.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/diskpaxos/MC_HDiskSynod.cfg",
+              "runtime": "unknown",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
         },
         {
           "path": "specifications/diskpaxos/Synod.tla",
@@ -3480,21 +3917,56 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/glowingRaccoon/clean.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/glowingRaccoon/product.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/glowingRaccoon/product.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/glowingRaccoon/stages.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/glowingRaccoon/stages.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -3530,6 +4002,24 @@
             "proof"
           ],
           "models": []
+        },
+        {
+          "path": "specifications/lamport_mutex/MCLamportMutex.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/lamport_mutex/MCLamportMutex.cfg",
+              "runtime": "00:00:10",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "state constraint"
+              ],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/lamport_mutex/NaturalsInduction.tla",
@@ -3580,7 +4070,16 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/nbacc_ray97/nbacc_ray97.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -3601,7 +4100,18 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/nbacg_guer01/nbacg_guer01.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },
@@ -3617,6 +4127,22 @@
       ],
       "tags": [],
       "modules": [
+        {
+          "path": "specifications/spanning/MC_spanning.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/spanning/MC_spanning.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "safety failure"
+            }
+          ]
+        },
         {
           "path": "specifications/spanning/spanning.tla",
           "communityDependencies": [],
@@ -3638,6 +4164,22 @@
         "beginner"
       ],
       "modules": [
+        {
+          "path": "specifications/sums_even/MC_sums_even.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/sums_even/MC_sums_even.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
+        },
         {
           "path": "specifications/sums_even/TLAPS.tla",
           "communityDependencies": [],
@@ -3740,21 +4282,50 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/transaction_commit/PaxosCommit.cfg",
+              "runtime": "00:00:30",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/transaction_commit/TCommit.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/transaction_commit/TCommit.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/transaction_commit/TwoPhase.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/transaction_commit/TwoPhase.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         }
       ]
     }

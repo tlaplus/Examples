@@ -108,6 +108,7 @@ def resolve_tlc_exit_code(code):
     """
     tlc_exit_codes = {
         0   : 'success',
+        10  : 'assumption failure',
         11  : 'deadlock failure',
         12  : 'safety failure',
         13  : 'liveness failure'

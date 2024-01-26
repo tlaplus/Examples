@@ -18,10 +18,11 @@ All specs in this repository are subject to CI validation to ensure quality.
 Here is a list of specs included in this repository, with links to the relevant directory and flags for various features:
 | Name                                                                                                | Author(s)                                  | Beginner | TLAPS Proof | PlusCal | TLC Model | Apalache |
 | --------------------------------------------------------------------------------------------------- | ------------------------------------------ | :------: | :---------: | :-----: | :-------: | :------: |
+| [Teaching Concurrency](specifications/TeachingConcurrency)                                          | Leslie Lamport                             |    ✔     |      ✔      |    ✔    |     ✔     |          |
+| [Loop Invariance](specifications/LoopInvariance)                                                    | Leslie Lamport                             |    ✔     |      ✔      |    ✔    |     ✔     |          |
 | [Learn TLA⁺ Proofs](specifications/LearnProofs)                                                     | Andrew Helwer                              |    ✔     |      ✔      |    ✔    |     ✔     |          |
-| [Teaching Concurrency](specifications/TeachingConcurrency)                                          | Leslie Lamport                             |    ✔     |      ✔      |    ✔    |           |          |
 | [Boyer-Moore Majority Vote](specifications/Majority)                                                | Stephan Merz                               |    ✔     |      ✔      |         |     ✔     |          |
-| [Proof x+x is Even](specifications/sums_even)                                                       | Stephan Merz                               |    ✔     |      ✔      |         |           |          |
+| [Proof x+x is Even](specifications/sums_even)                                                       | Stephan Merz                               |    ✔     |      ✔      |         |     ✔     |          |
 | [The N-Queens Puzzle](specifications/N-Queens)                                                      | Stephan Merz                               |    ✔     |             |    ✔    |     ✔     |          |
 | [The Dining Philosophers Problem](specifications/DiningPhilosophers)                                | Jeff Hemphill                              |    ✔     |             |    ✔    |     ✔     |          |
 | [The Car Talk Puzzle](specifications/CarTalkPuzzle)                                                 | Leslie Lamport                             |    ✔     |             |         |     ✔     |          |
@@ -31,17 +32,16 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [The Tower of Hanoi Puzzle](specifications/tower_of_hanoi)                                          | Markus Kuppe, Alexander Niederbühl         |    ✔     |             |         |     ✔     |          |
 | [Missionaries and Cannibals](specifications/MissionariesAndCannibals)                               | Leslie Lamport                             |    ✔     |             |         |     ✔     |          |
 | [The Coffee Can Bean Problem](specifications/CoffeeCan)                                             | Andrew Helwer                              |    ✔     |             |         |     ✔     |          |
-| [Stone Scale Puzzle](specifications/Stones)                                                         | Leslie Lamport                             |    ✔     |             |         |           |          |
-| [The Boulangerie Algorithm](specifications/Bakery-Boulangerie)                                      | Leslie Lamport, Stephan Merz               |          |      ✔      |    ✔    |           |          |
-| [Misra Reachability Algorithm](specifications/MisraReachability)                                    | Leslie Lamport                             |          |      ✔      |    ✔    |           |          |
-| [Loop Invariance](specifications/LoopInvariance)                                                    | Leslie Lamport                             |          |      ✔      |    ✔    |           |          |
+| [Stone Scale Puzzle](specifications/Stones)                                                         | Leslie Lamport                             |    ✔     |             |         |     ✔     |          |
+| [The Boulangerie Algorithm](specifications/Bakery-Boulangerie)                                      | Leslie Lamport, Stephan Merz               |          |      ✔      |    ✔    |     ✔     |          |
+| [Misra Reachability Algorithm](specifications/MisraReachability)                                    | Leslie Lamport                             |          |      ✔      |    ✔    |     ✔     |          |
 | [EWD840: Termination Detection in a Ring](specifications/ewd840)                                    | Stephan Merz                               |          |      ✔      |         |     ✔     |          |
 | [EWD998: Termination Detection in a Ring with Asynchronous Message Delivery](specifications/ewd998) | Stephan Merz, Markus Kuppe                 |          |      ✔      |         |     ✔     |          |
 | [The Paxos Protocol](specifications/Paxos)                                                          | Leslie Lamport                             |          |      ✔      |         |     ✔     |          |
-| [Asynchronous Reliable Broadcast](specifications/bcastByz)                                          | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |      ✔      |         |           |          |
-| [Distributed Mutual Exclusion](specifications/lamport_mutex)                                        | Stephan Merz                               |          |      ✔      |         |           |          |
-| [Two-Phase Handshaking](specifications/TwoPhase)                                                    | Leslie Lamport, Stephan Merz               |          |      ✔      |         |           |          |
-| [Paxos (How to Win a Turing Award)](specifications/PaxosHowToWinATuringAward)                       | Leslie Lamport                             |          |      ✔      |         |           |          |
+| [Asynchronous Reliable Broadcast](specifications/bcastByz)                                          | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |      ✔      |         |     ✔     |          |
+| [Distributed Mutual Exclusion](specifications/lamport_mutex)                                        | Stephan Merz                               |          |      ✔      |         |     ✔     |          |
+| [Two-Phase Handshaking](specifications/TwoPhase)                                                    | Leslie Lamport, Stephan Merz               |          |      ✔      |         |     ✔     |          |
+| [Paxos (How to Win a Turing Award)](specifications/PaxosHowToWinATuringAward)                       | Leslie Lamport                             |          |      ✔      |         |     ✔     |          |
 | [Dijkstra's Mutual Exclusion Algorithm](specifications/dijkstra-mutex)                              | Leslie Lamport                             |          |             |    ✔    |     ✔     |          |
 | [The Echo Algorithm](specifications/echo)                                                           | Stephan Merz                               |          |             |    ✔    |     ✔     |          |
 | [The TLC Safety Checking Algorithm](specifications/TLC)                                             | Markus Kuppe                               |          |             |    ✔    |     ✔     |          |
@@ -49,7 +49,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [The Slush Protocol](specifications/SlushProtocol)                                                  | Andrew Helwer                              |          |             |    ✔    |     ✔     |          |
 | [Minimal Circular Substring](specifications/LeastCircularSubstring)                                 | Andrew Helwer                              |          |             |    ✔    |     ✔     |          |
 | [Snapshot Key-Value Store](specifications/KeyValueStore)                                            | Andrew Helwer, Murat Demirbas              |          |             |    ✔    |     ✔     |          |
-| [Chang-Roberts Algorithm for Leader Election in a Ring](specifications/chang_roberts)               | Stephan Merz                               |          |             |    ✔    |           |          |
+| [Chang-Roberts Algorithm for Leader Election in a Ring](specifications/chang_roberts)               | Stephan Merz                               |          |             |    ✔    |     ✔     |          |
 | [Resource Allocator](specifications/allocator)                                                      | Stephan Merz                               |          |             |         |     ✔     |          |
 | [Transitive Closure](specifications/TransitiveClosure)                                              | Stephan Merz                               |          |             |         |     ✔     |          |
 | [Sliding Block Puzzle](specifications/SlidingPuzzles)                                               | Mariusz Ryndzionek                         |          |             |         |     ✔     |          |
@@ -65,24 +65,24 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Finitizing Monotonic Systems](specifications/FiniteMonotonic)                                      | Andrew Helwer                              |          |             |         |     ✔     |          |
 | [The Readers-Writers Problem](specifications/ReadersWriters)                                        | Isaac DeFrain                              |          |             |         |     ✔     |          |
 | [Einstein's Riddle](specifications/EinsteinRiddle)                                                  | Isaac DeFrain                              |          |             |         |     ✔     |          |
-| [Asynchronous Byzantine Consensus](specifications/aba-asyn-byz)                                     | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
-| [Folklore Reliable Broadcast](specifications/bcastFolklore)                                         | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
-| [The Bosco Byzantine Consensus Algorithm](specifications/bosco)                                     | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
-| [Consensus in One Communication Step](specifications/c1cs)                                          | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
-| [Condition-Based Consensus](specifications/cbc_max)                                                 | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
-| [One-Step Consensus with Zero-Degradation](specifications/cf1s-folklore)                            | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
-| [Failure Detector](specifications/detector_chan96)                                                  | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
-| [SWMR Shared Memory Disk Paxos](specifications/diskpaxos)                                           | Leslie Lamport, Giuliano Losa              |          |             |         |           |          |
-| [Asynchronous Non-Blocking Atomic Commit](specifications/nbacc_ray97)                               | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
-| [Asynchronous Non-Blocking Atomic Commitment with Failure Detectors](specifications/nbacg_guer01)   | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
-| [Spanning Tree Broadcast Algorithm](specifications/spanning)                                        | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
-| [Transaction Commit Models](specifications/transaction_commit)                                      | Leslie Lamport, Jim Gray                   |          |             |         |           |          |
-| [Span Tree Exercise](specifications/SpanningTree)                                                   | Leslie Lamport                             |          |             |         |           |          |
-| [The Cigarette Smokers Problem](specifications/CigaretteSmokers)                                    | Mariusz Ryndzionek                         |          |             |         |           |          |
-| [Conway's Game of Life](specifications/GameOfLife)                                                  | Mariusz Ryndzionek                         |          |             |         |           |          |
-| [Chameneos, a Concurrency Game](specifications/Chameneos)                                           | Mariusz Ryndzionek                         |          |             |         |           |          |
+| [Asynchronous Byzantine Consensus](specifications/aba-asyn-byz)                                     | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
+| [Folklore Reliable Broadcast](specifications/bcastFolklore)                                         | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
+| [The Bosco Byzantine Consensus Algorithm](specifications/bosco)                                     | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
+| [Consensus in One Communication Step](specifications/c1cs)                                          | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
+| [One-Step Consensus with Zero-Degradation](specifications/cf1s-folklore)                            | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
+| [Failure Detector](specifications/detector_chan96)                                                  | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
+| [Asynchronous Non-Blocking Atomic Commit](specifications/nbacc_ray97)                               | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
+| [Asynchronous Non-Blocking Atomic Commitment with Failure Detectors](specifications/nbacg_guer01)   | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
+| [Spanning Tree Broadcast Algorithm](specifications/spanning)                                        | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
+| [SWMR Shared Memory Disk Paxos](specifications/diskpaxos)                                           | Leslie Lamport, Giuliano Losa              |          |             |         |     ✔     |          |
+| [Transaction Commit Models](specifications/transaction_commit)                                      | Leslie Lamport, Jim Gray                   |          |             |         |     ✔     |          |
+| [Span Tree Exercise](specifications/SpanningTree)                                                   | Leslie Lamport                             |          |             |         |     ✔     |          |
+| [The Cigarette Smokers Problem](specifications/CigaretteSmokers)                                    | Mariusz Ryndzionek                         |          |             |         |     ✔     |          |
+| [Conway's Game of Life](specifications/GameOfLife)                                                  | Mariusz Ryndzionek                         |          |             |         |     ✔     |          |
+| [Chameneos, a Concurrency Game](specifications/Chameneos)                                           | Mariusz Ryndzionek                         |          |             |         |     ✔     |          |
+| [PCR Testing for Snippets of DNA](specifications/glowingRaccoon)                                    | Martin Harrison                            |          |             |         |     ✔     |          |
 | [TLA⁺ Level Checking](specifications/LevelChecking)                                                 | Leslie Lamport                             |          |             |         |           |          |
-| [PCR Testing for Snippets of DNA](specifications/glowingRaccoon)                                    | Martin Harrison                            |          |             |         |           |          |
+| [Condition-Based Consensus](specifications/cbc_max)                                                 | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |           |          |
 
 ## Examples Elsewhere
 Here is a list of specs stored in locations outside this repository, including submodules.
@@ -137,7 +137,7 @@ Ideally these will be moved into this repo over time.
 
 ## License
 The repository is under the MIT license and you are encouraged to publish your spec under a similarly-permissive license.
-However, your spec can be included in this repo along with you own license if you wish.
+However, your spec can be included in this repo along with your own license if you wish.
 
 ## Support or Contact
 Do you have any questions or comments?

@@ -1,6 +1,6 @@
 ----------------------- MODULE EnvironmentController -----------------------
 
-(* An encoding of a parameterized and partially syncrhonous model of the eventually  
+(* An encoding of a parameterized and partially synchronous model of the eventually  
    perfect failure detectors with crash faults from:
   
    [1] Chandra, Tushar Deepak, and Sam Toueg. "Unreliable failure detectors for 
@@ -87,7 +87,7 @@
         TLC spends more than 2 hours (from 11:17 to 13:26) verifying these properties.
       
    o PROBLEMS with TLC: I believe that PHIConstraint and PHIConstraint1 are equivalent. 
-     However, whenever I check this specification with PHIConstraing1, TLC shows an 
+     However, whenever I check this specification with PHIConstraint1, TLC shows an 
      error: "Too many possible next states for the last state in the trace." I guess 
      that the reasons are from optimizations for disjunctions. *)   
 
