@@ -129,6 +129,8 @@ Init ==
     /\ pets \in PETS
     /\ cigars \in CIGARS
 
+\* Apalache cannot infer the type of `vars' because it could be a sequence or a tuple.
+\* So we explicitely tell Apalache that it is a sequence by adding the following annotation:
 \* @type: Seq(Int -> Str);
 vars == <<nationality, colors, cigars, pets, drinks>>
 
@@ -157,7 +159,7 @@ Solution ==
 FindSolution == ~Solution
 
 \* To find the solution with the `^Apalache^' model-checker, run:
-\* apalache-mc check --init=Init --inv=FindSolution --length=0 Einstein.tla
-\* Then look for the file violation.tla in `^Apalache^' output directory.
+\* `^apalache-mc check --init=Init --inv=FindSolution --length=0 --run-dir=./outout Einstein.tla^'
+\* You will then find the solution in `^./output/violation.tla^'.
 
 ============================================================
