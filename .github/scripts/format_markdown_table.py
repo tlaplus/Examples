@@ -53,7 +53,6 @@ def swap_columns(table, first_col_index, second_col_index):
     for row in table.children:
         row.children[second], row.children[first] = row.children[first], row.children[second]
 
-
 def format_table(table):
     '''
     All table transformations should go here.
@@ -65,8 +64,9 @@ def format_document(document):
     All document transformations should go here.
     '''
     # Gets table of local specs
-    table = next((child for child in document.children if isinstance(child, Table)))
-    format_table(table)
+    local_table, remote_table = [child for child in document.children if isinstance(child, Table)]
+    #format_table(local_table)
+    format_table(remote_table)
 
 # Read, format, write
 # Need to both parse & render within same MarkdownRenderer context to preserve other formatting
