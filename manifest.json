@@ -196,7 +196,8 @@
       "title": "Checkpoint Coordination",
       "description": "An algorithm for controlling checkpoint leases in a Paxos ring",
       "sources": [
-        "https://github.com/Azure/RingMaster"
+        "https://github.com/Azure/RingMaster",
+        "https://ahelwer.ca/post/2023-04-05-checkpoint-coordination/"
       ],
       "authors": [
         "Andrew Helwer"
@@ -804,7 +805,9 @@
       "path": "specifications/LeastCircularSubstring",
       "title": "Minimal Circular Substring",
       "description": "Booth's 1980 algorithm to find the lexicographically-least circular substring",
-      "sources": [],
+      "sources": [
+        "https://ahelwer.ca/post/2023-03-30-pseudocode/"
+      ],
       "authors": [
         "Andrew Helwer"
       ],
@@ -1837,7 +1840,8 @@
       "title": "The Slush Protocol",
       "description": "An attempt to use TLA⁺ to analyze a probabilistic protocol in the Avalanche family",
       "sources": [
-        "https://github.com/ahelwer/avalanche-analysis"
+        "https://github.com/ahelwer/avalanche-analysis",
+        "https://ahelwer.ca/post/2020-09-11-probabilistic-distsys/"
       ],
       "authors": [
         "Andrew Helwer"
@@ -4406,7 +4410,9 @@
       "title": "Transaction Commit Models",
       "description": "Ordinary transaction commit, two-phase commit, and Paxos commit",
       "sources": [
-        "http://research.microsoft.com/en-us/um/people/lamport/pubs/pubs.html#paxos-commit"
+        "http://research.microsoft.com/en-us/um/people/lamport/pubs/pubs.html#paxos-commit",
+        "https://www.microsoft.com/en-us/research/uploads/prod/2004/01/consensus-on-transaction-commit.pdf",
+        "https://github.com/muratdem/PlusCal-examples/tree/master/2PCTM"
       ],
       "authors": [
         "Jim Gray",

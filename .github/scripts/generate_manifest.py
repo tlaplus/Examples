@@ -116,11 +116,9 @@ def find_corresponding_spec(old_spec, new_manifest):
     return specs[0] if any(specs) else None
 
 def integrate_spec_info(old_spec, new_spec):
-    fields = ['title', 'description', 'authors', 'tags']
+    fields = ['title', 'description', 'authors', 'sources' 'tags']
     for field in fields:
         new_spec[field] = old_spec[field]
-    source = old_spec['source']
-    new_spec['sources'] = [source] if any(source) else []
 
 def find_corresponding_module(old_module, new_spec):
     modules = [
