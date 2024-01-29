@@ -13,7 +13,10 @@
           "path": {"type": "string"},
           "title": {"type": "string"},
           "description": {"type": "string"},
-          "source": {"type": "string"},
+          "sources": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
           "authors": {
             "type": "array",
             "items": {"type": "string"}

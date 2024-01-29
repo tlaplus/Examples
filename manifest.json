@@ -3053,6 +3053,107 @@
       ]
     },
     {
+      "path": "specifications/byihive",
+      "title": "byihive",
+      "description": "",
+      "source": "",
+      "authors": [],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/byihive/VoucherCancel.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/byihive/VoucherCancel.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/byihive/VoucherIssue.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/byihive/VoucherIssue.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/byihive/VoucherLifeCycle.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/byihive/VoucherLifeCycle.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/byihive/VoucherRedeem.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/byihive/VoucherRedeem.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/byihive/VoucherTransfer.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/byihive/VoucherTransfer.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "path": "specifications/c1cs",
       "title": "Consensus in One Communication Step",
       "description": "Algorithm from paper *Consensus in one communication step* (2001)",
@@ -4278,6 +4379,24 @@
       ],
       "tags": [],
       "modules": [
+        {
+          "path": "specifications/transaction_commit/2PCwithBTM.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": [
+            {
+              "path": "specifications/transaction_commit/2PCwithBTM.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
+        },
         {
           "path": "specifications/transaction_commit/PaxosCommit.tla",
           "communityDependencies": [],
