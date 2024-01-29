@@ -2897,33 +2897,57 @@
       ]
     },
     {
-      "path": "specifications/acp-sb",
-      "title": "Atomic Commitment Protocol with Simple Broadcast Primitive",
-      "description": "TLA⁺ specs from CS-986: Advanced Topics in Program Verification",
-      "sources": [
-        "https://members.loria.fr/SMerz/talks/argentina2005/Charpentier/charpov/Teaching/CS-986/TLC/",
-        "https://dl.acm.org/doi/10.5555/302430.302436"
-      ],
-      "authors": [
-        "Stephan Merz"
+      "path": "specifications/acp",
+      "title": "Atomic Commitment Protocol", 
+      "description": "TLA⁺ specs from CS-986: Advanced Topics in Program Verification", 
+      "sources": [ 
+        "https://members.loria.fr/SMerz/talks/argentina2005/Charpentier/charpov/Teaching/CS-986/TLC/", 
+        "https://dl.acm.org/doi/10.5555/302430.302436",
+
       ],
       "tags": [],
       "modules": [
         {
-          "path": "specifications/acp-sb/ACP_SB.tla",
+          "path": "specifications/acp/ACP_NB.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
         },
         {
-          "path": "specifications/acp-sb/ACP_SB_TLC.tla",
+          "path": "specifications/acp/ACP_NB_TLC.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
             {
-              "path": "specifications/acp-sb/ACP_SB_TLC.cfg",
+              "path": "specifications/acp/ACP_NB_TLC.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/acp/ACP_SB.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/acp/ACP_SB_TLC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/acp/ACP_SB_TLC.cfg",
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
