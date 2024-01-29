@@ -5,3 +5,8 @@
 # Example:
 specifications/doesnotexist
 
+# Ignore submodules to ensure deterministic local execution
+specifications/BlockingQueue
+specifications/CCF
+specifications/azure-cosmos-tla
+

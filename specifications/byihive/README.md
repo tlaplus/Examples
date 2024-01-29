@@ -1,7 +1,3 @@
-#### <a href="https://github.com/byisystems/byihive">byihive</a>
-- Specification's authors: Santhosh Raju
-- Original paper: <a href="https://tools.ietf.org/rfc/rfc3506.txt">Requirements and Design for Voucher Trading System (VTS)</a>
-- Extended modules: default theories
-- Computation models: ❓
-- Some properties checked with TLC: consistency
-- <a href="https://github.com/byisystems/byihive">TLA<sup>+</sup> files</a>
+This contains the TLA+ specifications and models of the Voucher Transaction System (VTS) as decribed in the RFC3506.
+It was sourced from https://github.com/byisystems/byihive.
+
