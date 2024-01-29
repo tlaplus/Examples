@@ -2898,12 +2898,14 @@
     },
     {
       "path": "specifications/acp",
-      "title": "Atomic Commitment Protocol", 
-      "description": "TLA⁺ specs from CS-986: Advanced Topics in Program Verification", 
-      "sources": [ 
-        "https://members.loria.fr/SMerz/talks/argentina2005/Charpentier/charpov/Teaching/CS-986/TLC/", 
-        "https://dl.acm.org/doi/10.5555/302430.302436",
-
+      "title": "Atomic Commitment Protocol",
+      "description": "TLA⁺ specs from CS-986: Advanced Topics in Program Verification",
+      "sources": [
+        "https://members.loria.fr/SMerz/talks/argentina2005/Charpentier/charpov/Teaching/CS-986/TLC/",
+        "https://dl.acm.org/doi/10.5555/302430.302436"
+      ],
+      "authors": [
+        "Stephan Merz"
       ],
       "tags": [],
       "modules": [
@@ -2930,6 +2932,25 @@
                 "liveness"
               ],
               "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/acp/ACP_NB_WRONG_TLC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/acp/ACP_NB_WRONG_TLC.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "safety failure"
             }
           ]
         },
