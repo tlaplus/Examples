@@ -4273,7 +4273,8 @@
       "source": "http://research.microsoft.com/en-us/um/people/lamport/pubs/pubs.html#paxos-commit",
       "authors": [
         "Jim Gray",
-        "Leslie Lamport"
+        "Leslie Lamport",
+        "Murat Demirbas"
       ],
       "tags": [],
       "modules": [
