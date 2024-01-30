@@ -1,0 +1,38 @@
+name: CI for EWD998 Trace Validation
+
+on:
+  push:
+    paths:
+      - "specifications/ewd998/**"
+  pull_request:
+    paths:
+      - "specifications/ewd998/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Get (nightly) TLC
+      run: wget https://nightly.tlapl.us/dist/tla2tools.jar
+    - name: Get (nightly) CommunityModules
+      run: wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
+    - name: Run EWD998 Trace Validation
+      run: |
+        cd specifications/ewd998
+        javac -cp impl/lib/gson-2.8.6.jar -d impl/bin impl/src/*.java
+        i="0"
+        while [ $i -lt 50 ]; do
+          java -cp impl/bin/:impl/lib/gson-2.8.6.jar EWD998App 1 > trace.ndjson
+          JSON=trace.ndjson java -jar ../../tla2tools.jar -noTE EWD998ChanTrace || exit 1
+          sleep 3;
+          i=$[$i+1]
+        done
+    - name: Archive trace.ndjson (if any)
+      if: ${{ failure() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: trace.ndjson
+        path: specifications/ewd998/trace.ndjson
+
