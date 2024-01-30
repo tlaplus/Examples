@@ -3274,6 +3274,62 @@
       ]
     },
     {
+      "path": "specifications/byzpaxos",
+      "title": "Byzantizing Paxos by Refinement",
+      "description": "Mechanically-checked safety proof of a Byzantine Paxos algorithm",
+      "sources": [
+        "http://lamport.azurewebsites.net/pubs/pubs.html#web-byzpaxos",
+        "http://lamport.azurewebsites.net/pubs/web-byzpaxos.pdf",
+        "http://lamport.azurewebsites.net/tla/byzpaxos.html"
+      ],
+      "authors": [
+        "Leslie Lamport"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/byzpaxos/BPConProof.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/byzpaxos/Consensus.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/byzpaxos/PConProof.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/byzpaxos/VoteProof.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": []
+        }
+      ]
+    },
+    {
       "path": "specifications/c1cs",
       "title": "Consensus in One Communication Step",
       "description": "Algorithm from paper *Consensus in one communication step* (2001)",
