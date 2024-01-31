@@ -1,46 +1,53 @@
 ------------------- MODULE Einstein ------------------------
 
-(*********************************************************************)
-(* Literature/Source:                                                *)
-(*   https://udel.edu/~os/riddle.html                                *)
-(*                                                                   *)
-(* Situation:                                                        *)
-(* - There are 5 houses in five different colors.                    *)
-(* - In each house lives a person with a different nationality.      *)
-(* - These five owners drink a certain type of beverage, smoke a     *)
-(*   certain brand of cigar and keep a certain pet.                  *)
-(* - No owners have the same pet, smoke the same brand of cigar, or  *)
-(*   drink the same beverage.                                        *)
-(*                                                                   *)
-(* Rules:                                                            *)
-(*  1 the Brit lives in the red house                                *)
-(*  2 the Swede keeps dogs as pets                                   *)
-(*  3 the Dane drinks tea                                            *)
-(*  4 the green house is on the left of the white house              *)
-(*  5 the green house's owner drinks coffee                          *)
-(*  6 the person who smokes Pall Mall rears birds                    *)
-(*  7 the owner of the yellow house smokes Dunhill                   *)
-(*  8 the man living in the center house drinks mylk                 *)
-(*  9 the Norwegian lives in the first house                         *)
-(* 10 the man who smokes blends lives next to the one who keeps cats *)
-(* 11 the man who keeps horses lives next to man who smokes Dunhill  *)
-(* 12 the owner who smokes BlueMaster drinks beer                    *)
-(* 13 the German smokes Prince                                       *)
-(* 14 the Norwegian lives next to the blue house                     *)
-(* 15 the man who smokes blend has a neighbor who drinks water       *)
-(*                                                                   *)
-(* Question:                                                         *)
-(*  Who owns the fish?                                               *)
-(*********************************************************************)
+(*********************************************************************************)
+(* Literature/Source:                                                            *)
+(*   https://udel.edu/~os/riddle.html                                            *)
+(*                                                                               *)
+(* Situation:                                                                    *)
+(* - There are 5 houses in five different colors.                                *)
+(* - In each house lives a person with a different nationality.                  *)
+(* - These five owners drink a certain type of beverage, smoke a                 *)
+(*   certain brand of cigar and keep a certain pet.                              *)
+(* - No owners have the same pet, smoke the same brand of cigar, or              *)
+(*   drink the same beverage.                                                    *)
+(*                                                                               *)
+(* Rules:                                                                        *)
+(*  1 the Brit lives in the red house                                            *)
+(*  2 the Swede keeps dogs as pets                                               *)
+(*  3 the Dane drinks tea                                                        *)
+(*  4 the green house is on the left of the white house                          *)
+(*  5 the green house's owner drinks coffee                                      *)
+(*  6 the person who smokes Pall Mall rears birds                                *)
+(*  7 the owner of the yellow house smokes Dunhill                               *)
+(*  8 the man living in the center house drinks mylk                             *)
+(*  9 the Norwegian lives in the first house                                     *)
+(* 10 the man who smokes blends lives next to the one who keeps cats             *)
+(* 11 the man who keeps horses lives next to man who smokes Dunhill              *)
+(* 12 the owner who smokes BlueMaster drinks beer                                *)
+(* 13 the German smokes Prince                                                   *)
+(* 14 the Norwegian lives next to the blue house                                 *)
+(* 15 the man who smokes blend has a neighbor who drinks water                   *)
+(*                                                                               *)
+(* Question:                                                                     *)
+(*  Who owns the fish?                                                           *)
+(*                                                                               *)
+(* Note that `^TLC^' takes a very long time to find the solution because it      *)
+(* blindly enumerates all possible combinations of assignments to the variables; *)
+(* in contrast, `^Apalache^' finds the solution easily using an `^SMT^' solver.  *)
+(* Instructions to run `^Apalache^' appear at the end of the file.               *)
+(*********************************************************************************)
 
 EXTENDS Naturals, FiniteSets
+
+House == 1..5
 
 \* Note that TLC!Permutations has a Java module override and, thus,
 \* would be evaluated faster.  However, TLC!Permutations equals a
 \* set of records whereas Permutation below equals a set of tuples/
 \* sequences.  Also, Permutation expects Cardinality(S) = 5.
-Permutation(S) == 
-    { p \in [ 1..5 -> S ] :
+Permutation(S) ==
+    { p \in [ House -> S ] :
         /\ p[2] \in S \ {p[1]}
         /\ p[3] \in S \ {p[1], p[2]}
         /\ p[4] \in S \ {p[1], p[2], p[3]}
@@ -58,10 +65,15 @@ PETS == Permutation({ "bird", "cat", "dog", "fish", "horse" })
 CIGARS == Permutation({ "blend", "bm", "dh", "pm", "prince" })
 
 VARIABLES
+    \* @type: Int -> Str;
     nationality,    \* tuple of nationalities
+    \* @type: Int -> Str;
     colors,         \* tuple of house colors
+    \* @type: Int -> Str;
     pets,           \* tuple of pets
+    \* @type: Int -> Str;
     cigars,         \* tuple of cigars
+    \* @type: Int -> Str;
     drinks          \* tuple of drinks
 
 ------------------------------------------------------------
@@ -122,10 +134,15 @@ Init ==
     /\ pets \in PETS
     /\ cigars \in CIGARS
 
-Next ==
-    UNCHANGED <<nationality, colors, cigars, pets, drinks>>
+\* Apalache cannot infer the type of `vars' because it could be a sequence or a tuple.
+\* So we explicitely tell Apalache that it is a sequence by adding the following annotation:
+\* @type: Seq(Int -> Str);
+vars == <<nationality, colors, cigars, pets, drinks>>
 
-Spec == Init /\ [][Next]_<<nationality, colors, cigars, pets, drinks>>
+Next ==
+    UNCHANGED vars
+
+Spec == Init /\ [][Next]_vars
 
 Solution ==
     /\ BritLivesInTheRedHouse
@@ -145,5 +162,9 @@ Solution ==
     /\ BlendSmokerHasWaterDrinkingNeighbor
 
 FindSolution == ~Solution
+
+\* To find the solution with the `^Apalache^' model-checker, run:
+\* `^apalache-mc check --init=Init --inv=FindSolution --length=0 --run-dir=./outout Einstein.tla^'
+\* You will then find the solution in `^./output/violation.tla^'.
 
 ============================================================

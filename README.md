@@ -16,6 +16,7 @@ All specs in this repository are subject to CI validation to ensure quality.
 
 ## Examples Included Here
 Here is a list of specs included in this repository, with links to the relevant directory and flags for various features:
+<<<<<<< HEAD
 | Name                                                                                                | Author(s)                                           | Beginner | TLAPS Proof | PlusCal | TLC Model | Apalache |
 | --------------------------------------------------------------------------------------------------- | --------------------------------------------------- | :------: | :---------: | :-----: | :-------: | :------: |
 | [Teaching Concurrency](specifications/TeachingConcurrency)                                          | Leslie Lamport                                      |    ✔     |      ✔      |    ✔    |     ✔     |          |
@@ -68,8 +69,8 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Finitizing Monotonic Systems](specifications/FiniteMonotonic)                                      | Andrew Helwer                                       |          |             |         |     ✔     |          |
 | [Multi-Car Elevator System](specifications/MultiCarElevator)                                        | Andrew Helwer                                       |          |             |         |     ✔     |          |
 | [Nano Blockchain Protocol](specifications/NanoBlockchain)                                           | Andrew Helwer                                       |          |             |         |     ✔     |          |
-| [The Readers-Writers Problem](specifications/ReadersWriters)                                        | Isaac DeFrain                                       |          |             |         |     ✔     |          |
-| [Einstein's Riddle](specifications/EinsteinRiddle)                                                  | Isaac DeFrain                                       |          |             |         |     ✔     |          |
+| [The Readers-Writers Problem](specifications/ReadersWriters)                                        | Isaac DeFrain, Giuliano Losa                        |          |             |         |     ✔     |          |
+| [Einstein's Riddle](specifications/EinsteinRiddle)                                                  | Isaac DeFrain                                       |          |             |         |     ✔     |    ✔     |
 | [Asynchronous Byzantine Consensus](specifications/aba-asyn-byz)                                     | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |     ✔     |          |
 | [Folklore Reliable Broadcast](specifications/bcastFolklore)                                         | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |     ✔     |          |
 | [The Bosco Byzantine Consensus Algorithm](specifications/bosco)                                     | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |     ✔     |          |
