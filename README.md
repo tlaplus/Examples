@@ -64,7 +64,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Checkpoint Coordination](specifications/CheckpointCoordination)                                    | Andrew Helwer                              |          |             |         |     ✔     |          |
 | [Finitizing Monotonic Systems](specifications/FiniteMonotonic)                                      | Andrew Helwer                              |          |             |         |     ✔     |          |
 | [The Readers-Writers Problem](specifications/ReadersWriters)                                        | Isaac DeFrain                              |          |             |         |     ✔     |          |
-| [Einstein's Riddle](specifications/EinsteinRiddle)                                                  | Isaac DeFrain                              |          |             |         |     ✔     |          |
+| [Einstein's Riddle](specifications/EinsteinRiddle)                                                  | Isaac DeFrain                              |          |             |         |     ✔     |     ✔    |
 | [Asynchronous Byzantine Consensus](specifications/aba-asyn-byz)                                     | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
 | [Folklore Reliable Broadcast](specifications/bcastFolklore)                                         | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
 | [The Bosco Byzantine Consensus Algorithm](specifications/bosco)                                     | Thanh Hai Tran, Igor Konnov, Josef Widder  |          |             |         |     ✔     |          |
