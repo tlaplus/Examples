@@ -42,6 +42,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Distributed Mutual Exclusion](specifications/lamport_mutex)                                        | Stephan Merz                               |          |      ✔      |         |     ✔     |          |
 | [Two-Phase Handshaking](specifications/TwoPhase)                                                    | Leslie Lamport, Stephan Merz               |          |      ✔      |         |     ✔     |          |
 | [Paxos (How to Win a Turing Award)](specifications/PaxosHowToWinATuringAward)                       | Leslie Lamport                             |          |      ✔      |         |     ✔     |          |
+| [Byzantine Paxos by Refinement](specifications/byzpaxos)                                            | Leslie Lamport                             |          |      ✔      |         |     ✔     |          |
 | [Dijkstra's Mutual Exclusion Algorithm](specifications/dijkstra-mutex)                              | Leslie Lamport                             |          |             |    ✔    |     ✔     |          |
 | [The Echo Algorithm](specifications/echo)                                                           | Stephan Merz                               |          |             |    ✔    |     ✔     |          |
 | [The TLC Safety Checking Algorithm](specifications/TLC)                                             | Markus Kuppe                               |          |             |    ✔    |     ✔     |          |
@@ -56,7 +57,6 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [SWMR Shared Memory Disk Paxos](specifications/diskpaxos)                                           | Leslie Lamport, Giuliano Losa              |          |             |         |     ✔     |          |
 | [Transaction Commit Models](specifications/transaction_commit)                                      | Leslie Lamport, Jim Gray, Murat Demirbas   |          |             |         |     ✔     |          |
 | [Span Tree Exercise](specifications/SpanningTree)                                                   | Leslie Lamport                             |          |             |         |     ✔     |          |
-| [Byzantine Paxos by Refinement](specifications/byzpaxos)                                            | Leslie Lamport                             |          |             |         |     ✔     |          |
 | [The Knuth-Yao Method](specifications/KnuthYao)                                                     | Ron Pressler, Markus Kuppe                 |          |             |         |     ✔     |          |
 | [Huang's Algorithm](specifications/Huang)                                                           | Markus Kuppe                               |          |             |         |     ✔     |          |
 | [EWD 426: Token Stabilization](specifications/ewd426)                                               | Murat Demirbas, Markus Kuppe               |          |             |         |     ✔     |          |

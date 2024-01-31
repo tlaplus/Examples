@@ -7,7 +7,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["title", "description", "source", "authors", "path", "tags", "modules"],
+        "required": ["title", "description", "sources", "authors", "path", "tags", "modules"],
         "additionalProperties": false,
         "properties": {
           "path": {"type": "string"},
