@@ -35,6 +35,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [The Coffee Can Bean Problem](specifications/CoffeeCan)                                             | Andrew Helwer                              |    ✔     |             |         |     ✔     |          |
 | [The Boulangerie Algorithm](specifications/Bakery-Boulangerie)                                      | Leslie Lamport, Stephan Merz               |          |      ✔      |    ✔    |     ✔     |          |
 | [Misra Reachability Algorithm](specifications/MisraReachability)                                    | Leslie Lamport                             |          |      ✔      |    ✔    |     ✔     |          |
+| [Byzantizing Paxos by Refinement](specifications/byzpaxos)                                          | Leslie Lamport                             |          |      ✔      |    ✔    |     ✔     |          |
 | [EWD840: Termination Detection in a Ring](specifications/ewd840)                                    | Stephan Merz                               |          |      ✔      |         |     ✔     |          |
 | [EWD998: Termination Detection in a Ring with Asynchronous Message Delivery](specifications/ewd998) | Stephan Merz, Markus Kuppe                 |          |      ✔      |         |     ✔     |          |
 | [The Paxos Protocol](specifications/Paxos)                                                          | Leslie Lamport                             |          |      ✔      |         |     ✔     |          |
@@ -42,11 +43,11 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Distributed Mutual Exclusion](specifications/lamport_mutex)                                        | Stephan Merz                               |          |      ✔      |         |     ✔     |          |
 | [Two-Phase Handshaking](specifications/TwoPhase)                                                    | Leslie Lamport, Stephan Merz               |          |      ✔      |         |     ✔     |          |
 | [Paxos (How to Win a Turing Award)](specifications/PaxosHowToWinATuringAward)                       | Leslie Lamport                             |          |      ✔      |         |     ✔     |          |
-| [Byzantine Paxos by Refinement](specifications/byzpaxos)                                            | Leslie Lamport                             |          |      ✔      |         |     ✔     |          |
 | [Dijkstra's Mutual Exclusion Algorithm](specifications/dijkstra-mutex)                              | Leslie Lamport                             |          |             |    ✔    |     ✔     |          |
 | [The Echo Algorithm](specifications/echo)                                                           | Stephan Merz                               |          |             |    ✔    |     ✔     |          |
 | [The TLC Safety Checking Algorithm](specifications/TLC)                                             | Markus Kuppe                               |          |             |    ✔    |     ✔     |          |
 | [EWD687a: Detecting Termination in Distributed Computations](specifications/ewd687a)                | Stephan Merz, Leslie Lamport, Markus Kuppe |          |             |    ✔    |     ✔     |          |
+| [Transaction Commit Models](specifications/transaction_commit)                                      | Leslie Lamport, Jim Gray, Murat Demirbas   |          |             |    ✔    |     ✔     |          |
 | [The Slush Protocol](specifications/SlushProtocol)                                                  | Andrew Helwer                              |          |             |    ✔    |     ✔     |          |
 | [Minimal Circular Substring](specifications/LeastCircularSubstring)                                 | Andrew Helwer                              |          |             |    ✔    |     ✔     |          |
 | [Snapshot Key-Value Store](specifications/KeyValueStore)                                            | Andrew Helwer, Murat Demirbas              |          |             |    ✔    |     ✔     |          |
@@ -55,7 +56,6 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Transitive Closure](specifications/TransitiveClosure)                                              | Stephan Merz                               |          |             |         |     ✔     |          |
 | [Atomic Commitment Protocol](specifications/acp)                                                    | Stephan Merz                               |          |             |         |     ✔     |          |
 | [SWMR Shared Memory Disk Paxos](specifications/diskpaxos)                                           | Leslie Lamport, Giuliano Losa              |          |             |         |     ✔     |          |
-| [Transaction Commit Models](specifications/transaction_commit)                                      | Leslie Lamport, Jim Gray, Murat Demirbas   |          |             |         |     ✔     |          |
 | [Span Tree Exercise](specifications/SpanningTree)                                                   | Leslie Lamport                             |          |             |         |     ✔     |          |
 | [The Knuth-Yao Method](specifications/KnuthYao)                                                     | Ron Pressler, Markus Kuppe                 |          |             |         |     ✔     |          |
 | [Huang's Algorithm](specifications/Huang)                                                           | Markus Kuppe                               |          |             |         |     ✔     |          |
