@@ -1617,6 +1617,7 @@ THEOREM Invariance == Spec => []Inv
 (* implements algorithm PCon under the refinement mapping                  *)
 (* defined by the INSTANCE statement above.                                *)
 (***************************************************************************)
+AbstractSpec == P!Spec
 THEOREM Spec => P!Spec
 <1>1. Init => P!Init
   <2>. HAVE Init

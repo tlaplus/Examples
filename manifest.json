@@ -3295,7 +3295,16 @@
             "pluscal",
             "proof"
           ],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/byzpaxos/BPConProof.cfg",
+              "runtime": "unknown",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
         },
         {
           "path": "specifications/byzpaxos/Consensus.tla",
@@ -3305,7 +3314,19 @@
             "pluscal",
             "proof"
           ],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/byzpaxos/Consensus.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/byzpaxos/PConProof.tla",
@@ -3315,7 +3336,16 @@
             "pluscal",
             "proof"
           ],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/byzpaxos/PConProof.cfg",
+              "runtime": "00:06:00",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/byzpaxos/VoteProof.tla",
@@ -3325,7 +3355,19 @@
             "pluscal",
             "proof"
           ],
-          "models": []
+          "models": [
+            {
+              "path": "specifications/byzpaxos/VoteProof.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
         }
       ]
     },

@@ -915,6 +915,7 @@ BY InitImpliesInv, InductiveInvariance, PTL DEF Spec
 (* substitutions.                                                          *)
 (***************************************************************************)
 C == INSTANCE Consensus 
+Refines == C!Spec
 
 (***************************************************************************)
 (* The following theorem asserts that the safety properties of the voting  *)

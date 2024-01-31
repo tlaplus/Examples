@@ -93,7 +93,7 @@ CONSTANT Value, Acceptor, Quorum
 ASSUME QA == /\ \A Q \in Quorum : Q \subseteq Acceptor 
              /\ \A Q1, Q2 \in Quorum : Q1 \cap Q2 # {} 
                                                                      
-Ballot ==  Nat
+Ballot == Nat
 
 (***************************************************************************)
 (* We are going to have a leader process for each ballot and an acceptor   *)
@@ -516,6 +516,7 @@ PInv == TypeOK /\ PAccInv /\ P1bInv /\ P1cInv /\ P2aInv
 
 THEOREM Invariance == Spec => []PInv
 
+AbstractSpec == V!Spec
 THEOREM Implementation == Spec => V!Spec
 
 (***************************************************************************)
