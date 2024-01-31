@@ -66,7 +66,7 @@ def format_document(document):
     # Gets table of local specs
     local_table, remote_table = [child for child in document.children if isinstance(child, Table)]
     #format_table(local_table)
-    format_table(remote_table)
+    #format_table(remote_table)
 
 # Read, format, write
 # Need to both parse & render within same MarkdownRenderer context to preserve other formatting
