@@ -18,36 +18,46 @@ args = parser.parse_args()
 
 columns = ['name', 'authors', 'beginner', 'proof', 'tlc', 'pcal', 'apalache']
 
-def get_column(row, index):
+def get_column(row, col_name):
     '''
     Gets the cell of the given column in the given row.
     '''
-    return row.children[columns.index(index)].children[0]
+    return row.children[columns.index(col_name)].children[0]
 
-def remove_column(table, col_index):
+def remove_column(table, col_name):
     '''
     Removes the column of the given index from the table.
     '''
-    index = columns.index(col_index)
+    index = columns.index(col_name)
     table.header.children.pop(index)
     table.column_align.pop(index)
     for row in table.children:
         row.children.pop(index)
 
-def blank_column(table, col_index):
+def blank_column(table, col_name):
     '''
     Removes all data in the given column.
     '''
-    index = columns.index(col_index)
+    index = columns.index(col_name)
     for row in table.children:
         row.children[index].children = []
 
-def swap_columns(table, first_col_index, second_col_index):
+def duplicate_column(table, col_name):
+    '''
+    Duplicates the given column.
+    '''
+    index = columns.index(col_name)
+    table.header.children.insert(index, table.header.children[index])
+    table.column_align.insert(index, table.column_align[index])
+    for row in table.children:
+        row.children.insert(index, row.children[index])
+
+def swap_columns(table, first_col_name, second_col_name):
     '''
     Swaps two columns in a table.
     '''
-    first = columns.index(first_col_index)
-    second = columns.index(second_col_index)
+    first = columns.index(first_col_name)
+    second = columns.index(second_col_name)
     table.header.children[second], table.header.children[first] = table.header.children[first], table.header.children[second]
     table.column_align[second], table.column_align[first] = table.column_align[first], table.column_align[second]
     for row in table.children:
