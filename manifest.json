@@ -4,7 +4,7 @@
       "path": "specifications/Bakery-Boulangerie",
       "title": "The Boulangerie Algorithm",
       "description": "Spec of a variant of the Bakery Algorithm",
-      "source": "",
+      "sources": [],
       "authors": [
         "Leslie Lamport",
         "Stephan Merz"
@@ -73,7 +73,7 @@
       "path": "specifications/CarTalkPuzzle",
       "title": "The Car Talk Puzzle",
       "description": "Math puzzle involving a farmer, a stone, and a balance scale",
-      "source": "",
+      "sources": [],
       "authors": [
         "Leslie Lamport"
       ],
@@ -163,7 +163,9 @@
       "path": "specifications/Chameneos",
       "title": "Chameneos, a Concurrency Game",
       "description": "A concurrency game requiring concurrent & symmetric cooperation",
-      "source": "https://github.com/mryndzionek/tlaplus_specs#chameneostla",
+      "sources": [
+        "https://github.com/mryndzionek/tlaplus_specs#chameneostla"
+      ],
       "authors": [
         "Mariusz Ryndzionek"
       ],
@@ -193,7 +195,10 @@
       "path": "specifications/CheckpointCoordination",
       "title": "Checkpoint Coordination",
       "description": "An algorithm for controlling checkpoint leases in a Paxos ring",
-      "source": "https://github.com/Azure/RingMaster",
+      "sources": [
+        "https://github.com/Azure/RingMaster",
+        "https://ahelwer.ca/post/2023-04-05-checkpoint-coordination/"
+      ],
       "authors": [
         "Andrew Helwer"
       ],
@@ -242,7 +247,9 @@
       "path": "specifications/CigaretteSmokers",
       "title": "The Cigarette Smokers Problem",
       "description": "A concurrency problem described in 1971 by Suhas Patil",
-      "source": "https://github.com/mryndzionek/tlaplus_specs#cigarettesmokerstla",
+      "sources": [
+        "https://github.com/mryndzionek/tlaplus_specs#cigarettesmokerstla"
+      ],
       "authors": [
         "Mariusz Ryndzionek"
       ],
@@ -270,7 +277,9 @@
       "path": "specifications/CoffeeCan",
       "title": "The Coffee Can Bean Problem",
       "description": "Math problem published by Dijkstra attributed to Carel Scholten",
-      "source": "https://stackoverflow.com/a/66304920/2852699",
+      "sources": [
+        "https://stackoverflow.com/a/66304920/2852699"
+      ],
       "authors": [
         "Andrew Helwer"
       ],
@@ -322,7 +331,7 @@
       "path": "specifications/DieHard",
       "title": "The Die Hard Problem",
       "description": "Obtain 4 gallons of water using only 3 and 5 gallon jugs",
-      "source": "",
+      "sources": [],
       "authors": [
         "Leslie Lamport"
       ],
@@ -375,7 +384,7 @@
       "path": "specifications/DiningPhilosophers",
       "title": "The Dining Philosophers Problem",
       "description": "The Chandy-Misra solution to the Dining Philosophers concurrency problem",
-      "source": "",
+      "sources": [],
       "authors": [
         "Jeff Hemphill"
       ],
@@ -409,9 +418,10 @@
       "path": "specifications/EinsteinRiddle",
       "title": "Einstein's Riddle",
       "description": "Five houses, five people, various facts, who lives in what house?",
-      "source": "",
+      "sources": [],
       "authors": [
-        "Isaac DeFrain"
+        "Isaac DeFrain",
+        "Giuliano Losa"
       ],
       "tags": [],
       "modules": [
@@ -437,7 +447,9 @@
       "path": "specifications/FiniteMonotonic",
       "title": "Finitizing Monotonic Systems",
       "description": "Illustration of technique for making ordinarily-infinite monotonic systems finite for the purposes of model-checking.",
-      "source": "https://ahelwer.ca/post/2023-11-01-tla-finite-monotonic/",
+      "sources": [
+        "https://ahelwer.ca/post/2023-11-01-tla-finite-monotonic/"
+      ],
       "authors": [
         "Andrew Helwer"
       ],
@@ -520,7 +532,9 @@
       "path": "specifications/GameOfLife",
       "title": "Conway's Game of Life",
       "description": "The famous cellular automata simulation",
-      "source": "https://github.com/mryndzionek/tlaplus_specs#gameoflifetla",
+      "sources": [
+        "https://github.com/mryndzionek/tlaplus_specs#gameoflifetla"
+      ],
       "authors": [
         "Mariusz Ryndzionek"
       ],
@@ -548,7 +562,7 @@
       "path": "specifications/Huang",
       "title": "Huang's Algorithm",
       "description": "An algorithm for detecting termination in a distributed system",
-      "source": "",
+      "sources": [],
       "authors": [
         "Markus Kuppe"
       ],
@@ -585,7 +599,7 @@
       "path": "specifications/KeyValueStore",
       "title": "Snapshot Key-Value Store",
       "description": "A simple KVS implementing snapshot isolation",
-      "source": "",
+      "sources": [],
       "authors": [
         "Andrew Helwer",
         "Murat Demirbas"
@@ -685,7 +699,9 @@
       "path": "specifications/KnuthYao",
       "title": "The Knuth-Yao Method",
       "description": "A method for simulating a fair 6-sided die using only coin flips",
-      "source": "https://old.reddit.com/r/tlaplus/comments/j06ohw/how_do_you_reason_about_a_probabilistic/g6owlxy/",
+      "sources": [
+        "https://old.reddit.com/r/tlaplus/comments/j06ohw/how_do_you_reason_about_a_probabilistic/g6owlxy/"
+      ],
       "authors": [
         "Markus Kuppe",
         "Ron Pressler"
@@ -738,7 +754,7 @@
       "path": "specifications/LearnProofs",
       "title": "Learn TLA⁺ Proofs",
       "description": "Some specs of very simple algorithms & formal proofs of their correctness",
-      "source": "",
+      "sources": [],
       "authors": [
         "Andrew Helwer"
       ],
@@ -790,7 +806,9 @@
       "path": "specifications/LeastCircularSubstring",
       "title": "Minimal Circular Substring",
       "description": "Booth's 1980 algorithm to find the lexicographically-least circular substring",
-      "source": "",
+      "sources": [
+        "https://ahelwer.ca/post/2023-03-30-pseudocode/"
+      ],
       "authors": [
         "Andrew Helwer"
       ],
@@ -842,7 +860,9 @@
       "path": "specifications/LevelChecking",
       "title": "TLA⁺ Level Checking",
       "description": "Level-checking of TLA⁺ formulas as described in Specifying Systems",
-      "source": "https://github.com/tlaplus/tlaplus/blob/6bc82f7746ccdfbdf49cdef24448666d11e5e218/tlatools/org.lamport.tlatools/src/tla2sany/semantic/LevelNode.java#L354-L2778",
+      "sources": [
+        "https://github.com/tlaplus/tlaplus/blob/6bc82f7746ccdfbdf49cdef24448666d11e5e218/tlatools/org.lamport.tlatools/src/tla2sany/semantic/LevelNode.java#L354-L2778"
+      ],
       "authors": [
         "Leslie Lamport"
       ],
@@ -861,7 +881,9 @@
       "path": "specifications/LoopInvariance",
       "title": "Loop Invariance",
       "description": "Examples of finding and proving loop invariants in PlusCal",
-      "source": "http://lamport.azurewebsites.net/tla/proving-safety.pdf",
+      "sources": [
+        "http://lamport.azurewebsites.net/tla/proving-safety.pdf"
+      ],
       "authors": [
         "Leslie Lamport"
       ],
@@ -941,7 +963,7 @@
       "path": "specifications/Majority",
       "title": "Boyer-Moore Majority Vote",
       "description": "An efficient algorithm for detecting a majority value in a sequence",
-      "source": "",
+      "sources": [],
       "authors": [
         "Stephan Merz"
       ],
@@ -989,7 +1011,7 @@
       "path": "specifications/MisraReachability",
       "title": "Misra Reachability Algorithm",
       "description": "A sequential algorithm for computing the set of reachable nodes in a directed graph",
-      "source": "",
+      "sources": [],
       "authors": [
         "Leslie Lamport"
       ],
@@ -1120,7 +1142,7 @@
       "path": "specifications/MissionariesAndCannibals",
       "title": "Missionaries and Cannibals",
       "description": "Spec of a river-crossing puzzle",
-      "source": "",
+      "sources": [],
       "authors": [
         "Leslie Lamport"
       ],
@@ -1150,7 +1172,9 @@
       "path": "specifications/MultiCarElevator",
       "title": "Multi-Car Elevator System",
       "description": "A simple multi-car elevator system servicing a multi-floor building",
-      "source": "https://groups.google.com/g/tlaplus/c/5Xd8kv288jE/m/IrliJIatBwAJ",
+      "sources": [
+        "https://groups.google.com/g/tlaplus/c/5Xd8kv288jE/m/IrliJIatBwAJ"
+      ],
       "authors": [
         "Andrew Helwer"
       ],
@@ -1214,7 +1238,7 @@
       "path": "specifications/N-Queens",
       "title": "The N-Queens Puzzle",
       "description": "Place N queens on an NxN chess board such that no two queens threaten each other",
-      "source": "",
+      "sources": [],
       "authors": [
         "Stephan Merz"
       ],
@@ -1296,7 +1320,7 @@
       "path": "specifications/NanoBlockchain",
       "title": "Nano Blockchain Protocol",
       "description": "A specification of the protocol originally used by the Nano blockchain",
-      "source": "",
+      "sources": [],
       "authors": [
         "Andrew Helwer"
       ],
@@ -1353,7 +1377,7 @@
       "path": "specifications/Paxos",
       "title": "The Paxos Protocol",
       "description": "A protocol for error-tolerant consensus",
-      "source": "",
+      "sources": [],
       "authors": [
         "Leslie Lamport"
       ],
@@ -1447,7 +1471,9 @@
       "path": "specifications/PaxosHowToWinATuringAward",
       "title": "Paxos (How to Win a Turing Award)",
       "description": "Exercises from the lecture The Paxos Algorithm - or How to Win a Turing Award",
-      "source": "https://www.youtube.com/watch?v=tw3gsBms-f8",
+      "sources": [
+        "https://www.youtube.com/watch?v=tw3gsBms-f8"
+      ],
       "authors": [
         "Leslie Lamport"
       ],
@@ -1549,7 +1575,7 @@
       "path": "specifications/Prisoners",
       "title": "The Prisoners & Switches Puzzle",
       "description": "Given a room containing two switches prisoners enter one by one, they must develop a strategy to free themselves",
-      "source": "",
+      "sources": [],
       "authors": [
         "Leslie Lamport"
       ],
@@ -1588,7 +1614,7 @@
       "path": "specifications/ReadersWriters",
       "title": "The Readers-Writers Problem",
       "description": "Controlling concurrent access to a resource",
-      "source": "",
+      "sources": [],
       "authors": [
         "Isaac DeFrain"
       ],
@@ -1625,7 +1651,9 @@
       "path": "specifications/SDP_Verification",
       "title": "Software-Defined Perimeter",
       "description": "Specifying and verifying SDP-protocol-based zero trust architecture",
-      "source": "https://github.com/10227694/SDP_Verification",
+      "sources": [
+        "https://github.com/10227694/SDP_Verification"
+      ],
       "authors": [
         "Luming Dong",
         "Zhi Niu"
@@ -1696,7 +1724,7 @@
       "path": "specifications/SimplifiedFastPaxos",
       "title": "Simplified Fast Paxos",
       "description": "Spec of simplified Fast Paxos from Lamport's 2006 paper Fast Paxos",
-      "source": "",
+      "sources": [],
       "authors": [
         "Lim Ngian Xin Terry",
         "Gaurav Gandhi"
@@ -1747,7 +1775,7 @@
       "path": "specifications/SingleLaneBridge",
       "title": "Single-Lane Bridge Problem",
       "description": "Controlling cars moving over a single-lange bridge in opposite directions",
-      "source": "",
+      "sources": [],
       "authors": [
         "Younes Akhouayri"
       ],
@@ -1784,7 +1812,7 @@
       "path": "specifications/SlidingPuzzles",
       "title": "Sliding Block Puzzle",
       "description": "A spec of the Klotski sliding block puzzle",
-      "source": "",
+      "sources": [],
       "authors": [
         "Mariusz Ryndzionek"
       ],
@@ -1812,7 +1840,10 @@
       "path": "specifications/SlushProtocol",
       "title": "The Slush Protocol",
       "description": "An attempt to use TLA⁺ to analyze a probabilistic protocol in the Avalanche family",
-      "source": "https://github.com/ahelwer/avalanche-analysis",
+      "sources": [
+        "https://github.com/ahelwer/avalanche-analysis",
+        "https://ahelwer.ca/post/2020-09-11-probabilistic-distsys/"
+      ],
       "authors": [
         "Andrew Helwer"
       ],
@@ -1858,7 +1889,7 @@
       "path": "specifications/SpanningTree",
       "title": "Span Tree Exercise",
       "description": "Simplified algorithm from the Lamport paper *An Assertional Correctness Proof of a Distributed Program*",
-      "source": "",
+      "sources": [],
       "authors": [
         "Leslie Lamport"
       ],
@@ -1937,7 +1968,9 @@
       "path": "specifications/SpecifyingSystems",
       "title": "Specs from Specifying Systems",
       "description": "All specs seen in the textbook Specifying Systems by Leslie Lamport",
-      "source": "http://lamport.azurewebsites.net/tla/book.html",
+      "sources": [
+        "http://lamport.azurewebsites.net/tla/book.html"
+      ],
       "authors": [
         "Leslie Lamport"
       ],
@@ -2631,7 +2664,7 @@
       "path": "specifications/Stones",
       "title": "Stone Scale Puzzle",
       "description": "Alternative implementation of the Car Talk Puzzle",
-      "source": "",
+      "sources": [],
       "authors": [
         "Leslie Lamport"
       ],
@@ -2661,7 +2694,7 @@
       "path": "specifications/TLC",
       "title": "The TLC Safety Checking Algorithm",
       "description": "Spec of the safety checking algorithm used by the TLC model-checker",
-      "source": "",
+      "sources": [],
       "authors": [
         "Markus Kuppe"
       ],
@@ -2700,7 +2733,9 @@
       "path": "specifications/TeachingConcurrency",
       "title": "Teaching Concurrency",
       "description": "Simple problem useful for teaching and learning about concurrency",
-      "source": "http://lamport.azurewebsites.net/pubs/teaching-concurrency.pdf",
+      "sources": [
+        "http://lamport.azurewebsites.net/pubs/teaching-concurrency.pdf"
+      ],
       "authors": [
         "Leslie Lamport"
       ],
@@ -2752,7 +2787,7 @@
       "path": "specifications/TransitiveClosure",
       "title": "Transitive Closure",
       "description": "Spec defining the transitive closure of a relation",
-      "source": "",
+      "sources": [],
       "authors": [
         "Stephan Merz"
       ],
@@ -2780,7 +2815,7 @@
       "path": "specifications/TwoPhase",
       "title": "Two-Phase Handshaking",
       "description": "Specification of a very simple hardware protocol called two-phase handshaking",
-      "source": "",
+      "sources": [],
       "authors": [
         "Leslie Lamport",
         "Stephan Merz"
@@ -2834,7 +2869,7 @@
       "path": "specifications/aba-asyn-byz",
       "title": "Asynchronous Byzantine Consensus",
       "description": "Spec of the protocol from paper *Asynchronous Consensus and Broadcast Protocols* (1985)",
-      "source": "",
+      "sources": [],
       "authors": [
         "Igor Konnov",
         "Josef Widder",
@@ -2863,10 +2898,96 @@
       ]
     },
     {
+      "path": "specifications/acp",
+      "title": "Atomic Commitment Protocol",
+      "description": "TLA⁺ specs from CS-986: Advanced Topics in Program Verification",
+      "sources": [
+        "https://members.loria.fr/SMerz/talks/argentina2005/Charpentier/charpov/Teaching/CS-986/TLC/",
+        "https://dl.acm.org/doi/10.5555/302430.302436"
+      ],
+      "authors": [
+        "Stephan Merz"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/acp/ACP_NB.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/acp/ACP_NB_TLC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/acp/ACP_NB_TLC.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/acp/ACP_NB_WRONG_TLC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/acp/ACP_NB_WRONG_TLC.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "safety failure"
+            }
+          ]
+        },
+        {
+          "path": "specifications/acp/ACP_SB.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/acp/ACP_SB_TLC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/acp/ACP_SB_TLC.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "path": "specifications/allocator",
       "title": "Resource Allocator",
       "description": "Specification of a resource allocator",
-      "source": "",
+      "sources": [],
       "authors": [
         "Stephan Merz"
       ],
@@ -2950,7 +3071,7 @@
       "path": "specifications/bcastByz",
       "title": "Asynchronous Reliable Broadcast",
       "description": "Algorithm from paper *Simulating authenticated broadcasts to derive simple fault-tolerant algorithms* (1987)",
-      "source": "",
+      "sources": [],
       "authors": [
         "Igor Konnov",
         "Josef Widder",
@@ -2994,7 +3115,7 @@
       "path": "specifications/bcastFolklore",
       "title": "Folklore Reliable Broadcast",
       "description": "Algorithm from paper *Unreliable failure detectors for reliable distributed systems* (1996)",
-      "source": "",
+      "sources": [],
       "authors": [
         "Igor Konnov",
         "Josef Widder",
@@ -3026,7 +3147,7 @@
       "path": "specifications/bosco",
       "title": "The Bosco Byzantine Consensus Algorithm",
       "description": "Algorithm from paper *Bosco: One-step byzantine asynchronous consensus* (2008)",
-      "source": "",
+      "sources": [],
       "authors": [
         "Igor Konnov",
         "Josef Widder",
@@ -3053,10 +3174,215 @@
       ]
     },
     {
+      "path": "specifications/byihive",
+      "title": "RFC 3506: Voucher Transaction System",
+      "description": "Formal specification of a peer-to-peer ledger protocol",
+      "sources": [
+        "https://github.com/byisystems/byihive"
+      ],
+      "authors": [
+        "Santhosh Raju",
+        "Cherry G. Mathew",
+        "Fransisca Andriani"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/byihive/VoucherCancel.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/byihive/VoucherCancel.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/byihive/VoucherIssue.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/byihive/VoucherIssue.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/byihive/VoucherLifeCycle.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/byihive/VoucherLifeCycle.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/byihive/VoucherRedeem.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/byihive/VoucherRedeem.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/byihive/VoucherTransfer.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/byihive/VoucherTransfer.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock"
+              ],
+              "result": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "specifications/byzpaxos",
+      "title": "Byzantizing Paxos by Refinement",
+      "description": "Mechanically-checked safety proof of a Byzantine Paxos algorithm",
+      "sources": [
+        "http://lamport.azurewebsites.net/pubs/pubs.html#web-byzpaxos",
+        "http://lamport.azurewebsites.net/pubs/web-byzpaxos.pdf",
+        "http://lamport.azurewebsites.net/tla/byzpaxos.html"
+      ],
+      "authors": [
+        "Leslie Lamport"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/byzpaxos/BPConProof.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": [
+            {
+              "path": "specifications/byzpaxos/BPConProof.cfg",
+              "runtime": "unknown",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "unknown"
+            }
+          ]
+        },
+        {
+          "path": "specifications/byzpaxos/Consensus.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": [
+            {
+              "path": "specifications/byzpaxos/Consensus.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/byzpaxos/PConProof.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": [
+            {
+              "path": "specifications/byzpaxos/PConProof.cfg",
+              "runtime": "00:06:00",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/byzpaxos/VoteProof.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": [
+            {
+              "path": "specifications/byzpaxos/VoteProof.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "path": "specifications/c1cs",
       "title": "Consensus in One Communication Step",
       "description": "Algorithm from paper *Consensus in one communication step* (2001)",
-      "source": "",
+      "sources": [],
       "authors": [
         "Igor Konnov",
         "Josef Widder",
@@ -3088,7 +3414,7 @@
       "path": "specifications/cbc_max",
       "title": "Condition-Based Consensus",
       "description": "Algorithm from paper *Evaluating the condition-based approach to solve consensus* (2003)",
-      "source": "",
+      "sources": [],
       "authors": [
         "Igor Konnov",
         "Josef Widder",
@@ -3109,7 +3435,7 @@
       "path": "specifications/cf1s-folklore",
       "title": "One-Step Consensus with Zero-Degradation",
       "description": "Algorithm from paper *One-step Consensus with Zero-Degradation* (2006)",
-      "source": "",
+      "sources": [],
       "authors": [
         "Igor Konnov",
         "Josef Widder",
@@ -3141,7 +3467,7 @@
       "path": "specifications/chang_roberts",
       "title": "Chang-Roberts Algorithm for Leader Election in a Ring",
       "description": "Algorithm from paper *An improved algorithm for decentralized extrema-finding in circular configurations of processes* (1979)",
-      "source": "",
+      "sources": [],
       "authors": [
         "Stephan Merz"
       ],
@@ -3181,7 +3507,7 @@
       "path": "specifications/detector_chan96",
       "title": "Failure Detector",
       "description": "Algorithm from paper *Unreliable failure detectors for reliable distributed systems* (1996)",
-      "source": "",
+      "sources": [],
       "authors": [
         "Igor Konnov",
         "Josef Widder",
@@ -3227,7 +3553,7 @@
       "path": "specifications/dijkstra-mutex",
       "title": "Dijkstra's Mutual Exclusion Algorithm",
       "description": "Algorithm from paper *Solution of a Problem in Concurrent Programming Control* (1965)",
-      "source": "",
+      "sources": [],
       "authors": [
         "Leslie Lamport"
       ],
@@ -3302,7 +3628,9 @@
       "path": "specifications/diskpaxos",
       "title": "SWMR Shared Memory Disk Paxos",
       "description": "A formalization of the SWMR-Shared-Memory Disk Paxos",
-      "source": "https://github.com/nano-o/MultiPaxos/blob/master/DiskPaxos.tla",
+      "sources": [
+        "https://github.com/nano-o/MultiPaxos/blob/master/DiskPaxos.tla"
+      ],
       "authors": [
         "Giuliano Losa",
         "Leslie Lamport"
@@ -3352,7 +3680,7 @@
       "path": "specifications/echo",
       "title": "The Echo Algorithm",
       "description": "Algorithm for constructing a spanning tree in an undirected graph",
-      "source": "",
+      "sources": [],
       "authors": [
         "Stephan Merz"
       ],
@@ -3396,7 +3724,7 @@
       "path": "specifications/ewd426",
       "title": "EWD 426: Token Stabilization",
       "description": "Dijkstra's classical stabilizing token ring algorithm, EWD426",
-      "source": "",
+      "sources": [],
       "authors": [
         "Markus Kuppe",
         "Murat Demirbas"
@@ -3453,7 +3781,7 @@
       "path": "specifications/ewd687a",
       "title": "EWD687a: Detecting Termination in Distributed Computations",
       "description": "Dijkstra's Termination Detection Algorithm",
-      "source": "",
+      "sources": [],
       "authors": [
         "Leslie Lamport",
         "Markus Kuppe",
@@ -3534,7 +3862,9 @@
       "path": "specifications/ewd840",
       "title": "EWD840: Termination Detection in a Ring",
       "description": "EWD840: Termination Detection in a Ring",
-      "source": "Dijkstra's termination detection algorithm for ring topologies",
+      "sources": [
+        "Dijkstra's termination detection algorithm for ring topologies"
+      ],
       "authors": [
         "Stephan Merz"
       ],
@@ -3645,7 +3975,7 @@
       "path": "specifications/ewd998",
       "title": "EWD998: Termination Detection in a Ring with Asynchronous Message Delivery",
       "description": "Variant of EWD 840 given by Shmuel Safra",
-      "source": "",
+      "sources": [],
       "authors": [
         "Markus Kuppe",
         "Stephan Merz"
@@ -3906,7 +4236,7 @@
       "path": "specifications/glowingRaccoon",
       "title": "PCR Testing for Snippets of DNA",
       "description": "Specification of a PCR test process",
-      "source": "",
+      "sources": [],
       "authors": [
         "Martin Harrison"
       ],
@@ -3974,7 +4304,7 @@
       "path": "specifications/lamport_mutex",
       "title": "Distributed Mutual Exclusion",
       "description": "Specification of Lamport's distributed mutual exclusion algorithm",
-      "source": "",
+      "sources": [],
       "authors": [
         "Stephan Merz"
       ],
@@ -4057,7 +4387,7 @@
       "path": "specifications/nbacc_ray97",
       "title": "Asynchronous Non-Blocking Atomic Commit",
       "description": "Algorithm from paper *A case study of agreement problems in distributed systems: non-blocking atomic commitment* (1997)",
-      "source": "",
+      "sources": [],
       "authors": [
         "Igor Konnov",
         "Josef Widder",
@@ -4087,7 +4417,7 @@
       "path": "specifications/nbacg_guer01",
       "title": "Asynchronous Non-Blocking Atomic Commitment with Failure Detectors",
       "description": "Algorithm from paper *On the hardness of failure-sensitive agreement problems* (2001)",
-      "source": "",
+      "sources": [],
       "authors": [
         "Igor Konnov",
         "Josef Widder",
@@ -4119,7 +4449,7 @@
       "path": "specifications/spanning",
       "title": "Spanning Tree Broadcast Algorithm",
       "description": "A spanning tree broadcast algorithm",
-      "source": "",
+      "sources": [],
       "authors": [
         "Igor Konnov",
         "Josef Widder",
@@ -4156,7 +4486,7 @@
       "path": "specifications/sums_even",
       "title": "Proof x+x is Even",
       "description": "Two proofs that x+x is even for every natural number x",
-      "source": "",
+      "sources": [],
       "authors": [
         "Stephan Merz"
       ],
@@ -4204,7 +4534,7 @@
       "path": "specifications/tower_of_hanoi",
       "title": "The Tower of Hanoi Puzzle",
       "description": "Famous puzzle involving stacking disks on towers",
-      "source": "",
+      "sources": [],
       "authors": [
         "Alexander Niederbühl",
         "Markus Kuppe"
@@ -4270,13 +4600,36 @@
       "path": "specifications/transaction_commit",
       "title": "Transaction Commit Models",
       "description": "Ordinary transaction commit, two-phase commit, and Paxos commit",
-      "source": "http://research.microsoft.com/en-us/um/people/lamport/pubs/pubs.html#paxos-commit",
+      "sources": [
+        "http://research.microsoft.com/en-us/um/people/lamport/pubs/pubs.html#paxos-commit",
+        "https://www.microsoft.com/en-us/research/uploads/prod/2004/01/consensus-on-transaction-commit.pdf",
+        "https://github.com/muratdem/PlusCal-examples/tree/master/2PCTM"
+      ],
       "authors": [
         "Jim Gray",
-        "Leslie Lamport"
+        "Leslie Lamport",
+        "Murat Demirbas"
       ],
       "tags": [],
       "modules": [
+        {
+          "path": "specifications/transaction_commit/2PCwithBTM.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": [
+            {
+              "path": "specifications/transaction_commit/2PCwithBTM.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
+        },
         {
           "path": "specifications/transaction_commit/PaxosCommit.tla",
           "communityDependencies": [],

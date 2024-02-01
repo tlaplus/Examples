@@ -180,11 +180,13 @@ jobs:
             specifications/PaxosHowToWinATuringAward/Consensus.tla
             specifications/lamport_mutex/LamportMutex_proofs.tla
             specifications/ewd998/EWD998_proof.tla
+            specifications/byzpaxos/VoteProof.tla
             # Long-running; see https://github.com/tlaplus/tlapm/issues/85
             specifications/LoopInvariance/Quicksort.tla
             specifications/LoopInvariance/SumSequence.tla
             specifications/bcastByz/bcastByz.tla
             specifications/MisraReachability/ReachabilityProofs.tla
+            specifications/byzpaxos/BPConProof.tla # Takes about 30 minutes
           )
           python $SCRIPT_DIR/check_proofs.py  \
             --tlapm_path deps/tlapm-install   \
