@@ -145,7 +145,8 @@ Please open an issue or send an email to the [TLA+ group](https://groups.google.
 Do you have your own case study or TLA<sup>+</sup> specification you'd like to share with the community?
 Follow these instructions:
 1. Fork this repository and create a new directory under `specifications` with the name of your spec
-1. Place all TLA<sup>+</sup> files in the directory, along with their `.cfg` model files; you are encouraged to include at least one model that completes execution in less than 10 seconds
+1. Place all TLA<sup>+</sup> files in the directory, along with their `.cfg` model files
+1. You are encouraged to include at least one model that completes execution in less than 10 seconds, and (if possible) a model that fails in an interesting way - for example illustrating a system design you previously attempted that was found unsound by TLC
 1. Ensure name of each `.cfg` file matches the `.tla` file it models, or has its name as a prefix; for example `SpecName.tla` can have the models `SpecName.cfg` and `SpecNameLiveness.cfg`, etc.
 1. Consider including a `README.md` in the spec directory explaining the significance of the spec with links to any relevant websites or publications, or integrate this info as comments in the spec itself
 1. Add an entry to the table of specs included in this repo, summarizing your spec and its attributes
@@ -165,7 +166,7 @@ Otherwise, follow these directions:
 1. Locate your spec's entry in the [`manifest.json`](manifest.json) file and ensure the following fields are filled out:
    - Spec title: an appropriate title for your specification
    - Spec description: a short description of your specification
-   - Spec source: if this spec was first published elsewhere, provide a link to this location
+   - Spec sources: links relevant to the source of the spec (papers, blog posts, repositories)
    - Spec authors: a list of people who authored the spec
    - Spec tags:
      - `"beginner"` if your spec is appropriate for TLA<sup>+</sup> newcomers
@@ -180,6 +181,7 @@ Otherwise, follow these directions:
      - `"generate"` for model trace generation
    - Model result:
      - `"success"` if the model completes successfully
+     - `"assumption failure"` if the model violates an assumption
      - `"safety failure"` if the model violates an invariant
      - `"liveness failure"` if the model fails to satisfy a liveness property
      - `"deadlock failure"` if the model encounters deadlock
