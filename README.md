@@ -16,7 +16,6 @@ All specs in this repository are subject to CI validation to ensure quality.
 
 ## Examples Included Here
 Here is a list of specs included in this repository, with links to the relevant directory and flags for various features:
-<<<<<<< HEAD
 | Name                                                                                                | Author(s)                                           | Beginner | TLAPS Proof | PlusCal | TLC Model | Apalache |
 | --------------------------------------------------------------------------------------------------- | --------------------------------------------------- | :------: | :---------: | :-----: | :-------: | :------: |
 | [Teaching Concurrency](specifications/TeachingConcurrency)                                          | Leslie Lamport                                      |    ✔     |      ✔      |    ✔    |     ✔     |          |
