@@ -4221,6 +4221,15 @@
           ]
         },
         {
+          "path": "specifications/ewd998/TLAPS.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
           "path": "specifications/ewd998/Utils.tla",
           "communityDependencies": [
             "Functions",
