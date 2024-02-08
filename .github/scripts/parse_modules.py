@@ -49,7 +49,6 @@ def parse_module(path):
         logging.debug(output)
         return True
     else:
-        logging.error(' '.join(sany.args))
         logging.error(output)
         return False
 
