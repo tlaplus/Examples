@@ -44,7 +44,7 @@ main() {
   curl http://nightly.tlapl.us/dist/tla2tools.jar --output "$DEPS_DIR/tools/tla2tools.jar"
   # Get TLA⁺ community modules
   mkdir -p "$DEPS_DIR/community"
-  curl https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar --output "$DEPS_DIR/community/modules.jar"
+  curl -L https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar --output "$DEPS_DIR/community/modules.jar"
   # Get TLAPS modules
   curl -L https://github.com/tlaplus/tlapm/archive/main.zip --output tlapm.zip
   7z x tlapm.zip
