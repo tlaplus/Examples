@@ -9,26 +9,32 @@
 # The script takes the following positional command line parameters:
 #  1. Path to this script directory from the current working directory
 #  2. Path to the desired dependencies directory
+#  3. Boolean true/false; whether to initialize a python virtual env
 
 main() {
   # Validate command line parameters
-  if [ $# -ne 2 ]; then
-    echo "Usage: $0 <script dir path> <desired dependency dir path>"
+  if [ $# -ne 3 ]; then
+    echo "Usage: $0 <script dir path> <desired dependency dir path> <bool: use python venv>"
     exit 1
   fi
   SCRIPT_DIR="$1"
   DEPS_DIR="$2"
+  USE_VENV=$3
   # Print out tool version information
   java --version
   python --version
   pip --version
   cc --version
   cpp --version
-  # Install python packages in virtual environment
-  python -m venv .
-  source bin/activate
-  pip install -r "$SCRIPT_DIR/requirements.txt"
-  deactivate
+  # Install python packages
+  if $USE_VENV; then
+    python -m venv .
+    source bin/activate
+    pip install -r "$SCRIPT_DIR/requirements.txt"
+    deactivate
+  else
+    pip install -r "$SCRIPT_DIR/requirements.txt"
+  fi
   # Put all dependencies in their own directory to ensure they aren't included implicitly
   mkdir -p "$DEPS_DIR"
   # Get tree-sitter-tlaplus
@@ -50,10 +56,10 @@ main() {
   kernel=$(uname -s)
   if [ "$kernel" == "Linux" ]; then
     TLAPM_BIN_TYPE=x86_64-linux-gnu
-  elif [ "$kernel" == "macOS" ]; then
+  elif [ "$kernel" == "Darwin" ]; then
     TLAPM_BIN_TYPE=i386-darwin
   else
-    echo "Unknown OS"
+    echo "Unknown OS: $kernel"
     exit 1
   fi
   TLAPM_BIN="tlaps-1.5.0-$TLAPM_BIN_TYPE-inst.bin"
