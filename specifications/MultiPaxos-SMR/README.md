@@ -35,4 +35,9 @@ This spec differs from traditional, general descriptions of Paxos/MultiPaxos in 
 
 ---
 
-Link to blog post: [https://www.josehu.com/technical/2024/02/19/practical-MultiPaxos-TLA-spec.html](https://www.josehu.com/technical/2024/02/19/practical-MultiPaxos-TLA-spec.html)
+External links:
+
+- Link to blog post: [https://www.josehu.com/technical/2024/02/19/practical-MultiPaxos-TLA-spec.html](https://www.josehu.com/technical/2024/02/19/practical-MultiPaxos-TLA-spec.html)
+- Link to the Summerset codebase: [https://github.com/josehu07/summerset](https://github.com/josehu07/summerset)
+  - It is a protocol-generic distributed KV-store written in async Rust
+  - You can find the corresponding Rust implementation of a replication KV-store using almost the exact MultiPaxos protocol as modeled in this spec
