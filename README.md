@@ -86,6 +86,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [RFC 3506: Voucher Transaction System](specifications/byihive)                                      | Santhosh Raju, Cherry G. Mathew, Fransisca Andriani |          |             |         |     ✔     |          |
 | [TLA⁺ Level Checking](specifications/LevelChecking)                                                 | Leslie Lamport                                      |          |             |         |           |          |
 | [Condition-Based Consensus](specifications/cbc_max)                                                 | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |           |          |
+| [MultiPaxos in SMR-Style](specifications/MultiPaxos-SMR)                                            | Guanzhou Hu                                         |          |             |    ✔    |     ✔     |          |
 
 ## Examples Elsewhere
 Here is a list of specs stored in locations outside this repository, including submodules.
