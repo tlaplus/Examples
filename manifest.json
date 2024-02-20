@@ -1235,6 +1235,62 @@
       ]
     },
     {
+      "path": "specifications/MultiPaxos-SMR",
+      "title": "MultiPaxos in SMR-Style",
+      "description": "MultiPaxos in practical state machine replication system style",
+      "sources": [
+        "https://www.josehu.com/technical/2024/02/19/practical-MultiPaxos-TLA-spec.html"
+      ],
+      "authors": [
+        "Guanzhou Hu"
+      ],
+      "tags": [
+        "intermediate"
+      ],
+      "modules": [
+        {
+          "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": [
+            {
+              "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC_small.cfg",
+              "runtime": "00:00:10",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "symmetry"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": [
+            {
+              "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC.cfg",
+              "runtime": "00:07:53",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [
+                "symmetry"
+              ],
+              "result": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "path": "specifications/N-Queens",
       "title": "The N-Queens Puzzle",
       "description": "Place N queens on an NxN chess board such that no two queens threaten each other",
