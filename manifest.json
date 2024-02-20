@@ -1249,12 +1249,19 @@
       ],
       "modules": [
         {
-          "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC.tla",
+          "path": "specifications/MultiPaxos-SMR/MultiPaxos.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [
             "pluscal"
           ],
+          "models": []
+        },
+        {
+          "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
           "models": [
             {
               "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC_small.cfg",
@@ -1265,17 +1272,7 @@
                 "symmetry"
               ],
               "result": "success"
-            }
-          ]
-        },
-        {
-          "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [
-            "pluscal"
-          ],
-          "models": [
+            },
             {
               "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC.cfg",
               "runtime": "00:07:53",
