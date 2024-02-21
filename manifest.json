@@ -2080,10 +2080,7 @@
               "features": [
                 "ignore deadlock"
               ],
-              "result": "success",
-              "distinctStates": 120920,
-              "totalStates": 2146237,
-              "stateDepth": 7
+              "result": "success"
             }
           ]
         },

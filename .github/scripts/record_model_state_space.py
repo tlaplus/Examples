@@ -77,6 +77,8 @@ small_models = sorted(
                 or 'totalStates' not in model
                 or 'stateDepth' not in model
             )
+            # This model is nondeterministic due to use of the Random module
+            and model['path'] != 'specifications/SpanningTree/SpanTreeRandom.cfg'
     ],
     key = lambda m: m[2],
     reverse=True
