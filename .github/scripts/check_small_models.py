@@ -55,6 +55,17 @@ def check_model(module_path, model, expected_runtime):
                 logging.error(f'Model {model_path} expected result {expected_result} but got {actual_result}')
                 logging.error(tlc_result.stdout)
                 return False
+            if tla_utils.is_state_count_valid(model) and tla_utils.has_state_count(model):
+                state_count_info = tla_utils.extract_state_count_info(tlc_result.stdout)
+                if state_count_info is None:
+                    logging.error("Error: failed to find state info in TLC output")
+                    logging.error(tlc_result.stdout)
+                    return False
+                if not tla_utils.is_state_count_info_correct(model, *state_count_info):
+                    logging.error("Error: recorded state count info differed from actual state counts:")
+                    logging.error(f"(distinct/total/depth); expected: {tla_utils.get_state_count_info(model)}, actual: {state_count_info}")
+                    logging.error(tlc_result.stdout)
+                    return False
             return True
         case TimeoutExpired():
             logging.error(f'{model_path} hit hard timeout of {hard_timeout_in_seconds} seconds')

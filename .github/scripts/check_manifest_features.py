@@ -237,7 +237,7 @@ def check_features(parser, queries, manifest, examples_root):
                         f'ERROR: Model {model["path"]} has incorrect features in manifest; '
                         + f'expected {list(expected_features)}, actual {list(actual_features)}'
                     )
-                if ('distinctStates' in model or 'totalStates' in model or 'stateDepth' in model) and (model['mode'] != 'exhaustive search' or model['result'] != 'success'):
+                if tla_utils.has_state_count(model) and not tla_utils.is_state_count_valid(model):
                     success = False
                     print(
                         f'ERROR: Model {model["path"]} has state count info recorded; this is '

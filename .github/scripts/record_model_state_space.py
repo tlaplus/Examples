@@ -46,13 +46,13 @@ def check_model(module_path, model):
                 logging.error(f'Model {model_path} expected result {expected_result} but got {actual_result}')
                 logging.error(tlc_result.stdout)
                 return False
-            state_info = tla_utils.extract_state_info(tlc_result.stdout)
-            if state_info is None:
+            state_count_info = tla_utils.extract_state_count_info(tlc_result.stdout)
+            if state_count_info is None:
                 logging.error("Error: failed to find state info in TLC output")
                 logging.error(tlc_result.stdout)
                 return False
-            logging.info(f'States (distinct, total, depth): {state_info}')
-            model['distinctStates'], model['totalStates'], model['stateDepth'] = state_info
+            logging.info(f'States (distinct, total, depth): {state_count_info}')
+            model['distinctStates'], model['totalStates'], model['stateDepth'] = state_count_info
             return True
         case TimeoutExpired():
             logging.error(f'{model_path} hit hard timeout of {hard_timeout_in_seconds} seconds')
@@ -71,8 +71,7 @@ small_models = sorted(
         for module in spec['modules']
         for model in module['models']
             if model['size'] == 'small'
-            and model['mode'] == 'exhaustive search'
-            and model['result'] == 'success'
+            and tla_utils.is_state_count_valid(model)
             and (
                 'distinctStates' not in model
                 or 'totalStates' not in model

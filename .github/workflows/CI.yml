@@ -18,7 +18,8 @@ jobs:
         include:
         - { os: windows-latest }
         - { os: ubuntu-latest }
-        - { os: macos-14 }
+        # https://github.com/tlaplus/Examples/issues/119
+        #- { os: macos-14 }
       fail-fast: false
     env:
       SCRIPT_DIR: .github/scripts
