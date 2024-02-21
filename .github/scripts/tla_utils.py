@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 from os.path import join, normpath, pathsep
 import subprocess
+import re
 
 def from_cwd(root, path):
     """
@@ -41,6 +42,13 @@ def load_json(path):
     """
     with open(normpath(path), 'r', encoding='utf-8') as file:
         return json.load(file)
+
+def write_json(data, path):
+    """
+    Writes the given json to the given file.
+    """
+    with open(path, 'w', encoding='utf-8') as file:
+        json.dump(data, file, indent=2, ensure_ascii=False)
 
 def parse_timespan(unparsed):
     """
@@ -115,4 +123,17 @@ def resolve_tlc_exit_code(code):
     }
 
     return tlc_exit_codes[code] if code in tlc_exit_codes else str(code)
+
+state_count_regex = re.compile(r'(?P<total_states>\d+) states generated, (?P<distinct_states>\d+) distinct states found, 0 states left on queue.')
+state_depth_regex = re.compile(r'The depth of the complete state graph search is (?P<state_depth>\d+).')
+
+def extract_state_info(tlc_output):
+    state_count_findings = state_count_regex.search(tlc_output)
+    state_depth_findings = state_depth_regex.search(tlc_output)
+    if state_count_findings is None or state_depth_findings is None:
+        return None
+    distinct_states = int(state_count_findings.group('distinct_states'))
+    total_states = int(state_count_findings.group('total_states'))
+    state_depth = int(state_depth_findings.group('state_depth'))
+    return (distinct_states, total_states, state_depth)
 

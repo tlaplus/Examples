@@ -237,6 +237,13 @@ def check_features(parser, queries, manifest, examples_root):
                         f'ERROR: Model {model["path"]} has incorrect features in manifest; '
                         + f'expected {list(expected_features)}, actual {list(actual_features)}'
                     )
+                if ('distinctStates' in model or 'totalStates' in model or 'stateDepth' in model) and (model['mode'] != 'exhaustive search' or model['result'] != 'success'):
+                    success = False
+                    print(
+                        f'ERROR: Model {model["path"]} has state count info recorded; this is '
+                        + 'only valid for exhaustive search models that complete successfully.'
+                    )
+
     return success
 
 if __name__ == '__main__':
