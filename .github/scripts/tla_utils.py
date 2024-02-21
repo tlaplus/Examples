@@ -149,7 +149,8 @@ def is_state_count_info_correct(model, distinct_states, total_states, state_dept
     """
     expected_distinct_states, expected_total_states, expected_state_depth = get_state_count_info(model)
     none_or_equal = lambda expected, actual: expected is None or expected == actual
-    return none_or_equal(expected_distinct_states, distinct_states) and none_or_equal(expected_total_states, total_states) and none_or_equal(expected_state_depth, state_depth)
+    # State depth not yet deterministic due to TLC bug: https://github.com/tlaplus/tlaplus/issues/883
+    return none_or_equal(expected_distinct_states, distinct_states) and none_or_equal(expected_total_states, total_states) #and none_or_equal(expected_state_depth, state_depth)
 
 state_count_regex = re.compile(r'(?P<total_states>\d+) states generated, (?P<distinct_states>\d+) distinct states found, 0 states left on queue.')
 state_depth_regex = re.compile(r'The depth of the complete state graph search is (?P<state_depth>\d+).')

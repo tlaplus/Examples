@@ -48,7 +48,7 @@ def check_model(module_path, model):
                 return False
             state_count_info = tla_utils.extract_state_count_info(tlc_result.stdout)
             if state_count_info is None:
-                logging.error("Error: failed to find state info in TLC output")
+                logging.error("Failed to find state info in TLC output")
                 logging.error(tlc_result.stdout)
                 return False
             logging.info(f'States (distinct, total, depth): {state_count_info}')
