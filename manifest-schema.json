@@ -61,7 +61,7 @@
                       "mode": {
                         "oneOf": [
                           {
-                            "enum": ["exhaustive search", "generate"]
+                            "enum": ["exhaustive search", "generate", "symbolic"]
                           },
                           {
                             "type": "object",
