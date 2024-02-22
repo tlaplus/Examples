@@ -55,6 +55,9 @@
                         "pattern": "^(([0-9][0-9]:[0-9][0-9]:[0-9][0-9])|unknown)$"
                       },
                       "size": {"enum": ["small", "medium", "large", "unknown"]},
+                      "distinctStates": {"type": "integer"},
+                      "totalStates": {"type": "integer"},
+                      "stateDepth": {"type": "integer"},
                       "mode": {
                         "oneOf": [
                           {

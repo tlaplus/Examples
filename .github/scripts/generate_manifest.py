@@ -140,9 +140,10 @@ def find_corresponding_model(old_model, new_module):
     return models[0] if any(models) else None
 
 def integrate_model_info(old_model, new_model):
-    fields = ['runtime', 'size', 'mode', 'result']
+    fields = ['runtime', 'size', 'mode', 'result', 'distinctStates', 'totalStates', 'stateDepth']
     for field in fields:
-        new_model[field] = old_model[field]
+        if field in old_model:
+            new_model[field] = old_model[field]
 
 def integrate_old_manifest_into_new(old_manifest, new_manifest):
     for old_spec in old_manifest['specifications']:
@@ -180,7 +181,5 @@ if __name__ == '__main__':
     new_manifest = generate_new_manifest(examples_root, ignored_dirs, parser, queries)
     integrate_old_manifest_into_new(old_manifest, new_manifest)
 
-    # Write generated manifest to file
-    with open(manifest_path, 'w', encoding='utf-8') as new_manifest_file:
-        json.dump(new_manifest, new_manifest_file, indent=2, ensure_ascii=False)
+    tla_utils.write_json(new_manifest, manifest_path)
 

@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 from os.path import join, normpath, pathsep
 import subprocess
+import re
 
 def from_cwd(root, path):
     """
@@ -41,6 +42,13 @@ def load_json(path):
     """
     with open(normpath(path), 'r', encoding='utf-8') as file:
         return json.load(file)
+
+def write_json(data, path):
+    """
+    Writes the given json to the given file.
+    """
+    with open(path, 'w', encoding='utf-8') as file:
+        json.dump(data, file, indent=2, ensure_ascii=False)
 
 def parse_timespan(unparsed):
     """
@@ -115,4 +123,48 @@ def resolve_tlc_exit_code(code):
     }
 
     return tlc_exit_codes[code] if code in tlc_exit_codes else str(code)
+
+def is_state_count_valid(model):
+    """
+    Whether state count info could be valid for the given model.
+    """
+    return model['mode'] == 'exhaustive search' and model['result'] == 'success'
+
+def has_state_count(model):
+    """
+    Whether the given model has state count info.
+    """
+    return 'distinctStates' in model or 'totalStates' in model or 'stateDepth' in model
+
+def get_state_count_info(model):
+    """
+    Gets whatever state count info is present in the given model.
+    """
+    get_or_none = lambda key: model[key] if key in model else None
+    return (get_or_none('distinctStates'), get_or_none('totalStates'), get_or_none('stateDepth'))
+
+def is_state_count_info_correct(model, distinct_states, total_states, state_depth):
+    """
+    Whether the given state count info concords with the model.
+    """
+    expected_distinct_states, expected_total_states, expected_state_depth = get_state_count_info(model)
+    none_or_equal = lambda expected, actual: expected is None or expected == actual
+    # State depth not yet deterministic due to TLC bug: https://github.com/tlaplus/tlaplus/issues/883
+    return none_or_equal(expected_distinct_states, distinct_states) and none_or_equal(expected_total_states, total_states) #and none_or_equal(expected_state_depth, state_depth)
+
+state_count_regex = re.compile(r'(?P<total_states>\d+) states generated, (?P<distinct_states>\d+) distinct states found, 0 states left on queue.')
+state_depth_regex = re.compile(r'The depth of the complete state graph search is (?P<state_depth>\d+).')
+
+def extract_state_count_info(tlc_output):
+    """
+    Parse & extract state count info from TLC output.
+    """
+    state_count_findings = state_count_regex.search(tlc_output)
+    state_depth_findings = state_depth_regex.search(tlc_output)
+    if state_count_findings is None or state_depth_findings is None:
+        return None
+    distinct_states = int(state_count_findings.group('distinct_states'))
+    total_states = int(state_count_findings.group('total_states'))
+    state_depth = int(state_depth_findings.group('state_depth'))
+    return (distinct_states, total_states, state_depth)
 

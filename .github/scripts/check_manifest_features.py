@@ -9,12 +9,15 @@ the manifest.json file. Prominent checks include:
 
 from argparse import ArgumentParser
 from dataclasses import dataclass
+import logging
 import glob
 from os.path import basename, dirname, join, normpath, splitext
 from typing import Any
 import re
 import tla_utils
 from tree_sitter import Language, Parser
+
+logging.basicConfig(level=logging.INFO)
 
 def build_ts_grammar(ts_path):
     """
@@ -199,33 +202,33 @@ def check_features(parser, queries, manifest, examples_root):
     for spec in manifest['specifications']:
         if spec['title'] == '':
             success = False
-            print(f'ERROR: Spec {spec["path"]} does not have a title')
+            logging.error(f'Spec {spec["path"]} does not have a title')
         if spec['description'] == '':
             success = False
-            print(f'ERROR: Spec {spec["path"]} does not have a description')
+            logging.error(f'Spec {spec["path"]} does not have a description')
         if not any(spec['authors']):
             success = False
-            print(f'ERROR: Spec {spec["path"]} does not have any listed authors')
+            logging.error(f'Spec {spec["path"]} does not have any listed authors')
         for module in spec['modules']:
             module_path = module['path']
             tree, text, parse_err = parse_module(examples_root, parser, module_path)
             if parse_err:
                 success = False
-                print(f'ERROR: Module {module["path"]} contains syntax errors')
+                logging.error(f'Module {module["path"]} contains syntax errors')
             expected_features = get_tree_features(tree, queries)
             actual_features = set(module['features'])
             if expected_features != actual_features:
                 success = False
-                print(
-                    f'ERROR: Module {module["path"]} has incorrect features in manifest; '
+                logging.error(
+                    f'Module {module["path"]} has incorrect features in manifest; '
                     + f'expected {list(expected_features)}, actual {list(actual_features)}'
                 )
             expected_imports = get_community_imports(examples_root, tree, text, dirname(module_path), 'proof' in expected_features, queries)
             actual_imports = set(module['communityDependencies'])
             if expected_imports != actual_imports:
                 success = False
-                print(
-                    f'ERROR: Module {module["path"]} has incorrect community dependencies in manifest; '
+                logging.error(
+                    f'Module {module["path"]} has incorrect community dependencies in manifest; '
                     + f'expected {list(expected_imports)}, actual {list(actual_imports)}'
                 )
             for model in module['models']:
@@ -233,10 +236,17 @@ def check_features(parser, queries, manifest, examples_root):
                 actual_features = set(model['features'])
                 if expected_features != actual_features:
                     success = False
-                    print(
-                        f'ERROR: Model {model["path"]} has incorrect features in manifest; '
+                    logging.error(
+                        f'Model {model["path"]} has incorrect features in manifest; '
                         + f'expected {list(expected_features)}, actual {list(actual_features)}'
                     )
+                if tla_utils.has_state_count(model) and not tla_utils.is_state_count_valid(model):
+                    success = False
+                    logging.error(
+                        f'Model {model["path"]} has state count info recorded; this is '
+                        + 'only valid for exhaustive search models that complete successfully.'
+                    )
+
     return success
 
 if __name__ == '__main__':
@@ -253,9 +263,9 @@ if __name__ == '__main__':
     queries = build_queries(TLAPLUS_LANGUAGE)
 
     if check_features(parser, queries, manifest, examples_root):
-        print('SUCCESS: metadata in manifest is correct')
+        logging.info('SUCCESS: metadata in manifest is correct')
         exit(0)
     else:
-        print("ERROR: metadata in manifest is incorrect")
+        logging.error("Metadata in manifest is incorrect")
         exit(1)
 

@@ -45,7 +45,10 @@
               "features": [
                 "ignore deadlock"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 598608,
+              "totalStates": 3141768,
+              "stateDepth": 1
             }
           ]
         },
@@ -107,7 +110,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 0,
+              "totalStates": 0,
+              "stateDepth": 0
             }
           ]
         },
@@ -130,7 +136,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 0,
+              "totalStates": 0,
+              "stateDepth": 0
             }
           ]
         },
@@ -185,7 +194,10 @@
               "features": [
                 "ignore deadlock"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 34534,
+              "totalStates": 104697,
+              "stateDepth": 13
             }
           ]
         }
@@ -267,7 +279,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 6,
+              "totalStates": 15,
+              "stateDepth": 2
             }
           ]
         }
@@ -311,7 +326,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 5150,
+              "totalStates": 20002,
+              "stateDepth": 1
             },
             {
               "path": "specifications/CoffeeCan/CoffeeCan3000Beans.cfg",
@@ -408,7 +426,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 67,
+              "totalStates": 336,
+              "stateDepth": 29
             }
           ]
         }
@@ -479,7 +500,10 @@
                 "liveness",
                 "state constraint"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 50000,
+              "totalStates": 575001,
+              "stateDepth": 17
             }
           ]
         },
@@ -497,7 +521,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 50000,
+              "totalStates": 585401,
+              "stateDepth": 17
             }
           ]
         },
@@ -515,7 +542,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 56492,
+              "totalStates": 237626,
+              "stateDepth": 17
             }
           ]
         },
@@ -552,7 +582,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 65536,
+              "totalStates": 131072,
+              "stateDepth": 1
             }
           ]
         }
@@ -796,7 +829,10 @@
               "features": [
                 "state constraint"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 742,
+              "totalStates": 1523,
+              "stateDepth": 5
             }
           ]
         }
@@ -843,7 +879,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 8554,
+              "totalStates": 8681,
+              "stateDepth": 95
             }
           ]
         },
@@ -915,7 +954,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 27953,
+              "totalStates": 34383,
+              "stateDepth": 6
             }
           ]
         },
@@ -933,7 +975,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4548,
+              "totalStates": 11223,
+              "stateDepth": 9
             }
           ]
         },
@@ -985,7 +1030,10 @@
               "features": [
                 "ignore deadlock"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 2733,
+              "totalStates": 3459,
+              "stateDepth": 6
             }
           ]
         },
@@ -1055,7 +1103,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 0,
+              "totalStates": 0,
+              "stateDepth": 0
             }
           ]
         },
@@ -1228,7 +1279,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4122,
+              "totalStates": 14296,
+              "stateDepth": 36
             }
           ]
         }
@@ -1271,7 +1325,10 @@
               "features": [
                 "symmetry"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 343796,
+              "totalStates": 736012,
+              "stateDepth": 28
             },
             {
               "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC.cfg",
@@ -1413,7 +1470,10 @@
               "features": [
                 "view"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 3003,
+              "totalStates": 6083,
+              "stateDepth": 7
             }
           ]
         },
@@ -1459,7 +1519,10 @@
               "features": [
                 "ignore deadlock"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4,
+              "totalStates": 7,
+              "stateDepth": 1
             }
           ]
         },
@@ -1478,7 +1541,10 @@
                 "liveness",
                 "symmetry"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 25,
+              "totalStates": 82,
+              "stateDepth": 9
             }
           ]
         },
@@ -1498,7 +1564,10 @@
                 "liveness",
                 "symmetry"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 77,
+              "totalStates": 451,
+              "stateDepth": 12
             }
           ]
         },
@@ -1555,7 +1624,10 @@
               "features": [
                 "ignore deadlock"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4,
+              "totalStates": 4,
+              "stateDepth": 2
             }
           ]
         },
@@ -1583,7 +1655,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 3921,
+              "totalStates": 23563,
+              "stateDepth": 17
             }
           ]
         },
@@ -1602,7 +1677,10 @@
                 "ignore deadlock",
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 6752,
+              "totalStates": 41017,
+              "stateDepth": 16
             }
           ]
         },
@@ -1657,7 +1735,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 214,
+              "totalStates": 860,
+              "stateDepth": 14
             }
           ]
         }
@@ -1687,7 +1768,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 21527,
+              "totalStates": 59674,
+              "stateDepth": 13
             }
           ]
         },
@@ -1728,7 +1812,10 @@
                 "ignore deadlock",
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 2881,
+              "totalStates": 6826,
+              "stateDepth": 21
             }
           ]
         },
@@ -1818,7 +1905,10 @@
                 "liveness",
                 "symmetry"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 1207,
+              "totalStates": 13290,
+              "stateDepth": 22
             }
           ]
         }
@@ -1848,7 +1938,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 3605,
+              "totalStates": 20181,
+              "stateDepth": 29
             }
           ]
         },
@@ -1932,7 +2025,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 274678,
+              "totalStates": 1621541,
+              "stateDepth": 43
             }
           ]
         }
@@ -1963,7 +2059,10 @@
                 "ignore deadlock",
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 1236,
+              "totalStates": 10278,
+              "stateDepth": 5
             }
           ]
         },
@@ -2000,7 +2099,10 @@
                 "ignore deadlock",
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 3984,
+              "totalStates": 21784,
+              "stateDepth": 4
             },
             {
               "path": "specifications/SpanningTree/SpanTreeTest5Nodes.cfg",
@@ -2081,7 +2183,10 @@
                 "liveness",
                 "state constraint"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 3528,
+              "totalStates": 24368,
+              "stateDepth": 9
             }
           ]
         },
@@ -2130,7 +2235,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 12,
+              "totalStates": 30,
+              "stateDepth": 2
             }
           ]
         },
@@ -2146,7 +2254,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 12,
+              "totalStates": 30,
+              "stateDepth": 2
             }
           ]
         },
@@ -2162,7 +2273,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 0,
+              "totalStates": 0,
+              "stateDepth": 0
             }
           ]
         },
@@ -2185,7 +2299,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4408,
+              "totalStates": 21400,
+              "stateDepth": 10
             }
           ]
         },
@@ -2203,7 +2320,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 5196,
+              "totalStates": 28170,
+              "stateDepth": 18
             }
           ]
         },
@@ -2333,7 +2453,10 @@
               "features": [
                 "state constraint"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 3864,
+              "totalStates": 9660,
+              "stateDepth": 11
             }
           ]
         },
@@ -2349,7 +2472,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 12,
+              "totalStates": 24,
+              "stateDepth": 1
             }
           ]
         },
@@ -2367,7 +2493,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 12,
+              "totalStates": 24,
+              "stateDepth": 1
             }
           ]
         },
@@ -2399,7 +2528,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 12,
+              "totalStates": 24,
+              "stateDepth": 1
             }
           ]
         },
@@ -2438,7 +2570,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4408,
+              "totalStates": 21400,
+              "stateDepth": 10
             }
           ]
         },
@@ -2456,7 +2591,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 5196,
+              "totalStates": 28170,
+              "stateDepth": 18
             }
           ]
         },
@@ -2581,7 +2719,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 0,
+              "totalStates": 0,
+              "stateDepth": 0
             }
           ]
         },
@@ -2667,7 +2808,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 20,
+              "totalStates": 36,
+              "stateDepth": 3
             }
           ]
         },
@@ -2707,7 +2851,10 @@
                 "liveness",
                 "state constraint"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 240,
+              "totalStates": 392,
+              "stateDepth": 10
             }
           ]
         }
@@ -2737,7 +2884,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 0,
+              "totalStates": 0,
+              "stateDepth": 0
             }
           ]
         }
@@ -2776,7 +2926,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 2790,
+              "totalStates": 2990,
+              "stateDepth": 52
             }
           ]
         }
@@ -2811,7 +2964,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 723,
+              "totalStates": 1842,
+              "stateDepth": 11
             }
           ]
         },
@@ -2830,7 +2986,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 277726,
+              "totalStates": 1454776,
+              "stateDepth": 25
             }
           ]
         }
@@ -2858,7 +3017,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 0,
+              "totalStates": 0,
+              "stateDepth": 0
             }
           ]
         }
@@ -2894,7 +3056,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4,
+              "totalStates": 5,
+              "stateDepth": 4
             }
           ]
         },
@@ -2985,7 +3150,10 @@
                 "ignore deadlock",
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4284,
+              "totalStates": 23988,
+              "stateDepth": 19
             }
           ]
         },
@@ -3030,7 +3198,10 @@
                 "ignore deadlock",
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 54944,
+              "totalStates": 218352,
+              "stateDepth": 21
             }
           ]
         }
@@ -3060,7 +3231,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 17701,
+              "totalStates": 64414,
+              "stateDepth": 16
             }
           ]
         },
@@ -3078,7 +3252,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 1690,
+              "totalStates": 5854,
+              "stateDepth": 7
             }
           ]
         },
@@ -3096,7 +3273,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 1690,
+              "totalStates": 5854,
+              "stateDepth": 7
             }
           ]
         },
@@ -3114,7 +3294,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 400,
+              "totalStates": 633,
+              "stateDepth": 6
             }
           ]
         }
@@ -3148,7 +3331,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 14424,
+              "totalStates": 227344,
+              "stateDepth": 7
             },
             {
               "path": "specifications/bcastByz/bcastByzNoBcast.cfg",
@@ -3158,7 +3344,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 45,
+              "totalStates": 90,
+              "stateDepth": 1
             }
           ]
         }
@@ -3254,7 +3443,10 @@
               "features": [
                 "ignore deadlock"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4199,
+              "totalStates": 26848,
+              "stateDepth": 11
             }
           ]
         },
@@ -3273,7 +3465,10 @@
                 "ignore deadlock",
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4199,
+              "totalStates": 26848,
+              "stateDepth": 11
             }
           ]
         },
@@ -3291,7 +3486,10 @@
               "features": [
                 "ignore deadlock"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 64,
+              "totalStates": 193,
+              "stateDepth": 7
             }
           ]
         },
@@ -3309,7 +3507,10 @@
               "features": [
                 "ignore deadlock"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4199,
+              "totalStates": 26848,
+              "stateDepth": 11
             }
           ]
         },
@@ -3327,7 +3528,10 @@
               "features": [
                 "ignore deadlock"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4197,
+              "totalStates": 26848,
+              "stateDepth": 11
             }
           ]
         }
@@ -3384,7 +3588,10 @@
                 "ignore deadlock",
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4,
+              "totalStates": 4,
+              "stateDepth": 2
             }
           ]
         },
@@ -3425,7 +3632,10 @@
                 "ignore deadlock",
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 6962,
+              "totalStates": 318877,
+              "stateDepth": 15
             }
           ]
         }
@@ -3550,7 +3760,10 @@
                 "ignore deadlock",
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 137,
+              "totalStates": 227,
+              "stateDepth": 10
             }
           ]
         }
@@ -3760,7 +3973,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 75,
+              "totalStates": 116,
+              "stateDepth": 16
             }
           ]
         },
@@ -3824,7 +4040,10 @@
                 "ignore deadlock",
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 46656,
+              "totalStates": 248832,
+              "stateDepth": 1
             }
           ]
         }
@@ -3939,7 +4158,10 @@
               "features": [
                 "ignore deadlock"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 302,
+              "totalStates": 2001,
+              "stateDepth": 9
             }
           ]
         },
@@ -3982,7 +4204,10 @@
               "features": [
                 "ignore deadlock"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 1566,
+              "totalStates": 15986,
+              "stateDepth": 12
             }
           ]
         },
@@ -4009,7 +4234,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 129,
+              "totalStates": 722,
+              "stateDepth": 1
             }
           ]
         },
@@ -4052,7 +4280,10 @@
                 "liveness",
                 "state constraint"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4097,
+              "totalStates": 53271,
+              "stateDepth": 14
             }
           ]
         },
@@ -4135,7 +4366,10 @@
                 "state constraint",
                 "view"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 14,
+              "totalStates": 15,
+              "stateDepth": 14
             }
           ]
         },
@@ -4318,7 +4552,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 63,
+              "totalStates": 99,
+              "stateDepth": 10
             }
           ]
         },
@@ -4337,7 +4574,10 @@
                 "ignore deadlock",
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 305,
+              "totalStates": 376,
+              "stateDepth": 23
             }
           ]
         },
@@ -4356,7 +4596,10 @@
                 "ignore deadlock",
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 83,
+              "totalStates": 93,
+              "stateDepth": 23
             }
           ]
         }
@@ -4409,7 +4652,10 @@
               "features": [
                 "state constraint"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 724274,
+              "totalStates": 2729079,
+              "stateDepth": 61
             }
           ]
         },
@@ -4469,7 +4715,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 3016,
+              "totalStates": 49592,
+              "stateDepth": 7
             }
           ]
         }
@@ -4501,7 +4750,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 24922,
+              "totalStates": 159538,
+              "stateDepth": 16
             }
           ]
         }
@@ -4568,7 +4820,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 0,
+              "totalStates": 0,
+              "stateDepth": 0
             }
           ]
         },
@@ -4688,7 +4943,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 1245,
+              "totalStates": 5841,
+              "stateDepth": 15
             }
           ]
         },
@@ -4722,7 +4980,10 @@
               "features": [
                 "ignore deadlock"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 34,
+              "totalStates": 94,
+              "stateDepth": 7
             }
           ]
         },
@@ -4738,7 +4999,10 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 288,
+              "totalStates": 1146,
+              "stateDepth": 11
             }
           ]
         }
