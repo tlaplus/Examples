@@ -5022,9 +5022,7 @@
         {
           "path": "specifications/YoYo/YoYoNoPruning.tla",
           "communityDependencies": [
-            "UndirectedGraphs",
-            "SequencesExt",
-            "Folds"
+            "UndirectedGraphs"
           ],
           "tlaLanguageVersion": 2,
           "features": [],
@@ -5032,11 +5030,7 @@
         },
         {
           "path": "specifications/YoYo/MCYoYoNoPruning.tla",
-          "communityDependencies": [
-            "UndirectedGraphs",
-            "SequencesExt",
-            "Folds"
-          ],
+          "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
@@ -5058,9 +5052,7 @@
         {
           "path": "specifications/YoYo/YoYoPruning.tla",
           "communityDependencies": [
-            "UndirectedGraphs",
-            "SequencesExt",
-            "Folds"
+            "UndirectedGraphs"
           ],
           "tlaLanguageVersion": 2,
           "features": [],
@@ -5068,11 +5060,7 @@
         },
         {
           "path": "specifications/YoYo/MCYoYoPruning.tla",
-          "communityDependencies": [
-            "UndirectedGraphs",
-            "SequencesExt",
-            "Folds"
-          ],
+          "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": [
@@ -5095,9 +5083,7 @@
         {
           "path": "specifications/YoYo/YoYoAllGraphs.tla",
           "communityDependencies": [
-            "UndirectedGraphs",
-            "SequencesExt",
-            "Folds"
+            "UndirectedGraphs"
           ],
           "tlaLanguageVersion": 2,
           "features": [],
