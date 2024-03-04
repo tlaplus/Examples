@@ -5010,7 +5010,7 @@
     },
     {
       "path": "specifications/YoYo",
-      "title": "YoYo Leader Election Algorithm",
+      "title": "Yo-Yo Leader Election",
       "description": "Algorithm due to Nicola Santoro for leader election in a connected undirected network",
       "sources": ["https://research.nicola-santoro.com/DADA.html"],
       "authors": [
