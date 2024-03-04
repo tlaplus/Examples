@@ -5007,6 +5007,118 @@
           ]
         }
       ]
+    },
+    {
+      "path": "specifications/YoYo",
+      "title": "YoYo Leader Election Algorithm",
+      "description": "Algorithm due to Nicola Santoro for leader election in a connected undirected network",
+      "sources": ["https://research.nicola-santoro.com/DADA.html"],
+      "authors": [
+        "Ludovic Yvoz",
+        "Stephan Merz"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/YoYo/YoYoNoPruning.tla",
+          "communityDependencies": [
+            "UndirectedGraphs",
+            "SequencesExt",
+            "Folds"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/YoYo/MCYoYoNoPruning.tla",
+          "communityDependencies": [
+            "UndirectedGraphs",
+            "SequencesExt",
+            "Folds"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/YoYo/MCYoYoNoPruning.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success",
+              "distinctStates": 60,
+              "totalStates": 110,
+              "stateDepth": 19
+            }
+          ]
+        },
+        {
+          "path": "specifications/YoYo/YoYoPruning.tla",
+          "communityDependencies": [
+            "UndirectedGraphs",
+            "SequencesExt",
+            "Folds"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/YoYo/MCYoYoPruning.tla",
+          "communityDependencies": [
+            "UndirectedGraphs",
+            "SequencesExt",
+            "Folds"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/YoYo/MCYoYoPruning.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success",
+              "distinctStates": 102,
+              "totalStates": 157,
+              "stateDepth": 31
+            }
+          ]
+        },
+        {
+          "path": "specifications/YoYo/YoYoAllGraphs.tla",
+          "communityDependencies": [
+            "UndirectedGraphs",
+            "SequencesExt",
+            "Folds"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/YoYo/YoYoAllGraphs.cfg",
+              "runtime": "00:00:02",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success",
+              "distinctStates": 26731,
+              "totalStates": 48535,
+              "stateDepth": 39
+            }
+          ]
+        }
+      ]
     }
   ]
 }
