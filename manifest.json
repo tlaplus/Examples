@@ -4331,6 +4331,28 @@
           ]
         },
         {
+          "path": "specifications/ewd998/EWD998PCal.tla",
+          "communityDependencies": [
+            "BagsExt"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": ["pluscal"],
+          "models": [
+            {
+              "path": "specifications/ewd998/EWD998PCal.cfg",
+              "runtime": "00:00:21",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [
+                "state constraint",
+                "liveness",
+                "alias"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
           "path": "specifications/ewd998/EWD998Chan.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
