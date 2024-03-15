@@ -9,7 +9,7 @@ It serves as:
 - a collection of case studies in the application of formal specification in TLA<sup>+</sup>
 
 All TLA<sup>+</sup> specs can be found in the [`specifications`](specifications) directory.
-The table below lists all specs and their features, such as whether they are suitable for beginners or use PlusCal.
+The table below lists all specs and their features, such as whether they are suitable for beginners, come with an additional PlusCal variant `(✔)`, or use PlusCal exclusively.
 The [`manifest.json`](manifest.json) file is the source of truth for this table, and is a detailed human- & machine-readable description of the specs & their models.
 Its schema is [`manifest-schema.json`](manifest-schema.json).
 All specs in this repository are subject to CI validation to ensure quality.
@@ -38,7 +38,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Misra Reachability Algorithm](specifications/MisraReachability)                                    | Leslie Lamport                                      |          |      ✔      |    ✔    |     ✔     |          |
 | [Byzantizing Paxos by Refinement](specifications/byzpaxos)                                          | Leslie Lamport                                      |          |      ✔      |    ✔    |     ✔     |          |
 | [EWD840: Termination Detection in a Ring](specifications/ewd840)                                    | Stephan Merz                                        |          |      ✔      |         |     ✔     |          |
-| [EWD998: Termination Detection in a Ring with Asynchronous Message Delivery](specifications/ewd998) | Stephan Merz, Markus Kuppe                          |          |      ✔      |         |     ✔     |          |
+| [EWD998: Termination Detection in a Ring with Asynchronous Message Delivery](specifications/ewd998) | Stephan Merz, Markus Kuppe                          |          |      ✔      |   (✔)   |     ✔     |          |
 | [The Paxos Protocol](specifications/Paxos)                                                          | Leslie Lamport                                      |          |      ✔      |         |     ✔     |          |
 | [Asynchronous Reliable Broadcast](specifications/bcastByz)                                          | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |      ✔      |         |     ✔     |          |
 | [Distributed Mutual Exclusion](specifications/lamport_mutex)                                        | Stephan Merz                                        |          |      ✔      |         |     ✔     |          |
