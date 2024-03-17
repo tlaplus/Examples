@@ -1572,6 +1572,20 @@
           ]
         },
         {
+          "path": "specifications/Paxos/Voting2.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/Paxos/ApaVoting2.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
           "path": "specifications/Paxos/Paxos.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
