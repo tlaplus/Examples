@@ -35,7 +35,7 @@ jobs:
         ## Identify git diff: $(git diff --name-only HEAD^ | grep '.tla')
         ## Install genaiscript runtime: https://microsoft.github.io/genaiscript/reference/cli/
         ## Output LLM response in SARIF format: https://microsoft.github.io/genaiscript/reference/scripts/annotations/ (redirect other output to /dev/null for GH not to also show the annotations)
-        run: npx --yes genaiscript-cli run .github/scripts/TLAi-linter.genai.js $(git diff --name-only HEAD^ | grep '.tla') --max-tokens 2000 --out-annotations results.sarif > /dev/null
+        run: npx --yes genaiscript run .github/scripts/TLAi-linter.genai.js $(git diff --name-only HEAD^ | grep '.tla') --max-tokens 2000 --out-annotations results.sarif > /dev/null
 
       - name: Upload SARIF file
         ## https://sarifweb.azurewebsites.net
