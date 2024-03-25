@@ -166,6 +166,7 @@ Rng(a,b) == { i \in Node: a <= i /\ i <= b }
 (* Safra's inductive invariant                                             *)
 (***************************************************************************)
 Inv == 
+  \* The number of counted messages at each node and the number of messages in transit is consistent.
   /\ P0:: B = Sum(counter, Node)
      (* (Ai: t < i < N: machine nr.i is passive) /\ *)
      (* (Si: t < i < N: ci.i) = q *)
