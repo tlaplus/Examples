@@ -1,6 +1,7 @@
 from datetime import datetime
 import json
 from os.path import join, normpath, pathsep
+from tree_sitter import Language, Parser
 import subprocess
 import re
 
@@ -49,6 +50,29 @@ def write_json(data, path):
     """
     with open(path, 'w', encoding='utf-8') as file:
         json.dump(data, file, indent=2, ensure_ascii=False)
+
+def build_ts_grammar(ts_path):
+    """
+    Builds the tree-sitter-tlaplus grammar and constructs the parser.
+    """
+    ts_build_path = join(ts_path, 'build', 'tree-sitter-languages.so')
+    Language.build_library(ts_build_path, [ts_path])
+    TLAPLUS_LANGUAGE = Language(ts_build_path, 'tlaplus')
+    parser = Parser()
+    parser.set_language(TLAPLUS_LANGUAGE)
+    return (TLAPLUS_LANGUAGE, parser)
+
+def parse_module(examples_root, parser, path):
+    """
+    Parses a .tla file; returns the parse tree along with whether a parse
+    error was detected.
+    """
+    module_text = None
+    path = from_cwd(examples_root, path)
+    with open(path, 'rb') as module_file:
+        module_text = module_file.read()
+    tree = parser.parse(module_text)
+    return (tree, module_text, tree.root_node.has_error)
 
 def parse_timespan(unparsed):
     """

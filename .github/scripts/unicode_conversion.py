@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 from concurrent.futures import ThreadPoolExecutor
 import logging
 from os import cpu_count
-from os.path import dirname, normpath, pathsep
+from os.path import dirname, normpath
 import subprocess
 from subprocess import CompletedProcess
 import tla_utils

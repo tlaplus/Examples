@@ -11,24 +11,12 @@ from argparse import ArgumentParser
 from dataclasses import dataclass
 import logging
 import glob
-from os.path import basename, dirname, join, normpath, splitext
+from os.path import basename, dirname, normpath, splitext
 from typing import Any
 import re
 import tla_utils
-from tree_sitter import Language, Parser
 
 logging.basicConfig(level=logging.INFO)
-
-def build_ts_grammar(ts_path):
-    """
-    Builds the tree-sitter-tlaplus grammar and constructs the parser.
-    """
-    ts_build_path = join(ts_path, 'build', 'tree-sitter-languages.so')
-    Language.build_library(ts_build_path, [ts_path])
-    TLAPLUS_LANGUAGE = Language(ts_build_path, 'tlaplus')
-    parser = Parser()
-    parser.set_language(TLAPLUS_LANGUAGE)
-    return (TLAPLUS_LANGUAGE, parser)
 
 @dataclass
 class Queries:
@@ -61,18 +49,6 @@ def build_queries(language):
 
     return Queries(import_query, module_name_query, feature_query)
 
-def parse_module(examples_root, parser, path):
-    """
-    Parses a .tla file; returns the parse tree along with whether a parse
-    error was detected.
-    """
-    module_text = None
-    path = tla_utils.from_cwd(examples_root, path)
-    with open(path, 'rb') as module_file:
-        module_text = module_file.read()
-    tree = parser.parse(module_text)
-    return (tree, module_text, tree.root_node.has_error)
-
 def get_module_names_in_dir(examples_root, dir):
     """
     Gets the module names of all .tla files in the given directory.
@@ -90,7 +66,7 @@ def get_module_features(examples_root, path, parser, queries):
     """
     Gets notable features for the .tla file at the given path
     """
-    tree, _, _ = parse_module(examples_root, parser, path)
+    tree, _, _ = tla_utils.parse_module(examples_root, parser, path)
     return get_tree_features(tree, queries)
 
 # Regexes mapping to features for models
@@ -190,7 +166,7 @@ def get_community_module_imports(examples_root, parser, path, queries):
     """
     Gets all community modules imported by the .tla file at the given path.
     """
-    tree, text, _ = parse_module(examples_root, parser, path)
+    tree, text, _ = tla_utils.parse_module(examples_root, parser, path)
     has_proof = 'proof' in get_tree_features(tree, queries)
     return get_community_imports(examples_root, tree, text, dirname(path), has_proof, queries)
 
@@ -211,7 +187,7 @@ def check_features(parser, queries, manifest, examples_root):
             logging.error(f'Spec {spec["path"]} does not have any listed authors')
         for module in spec['modules']:
             module_path = module['path']
-            tree, text, parse_err = parse_module(examples_root, parser, module_path)
+            tree, text, parse_err = tla_utils.parse_module(examples_root, parser, module_path)
             if parse_err:
                 success = False
                 logging.error(f'Module {module["path"]} contains syntax errors')
@@ -259,7 +235,7 @@ if __name__ == '__main__':
     manifest = tla_utils.load_json(manifest_path)
     examples_root = dirname(manifest_path)
 
-    (TLAPLUS_LANGUAGE, parser) = build_ts_grammar(normpath(args.ts_path))
+    (TLAPLUS_LANGUAGE, parser) = tla_utils.build_ts_grammar(normpath(args.ts_path))
     queries = build_queries(TLAPLUS_LANGUAGE)
 
     if check_features(parser, queries, manifest, examples_root):
