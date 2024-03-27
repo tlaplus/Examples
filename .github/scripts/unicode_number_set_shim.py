@@ -37,7 +37,13 @@ def build_insertion_point_query(language):
     """
     Builds query to get insertion point for shim definitions.
     """
-    return language.query('((header_line) name: (identifier) (header_line)) @header (extends) @extends')
+    queries = [
+        '(extends) @extends',
+        '(module (instance) @instance)',
+        '(module (local_definition (instance) @instance))',
+        '(module_definition (instance) @module_def_instance)'
+    ]
+    return language.query(' '.join(queries))
 
 def get_required_defs(tree, query):
     """
