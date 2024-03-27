@@ -43,7 +43,7 @@ modules = [
 for path in skip_modules:
     logging.info(f'Skipping {path}')
 
-def convert_module(tlauc_path, command, module_path):
+def convert_module(module_path):
     logging.info(f'Converting {module_path} to {command}')
     result = subprocess.run(
         [tlauc_path, command, '--input', module_path, '--output', module_path, '--overwrite'],
@@ -62,9 +62,9 @@ def convert_module(tlauc_path, command, module_path):
             logging.error(f'Unhandled TLAUC result type {type(result)}: {result.stdout}')
 
 success = True
-for module_path in modules:
-    if not convert_module(tlauc_path, command, module_path):
-        success = False
-
-exit(0 if success else 1)
+thread_count = cpu_count() if not args.verbose else 1
+logging.info(f'Converting using {thread_count} threads')
+with ThreadPoolExecutor(thread_count) as executor:
+    results = executor.map(convert_module, modules)
+    exit(0 if all(results) else 1)
 
