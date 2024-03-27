@@ -50,6 +50,12 @@ main() {
   7z x tlapm.zip
   mv tlapm-main "$DEPS_DIR/tlapm"
   rm tlapm.zip
+  # Get TLAUC
+  mkdir -p "$DEPS_DIR/tlauc"
+  curl -L https://github.com/tlaplus-community/tlauc/releases/download/v0.2.0/tlauc-windows.zip --output tlauc.zip
+  7z x tlauc.zip
+  mv tlauc.exe "$DEPS_DIR/tlauc/"
+  rm tlauc.zip
 }
 
 main "$@"
