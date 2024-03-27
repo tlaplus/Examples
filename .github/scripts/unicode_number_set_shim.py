@@ -17,14 +17,15 @@ logging.basicConfig(level=logging.INFO)
 
 @dataclass
 class NumberSetShim:
+    module          : str
     ascii           : str
     unicode         : str
     capture         : str
 
 shims = [
-    NumberSetShim('Nat', 'ℕ', 'nat'),
-    NumberSetShim('Int', 'ℤ', 'int'),
-    NumberSetShim('Real', 'ℝ', 'real')
+    NumberSetShim('Naturals', 'Nat', 'ℕ', 'nat'),
+    NumberSetShim('Integers', 'Int', 'ℤ', 'int'),
+    NumberSetShim('Reals', 'Real', 'ℝ', 'real')
 ]
 
 def build_number_set_query(language):
@@ -49,19 +50,16 @@ def get_required_defs(tree, query):
     """
     Gets Nat/Int/Real definitions that are used in the module.
     """
-    return set(name for _, name in query.captures(tree.root_node))
+    captures = set(name for _, name in query.captures(tree.root_node))
+    return [shim for shim in shims if shim.capture in captures]
 
-def get_def_text(required_defs):
+def get_def_bytes(shim):
     """
-    Builds the definitions to insert into the module.
+    Builds the definition to insert into the module.
     """
-    return '\n' + '\n'.join(
-        f'LOCAL {shim.unicode} ≜ {shim.ascii}'
-        for shim in shims
-        if shim.capture in required_defs
-    )
+    return bytes(f'\nLOCAL {shim.unicode} ≜ {shim.ascii}', 'utf-8')
 
-def get_insertion_point(tree, query):
+def get_insertion_point(tree, module_bytes, query):
     """
     Find a suitable insertion point in the file: either directly after the
     header, or directly after the EXTENDS statement if it exists.
@@ -75,17 +73,36 @@ def get_insertion_point(tree, query):
         header = next(node for (node, name) in captures if name == 'header')
         return header.byte_range[1]
 
-def insert_defs(module_path, insertion_point, defs):
+def insert_defs(module_path, module_bytes, tree, query, required_defs):
     """
-    Inserts the shim definitions at the given byte offset in the module.
+    Inserts the shim definitions at a good point in the module.
+    """
+    expected_module_imports = set(shim.module for shim in required_defs)
+    insertion_offsets = {}
+    captures = query.captures(tree.root_node)
+    for node, capture_name in captures:
+        match capture_name:
+            case 'extends':
+                extended_modules = [
+                    module_bytes[child.byte_range()[0]:child.byte_range()[1]].decode('utf-8')
+                    for child in node.named_children()
+                ]
+                print(extended_modules)
+                break
+            case 'instance':
+                break
+            case 'module_def_instance':
+                break
+            case _:
+                logging.error(f'Unknown capture {capture_name}')
+                exit(1)
     """
     def_bytes = bytes(defs, 'utf-8')
-    with open(module_path, 'rb+') as module:
+    with open(module_path, 'wb') as module:
         module_bytes = bytearray(module.read())
         module_bytes[insertion_point:insertion_point] = def_bytes
-        module.seek(0)
-        module.truncate()
         module.write(module_bytes)
+    """
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Adds ℕ/ℤ/ℝ Unicode number set shim definitions to modules as needed.')
@@ -115,13 +132,14 @@ if __name__ == '__main__':
 
     for module_path in modules:
         logging.info(f'Processing {module_path}')
-        tree, _, _ = tla_utils.parse_module(examples_root, parser, module_path)
+        tree, module_bytes, parse_failure = tla_utils.parse_module(examples_root, parser, module_path)
+        if parse_failure:
+            logging.error(f'Failed to parse {module_path}')
+            exit(1)
         required_defs = get_required_defs(tree, number_set_query)
         if not any(required_defs):
             logging.info('No shim insertion necessary')
             continue
-        logging.info(f'Inserting defs {required_defs}')
-        defs = get_def_text(required_defs)
-        insertion_point = get_insertion_point(tree, insertion_point_query)
-        insert_defs(module_path, insertion_point, defs)
+        logging.info(f'Inserting defs {[shim.unicode for shim in required_defs]}')
+        insert_defs(module_path, module_bytes, tree, insertion_point_query, required_defs)
 
