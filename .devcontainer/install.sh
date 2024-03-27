@@ -40,13 +40,13 @@ echo 'export PATH=$PATH:/workspace/Examples/tools/tlaps/bin:/workspaces/Examples
 ## Install Apalache
 wget -qN https://github.com/informalsystems/apalache/releases/latest/download/apalache.tgz -P /tmp
 mkdir -p tools/
-tar -xvfz /tmp/apalache.tgz --directory tools/
+tar -zxvf /tmp/apalache.tgz --directory tools/
 echo 'export PATH=$PATH:/workspace/Examples/tools/apalache/bin:/workspaces/Examples/tools/apalache/bin' >> $HOME/.bashrc
 tools/apalache/bin/apalache-mc config --enable-stats=true
 
 ## Install TLAUC
 wget -qN https://github.com/tlaplus-community/tlauc/releases/latest/download/tlauc-linux.tar.gz -P /tmp
 mkdir -p tools/tlauc
-tar -xvfz /tmp/tlauc-linux.tar.gz --directory tools/tlauc/
+tar -zxvf /tmp/tlauc-linux.tar.gz --directory tools/tlauc/
 echo 'export PATH=$PATH:/workspace/Examples/tools/tlauc:/workspaces/Examples/tools/tlauc' >> $HOME/.bashrc
 
