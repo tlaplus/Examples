@@ -170,6 +170,8 @@ Inv ==
   /\ P0:: B = Sum(counter, Node)
      (* (Ai: t < i < N: machine nr.i is passive) /\ *)
      (* (Si: t < i < N: ci.i) = q *)
+     \* The token counter is consistent with the sum of the counters at the nodes that have passed
+     \* the token in the current token round, iff those nodes are inactive.
   /\ \/ P1:: /\ \A i \in Rng(token.pos+1, N-1): active[i] = FALSE \* machine nr.i is passive
              /\ IF token.pos = N-1 
                 THEN token.q = 0 
