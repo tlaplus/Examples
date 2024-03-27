@@ -41,16 +41,26 @@ def build_insertion_point_query(language):
     return language.query('((header_line) name: (identifier) (header_line)) @header (extends) @extends')
 
 def get_required_defs(tree, query):
+    """
+    Gets Nat/Int/Real definitions that are used in the module.
+    """
     return set([name for _, name in query.captures(tree.root_node)])
 
 def get_def_text(required_defs):
-    defs = '\n'
-    for shim in shims:
-        if shim.capture in required_defs:
-            defs += f'LOCAL {shim.unicode} ≜ {shim.ascii}\n'
-    return defs
+    """
+    Builds the definitions to insert into the module.
+    """
+    return '\n' + '\n'.join(
+        f'LOCAL {shim.unicode} ≜ {shim.ascii}'
+        for shim in shims
+        if shim.capture in required_defs
+    )
 
 def get_insertion_point(tree, query):
+    """
+    Find a suitable insertion point in the file: either directly after the
+    header, or directly after the EXTENDS statement if it exists.
+    """
     captures = query.captures(tree.root_node)
     has_extends = any(name for (_, name) in captures if name == 'extends')
     if has_extends:
@@ -61,10 +71,15 @@ def get_insertion_point(tree, query):
         return header.byte_range[1]
 
 def insert_defs(module_path, insertion_point, defs):
+    """
+    Inserts the shim definitions at the given byte offset in the module.
+    """
     def_bytes = bytes(defs, 'utf-8')
     with open(module_path, 'rb+') as module:
         module_bytes = bytearray(module.read())
         module_bytes[insertion_point:insertion_point] = def_bytes
+        module.seek(0)
+        module.truncate()
         module.write(module_bytes)
 
 if __name__ == '__main__':
