@@ -62,7 +62,7 @@ def get_insertion_point(tree, query):
 
 def insert_defs(module_path, insertion_point, defs):
     def_bytes = bytes(defs, 'utf-8')
-    with open(module_path, 'rb+', encoding='utf-8') as module:
+    with open(module_path, 'rb+') as module:
         module_bytes = bytearray(module.read())
         module_bytes[insertion_point:insertion_point] = def_bytes
         module.write(module_bytes)
