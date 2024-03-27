@@ -10,9 +10,8 @@ the relevant Unicode number set is inserted into the top of the file.
 from argparse import ArgumentParser
 from dataclasses import dataclass
 import logging
-from os.path import dirname, join, normpath
+from os.path import dirname, normpath
 import tla_utils
-from tree_sitter import Language, Parser
 
 logging.basicConfig(level=logging.INFO)
 
@@ -32,7 +31,7 @@ def build_number_set_query(language):
     """
     Builds query looking for use of number sets.
     """
-    return language.query(' '.join([f'({shim.capture}_number_set "{shim.unicode}") @{shim.capture}' for shim in shims]))
+    return language.query(' '.join(f'({shim.capture}_number_set "{shim.unicode}") @{shim.capture}' for shim in shims))
 
 def build_insertion_point_query(language):
     """
@@ -44,7 +43,7 @@ def get_required_defs(tree, query):
     """
     Gets Nat/Int/Real definitions that are used in the module.
     """
-    return set([name for _, name in query.captures(tree.root_node)])
+    return set(name for _, name in query.captures(tree.root_node))
 
 def get_def_text(required_defs):
     """
