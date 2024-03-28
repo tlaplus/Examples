@@ -38,6 +38,12 @@ def create_shim_module(module_dir, shim):
     with open(join(module_dir, f'{shim_module_name(shim)}.tla'), 'w', encoding='utf-8') as module:
         module.write(build_shim_module(shim))
 
+def create_shim_modules(examples_root, module_path):
+    module_path = tla_utils.from_cwd(examples_root, module_path)
+    module_dir = dir(module_path)
+    for shim in shims:
+        create_shim_module(module_dir, shim)
+
 def build_imports_query(language):
     """
     Builds query to get import locations for shim insertion.
@@ -124,4 +130,5 @@ if __name__ == '__main__':
             exit(1)
         replace_imports(module_bytes, tree, imports_query)
         write_module(examples_root, module_path, module_bytes)
+        create_shim_modules(examples_root, module_path)
 
