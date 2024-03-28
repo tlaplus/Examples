@@ -35,12 +35,13 @@ def build_shim_module(shim):
     return f'---- MODULE {shim_module_name(shim)} ----\nEXTENDS {shim.module}\n{shim.unicode} ≜ {shim.ascii}\n===='
 
 def create_shim_module(module_dir, shim):
-    with open(join(module_dir, f'{shim_module_name(shim)}.tla'), 'w', encoding='utf-8') as module:
+    shim_path = join(module_dir, f'{shim_module_name(shim)}.tla') 
+    with open(shim_path, 'w', encoding='utf-8') as module:
         module.write(build_shim_module(shim))
 
 def create_shim_modules(examples_root, module_path):
     module_path = tla_utils.from_cwd(examples_root, module_path)
-    module_dir = dir(module_path)
+    module_dir = dirname(module_path)
     for shim in shims:
         create_shim_module(module_dir, shim)
 
