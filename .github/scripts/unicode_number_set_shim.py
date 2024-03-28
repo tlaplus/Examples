@@ -34,15 +34,26 @@ shims = [
 ]
 
 def build_shim_module(shim):
-    imports = [shim.module] + shim.imports
+    """
+    Derives the contents of a shim module.
+    """
+    imports = shim.imports.append(shim.module)
     return f'---- MODULE {shim_module_name(shim.module)} ----\nEXTENDS {", ".join(imports)}\n{shim.unicode} ≜ {shim.ascii}\n===='
 
 def create_shim_module(module_dir, shim):
+    """
+    Creates a shim module for the given shim.
+    """
     shim_path = join(module_dir, f'{shim_module_name(shim.module)}.tla') 
     with open(shim_path, 'w', encoding='utf-8') as module:
         module.write(build_shim_module(shim))
 
 def create_shim_modules(examples_root, module_path):
+    """
+    Creates shim modules in the same directory as the module so they are
+    automatically imported. Since this creates quite a few .tla files, they
+    can be easily deleted with find -iname *_UnicodeShim.tla -delete.
+    """
     module_path = tla_utils.from_cwd(examples_root, module_path)
     module_dir = dirname(module_path)
     for shim in shims:
@@ -61,9 +72,16 @@ def build_imports_query(language):
     return language.query(' '.join(queries))
 
 def node_to_string(module_bytes, node, byte_offset):
+    """
+    Gets the string covered by the given parse tree node.
+    """
     return module_bytes[node.byte_range[0]+byte_offset:node.byte_range[1]+byte_offset].decode('utf-8')
 
 def replace_with_shim(module_bytes, node, byte_offset, shim):
+    """
+    Replace the text covered by the given parse tree node with a reference to
+    a shim module.
+    """
     target = bytes(shim_module_name(shim.module), 'utf-8')
     target_len = len(target)
     source_len = node.byte_range[1] - node.byte_range[0]
@@ -96,6 +114,9 @@ def replace_imports(module_bytes, tree, query):
                 exit(1)
 
 def write_module(examples_root, module_path, module_bytes):
+    """
+    Overwrites a module with the given bytes.
+    """
     module_path = tla_utils.from_cwd(examples_root, module_path)
     with open(module_path, 'wb') as module:
         module.write(module_bytes)
@@ -128,10 +149,10 @@ if __name__ == '__main__':
     for module_path in modules:
         logging.info(f'Processing {module_path}')
         tree, module_bytes, parse_failure = tla_utils.parse_module(examples_root, parser, module_path)
-        module_bytes = bytearray(module_bytes)
         if parse_failure:
             logging.error(f'Failed to parse {module_path}')
             exit(1)
+        module_bytes = bytearray(module_bytes)
         replace_imports(module_bytes, tree, imports_query)
         write_module(examples_root, module_path, module_bytes)
         create_shim_modules(examples_root, module_path)
