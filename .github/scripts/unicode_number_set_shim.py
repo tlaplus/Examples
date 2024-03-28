@@ -12,6 +12,7 @@ from dataclasses import dataclass
 import logging
 from os.path import dirname, normpath, join
 import tla_utils
+from typing import List
 
 logging.basicConfig(level=logging.INFO)
 
@@ -21,24 +22,20 @@ class NumberSetShim:
     ascii           : str
     unicode         : str
     capture         : str
-
-shims = [
-    NumberSetShim('Naturals', 'Nat', 'ℕ', 'nat'),
-    NumberSetShim('Integers', 'Int', 'ℤ', 'int'),
-    NumberSetShim('Reals', 'Real', 'ℝ', 'real')
-]
+    imports         : List[str]
 
 def shim_module_name(shim_module):
     return f'{shim_module}_UnicodeShim'
 
-shim_imports = {
-    'Naturals' : 'Naturals',
-    'Integers' : shim_module_name('Naturals'),
-    'Reals' : shim_module_name('Integers')
-}
+shims = [
+    NumberSetShim('Naturals', 'Nat', 'ℕ', 'nat', []),
+    NumberSetShim('Integers', 'Int', 'ℤ', 'int', [shim_module_name('Naturals')]),
+    NumberSetShim('Reals', 'Real', 'ℝ', 'real', [shim_module_name('Integers')])
+]
 
 def build_shim_module(shim):
-    return f'---- MODULE {shim_module_name(shim.module)} ----\nEXTENDS {shim_imports[shim.module]}\n{shim.unicode} ≜ {shim.ascii}\n===='
+    imports = [shim.module] + shim.imports
+    return f'---- MODULE {shim_module_name(shim.module)} ----\nEXTENDS {", ".join(imports)}\n{shim.unicode} ≜ {shim.ascii}\n===='
 
 def create_shim_module(module_dir, shim):
     shim_path = join(module_dir, f'{shim_module_name(shim.module)}.tla') 
