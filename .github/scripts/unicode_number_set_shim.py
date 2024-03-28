@@ -25,6 +25,9 @@ class NumberSetShim:
     imports         : List[str]
 
 def shim_module_name(shim_module):
+    """
+    The name of the shim module.
+    """
     return f'{shim_module}_UnicodeShim'
 
 shims = [
@@ -37,8 +40,9 @@ def build_shim_module(shim):
     """
     Derives the contents of a shim module.
     """
-    imports = shim.imports.append(shim.module)
-    return f'---- MODULE {shim_module_name(shim.module)} ----\nEXTENDS {", ".join(imports)}\n{shim.unicode} ≜ {shim.ascii}\n===='
+    module_name = shim_module_name(shim.module)
+    imports = ', '.join(shim.imports + [shim.module])
+    return f'---- MODULE {module_name} ----\nEXTENDS {imports}\n{shim.unicode} ≜ {shim.ascii}\n===='
 
 def create_shim_module(module_dir, shim):
     """
@@ -65,9 +69,7 @@ def build_imports_query(language):
     """
     queries = [
         '(extends) @extends',
-        '(module (instance) @instance)',
-        '(module (local_definition (instance) @instance))',
-        '(module_definition (instance) @instance)'
+        '(instance) @instance'
     ]
     return language.query(' '.join(queries))
 
@@ -82,9 +84,9 @@ def replace_with_shim(module_bytes, node, byte_offset, shim):
     Replace the text covered by the given parse tree node with a reference to
     a shim module.
     """
+    source_len = node.byte_range[1] - node.byte_range[0]
     target = bytes(shim_module_name(shim.module), 'utf-8')
     target_len = len(target)
-    source_len = node.byte_range[1] - node.byte_range[0]
     module_bytes[node.byte_range[0]+byte_offset:node.byte_range[1]+byte_offset] = target
     return byte_offset + target_len - source_len
 
@@ -95,23 +97,16 @@ def replace_imports(module_bytes, tree, query):
     shim_modules = {shim.module : shim for shim in shims}
     captures = query.captures(tree.root_node)
     byte_offset = 0
-    for node, capture_name in captures:
-        match capture_name:
-            case 'extends':
-                for imported_module in node.named_children:
-                    imported_module_name = node_to_string(module_bytes, imported_module, byte_offset)
-                    if imported_module_name in shim_modules:
-                        shim = shim_modules[imported_module_name]
-                        byte_offset = replace_with_shim(module_bytes, imported_module, byte_offset, shim)
-            case 'instance':
-                imported_module = node.named_child(0)
-                imported_module_name = node_to_string(module_bytes, imported_module, byte_offset)
-                if imported_module_name in shim_modules:
-                    shim = shim_modules[imported_module_name]
-                    byte_offset = replace_with_shim(module_bytes, imported_module, byte_offset, shim)
-            case _:
-                logging.error(f'Unknown capture {capture_name}')
-                exit(1)
+    imported_modules = [
+        (imported_module, shim_modules[module_name])
+        for imported_module_set in [
+            node.named_children if 'extends' == capture_name else [node.named_child(0)] # @instance capture
+            for node, capture_name in captures
+        ] for imported_module in imported_module_set
+        if (module_name := node_to_string(module_bytes, imported_module, byte_offset)) in shim_modules
+    ]
+    for imported_module, shim in imported_modules:
+        byte_offset = replace_with_shim(module_bytes, imported_module, byte_offset, shim)
 
 def write_module(examples_root, module_path, module_bytes):
     """
