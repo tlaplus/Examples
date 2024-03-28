@@ -28,11 +28,17 @@ shims = [
     NumberSetShim('Reals', 'Real', 'ℝ', 'real')
 ]
 
-def shim_module_name(shim):
-    return f'{shim.module}_UnicodeShim'
+def shim_module_name(shim_module):
+    return f'{shim_module}_UnicodeShim'
+
+shim_imports = {
+    'Naturals' : 'Naturals',
+    'Integers' : shim_module_name('Naturals'),
+    'Reals' : shim_module_name('Integers')
+}
 
 def build_shim_module(shim):
-    return f'---- MODULE {shim_module_name(shim)} ----\nEXTENDS {shim.module}\n{shim.unicode} ≜ {shim.ascii}\n===='
+    return f'---- MODULE {shim_module_name(shim.module)} ----\nEXTENDS {shim_imports[shim.module]}\n{shim.unicode} ≜ {shim.ascii}\n===='
 
 def create_shim_module(module_dir, shim):
     shim_path = join(module_dir, f'{shim_module_name(shim)}.tla') 
@@ -61,7 +67,7 @@ def node_to_string(module_bytes, node, byte_offset):
     return module_bytes[node.byte_range[0]+byte_offset:node.byte_range[1]+byte_offset].decode('utf-8')
 
 def replace_with_shim(module_bytes, node, byte_offset, shim):
-    target = bytes(shim_module_name(shim), 'utf-8')
+    target = bytes(shim_module_name(shim.module), 'utf-8')
     target_len = len(target)
     source_len = node.byte_range[1] - node.byte_range[0]
     module_bytes[node.byte_range[0]+byte_offset:node.byte_range[1]+byte_offset] = target
