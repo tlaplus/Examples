@@ -29,7 +29,7 @@ shims = [
 ]
 
 def shim_module_name(shim):
-    return f'{shim.module}UnicodeShim'
+    return f'{shim.module}_UnicodeShim'
 
 def build_shim_module(shim):
     return f'---- MODULE {shim_module_name(shim)} ----\nEXTENDS {shim.module}\n{shim.unicode} ≜ {shim.ascii}\n===='
@@ -55,8 +55,10 @@ def node_to_string(module_bytes, node, byte_offset):
 
 def replace_with_shim(module_bytes, node, byte_offset, shim):
     target = bytes(shim_module_name(shim), 'utf-8')
+    target_len = len(target)
+    source_len = node.byte_range[1] - node.byte_range[0]
     module_bytes[node.byte_range[0]+byte_offset:node.byte_range[1]+byte_offset] = target
-    return byte_offset + len(target)
+    return byte_offset + target_len - source_len
 
 def replace_imports(module_bytes, tree, query):
     """
