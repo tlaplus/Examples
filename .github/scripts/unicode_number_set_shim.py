@@ -2,20 +2,20 @@
 While Unicode support in the Java tools goes through a trial period, the core
 Naturals/Integers/Reals modules will remain Unicode-free. So, the Unicode
 number sets ℕ, ℤ, and ℝ must be defined in any module that wishes to use
-them. This script iterates through all modules in the manifest and detects
-whether they reference the Unicode number sets; if so, a local definition of
-the relevant Unicode number set is inserted into the top of the file.
+them. This script iterates through all modules in the manifest and replaces
+their imports of the Naturals/Integers/Reals modules with shims containing
+a definition of the Unicode number sets.
 """
 
 from argparse import ArgumentParser
 from dataclasses import dataclass
 import logging
-from os.path import dirname, normpath
+from os.path import dirname, normpath, join
 import tla_utils
 
 logging.basicConfig(level=logging.INFO)
 
-@dataclass
+@dataclass(frozen=True)
 class NumberSetShim:
     module          : str
     ascii           : str
@@ -28,81 +28,65 @@ shims = [
     NumberSetShim('Reals', 'Real', 'ℝ', 'real')
 ]
 
-def build_number_set_query(language):
-    """
-    Builds query looking for use of number sets.
-    """
-    return language.query(' '.join(f'({shim.capture}_number_set "{shim.unicode}") @{shim.capture}' for shim in shims))
+def shim_module_name(shim):
+    return f'{shim.module}UnicodeShim'
 
-def build_insertion_point_query(language):
+def build_shim_module(shim):
+    return f'---- MODULE {shim_module_name(shim)} ----\nEXTENDS {shim.module}\n{shim.unicode} ≜ {shim.ascii}\n===='
+
+def create_shim_module(module_dir, shim):
+    with open(join(module_dir, f'{shim_module_name(shim)}.tla'), 'w', encoding='utf-8') as module:
+        module.write(build_shim_module(shim))
+
+def build_imports_query(language):
     """
-    Builds query to get insertion point for shim definitions.
+    Builds query to get import locations for shim insertion.
     """
     queries = [
         '(extends) @extends',
         '(module (instance) @instance)',
         '(module (local_definition (instance) @instance))',
-        '(module_definition (instance) @module_def_instance)'
+        '(module_definition (instance) @instance)'
     ]
     return language.query(' '.join(queries))
 
-def get_required_defs(tree, query):
-    """
-    Gets Nat/Int/Real definitions that are used in the module.
-    """
-    captures = set(name for _, name in query.captures(tree.root_node))
-    return [shim for shim in shims if shim.capture in captures]
+def node_to_string(module_bytes, node, byte_offset):
+    return module_bytes[node.byte_range[0]+byte_offset:node.byte_range[1]+byte_offset].decode('utf-8')
 
-def get_def_bytes(shim):
-    """
-    Builds the definition to insert into the module.
-    """
-    return bytes(f'\nLOCAL {shim.unicode} ≜ {shim.ascii}', 'utf-8')
+def replace_with_shim(module_bytes, node, byte_offset, shim):
+    target = bytes(shim_module_name(shim), 'utf-8')
+    module_bytes[node.byte_range[0]+byte_offset:node.byte_range[1]+byte_offset] = target
+    return byte_offset + len(target)
 
-def get_insertion_point(tree, module_bytes, query):
+def replace_imports(module_bytes, tree, query):
     """
-    Find a suitable insertion point in the file: either directly after the
-    header, or directly after the EXTENDS statement if it exists.
+    Replaces imports with unicode shim version.
     """
+    shim_modules = {shim.module : shim for shim in shims}
     captures = query.captures(tree.root_node)
-    has_extends = any(name for (_, name) in captures if name == 'extends')
-    if has_extends:
-        extends_node = next(node for (node, name) in captures if name == 'extends')
-        return extends_node.byte_range[1]
-    else:
-        header = next(node for (node, name) in captures if name == 'header')
-        return header.byte_range[1]
-
-def insert_defs(module_path, module_bytes, tree, query, required_defs):
-    """
-    Inserts the shim definitions at a good point in the module.
-    """
-    expected_module_imports = set(shim.module for shim in required_defs)
-    insertion_offsets = {}
-    captures = query.captures(tree.root_node)
+    byte_offset = 0
     for node, capture_name in captures:
         match capture_name:
             case 'extends':
-                extended_modules = [
-                    module_bytes[child.byte_range()[0]:child.byte_range()[1]].decode('utf-8')
-                    for child in node.named_children()
-                ]
-                print(extended_modules)
-                break
+                for imported_module in node.named_children:
+                    imported_module_name = node_to_string(module_bytes, imported_module, byte_offset)
+                    if imported_module_name in shim_modules:
+                        shim = shim_modules[imported_module_name]
+                        byte_offset = replace_with_shim(module_bytes, imported_module, byte_offset, shim)
             case 'instance':
-                break
-            case 'module_def_instance':
-                break
+                imported_module = node.named_child(0)
+                imported_module_name = node_to_string(module_bytes, imported_module, byte_offset)
+                if imported_module_name in shim_modules:
+                    shim = shim_modules[imported_module_name]
+                    byte_offset = replace_with_shim(module_bytes, imported_module, byte_offset, shim)
             case _:
                 logging.error(f'Unknown capture {capture_name}')
                 exit(1)
-    """
-    def_bytes = bytes(defs, 'utf-8')
+
+def write_module(examples_root, module_path, module_bytes):
+    module_path = tla_utils.from_cwd(examples_root, module_path)
     with open(module_path, 'wb') as module:
-        module_bytes = bytearray(module.read())
-        module_bytes[insertion_point:insertion_point] = def_bytes
         module.write(module_bytes)
-    """
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Adds ℕ/ℤ/ℝ Unicode number set shim definitions to modules as needed.')
@@ -119,8 +103,7 @@ if __name__ == '__main__':
     only_modules = [normpath(path) for path in args.only]
 
     (TLAPLUS_LANGUAGE, parser) = tla_utils.build_ts_grammar(normpath(args.ts_path))
-    number_set_query = build_number_set_query(TLAPLUS_LANGUAGE)
-    insertion_point_query = build_insertion_point_query(TLAPLUS_LANGUAGE)
+    imports_query = build_imports_query(TLAPLUS_LANGUAGE)
 
     modules = [
         module['path']
@@ -136,10 +119,6 @@ if __name__ == '__main__':
         if parse_failure:
             logging.error(f'Failed to parse {module_path}')
             exit(1)
-        required_defs = get_required_defs(tree, number_set_query)
-        if not any(required_defs):
-            logging.info('No shim insertion necessary')
-            continue
-        logging.info(f'Inserting defs {[shim.unicode for shim in required_defs]}')
-        insert_defs(module_path, module_bytes, tree, insertion_point_query, required_defs)
+        replace_imports(module_bytes, tree, imports_query)
+        write_module(examples_root, module_path, module_bytes)
 
