@@ -116,6 +116,7 @@ if __name__ == '__main__':
     for module_path in modules:
         logging.info(f'Processing {module_path}')
         tree, module_bytes, parse_failure = tla_utils.parse_module(examples_root, parser, module_path)
+        module_bytes = bytearray(module_bytes)
         if parse_failure:
             logging.error(f'Failed to parse {module_path}')
             exit(1)
