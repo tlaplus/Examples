@@ -41,7 +41,7 @@ def build_shim_module(shim):
     return f'---- MODULE {shim_module_name(shim.module)} ----\nEXTENDS {shim_imports[shim.module]}\n{shim.unicode} ≜ {shim.ascii}\n===='
 
 def create_shim_module(module_dir, shim):
-    shim_path = join(module_dir, f'{shim_module_name(shim)}.tla') 
+    shim_path = join(module_dir, f'{shim_module_name(shim.module)}.tla') 
     with open(shim_path, 'w', encoding='utf-8') as module:
         module.write(build_shim_module(shim))
 
