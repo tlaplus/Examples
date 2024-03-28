@@ -8,7 +8,6 @@ manifest.json file or set as blank/unknown as appropriate.
 """
 
 from check_manifest_features import *
-import json
 import os
 from os.path import basename, dirname, join, normpath, relpath, splitext
 from pathlib import PureWindowsPath
@@ -174,7 +173,7 @@ if __name__ == '__main__':
     ci_ignore_path = normpath(args.ci_ignore_path)
     ignored_dirs = tla_utils.get_ignored_dirs(ci_ignore_path)
 
-    (TLAPLUS_LANGUAGE, parser) = build_ts_grammar(normpath(args.ts_path))
+    (TLAPLUS_LANGUAGE, parser) = tla_utils.build_ts_grammar(normpath(args.ts_path))
     queries = build_queries(TLAPLUS_LANGUAGE)
 
     old_manifest = tla_utils.load_json(manifest_path)
