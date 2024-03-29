@@ -58,8 +58,6 @@ modules_failing_unicode_parsing = [
     # Defines Real in module
     'specifications/SpecifyingSystems/RealTime/MCRealTime.tla',
     'specifications/SpecifyingSystems/RealTime/MCRealTimeHourClock.tla',
-    'specifications/SpecifyingSystems/RealTime/RTMemory.tla',
-    'specifications/SpecifyingSystems/RealTime/RTWriteThroughCache.tla',
     # Standard modules
     'specifications/SpecifyingSystems/Standard/Naturals.tla',
     'specifications/SpecifyingSystems/Standard/Integers.tla',

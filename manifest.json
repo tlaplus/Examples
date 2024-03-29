@@ -2687,7 +2687,7 @@
           "models": []
         },
         {
-          "path": "specifications/SpecifyingSystems/RealTime/RealTime.tla",
+          "path": "specifications/SpecifyingSystems/RealTime/RealTime_SS.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],

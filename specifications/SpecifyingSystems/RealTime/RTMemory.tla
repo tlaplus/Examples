@@ -1,5 +1,5 @@
 --------------------- MODULE RTMemory ----------------------
-EXTENDS MemoryInterface, RealTime
+EXTENDS MemoryInterface, RealTime_SS
 CONSTANT Rho
 ASSUME (Rho \in Real) /\ (Rho > 0)
  
