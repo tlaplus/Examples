@@ -68,16 +68,16 @@ def build_imports_query(language):
     Builds query to get import locations for shim insertion.
     """
     queries = [
-        '(extends) @extends',
-        '(instance) @instance'
+        '(extends (identifier_ref) @import)',
+        '(instance (identifier_ref) @import)'
     ]
     return language.query(' '.join(queries))
 
-def node_to_string(module_bytes, node, byte_offset):
+def node_to_string(module_bytes, node):
     """
     Gets the string covered by the given parse tree node.
     """
-    return module_bytes[node.byte_range[0]+byte_offset:node.byte_range[1]+byte_offset].decode('utf-8')
+    return module_bytes[node.byte_range[0]:node.byte_range[1]].decode('utf-8')
 
 def replace_with_shim(module_bytes, node, byte_offset, shim):
     """
@@ -95,16 +95,12 @@ def replace_imports(module_bytes, tree, query):
     Replaces imports with unicode shim version.
     """
     shim_modules = {shim.module : shim for shim in shims}
-    captures = query.captures(tree.root_node)
-    byte_offset = 0
     imported_modules = [
         (imported_module, shim_modules[module_name])
-        for imported_module_set in [
-            node.named_children if 'extends' == capture_name else [node.named_child(0)] # @instance capture
-            for node, capture_name in captures
-        ] for imported_module in imported_module_set
-        if (module_name := node_to_string(module_bytes, imported_module, byte_offset)) in shim_modules
+        for imported_module, _ in query.captures(tree.root_node)
+        if (module_name := node_to_string(module_bytes, imported_module)) in shim_modules
     ]
+    byte_offset = 0
     for imported_module, shim in imported_modules:
         byte_offset = replace_with_shim(module_bytes, imported_module, byte_offset, shim)
 

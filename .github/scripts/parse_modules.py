@@ -54,19 +54,7 @@ def parse_module(path):
 
 manifest = tla_utils.load_json(manifest_path)
 
-specs_failing_unicode_parsing = [
-    # TLAPS.tla operator null in level-checking
-    'specifications/ewd840',
-    'specifications/sums_even',
-    'specifications/ewd998',
-    'specifications/TwoPhase',
-    'specifications/byzpaxos',
-]
-
 modules_failing_unicode_parsing = [
-    # this.operator null in level-checking
-    'specifications/SpecifyingSystems/Liveness/LiveHourClock.tla',
-    'specifications/SpecifyingSystems/Liveness/MCLiveWriteThroughCache.tla',
     # Unknown operator R
     'specifications/SpecifyingSystems/RealTime/MCRealTime.tla',
     'specifications/SpecifyingSystems/RealTime/MCRealTimeHourClock.tla',
@@ -79,20 +67,11 @@ modules_failing_unicode_parsing = [
     'specifications/SpecifyingSystems/Standard/Reals.tla',
     'specifications/SpecifyingSystems/Standard/ProtoReals.tla', # root
     'specifications/SpecifyingSystems/Standard/Peano.tla',
-    # Level-checking of ASSUME
-    'specifications/NanoBlockchain/MCNano.tla',
-    'specifications/NanoBlockchain/Nano.tla', # root
     # PlusCal illegal lexeme
     'specifications/byzpaxos/BPConProof.tla',
     'specifications/byzpaxos/Consensus.tla', # root
     'specifications/byzpaxos/PConProof.tla', # root
     'specifications/byzpaxos/VoteProof.tla',
-    # TLAPS null operator when level-checking
-    'specifications/lamport_mutex/LamportMutex_proofs.tla',
-    'specifications/lamport_mutex/NaturalsInduction.tla',
-    'specifications/lamport_mutex/SequenceTheorems.tla',
-    'specifications/lamport_mutex/WellFoundedInduction.tla',
-    'specifications/lamport_mutex/TLAPS.tla', # root
 ]
 
 # List of all modules to parse and whether they should use TLAPS imports
@@ -101,7 +80,6 @@ modules = [
     for spec in manifest['specifications']
     for module in spec['modules']
         if normpath(module['path']) not in skip_modules
-        and spec['path'] not in specs_failing_unicode_parsing
         and module['path'] not in modules_failing_unicode_parsing
         and (only_modules == [] or normpath(module['path']) in only_modules)
 ]
