@@ -1,5 +1,5 @@
 ----------------------- MODULE RTWriteThroughCache --------------------------
-EXTENDS WriteThroughCache, RealTime
+EXTENDS WriteThroughCache, RealTime_SS
 
 CONSTANT N
 ASSUME (N \in Nat) /\ (Proc = 0 .. N-1)
