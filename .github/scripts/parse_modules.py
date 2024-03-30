@@ -54,30 +54,12 @@ def parse_module(path):
 
 manifest = tla_utils.load_json(manifest_path)
 
-modules_failing_unicode_parsing = [
-    # Defines Real in module
-    'specifications/SpecifyingSystems/RealTime/MCRealTime.tla',
-    'specifications/SpecifyingSystems/RealTime/MCRealTimeHourClock.tla',
-    # Standard modules
-    'specifications/SpecifyingSystems/Standard/Naturals.tla',
-    'specifications/SpecifyingSystems/Standard/Integers.tla',
-    'specifications/SpecifyingSystems/Standard/Reals.tla',
-    'specifications/SpecifyingSystems/Standard/ProtoReals.tla', # root
-    'specifications/SpecifyingSystems/Standard/Peano.tla',
-    # PlusCal illegal lexeme
-    'specifications/byzpaxos/BPConProof.tla',
-    'specifications/byzpaxos/Consensus.tla', # root
-    'specifications/byzpaxos/PConProof.tla', # root
-    'specifications/byzpaxos/VoteProof.tla',
-]
-
 # List of all modules to parse and whether they should use TLAPS imports
 modules = [
     tla_utils.from_cwd(examples_root, module['path'])
     for spec in manifest['specifications']
     for module in spec['modules']
         if normpath(module['path']) not in skip_modules
-        and module['path'] not in modules_failing_unicode_parsing
         and (only_modules == [] or normpath(module['path']) in only_modules)
 ]
 
