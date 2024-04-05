@@ -7,20 +7,23 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["title", "description", "source", "authors", "path", "tags", "modules"],
+        "required": ["title", "description", "sources", "authors", "path", "tags", "modules"],
         "additionalProperties": false,
         "properties": {
           "path": {"type": "string"},
           "title": {"type": "string"},
           "description": {"type": "string"},
-          "source": {"type": "string"},
+          "sources": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
           "authors": {
             "type": "array",
             "items": {"type": "string"}
           },
           "tags": {
             "type": "array",
-            "items": {"enum": ["beginner"]}
+            "items": {"enum": ["beginner", "intermediate", "ewd"]}
           },
           "modules": {
             "type": "array",
@@ -44,7 +47,7 @@
                   "items": {
                     "type": "object",
                     "additionalProperties": false,
-                    "required": ["path", "runtime", "size", "mode", "config", "features", "result"],
+                    "required": ["path", "runtime", "size", "mode", "features", "result"],
                     "properties": {
                       "path": {"type": "string"},
                       "runtime": {
@@ -52,6 +55,9 @@
                         "pattern": "^(([0-9][0-9]:[0-9][0-9]:[0-9][0-9])|unknown)$"
                       },
                       "size": {"enum": ["small", "medium", "large", "unknown"]},
+                      "distinctStates": {"type": "integer"},
+                      "totalStates": {"type": "integer"},
+                      "stateDepth": {"type": "integer"},
                       "mode": {
                         "oneOf": [
                           {
@@ -74,15 +80,11 @@
                           }
                         ]
                       },
-                      "config": {
-                        "type": "array",
-                        "items": {"enum": ["ignore deadlock"]}
-                      },
                       "features": {
                         "type": "array",
-                        "items": {"enum": ["liveness", "symmetry", "view", "alias", "state constraint"]}
+                        "items": {"enum": ["liveness", "symmetry", "view", "alias", "state constraint", "ignore deadlock"]}
                       },
-                      "result": {"enum": ["success", "safety failure", "liveness failure", "deadlock failure", "unknown"]}
+                      "result": {"enum": ["success", "assumption failure", "deadlock failure", "safety failure", "liveness failure", "unknown"]}
                     }
                   }
                 }

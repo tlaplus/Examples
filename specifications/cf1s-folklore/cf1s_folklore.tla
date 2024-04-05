@@ -150,9 +150,7 @@ OneStep0_Ltl ==
 (* If all processes propose 1, then every process crashes or decides 1. *)
 OneStep1_Ltl ==  
   (\A i \in Proc : pc[i] = "V1") => <>(\A i \in Proc : pc[i] # "U0" /\ pc[i] # "U1" /\ pc[i] # "D0")
-  
-         
-
+ 
 =============================================================================
 \* Modification History
 \* Last modified Mon Jul 09 13:26:59 CEST 2018 by tthai

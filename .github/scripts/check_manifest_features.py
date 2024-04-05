@@ -9,22 +9,14 @@ the manifest.json file. Prominent checks include:
 
 from argparse import ArgumentParser
 from dataclasses import dataclass
+import logging
 import glob
-from os.path import basename, dirname, join, normpath, splitext
+from os.path import basename, dirname, normpath, splitext
 from typing import Any
+import re
 import tla_utils
-from tree_sitter import Language, Parser
 
-def build_ts_grammar(ts_path):
-    """
-    Builds the tree-sitter-tlaplus grammar and constructs the parser.
-    """
-    ts_build_path = join(ts_path, 'build', 'tree-sitter-languages.so')
-    Language.build_library(ts_build_path, [ts_path])
-    TLAPLUS_LANGUAGE = Language(ts_build_path, 'tlaplus')
-    parser = Parser()
-    parser.set_language(TLAPLUS_LANGUAGE)
-    return (TLAPLUS_LANGUAGE, parser)
+logging.basicConfig(level=logging.INFO)
 
 @dataclass
 class Queries:
@@ -57,18 +49,6 @@ def build_queries(language):
 
     return Queries(import_query, module_name_query, feature_query)
 
-def parse_module(examples_root, parser, path):
-    """
-    Parses a .tla file; returns the parse tree along with whether a parse
-    error was detected.
-    """
-    module_text = None
-    path = tla_utils.from_cwd(examples_root, path)
-    with open(path, 'rb') as module_file:
-        module_text = module_file.read()
-    tree = parser.parse(module_text)
-    return (tree, module_text, tree.root_node.has_error)
-
 def get_module_names_in_dir(examples_root, dir):
     """
     Gets the module names of all .tla files in the given directory.
@@ -86,24 +66,25 @@ def get_module_features(examples_root, path, parser, queries):
     """
     Gets notable features for the .tla file at the given path
     """
-    tree, _, _ = parse_module(examples_root, parser, path)
+    tree, _, _ = tla_utils.parse_module(examples_root, parser, path)
     return get_tree_features(tree, queries)
 
-# Keywords mapping to features for models
+# Regexes mapping to features for models
 model_features = {
-    'PROPERTY': 'liveness',
-    'PROPERTIES': 'liveness',
-    'SYMMETRY': 'symmetry',
-    'ALIAS': 'alias',
-    'VIEW': 'view',
-    'CONSTRAINT': 'state constraint',
-    'CONSTRAINTS': 'state constraint',
+    re.compile('^PROPERTY', re.MULTILINE) : 'liveness',
+    re.compile('^PROPERTIES', re.MULTILINE): 'liveness',
+    re.compile('^SYMMETRY', re.MULTILINE): 'symmetry',
+    re.compile('^ALIAS', re.MULTILINE): 'alias',
+    re.compile('^VIEW', re.MULTILINE): 'view',
+    re.compile('^CONSTRAINT', re.MULTILINE): 'state constraint',
+    re.compile('^CONSTRAINTS', re.MULTILINE): 'state constraint',
+    re.compile('^CHECK_DEADLOCK\\s+FALSE', re.MULTILINE) : 'ignore deadlock'
 }
 
 def get_model_features(examples_root, path):
     """
     Finds features present in the given .cfg model file.
-    This will be a best-effort text search until a tree-sitter grammar is
+    This will be a best-effort regex search until a tree-sitter grammar is
     created for .cfg files.
     """
     path = tla_utils.from_cwd(examples_root, path)
@@ -111,10 +92,9 @@ def get_model_features(examples_root, path):
     model_text = None
     with open(path, 'rt') as model_file:
         model_text = model_file.read()
-    for line in model_text.split('\n'):
-        tokens = line.split()
-        if len(tokens) > 0 and tokens[0] in model_features:
-            features.append(model_features[tokens[0]])
+    for regex, feature in model_features.items():
+        if regex.search(model_text):
+            features.append(feature)
     return set(features)
 
 # All the standard modules available when using TLC
@@ -186,7 +166,7 @@ def get_community_module_imports(examples_root, parser, path, queries):
     """
     Gets all community modules imported by the .tla file at the given path.
     """
-    tree, text, _ = parse_module(examples_root, parser, path)
+    tree, text, _ = tla_utils.parse_module(examples_root, parser, path)
     has_proof = 'proof' in get_tree_features(tree, queries)
     return get_community_imports(examples_root, tree, text, dirname(path), has_proof, queries)
 
@@ -198,33 +178,33 @@ def check_features(parser, queries, manifest, examples_root):
     for spec in manifest['specifications']:
         if spec['title'] == '':
             success = False
-            print(f'ERROR: Spec {spec["path"]} does not have a title')
+            logging.error(f'Spec {spec["path"]} does not have a title')
         if spec['description'] == '':
             success = False
-            print(f'ERROR: Spec {spec["path"]} does not have a description')
+            logging.error(f'Spec {spec["path"]} does not have a description')
         if not any(spec['authors']):
             success = False
-            print(f'ERROR: Spec {spec["path"]} does not have any listed authors')
+            logging.error(f'Spec {spec["path"]} does not have any listed authors')
         for module in spec['modules']:
             module_path = module['path']
-            tree, text, parse_err = parse_module(examples_root, parser, module_path)
+            tree, text, parse_err = tla_utils.parse_module(examples_root, parser, module_path)
             if parse_err:
                 success = False
-                print(f'ERROR: Module {module["path"]} contains syntax errors')
+                logging.error(f'Module {module["path"]} contains syntax errors')
             expected_features = get_tree_features(tree, queries)
             actual_features = set(module['features'])
             if expected_features != actual_features:
                 success = False
-                print(
-                    f'ERROR: Module {module["path"]} has incorrect features in manifest; '
+                logging.error(
+                    f'Module {module["path"]} has incorrect features in manifest; '
                     + f'expected {list(expected_features)}, actual {list(actual_features)}'
                 )
             expected_imports = get_community_imports(examples_root, tree, text, dirname(module_path), 'proof' in expected_features, queries)
             actual_imports = set(module['communityDependencies'])
             if expected_imports != actual_imports:
                 success = False
-                print(
-                    f'ERROR: Module {module["path"]} has incorrect community dependencies in manifest; '
+                logging.error(
+                    f'Module {module["path"]} has incorrect community dependencies in manifest; '
                     + f'expected {list(expected_imports)}, actual {list(actual_imports)}'
                 )
             for model in module['models']:
@@ -232,10 +212,17 @@ def check_features(parser, queries, manifest, examples_root):
                 actual_features = set(model['features'])
                 if expected_features != actual_features:
                     success = False
-                    print(
-                        f'ERROR: Model {model["path"]} has incorrect features in manifest; '
+                    logging.error(
+                        f'Model {model["path"]} has incorrect features in manifest; '
                         + f'expected {list(expected_features)}, actual {list(actual_features)}'
                     )
+                if tla_utils.has_state_count(model) and not tla_utils.is_state_count_valid(model):
+                    success = False
+                    logging.error(
+                        f'Model {model["path"]} has state count info recorded; this is '
+                        + 'only valid for exhaustive search models that complete successfully.'
+                    )
+
     return success
 
 if __name__ == '__main__':
@@ -248,13 +235,13 @@ if __name__ == '__main__':
     manifest = tla_utils.load_json(manifest_path)
     examples_root = dirname(manifest_path)
 
-    (TLAPLUS_LANGUAGE, parser) = build_ts_grammar(normpath(args.ts_path))
+    (TLAPLUS_LANGUAGE, parser) = tla_utils.build_ts_grammar(normpath(args.ts_path))
     queries = build_queries(TLAPLUS_LANGUAGE)
 
     if check_features(parser, queries, manifest, examples_root):
-        print('SUCCESS: metadata in manifest is correct')
+        logging.info('SUCCESS: metadata in manifest is correct')
         exit(0)
     else:
-        print("ERROR: metadata in manifest is incorrect")
+        logging.error("Metadata in manifest is incorrect")
         exit(1)
 

@@ -8,13 +8,11 @@ manifest.json file or set as blank/unknown as appropriate.
 """
 
 from check_manifest_features import *
-import json
 import os
 from os.path import basename, dirname, join, normpath, relpath, splitext
 from pathlib import PureWindowsPath
 import glob
 import tla_utils
-from tree_sitter import Language, Parser
 
 def to_posix(path):
     """
@@ -53,15 +51,20 @@ def get_cfg_files(examples_root, tla_path):
     Assume a .cfg file in the same directory as the .tla file and with the
     same name is a model of that .tla file; also assume this of any .cfg
     files where the .tla file name is only a prefix of the .cfg file name,
-    unless there are other .tla file names in the directory that exactly
-    match the .cfg file name.
+    unless there are other .tla file names in the directory that are longer
+    prefixes of the .cfg file name.
     """
     parent_dir = dirname(tla_path)
     module_name, _ = splitext(basename(tla_path))
     other_module_names = [other for other in get_module_names_in_dir(examples_root, parent_dir) if other != module_name]
     return [
-        path for path in glob.glob(f'{join(parent_dir, module_name)}*.cfg', root_dir=examples_root)
-        if splitext(basename(path))[0] not in other_module_names
+        path
+        for path in glob.glob(f'{join(parent_dir, module_name)}*.cfg', root_dir=examples_root)
+        if not any([
+            splitext(basename(path))[0].startswith(other_module_name)
+            for other_module_name in other_module_names
+            if len(other_module_name) > len(module_name)
+        ])
     ]
 
 def generate_new_manifest(examples_root, ignored_dirs, parser, queries):
@@ -74,7 +77,7 @@ def generate_new_manifest(examples_root, ignored_dirs, parser, queries):
                 'path': to_posix(spec_path),
                 'title': spec_name,
                 'description': '',
-                'source': '',
+                'sources': [],
                 'authors': [],
                 'tags': [],
                 'modules': [
@@ -89,7 +92,6 @@ def generate_new_manifest(examples_root, ignored_dirs, parser, queries):
                                 'runtime': 'unknown',
                                 'size': 'unknown',
                                 'mode': 'exhaustive search',
-                                'config': [],
                                 'features': sorted(list(get_model_features(examples_root, cfg_path))),
                                 'result': 'unknown'
                             }
@@ -113,10 +115,9 @@ def find_corresponding_spec(old_spec, new_manifest):
     return specs[0] if any(specs) else None
 
 def integrate_spec_info(old_spec, new_spec):
-    fields = ['title', 'description', 'source', 'tags']
+    fields = ['title', 'description', 'authors', 'sources', 'tags']
     for field in fields:
         new_spec[field] = old_spec[field]
-    new_spec['authors'] = old_spec['authors']
 
 def find_corresponding_module(old_module, new_spec):
     modules = [
@@ -138,9 +139,10 @@ def find_corresponding_model(old_model, new_module):
     return models[0] if any(models) else None
 
 def integrate_model_info(old_model, new_model):
-    fields = ['runtime', 'size', 'mode', 'config', 'result']
+    fields = ['runtime', 'size', 'mode', 'result', 'distinctStates', 'totalStates', 'stateDepth']
     for field in fields:
-        new_model[field] = old_model[field]
+        if field in old_model:
+            new_model[field] = old_model[field]
 
 def integrate_old_manifest_into_new(old_manifest, new_manifest):
     for old_spec in old_manifest['specifications']:
@@ -171,14 +173,12 @@ if __name__ == '__main__':
     ci_ignore_path = normpath(args.ci_ignore_path)
     ignored_dirs = tla_utils.get_ignored_dirs(ci_ignore_path)
 
-    (TLAPLUS_LANGUAGE, parser) = build_ts_grammar(normpath(args.ts_path))
+    (TLAPLUS_LANGUAGE, parser) = tla_utils.build_ts_grammar(normpath(args.ts_path))
     queries = build_queries(TLAPLUS_LANGUAGE)
 
     old_manifest = tla_utils.load_json(manifest_path)
     new_manifest = generate_new_manifest(examples_root, ignored_dirs, parser, queries)
     integrate_old_manifest_into_new(old_manifest, new_manifest)
 
-    # Write generated manifest to file
-    with open(manifest_path, 'w', encoding='utf-8') as new_manifest_file:
-        json.dump(new_manifest, new_manifest_file, indent=2, ensure_ascii=False)
+    tla_utils.write_json(new_manifest, manifest_path)
 

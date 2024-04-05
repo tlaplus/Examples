@@ -1,7 +1,9 @@
 from datetime import datetime
 import json
 from os.path import join, normpath, pathsep
+from tree_sitter import Language, Parser
 import subprocess
+import re
 
 def from_cwd(root, path):
     """
@@ -42,6 +44,36 @@ def load_json(path):
     with open(normpath(path), 'r', encoding='utf-8') as file:
         return json.load(file)
 
+def write_json(data, path):
+    """
+    Writes the given json to the given file.
+    """
+    with open(path, 'w', encoding='utf-8') as file:
+        json.dump(data, file, indent=2, ensure_ascii=False)
+
+def build_ts_grammar(ts_path):
+    """
+    Builds the tree-sitter-tlaplus grammar and constructs the parser.
+    """
+    ts_build_path = join(ts_path, 'build', 'tree-sitter-languages.so')
+    Language.build_library(ts_build_path, [ts_path])
+    TLAPLUS_LANGUAGE = Language(ts_build_path, 'tlaplus')
+    parser = Parser()
+    parser.set_language(TLAPLUS_LANGUAGE)
+    return (TLAPLUS_LANGUAGE, parser)
+
+def parse_module(examples_root, parser, path):
+    """
+    Parses a .tla file; returns the parse tree along with whether a parse
+    error was detected.
+    """
+    module_text = None
+    path = from_cwd(examples_root, path)
+    with open(path, 'rb') as module_file:
+        module_text = module_file.read()
+    tree = parser.parse(module_text)
+    return (tree, module_text, tree.root_node.has_error)
+
 def parse_timespan(unparsed):
     """
     Parses the timespan format used in the manifest.json format.
@@ -67,14 +99,7 @@ def get_run_mode(mode):
     else:
         raise NotImplementedError(f'Undefined model-check mode {mode}')
 
-def get_config(config):
-    """
-    Converts the model config found in manifest.json into TLC CLI
-    parameters.
-    """
-    return ['-deadlock'] if 'ignore deadlock' in config else []
-
-def check_model(tools_jar_path, module_path, model_path, tlapm_lib_path, community_jar_path, mode, config, hard_timeout_in_seconds):
+def check_model(tools_jar_path, module_path, model_path, tlapm_lib_path, community_jar_path, mode, hard_timeout_in_seconds):
     """
     Model-checks the given model against the given module.
     """
@@ -98,7 +123,7 @@ def check_model(tools_jar_path, module_path, model_path, tlapm_lib_path, communi
                 '-workers', 'auto',
                 '-lncheck', 'final',
                 '-cleanup'
-            ] + get_config(config) + get_run_mode(mode),
+            ] + get_run_mode(mode),
             timeout=hard_timeout_in_seconds,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
@@ -115,10 +140,55 @@ def resolve_tlc_exit_code(code):
     """
     tlc_exit_codes = {
         0   : 'success',
+        10  : 'assumption failure',
         11  : 'deadlock failure',
         12  : 'safety failure',
         13  : 'liveness failure'
     }
 
     return tlc_exit_codes[code] if code in tlc_exit_codes else str(code)
+
+def is_state_count_valid(model):
+    """
+    Whether state count info could be valid for the given model.
+    """
+    return model['mode'] == 'exhaustive search' and model['result'] == 'success'
+
+def has_state_count(model):
+    """
+    Whether the given model has state count info.
+    """
+    return 'distinctStates' in model or 'totalStates' in model or 'stateDepth' in model
+
+def get_state_count_info(model):
+    """
+    Gets whatever state count info is present in the given model.
+    """
+    get_or_none = lambda key: model[key] if key in model else None
+    return (get_or_none('distinctStates'), get_or_none('totalStates'), get_or_none('stateDepth'))
+
+def is_state_count_info_correct(model, distinct_states, total_states, state_depth):
+    """
+    Whether the given state count info concords with the model.
+    """
+    expected_distinct_states, expected_total_states, expected_state_depth = get_state_count_info(model)
+    none_or_equal = lambda expected, actual: expected is None or expected == actual
+    # State depth not yet deterministic due to TLC bug: https://github.com/tlaplus/tlaplus/issues/883
+    return none_or_equal(expected_distinct_states, distinct_states) and none_or_equal(expected_total_states, total_states) #and none_or_equal(expected_state_depth, state_depth)
+
+state_count_regex = re.compile(r'(?P<total_states>\d+) states generated, (?P<distinct_states>\d+) distinct states found, 0 states left on queue.')
+state_depth_regex = re.compile(r'The depth of the complete state graph search is (?P<state_depth>\d+).')
+
+def extract_state_count_info(tlc_output):
+    """
+    Parse & extract state count info from TLC output.
+    """
+    state_count_findings = state_count_regex.search(tlc_output)
+    state_depth_findings = state_depth_regex.search(tlc_output)
+    if state_count_findings is None or state_depth_findings is None:
+        return None
+    distinct_states = int(state_count_findings.group('distinct_states'))
+    total_states = int(state_count_findings.group('total_states'))
+    state_depth = int(state_depth_findings.group('state_depth'))
+    return (distinct_states, total_states, state_depth)
 

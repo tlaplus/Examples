@@ -15,14 +15,20 @@ parser.add_argument('--tools_jar_path', help='Path to the tla2tools.jar file', r
 parser.add_argument('--tlapm_lib_path', help='Path to the TLA+ proof manager module directory; .tla files should be in this directory', required=True)
 parser.add_argument('--community_modules_jar_path', help='Path to the CommunityModules-deps.jar file', required=True)
 parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+parser.add_argument('--skip', nargs='+', help='Space-separated list of .tla modules to skip parsing', required=False, default=[])
+parser.add_argument('--only', nargs='+', help='If provided, only parse models in this space-separated list', required=False, default=[])
+parser.add_argument('--verbose', help='Set logging output level to debug', action='store_true')
 args = parser.parse_args()
+
+logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
 
 tools_jar_path = normpath(args.tools_jar_path)
 tlaps_modules = normpath(args.tlapm_lib_path)
 community_modules = normpath(args.community_modules_jar_path)
 manifest_path = normpath(args.manifest_path)
 examples_root = dirname(manifest_path)
-logging.basicConfig(level=logging.INFO)
+skip_modules = [normpath(path) for path in args.skip]
+only_modules = [normpath(path) for path in args.only]
 
 def parse_module(path):
     """
@@ -30,7 +36,7 @@ def parse_module(path):
     """
     logging.info(path)
     # Jar paths must go first
-    search_paths = pathsep.join([tools_jar_path, community_modules, dirname(path), tlaps_modules])
+    search_paths = pathsep.join([tools_jar_path, dirname(path), community_modules, tlaps_modules])
     sany = subprocess.run([
         'java',
         '-cp', search_paths,
@@ -38,29 +44,30 @@ def parse_module(path):
         '-error-codes',
         path
     ], capture_output=True)
-    if sany.returncode != 0:
-        logging.error(sany.stdout.decode('utf-8'))
+    output = ' '.join(sany.args) + '\n' + sany.stdout.decode('utf-8')
+    if 0 == sany.returncode:
+        logging.debug(output)
+        return True
+    else:
+        logging.error(output)
         return False
-    return True
 
 manifest = tla_utils.load_json(manifest_path)
-
-# Skip these specs and modules as they do not currently parse
-skip_specs = [
-    # https://github.com/tlaplus/Examples/issues/66
-    'specifications/ewd998'
-]
-skip_modules = []
 
 # List of all modules to parse and whether they should use TLAPS imports
 modules = [
     tla_utils.from_cwd(examples_root, module['path'])
-    for spec in manifest['specifications'] if spec['path'] not in skip_specs
-    for module in spec['modules'] if module['path'] not in skip_modules
+    for spec in manifest['specifications']
+    for module in spec['modules']
+        if normpath(module['path']) not in skip_modules
+        and (only_modules == [] or normpath(module['path']) in only_modules)
 ]
 
+for path in skip_modules:
+    logging.info(f'Skipping {path}')
+
 # Parse specs in parallel
-thread_count = cpu_count()
+thread_count = cpu_count() if not args.verbose else 1
 logging.info(f'Parsing using {thread_count} threads')
 with ThreadPoolExecutor(thread_count) as executor:
     results = executor.map(parse_module, modules)

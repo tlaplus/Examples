@@ -12,7 +12,7 @@ VARIABLE smokers, dealer
 (***************************************************************************)
 (* 'Ingredients' is a set of ingredients, originally                       *)
 (* {matches, paper, tobacco}. 'Offers' is a subset of subsets of           *)
-(* ingredients, each missing just one ingriedent                           *)
+(* ingredients, each missing just one ingredient                           *)
 (***************************************************************************)
 ASSUME /\ Offers \subseteq (SUBSET Ingredients)
        /\ \A n \in Offers : Cardinality(n) = Cardinality(Ingredients) - 1

@@ -1,0 +1,9 @@
+[submodule "specifications/CCF"]
+	path = specifications/CCF
+	url = https://github.com/microsoft/CCF.git
+[submodule "specifications/azure-cosmos-tla"]
+	path = specifications/azure-cosmos-tla
+	url = https://github.com/tlaplus/azure-cosmos-tla.git
+[submodule "specifications/BlockingQueue"]
+	path = specifications/BlockingQueue
+	url = https://github.com/lemmy/BlockingQueue.git

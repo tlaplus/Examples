@@ -38,9 +38,11 @@ pyvenv.cfg
 
 ## Ignore directories used for local CI testing
 deps/
+tree-sitter-tlaplus/
 
 # Ignore TTrace specs
 *_TTrace_*.tla
 
-## Blacklist tools/ folder created by .devcontainer.json
+## Ignore tools/ folder created by .devcontainer.json
 tools/
+

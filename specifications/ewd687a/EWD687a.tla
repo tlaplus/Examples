@@ -329,19 +329,22 @@ RcvAck(p) == \E e \in OutEdges(p) :
 (* 2b. The receiver q of the ack is the parent of p in the overlay tree,   *)
 (*     and p is neutral after sending the ack.                             *)
 (*                                                                         *)
-(* If process p is neutral after sending an ack, it removes itself from    *)
-(* the overlay tree by setting the value of upEdge[p] to NotAnEdge.        *)
+(* UP. If process p is neutral after sending an ack (hence netural(p)'),   *)
+(* it removes itself from the overlay tree by setting the value of         *)
+(* upEdge[p] to NotAnEdge.                                                 *)
 (***************************************************************************)
 SendAck(p) == /\ \E e \in InEdges(p) :
                      /\ rcvdUnacked[e] > 0
-                     \* 1.
-                     /\ (e = upEdge[p] ) =>
-                        \* 2b.
+                     \* 1. q *not* the parent of p (intentionally vacuously true).
+                     /\ (e = upEdge[p]) =>
+                        \* 2a. q parent and q is expecting more than one ack from p.
                         \/ rcvdUnacked[e] > 1
-                        \* 2c.  (compare neutral(p) with the following).
-                        \/ /\ ~ active[p] 
-                           /\ \A d \in OutEdges(p) : sentUnacked[d] = 0
+                        \* 2b. q parent and p is neutral after sending the ack
+                        \*     (neutral(p)' implied by neutral(p) while e is ignored).
+                        \/ /\ ~ active[p]
                            /\ \A d \in InEdges(p) \ {e} : rcvdUnacked[d] = 0
+                           /\ \A d \in OutEdges(p) : sentUnacked[d] = 0
+                           \* Observe the similarity of the above three conjuncts with neutral(p) above.
                      /\ rcvdUnacked' = [rcvdUnacked EXCEPT ![e] = @ - 1] 
                      /\ acks' = [acks EXCEPT ![e] = @ + 1]
               /\ UNCHANGED <<active, msgs, sentUnacked>>
@@ -392,14 +395,14 @@ Spec == Init /\ [][Next]_vars /\ WF_vars(Next)
 ----------------------------------------------------------------------------
  
 (***************************************************************************)
-(* Messages are never lost, thus, the difference of msgs[e], acks[e],      *)
-(* sentUnacked[e], and rcvdUnacked[e] for any e in Edges is always zero.   *)
+(* EWd687a assumes messages are not lost.  Thus, the four counters always  *)
+(* have to be consistent, i.e., the sum of msgs[e], acks[e], and           *)
+(* rcvdUnacked[e] equals sentUnacked[e], for any e in Edges.               *)
 (***************************************************************************)
-DifferenceZero ==
-    [] \A e \in Edges:
-        (sentUnacked[e] - msgs[e] - rcvdUnacked[e] - acks[e]) = 0
+CountersConsistent ==
+    [] \A e \in Edges: sentUnacked[e] = rcvdUnacked[e] + acks[e] + msgs[e]
 
-THEOREM Spec => DifferenceZero
+THEOREM Spec => CountersConsistent
 
 (***************************************************************************)
 (* The overlay tree is a tree of non-neutral nodes rooted in the leader,   *)

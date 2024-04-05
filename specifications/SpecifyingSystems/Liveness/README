@@ -36,7 +36,7 @@ Exercises:
    that the specification LISpec of LiveInternalMemory does not satisfy the 
    following property
 
-       \A p \in Proc : (ctl[p] = "rdy") ~> (ctl[p] = "req") 
+       \A p \in Proc : (ctl[p] = "rdy") ~> (ctl[p] = "busy")
 
 2. Determine which of the following formulas are temporal
    tautologies.  For each one that isn't, give a counterexample.

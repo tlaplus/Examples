@@ -1,0 +1,54 @@
+name: TLAi linter
+
+on: [pull_request_target, workflow_dispatch]
+
+jobs:
+  linting:
+    name: TLAi linter
+
+    runs-on: ubuntu-latest
+
+    env:
+      ## https://microsoft.github.io/genaiscript/reference/token/
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_API_BASE: ${{ secrets.OPENAI_API_BASE }}
+      OPENAI_API_TYPE: ${{ secrets.OPENAI_API_TYPE }}
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Clone repo
+        if: env.OPENAI_API_KEY != ''
+        uses: actions/checkout@v4
+        with:
+            ## All history for git diff below to succeed.
+            fetch-depth: 0
+
+      - name: Check if HEAD commit contains TLA changes.
+        if: env.OPENAI_API_KEY != ''
+        id: git_commit
+        run: echo "::set-output name=contains_tla::$(git diff --name-only HEAD^ | grep -q '\.tla' && echo 'true' || echo 'false')"
+
+      - name: Setup NodeJS
+        if: steps.git_commit.outputs.contains_tla == 'true'
+        ## https://github.com/actions/setup-node
+        uses: actions/setup-node@v4
+        with:
+            node-version: "20"
+
+      - name: Run GenAIscript on the TLA+ specs that are added in this pull request.
+        if: steps.git_commit.outputs.contains_tla == 'true'
+        ## Identify git diff: $(git diff --name-only HEAD^ | grep '.tla')
+        ## Install genaiscript runtime: https://microsoft.github.io/genaiscript/reference/cli/
+        ## Output LLM response in SARIF format: https://microsoft.github.io/genaiscript/reference/scripts/annotations/ (redirect other output to /dev/null for GH not to also show the annotations)
+        run: npx --yes genaiscript run .github/scripts/TLAi-linter.genai.js $(git diff --name-only HEAD^ | grep '\.tla') --max-tokens 2000 --out-annotations results.sarif > /dev/null
+
+      - name: Upload SARIF file
+        if: (success() || failure()) && steps.git_commit.outputs.contains_tla == 'true'
+        ## https://sarifweb.azurewebsites.net
+        ## https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/uploading-a-sarif-file-to-github
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+            sarif_file: results.sarif
