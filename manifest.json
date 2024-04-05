@@ -4560,7 +4560,6 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "config": [],
               "features": ["alias", "view"],
               "result": "success"
             }
