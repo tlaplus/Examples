@@ -1,5 +1,11 @@
 ------------------------------- MODULE tcp ----------------------------------
-(* https://datatracker.ietf.org/doc/html/rfc9293 *)
+(* 
+https://datatracker.ietf.org/doc/html/rfc9293
+
+This spec abstracts from many details such as sequence numbers in RFC9293 and
+focuses on the state transitions of the TCP finite state machine shown in the
+diagram at the end of this file.
+*)
 EXTENDS Integers, Sequences, SequencesExt, FiniteSets
 
 CONSTANT 
@@ -10,13 +16,6 @@ ASSUME Cardinality(Peers) = 2
 States == {"LISTEN", "CLOSED", "SYN-SENT", "SYN-RECEIVED", "ESTABLISHED", 
           "FIN-WAIT-1", "FIN-WAIT-2", "CLOSING", "CLOSE-WAIT", "LAST-ACK",
           "TIME-WAIT"}
-
-(*
-Modeling siplifications:
-- No TCBs
-- User commands are not modeled directly, but may happen implicitly. However, active open is only allowed from the initial state.
-- No retransmissions (NoRetransmissions state constraint) or timeouts are modeled.
-*)
 
 VARIABLE
     tcb,
