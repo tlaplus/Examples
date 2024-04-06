@@ -87,7 +87,8 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [RFC 3506: Voucher Transaction System](specifications/byihive)                                      | Santhosh Raju, Cherry G. Mathew, Fransisca Andriani |          |             |         |     ✔     |          |
 | [TLA⁺ Level Checking](specifications/LevelChecking)                                                 | Leslie Lamport                                      |          |             |         |           |          |
 | [Condition-Based Consensus](specifications/cbc_max)                                                 | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |           |          |
-| [Yo-Yo Leader Election](specifications/YoYo)                                                 | Ludovic Yvoz, Stephan Merz           |          |             |         |      ✔    |          |
+| [Yo-Yo Leader Election](specifications/YoYo)                                                        | Ludovic Yvoz, Stephan Merz                          |          |             |         |      ✔    |          |
+| [TCP as defined in RFC 9293](specifications/tcp)                                                    | Markus Kuppe                                        |          |             |         |      ✔    |          |
 
 ## Examples Elsewhere
 Here is a list of specs stored in locations outside this repository, including submodules.
