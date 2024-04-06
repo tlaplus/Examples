@@ -31,12 +31,9 @@ TypeOK ==
     /\ network \in [ Peers -> Seq({"SYN", "SYN,ACK", "ACK", "RST", "FIN"} \cup {"ACKofFIN"}) ]
 
 Init ==
-    \* One node starts in the SYN-SENT state, i.e., one node has already received the active open command. The other node
-    \* is in the listen state, i.e., it has received the passive open command.
-    \E node \in Peers:
-        /\ tcb = [p \in Peers |-> TRUE]
-        /\ connstate = [p \in Peers |-> IF p = node THEN "SYN-SENT" ELSE "LISTEN"]
-        /\ network = [p \in Peers |-> IF p = node THEN <<>> ELSE << "SYN" >>]
+    /\ tcb = [p \in Peers |-> FALSE]
+    /\ connstate = [p \in Peers |-> "CLOSED"]
+    /\ network = [p \in Peers |-> <<>>]
 
 \* Action triggered by user commands:
 

@@ -5,6 +5,14 @@ CONSTANTS A, B
 peers == {A, B}
 Symmetry == Permutations(peers)
 
+MCInit ==
+    \* One node starts in the SYN-SENT state, i.e., one node has already received the active open command. The other node
+    \* is in the listen state, i.e., it has received the passive open command.
+    \E node \in Peers:
+        /\ tcb = [p \in Peers |-> TRUE]
+        /\ connstate = [p \in Peers |-> IF p = node THEN "SYN-SENT" ELSE "LISTEN"]
+        /\ network = [p \in Peers |-> IF p = node THEN <<>> ELSE << "SYN" >>]
+
 NoRetransmission ==
     \A p \in Peers :
         \A i \in 1..Len(network[p]) - 1 :
