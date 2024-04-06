@@ -261,7 +261,7 @@ Spec ==
     /\ [][Next]_vars
     /\ WF_vars(System)
     \* Would get stuck in SYN-SENT if we don't assert a user command.
-    /\ WF_vars(\E local, remote \in Peers: CLOSE_CLOSE_WAIT(local, remote))
+    /\ WF_vars(\E local, remote \in Peers: CLOSE_SYN_SENT(local, remote))
 
 -----------------------------------------------------------------------------
 
@@ -271,6 +271,10 @@ Inv ==
     \* message are in flight, the state of the nodes can be different.
     \A local, remote \in { p \in Peers : network[p] = <<>> } :
         connstate[local] = "ESTABLISHED" <=> connstate[remote] = "ESTABLISHED"
+
+Prop ==
+    \A p \in Peers :
+        connstate[p] = "SYN-SENT" ~> connstate[p] \in {"ESTABLISHED", "LISTEN", "CLOSED"}
 
 =============================================================================
 \* Modification History

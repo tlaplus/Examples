@@ -5177,11 +5177,11 @@
               "mode": "exhaustive search",
               "features": [
                 "state constraint",
-                "symmetry"
+                "liveness"
               ],
               "result": "success",
-              "distinctStates": 598,
-              "totalStates": 3196,
+              "distinctStates": 1182,
+              "totalStates": 6322,
               "stateDepth": 14
             }
           ]
