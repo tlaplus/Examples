@@ -1,0 +1,63 @@
+cff-version: 1.2.0
+title: TLA+ Examples
+message: Please cite this software using these metadata.
+type: software
+authors:
+  - given-names: Leslie
+    affiliation: Microsoft
+    family-names: Lamport
+  - given-names: Markus
+    name-particle: A.
+    affiliation: Microsoft
+    family-names: Kuppe
+  - given-names: Stephan
+    family-names: Merz
+    affiliation: Inria
+  - given-names: Andrew
+    family-names: Helwer
+  - given-names: William
+    family-names: Schultz
+  - given-names: Jeff
+    family-names: Hemphill
+  - given-names: Mariusz
+    family-names: Ryndzionek
+  - given-names: Igor
+    family-names: Konnov
+  - given-names: Thanh Hai
+    family-names: Tran
+  - given-names: Josef
+    family-names: Widder
+  - given-names: Jim
+    family-names: Gray
+  - given-names: Murat
+    family-names: Demirbas
+  - given-names: Guanzhou
+    family-names: Hu
+  - given-names: Giuliano
+    family-names: Losa
+  - given-names: Ron
+    family-names: Pressler
+  - given-names: Younes
+    family-names: Akhouayri
+  - given-names: Luming
+    family-names: Dong
+  - given-names: Zhi
+    family-names: Niu
+  - given-names: Lim Ngian Xin
+    family-names: Terry
+  - given-names: Gaurav
+    family-names: Gandhi
+  - given-names: Isaac
+    family-names: DeFrain
+  - given-names: Martin
+    family-names: Harrison
+  - given-names: Santhosh
+    family-names: Raju
+  - given-names: Cherry G. 
+    family-names: Mathew
+  - given-names: Fransisca
+    family-names: Andriani
+  - given-names: Ludovic
+    family-names: Yvoz
+version: 1.0.0
+url: "https://github.com/tlaplus/Examples"
