@@ -81,6 +81,8 @@ jobs:
           python $SCRIPT_DIR/parse_modules.py                            \
             --tools_jar_path $DEPS_DIR/tools/tla2tools.jar               \
             --manifest_path manifest.json
+          git status
+          git diff
       - name: Parse all modules
         run: |
           # Need to have a nonempty list to pass as a skip parameter
