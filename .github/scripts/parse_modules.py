@@ -38,13 +38,17 @@ def parse_module(path):
     # Jar paths must go first
     search_paths = pathsep.join([tools_jar_path, dirname(path), community_modules, tlaps_modules])
     sany = subprocess.run([
-        'java',
-        '-cp', search_paths,
-        'tla2sany.SANY',
-        '-error-codes',
-        path
-    ], capture_output=True)
-    output = ' '.join(sany.args) + '\n' + sany.stdout.decode('utf-8')
+            'java',
+            '-cp', search_paths,
+            'tla2sany.SANY',
+            '-error-codes',
+            path
+        ],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True
+    )
+    output = ' '.join(sany.args) + '\n' + sany.stdout
     if 0 == sany.returncode:
         logging.debug(output)
         return True
