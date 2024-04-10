@@ -30,7 +30,7 @@ Transaction manager (TM) is added.
    }
 
   macro Fail(p) {
-    if (RMMAYFAIL) rmState[p] := "failed";
+    if (RMMAYFAIL /\ ~\E rm \in RM:rmState[rm]="failed") rmState[p] := "failed";
    }
 
   fair process (RManager \in RM) {
@@ -153,10 +153,13 @@ BTA == /\ pc[10] = "BTA"
 
 BTManager == BTS \/ BTC \/ BTA
 
+(* Allow infinite stuttering to prevent deadlock on termination. *)
+Terminating == /\ \A self \in ProcSet: pc[self] = "Done"
+               /\ UNCHANGED vars
+
 Next == TManager \/ BTManager
            \/ (\E self \in RM: RManager(self))
-           \/ (* Disjunct to prevent deadlock on termination *)
-              ((\A self \in ProcSet: pc[self] = "Done") /\ UNCHANGED vars)
+           \/ Terminating
 
 Spec == /\ Init /\ [][Next]_vars
         /\ \A self \in RM : WF_vars(RManager(self))
