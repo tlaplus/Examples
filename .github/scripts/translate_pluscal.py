@@ -1,5 +1,5 @@
 """
-Converts all TLA⁺ modules from ASCII to Unicode or vice-versa.
+Runs PlusCal translation on all PlusCal specs.
 """
 
 from argparse import ArgumentParser
@@ -11,10 +11,9 @@ import subprocess
 from subprocess import CompletedProcess
 import tla_utils
 
-parser = ArgumentParser(description='Converts all TLA+ modules from ASCII to Unicode or vice-versa.')
-parser.add_argument('--tlauc_path', help='Path to the TLAUC executable', required=True)
+parser = ArgumentParser(description='Run PlusCal translation on all modules.')
+parser.add_argument('--tools_jar_path', help='Path to the tla2tools.jar file', required=True)
 parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
-parser.add_argument('--to_ascii', help='Convert to ASCII instead of Unicode', action='store_true')
 parser.add_argument('--skip', nargs='+', help='Space-separated list of .tla modules to skip converting', required=False, default=[])
 parser.add_argument('--only', nargs='+', help='If provided, only convert models in this space-separated list', required=False, default=[])
 parser.add_argument('--verbose', help='Set logging output level to debug', action='store_true')
@@ -22,8 +21,7 @@ args = parser.parse_args()
 
 logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
 
-tlauc_path = normpath(args.tlauc_path)
-command = 'ascii' if args.to_ascii else 'unicode'
+tools_path = normpath(args.tools_jar_path)
 manifest_path = normpath(args.manifest_path)
 examples_root = dirname(manifest_path)
 skip_modules = [normpath(path) for path in args.skip]
@@ -31,22 +29,23 @@ only_modules = [normpath(path) for path in args.only]
 
 manifest = tla_utils.load_json(manifest_path)
 
-# List of all modules to convert
+# List of all modules to translate
 modules = [
     tla_utils.from_cwd(examples_root, module['path'])
     for spec in manifest['specifications']
     for module in spec['modules']
-        if normpath(module['path']) not in skip_modules
+        if 'pluscal' in module['features']
+        and normpath(module['path']) not in skip_modules
         and (only_modules == [] or normpath(module['path']) in only_modules)
 ]
 
 for path in skip_modules:
     logging.info(f'Skipping {path}')
 
-def convert_module(module_path):
-    logging.info(f'Converting {module_path} to {command}')
+def translate_module(module_path):
+    logging.info(f'Translating PlusCal in {module_path}')
     result = subprocess.run(
-        [tlauc_path, command, '--input', module_path, '--output', module_path, '--overwrite'],
+        ['java', '-cp', tools_path, 'pcal.trans', module_path],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True
@@ -54,18 +53,20 @@ def convert_module(module_path):
     match result:
         case CompletedProcess():
             if result.returncode == 0:
+                logging.info(result.stdout)
                 return True
             else:
                 logging.error(f'Module {module_path} conversion failed with return code {result.returncode}; output:\n{result.stdout}')
                 return False
         case _:
-            logging.error(f'Unhandled TLAUC result type {type(result)}: {result.stdout}')
+            logging.error(f'Unhandled result type {type(result)}: {result.stdout}')
             return False
 
 success = True
-thread_count = cpu_count() if not args.verbose else 1
-logging.info(f'Converting using {thread_count} threads')
+#thread_count = cpu_count() if not args.verbose else 1
+thread_count = 1
+logging.info(f'Translating using {thread_count} threads')
 with ThreadPoolExecutor(thread_count) as executor:
-    results = executor.map(convert_module, modules)
+    results = executor.map(translate_module, modules)
     exit(0 if all(results) else 1)
 
