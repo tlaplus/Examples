@@ -107,7 +107,7 @@ Init == (* Global variables *)
         /\ k \in Proc
         (* Process P *)
         /\ temp = [self \in Proc |-> defaultInitValue]
-        /\ pc = [self \in ProcSet |-> CASE self \in Proc -> "Li0"]
+        /\ pc = [self \in ProcSet |-> "Li0"]
 
 Li0(self) == /\ pc[self] = "Li0"
              /\ b' = [b EXCEPT ![self] = FALSE]
@@ -154,15 +154,12 @@ Li4a(self) == /\ pc[self] = "Li4a"
 Li4b(self) == /\ pc[self] = "Li4b"
               /\ IF temp[self] # {}
                     THEN /\ \E j \in temp[self]:
-                              /\ temp' = [temp EXCEPT 
-                                            ![self] = temp[self] \ {j}]
+                              /\ temp' = [temp EXCEPT ![self] = temp[self] \ {j}]
                               /\ IF ~c[j]
-                                    THEN /\ pc' = [pc EXCEPT 
-                                                     ![self] = "Li1"]
-                                    ELSE /\ pc' = [pc EXCEPT 
-                                                     ![self] = "Li4b"]
+                                    THEN /\ pc' = [pc EXCEPT ![self] = "Li1"]
+                                    ELSE /\ pc' = [pc EXCEPT ![self] = "Li4b"]
                     ELSE /\ pc' = [pc EXCEPT ![self] = "cs"]
-                         /\ UNCHANGED temp
+                         /\ temp' = temp
               /\ UNCHANGED << b, c, k >>
 
 cs(self) == /\ pc[self] = "cs"
@@ -190,12 +187,9 @@ P(self) == Li0(self) \/ Li1(self) \/ Li2(self) \/ Li3a(self) \/ Li3b(self)
               \/ cs(self) \/ Li5(self) \/ Li6(self) \/ ncs(self)
 
 Next == (\E self \in Proc: P(self))
-           \/ (* Disjunct to prevent deadlock on termination *)
-              ((\A self \in ProcSet: pc[self] = "Done") /\ UNCHANGED vars)
 
-Spec == Init /\ [][Next]_vars /\ \A self \in Proc: WF_vars(P(self))
-
-Termination == <>(\A self \in ProcSet: pc[self] = "Done")
+Spec == /\ Init /\ [][Next]_vars
+        /\ \A self \in Proc : WF_vars(P(self))
 
 \* END TRANSLATION
 
