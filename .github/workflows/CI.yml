@@ -94,8 +94,12 @@ jobs:
             --tools_jar_path $DEPS_DIR/tools/tla2tools.jar  \
             --manifest_path manifest.json                   \
             --skip "${SKIP[@]}"
-          git status
-          git diff
+          if [ ! ${{ matrix.unicode }} ]; then
+            git status
+            git diff
+            diff_count=$(git status --porcelain=v1 2>/dev/null | wc -l)
+            exit $diff_count
+          fi
       - name: Parse all modules
         run: |
           # Need to have a nonempty list to pass as a skip parameter
