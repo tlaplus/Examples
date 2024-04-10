@@ -78,8 +78,12 @@ jobs:
       - name: Translate PlusCal
         if: (!matrix.unicode) # PlusCal does not yet support unicode
         run: |
-          # Need to have a nonempty list to pass as a skip parameter
-          SKIP=("does/not/exist")
+          # https://github.com/tlaplus/tlaplus/issues/906
+          SKIP=(
+            "specifications/byzpaxos/BPConProof.tla"
+            "specifications/byzpaxos/PConProof.tla"
+            "specifications/byzpaxos/VoteProof.tla"
+          )
           if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
             # Slush.tla includes unicode characters in comments,
             # and on Windows the PlusCal translator can't handle
