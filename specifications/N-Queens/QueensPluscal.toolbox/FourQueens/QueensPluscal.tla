@@ -86,14 +86,16 @@ nxtQ == /\ pc = "nxtQ"
                                  THEN /\ todo' = todo \ {queens}
                                       /\ sols' = (sols \union exts)
                                  ELSE /\ todo' = ((todo \ {queens}) \union exts)
-                                      /\ UNCHANGED sols
+                                      /\ sols' = sols
                    /\ pc' = "nxtQ"
               ELSE /\ pc' = "Done"
                    /\ UNCHANGED << todo, sols >>
 
+(* Allow infinite stuttering to prevent deadlock on termination. *)
+Terminating == pc = "Done" /\ UNCHANGED vars
+
 Next == nxtQ
-           \/ (* Disjunct to prevent deadlock on termination *)
-              (pc = "Done" /\ UNCHANGED vars)
+           \/ Terminating
 
 Spec == Init /\ [][Next]_vars
 

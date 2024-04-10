@@ -88,7 +88,7 @@ l:  while (TRUE) {
   }
 }
 *)
-\* BEGIN TRANSLATION (chksum(pcal) = "2130f031" /\ chksum(tla) = "7d13cf45")
+\* BEGIN TRANSLATION (chksum(pcal) = "d18d3150" /\ chksum(tla) = "7d13cf45")
 VARIABLES terminationDetected, network
 
 (* define statement *)
