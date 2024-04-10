@@ -45,7 +45,7 @@ for path in skip_modules:
 def translate_module(module_path):
     logging.info(f'Translating PlusCal in {module_path}')
     result = subprocess.run(
-        ['java', '-cp', tools_path, 'pcal.trans', module_path],
+        ['java', '-cp', tools_path, 'pcal.trans', '-nocfg', module_path],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True
