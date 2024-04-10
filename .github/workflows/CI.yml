@@ -75,6 +75,12 @@ jobs:
           python "$SCRIPT_DIR/unicode_number_set_shim.py" \
             --ts_path "$DEPS_DIR/tree-sitter-tlaplus"     \
             --manifest_path manifest.json
+      - name: Translate PlusCal
+        if: (!matrix.unicode) # PlusCal does not yet support unicode
+        run: |
+          python $SCRIPT_DIR/parse_modules.py                            \
+            --tools_jar_path $DEPS_DIR/tools/tla2tools.jar               \
+            --manifest_path manifest.json
       - name: Parse all modules
         run: |
           # Need to have a nonempty list to pass as a skip parameter
