@@ -43,7 +43,7 @@ for path in skip_modules:
     logging.info(f'Skipping {path}')
 
 def translate_module(module_path):
-    logging.info(f'Translating PlusCal in {module_path}')
+    logging.info(f'Translating {module_path}')
     result = subprocess.run(
         ['java', '-cp', tools_path, 'pcal.trans', '-nocfg', module_path],
         stdout=subprocess.PIPE,
@@ -63,7 +63,7 @@ def translate_module(module_path):
 
 success = True
 thread_count = cpu_count() if not args.verbose else 1
-logging.info(f'Translating using {thread_count} threads')
+logging.info(f'Translating PlusCal using {thread_count} threads')
 with ThreadPoolExecutor(thread_count) as executor:
     results = executor.map(translate_module, modules)
     exit(0 if all(results) else 1)
