@@ -94,7 +94,7 @@ jobs:
             --tools_jar_path $DEPS_DIR/tools/tla2tools.jar  \
             --manifest_path manifest.json                   \
             --skip "${SKIP[@]}"
-          if [[ ! ${{ matrix.unicode }} ]]; then
+          if [[ "${{ matrix.unicode }}" == "false" ]]; then
             git status
             git diff
             diff_count=$(git status --porcelain=v1 2>/dev/null | wc -l)
