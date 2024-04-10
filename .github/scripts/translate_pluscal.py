@@ -53,7 +53,6 @@ def translate_module(module_path):
     match result:
         case CompletedProcess():
             if result.returncode == 0:
-                logging.info(result.stdout)
                 return True
             else:
                 logging.error(f'Module {module_path} conversion failed with return code {result.returncode}; output:\n{result.stdout}')
@@ -63,8 +62,7 @@ def translate_module(module_path):
             return False
 
 success = True
-#thread_count = cpu_count() if not args.verbose else 1
-thread_count = 1
+thread_count = cpu_count() if not args.verbose else 1
 logging.info(f'Translating using {thread_count} threads')
 with ThreadPoolExecutor(thread_count) as executor:
     results = executor.map(translate_module, modules)
