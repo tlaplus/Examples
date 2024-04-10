@@ -12,7 +12,7 @@ on:
 jobs:
   validate:
     name: Validate Manifest, Specs, & Models
-    runs-on: ${{ matrix.os }}
+    runs-on: matrix.os
     strategy:
       matrix:
         # macOS not used; see https://github.com/tlaplus/Examples/issues/119
@@ -68,13 +68,13 @@ jobs:
         run: |
           python "$SCRIPT_DIR/unicode_conversion.py"  \
             --tlauc_path "$DEPS_DIR/tlauc/tlauc"      \
-            --manifest_path "$EXAMPLES_DIR/manifest.json"
+            --manifest_path manifest.json
       - name: Add unicode shims
         if: matrix.unicode
         run: |
           python "$SCRIPT_DIR/unicode_number_set_shim.py" \
             --ts_path "$DEPS_DIR/tree-sitter-tlaplus"     \
-            --manifest_path "$EXAMPLES_DIR/manifest.json"
+            --manifest_path manifest.json
       - name: Parse all modules
         run: |
           # Need to have a nonempty list to pass as a skip parameter
