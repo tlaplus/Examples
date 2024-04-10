@@ -247,7 +247,7 @@ THEOREM Spec => []resultCorrect
   <2>2. CASE UNCHANGED vars
     BY <2>2 DEF Inv, TypeOK,  vars
   <2>3. QED
-    BY <2>1,  <2>2 DEF Next
+    BY <2>1,  <2>2 DEF Next, Terminating
 <1>3. Inv => resultCorrect
    BY  DEF resultCorrect, Inv, TypeOK
 <1>4. QED

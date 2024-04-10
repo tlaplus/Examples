@@ -151,7 +151,7 @@ THEOREM Spec => []PCorrect
   <2>3. CASE UNCHANGED vars
     BY <2>3 DEF TypeOK, Inv, vars
   <2>4. QED
-    BY <2>1, <2>2, <2>3 DEF Next, proc
+    BY <2>1, <2>2, <2>3 DEF Next, Terminating, proc
 <1>3. Inv => PCorrect
   BY DEF Inv, TypeOK, PCorrect
 <1>4. QED
