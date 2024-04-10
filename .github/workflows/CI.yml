@@ -12,7 +12,7 @@ on:
 jobs:
   validate:
     name: Validate Manifest, Specs, & Models
-    runs-on: matrix.os
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         # macOS not used; see https://github.com/tlaplus/Examples/issues/119
