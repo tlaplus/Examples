@@ -45,23 +45,23 @@ jobs:
         run: $SCRIPT_DIR/linux-setup.sh $SCRIPT_DIR $DEPS_DIR false
       - name: Check manifest.json format
         run: |
-          python $SCRIPT_DIR/check_manifest_schema.py \
-            --manifest_path manifest.json             \
+          python "$SCRIPT_DIR/check_manifest_schema.py" \
+            --manifest_path manifest.json               \
             --schema_path manifest-schema.json
       - name: Check manifest files
         run: |
-          python $SCRIPT_DIR/check_manifest_files.py  \
-            --manifest_path manifest.json             \
+          python "$SCRIPT_DIR/check_manifest_files.py"  \
+            --manifest_path manifest.json               \
             --ci_ignore_path .ciignore
       - name: Check manifest feature flags
         run: |
-          python $SCRIPT_DIR/check_manifest_features.py \
-            --manifest_path manifest.json               \
+          python "$SCRIPT_DIR/check_manifest_features.py" \
+            --manifest_path manifest.json                 \
             --ts_path $DEPS_DIR/tree-sitter-tlaplus
       - name: Check README spec table
         run: |
-          python $SCRIPT_DIR/check_markdown_table.py  \
-            --manifest_path manifest.json             \
+          python "$SCRIPT_DIR/check_markdown_table.py"  \
+            --manifest_path manifest.json               \
             --readme_path README.md
       - name: Convert specs to unicode
         if: matrix.unicode
@@ -78,8 +78,8 @@ jobs:
       - name: Translate PlusCal
         if: (!matrix.unicode) # PlusCal does not yet support unicode
         run: |
-          python $SCRIPT_DIR/parse_modules.py                            \
-            --tools_jar_path $DEPS_DIR/tools/tla2tools.jar               \
+          python $SCRIPT_DIR/translate_pluscal.py           \
+            --tools_jar_path $DEPS_DIR/tools/tla2tools.jar  \
             --manifest_path manifest.json
           git status
           git diff
