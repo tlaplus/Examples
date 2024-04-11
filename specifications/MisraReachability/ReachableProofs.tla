@@ -74,7 +74,7 @@ THEOREM Thm1 == Spec => []Inv1
     <2>2. CASE UNCHANGED vars
       BY <2>2 DEF Inv1, TypeOK, vars
     <2>3. QED
-      BY <2>1, <2>2 DEF Next
+      BY <2>1, <2>2 DEF Next, Terminating
   <1>3. QED
     BY <1>1, <1>2, PTL DEF Spec  
 
@@ -189,7 +189,7 @@ THEOREM Thm3 == Spec => []Inv3
       (*********************************************************************)
       BY <2>1, <2>3 DEF Inv3, TypeOK, vars  
     <2>4. QED
-      BY <2>2, <2>3 DEF Next  
+      BY <2>2, <2>3 DEF Next, Terminating
   <1>3. QED
     BY <1>1, <1>2, Thm2, PTL DEF Spec
 

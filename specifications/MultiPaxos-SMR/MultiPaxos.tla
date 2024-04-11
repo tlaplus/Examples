@@ -424,7 +424,7 @@ end algorithm; *)
 
 ----------
 
-\* BEGIN TRANSLATION (chksum(pcal) = "d7327cb9" /\ chksum(tla) = "bfbfd945")
+\* BEGIN TRANSLATION (chksum(pcal) = "2be53042" /\ chksum(tla) = "bfbfd945")
 VARIABLES msgs, node, pending, observed, pc
 
 (* define statement *)

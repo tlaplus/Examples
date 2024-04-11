@@ -81,7 +81,6 @@ node and does the following:
 \* BEGIN TRANSLATION    Here is the TLA+ translation of the PlusCal code.
 VARIABLES marked, vroot, pc
 
-\*Reachable == ReachableFrom(marked)  (* added for a test *)
 vars == << marked, vroot, pc >>
 
 Init == (* Global variables *)
@@ -101,9 +100,11 @@ a == /\ pc = "a"
            ELSE /\ pc' = "Done"
                 /\ UNCHANGED << marked, vroot >>
 
+(* Allow infinite stuttering to prevent deadlock on termination. *)
+Terminating == pc = "Done" /\ UNCHANGED vars
+
 Next == a
-           \/ (* Disjunct to prevent deadlock on termination *)
-              (pc = "Done" /\ UNCHANGED vars)
+           \/ Terminating
 
 Spec == /\ Init /\ [][Next]_vars
         /\ WF_vars(Next)

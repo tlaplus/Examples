@@ -258,9 +258,11 @@ trc == /\ pc = "trc"
                   /\ UNCHANGED counterexample
        /\ UNCHANGED << S, C, state, successors, i, T >>
 
+(* Allow infinite stuttering to prevent deadlock on termination. *)
+Terminating == pc = "Done" /\ UNCHANGED vars
+
 Next == init \/ initPost \/ scsr \/ each \/ trc
-           \/ (* Disjunct to prevent deadlock on termination *)
-              (pc = "Done" /\ UNCHANGED vars)
+           \/ Terminating
 
 Spec == /\ Init /\ [][Next]_vars
         /\ WF_vars(Next)

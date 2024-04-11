@@ -45,23 +45,23 @@ jobs:
         run: $SCRIPT_DIR/linux-setup.sh $SCRIPT_DIR $DEPS_DIR false
       - name: Check manifest.json format
         run: |
-          python $SCRIPT_DIR/check_manifest_schema.py \
-            --manifest_path manifest.json             \
+          python "$SCRIPT_DIR/check_manifest_schema.py" \
+            --manifest_path manifest.json               \
             --schema_path manifest-schema.json
       - name: Check manifest files
         run: |
-          python $SCRIPT_DIR/check_manifest_files.py  \
-            --manifest_path manifest.json             \
+          python "$SCRIPT_DIR/check_manifest_files.py"  \
+            --manifest_path manifest.json               \
             --ci_ignore_path .ciignore
       - name: Check manifest feature flags
         run: |
-          python $SCRIPT_DIR/check_manifest_features.py \
-            --manifest_path manifest.json               \
+          python "$SCRIPT_DIR/check_manifest_features.py" \
+            --manifest_path manifest.json                 \
             --ts_path $DEPS_DIR/tree-sitter-tlaplus
       - name: Check README spec table
         run: |
-          python $SCRIPT_DIR/check_markdown_table.py  \
-            --manifest_path manifest.json             \
+          python "$SCRIPT_DIR/check_markdown_table.py"  \
+            --manifest_path manifest.json               \
             --readme_path README.md
       - name: Convert specs to unicode
         if: matrix.unicode
@@ -75,6 +75,31 @@ jobs:
           python "$SCRIPT_DIR/unicode_number_set_shim.py" \
             --ts_path "$DEPS_DIR/tree-sitter-tlaplus"     \
             --manifest_path manifest.json
+      - name: Translate PlusCal
+        if: (!matrix.unicode) # PlusCal does not yet support unicode
+        run: |
+          # https://github.com/tlaplus/tlaplus/issues/906
+          SKIP=(
+            "specifications/byzpaxos/BPConProof.tla"
+            "specifications/byzpaxos/PConProof.tla"
+            "specifications/byzpaxos/VoteProof.tla"
+          )
+          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+            # Slush.tla includes unicode characters in comments,
+            # and on Windows the PlusCal translator can't handle
+            # this for some reason.
+            SKIP+=("specifications/SlushProtocol/Slush.tla")
+          fi
+          python $SCRIPT_DIR/translate_pluscal.py           \
+            --tools_jar_path $DEPS_DIR/tools/tla2tools.jar  \
+            --manifest_path manifest.json                   \
+            --skip "${SKIP[@]}"
+          if [[ "${{ matrix.unicode }}" == "false" ]]; then
+            git status
+            git diff
+            diff_count=$(git status --porcelain=v1 2>/dev/null | wc -l)
+            exit $diff_count
+          fi
       - name: Parse all modules
         run: |
           # Need to have a nonempty list to pass as a skip parameter

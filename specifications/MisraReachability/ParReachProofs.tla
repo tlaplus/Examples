@@ -11,7 +11,7 @@ LEMMA TypeInvariant == Spec  => []Inv
 <1>1. Init => Inv
     BY RootAssump DEF Init, Inv, ProcSet  
 <1>2. Inv /\ [Next]_vars => Inv'
-   BY SuccAssump DEF Inv, Next, vars, ProcSet, p, a, b, c
+   BY SuccAssump DEF Inv, Next, Terminating, vars, ProcSet, p, a, b, c
 <1>3. QED
   BY <1>1, <1>2, PTL DEF Spec
   
@@ -23,7 +23,7 @@ THEOREM Spec => R!Init /\ [][R!Next]_R!vars
                       [Next]_vars
                PROVE  [R!Next]_R!vars
     OBVIOUS
-  <2> USE DEF Inv, Next, vars, R!Next, R!vars, vrootBar, pcBar
+  <2> USE DEF Inv, Next, Terminating, vars, R!Next, R!vars, vrootBar, pcBar
   <2>1. ASSUME NEW self \in Procs,
                a(self)
         PROVE  [R!Next]_R!vars
@@ -58,7 +58,7 @@ THEOREM Spec => R!Init /\ [][R!Next]_R!vars
   <2>4. CASE UNCHANGED vars
     BY <2>4
   <2>5. QED
-    BY <2>1, <2>2, <2>3, <2>4 DEF Next, p
+    BY <2>1, <2>2, <2>3, <2>4 DEF Next, Terminating, p
 <1>3. QED
   BY <1>1, <1>2, TypeInvariant, PTL DEF Spec
 

@@ -113,7 +113,7 @@ Think:
 end process;
 
 end algorithm; *)
-\* BEGIN TRANSLATION (chksum(pcal) = "8d8268d4" /\ chksum(tla) = "16352822")
+\* BEGIN TRANSLATION (chksum(pcal) = "ea877089" /\ chksum(tla) = "16352822")
 VARIABLES forks, pc
 
 (* define statement *)

@@ -115,7 +115,7 @@ n1(self) == /\ pc[self] = "n1"
                               /\ rcvd' = [rcvd EXCEPT ![self] = rcvd[self]+1]
                               /\ IF self # initiator /\ rcvd'[self] = 1
                                     THEN /\ Assert((msg.kind = "m"), 
-                                                   "Failure of assertion at line 50, column 16.")
+                                                   "Failure of assertion at line 55, column 16.")
                                          /\ parent' = [parent EXCEPT ![self] = msg.sndr]
                                          /\ inbox' = multicast(net, self, nbrs[self] \ {msg.sndr}, "m")
                                     ELSE /\ inbox' = net
@@ -132,7 +132,7 @@ n1(self) == /\ pc[self] = "n1"
 n2(self) == /\ pc[self] = "n2"
             /\ IF self # initiator
                   THEN /\ Assert((parent[self] \in nbrs[self]), 
-                                 "Failure of assertion at line 65, column 10.")
+                                 "Failure of assertion at line 70, column 10.")
                        /\ inbox' = send(inbox, self, parent[self], "c")
                   ELSE /\ TRUE
                        /\ inbox' = inbox

@@ -67,9 +67,11 @@ a == /\ pc = "a"
                 /\ UNCHANGED << low, high, result >>
      /\ UNCHANGED << seq, val >>
 
+(* Allow infinite stuttering to prevent deadlock on termination. *)
+Terminating == pc = "Done" /\ UNCHANGED vars
+
 Next == a
-           \/ (* Disjunct to prevent deadlock on termination *)
-              (pc = "Done" /\ UNCHANGED vars)
+           \/ Terminating
 
 Spec == /\ Init /\ [][Next]_vars
         /\ WF_vars(Next)
@@ -245,7 +247,7 @@ THEOREM Spec => []resultCorrect
   <2>2. CASE UNCHANGED vars
     BY <2>2 DEF Inv, TypeOK,  vars
   <2>3. QED
-    BY <2>1,  <2>2 DEF Next
+    BY <2>1,  <2>2 DEF Next, Terminating
 <1>3. Inv => resultCorrect
    BY  DEF resultCorrect, Inv, TypeOK
 <1>4. QED

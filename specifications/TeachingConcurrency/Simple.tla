@@ -57,9 +57,12 @@ b(self) == /\ pc[self] = "b"
 
 proc(self) == a(self) \/ b(self)
 
+(* Allow infinite stuttering to prevent deadlock on termination. *)
+Terminating == /\ \A self \in ProcSet: pc[self] = "Done"
+               /\ UNCHANGED vars
+
 Next == (\E self \in 0..N-1: proc(self))
-           \/ (* Disjunct to prevent deadlock on termination *)
-              ((\A self \in ProcSet: pc[self] = "Done") /\ UNCHANGED vars)
+           \/ Terminating
 
 Spec == Init /\ [][Next]_vars
 
@@ -148,7 +151,7 @@ THEOREM Spec => []PCorrect
   <2>3. CASE UNCHANGED vars
     BY <2>3 DEF TypeOK, Inv, vars
   <2>4. QED
-    BY <2>1, <2>2, <2>3 DEF Next, proc
+    BY <2>1, <2>2, <2>3 DEF Next, Terminating, proc
 <1>3. Inv => PCorrect
   BY DEF Inv, TypeOK, PCorrect
 <1>4. QED
