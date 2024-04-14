@@ -17,7 +17,7 @@ EXTENDS Naturals, TLAPS
   }
 }
 ****************************************************************************)
-\* BEGIN TRANSLATION (chksum(pcal) = "b4b07666" /\ chksum(tla) = "8adfa002")
+\* BEGIN TRANSLATION
 VARIABLE x
 
 vars == << x >>

@@ -23,7 +23,7 @@ lb: while (i <= Len(f)) {
   }
 }
 ****************************************************************************)
-\* BEGIN TRANSLATION (chksum(pcal) = "31f24270" /\ chksum(tla) = "819802c6")
+\* BEGIN TRANSLATION
 VARIABLES f, h, i, pc
 
 (* define statement *)

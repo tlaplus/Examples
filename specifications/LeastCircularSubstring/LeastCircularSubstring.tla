@@ -46,7 +46,7 @@ LVR:  j := j + 1;
 end algorithm;
 
 ****************************************************************************)
-\* BEGIN TRANSLATION (chksum(pcal) = "c2e05615" /\ chksum(tla) = "81694c33")
+\* BEGIN TRANSLATION
 VARIABLES b, n, f, i, j, k, pc
 
 (* define statement *)

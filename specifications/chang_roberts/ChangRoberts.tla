@@ -62,7 +62,7 @@ succ(n) == IF n=N THEN 1 ELSE n+1  \* successor along the ring
    } \* end process
 }  \* end algorithm
 **)
-\* BEGIN TRANSLATION (chksum(pcal) = "65c8d352" /\ chksum(tla) = "33951c89")
+\* BEGIN TRANSLATION
 VARIABLES msgs, pc, initiator, state
 
 vars == << msgs, pc, initiator, state >>

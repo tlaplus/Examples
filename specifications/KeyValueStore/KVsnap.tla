@@ -79,7 +79,7 @@ COMMIT: \* Commit the transaction to the database if there is no conflict
 }
 *)
 
-\* BEGIN TRANSLATION (chksum(pcal) = "1adfcb46" /\ chksum(tla) = "5b28617f")
+\* BEGIN TRANSLATION
 VARIABLES store, tx, missed, pc, snapshotStore, read_keys, write_keys, ops
 
 vars == << store, tx, missed, pc, snapshotStore, read_keys, write_keys, ops
