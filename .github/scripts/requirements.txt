@@ -1,4 +1,5 @@
-jsonschema == 4.20.0
-tree-sitter==0.20.4
+jsonschema==4.20.0
 mistletoe==1.2.1
+tree-sitter
+tree-sitter-tlaplus
 

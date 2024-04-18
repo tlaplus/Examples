@@ -15,6 +15,8 @@ from os.path import basename, dirname, normpath, splitext
 from typing import Any
 import re
 import tla_utils
+import tree_sitter_tlaplus
+from tree_sitter import Language, Parser
 
 logging.basicConfig(level=logging.INFO)
 
@@ -228,14 +230,16 @@ def check_features(parser, queries, manifest, examples_root):
 if __name__ == '__main__':
     parser = ArgumentParser(description='Checks metadata in tlaplus/examples manifest.json against module and model files in repository.')
     parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
-    parser.add_argument('--ts_path', help='Path to tree-sitter-tlaplus directory', required=True)
+    parser.add_argument('--ts_path', help='[DEPRECATED, UNUSED] Path to tree-sitter-tlaplus directory', required=False)
     args = parser.parse_args()
 
     manifest_path = normpath(args.manifest_path)
     manifest = tla_utils.load_json(manifest_path)
     examples_root = dirname(manifest_path)
 
-    (TLAPLUS_LANGUAGE, parser) = tla_utils.build_ts_grammar(normpath(args.ts_path))
+    TLAPLUS_LANGUAGE = Language(tree_sitter_tlaplus.language(), 'tlaplus')
+    parser = Parser()
+    parser.set_language(TLAPLUS_LANGUAGE)
     queries = build_queries(TLAPLUS_LANGUAGE)
 
     if check_features(parser, queries, manifest, examples_root):

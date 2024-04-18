@@ -13,6 +13,8 @@ import logging
 from os.path import dirname, normpath, join
 import tla_utils
 from typing import List
+import tree_sitter_tlaplus
+from tree_sitter import Language, Parser
 
 logging.basicConfig(level=logging.INFO)
 
@@ -115,7 +117,7 @@ def write_module(examples_root, module_path, module_bytes):
 if __name__ == '__main__':
     parser = ArgumentParser(description='Adds ℕ/ℤ/ℝ Unicode number set shim definitions to modules as needed.')
     parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
-    parser.add_argument('--ts_path', help='Path to tree-sitter-tlaplus directory', required=True)
+    parser.add_argument('--ts_path', help='[DEPRECATED, UNUSED] Path to tree-sitter-tlaplus directory', required=False)
     parser.add_argument('--skip', nargs='+', help='Space-separated list of .tla modules to skip', required=False, default=[])
     parser.add_argument('--only', nargs='+', help='If provided, only modify models in this space-separated list', required=False, default=[])
     args = parser.parse_args()
@@ -126,7 +128,9 @@ if __name__ == '__main__':
     skip_modules = [normpath(path) for path in args.skip]
     only_modules = [normpath(path) for path in args.only]
 
-    (TLAPLUS_LANGUAGE, parser) = tla_utils.build_ts_grammar(normpath(args.ts_path))
+    TLAPLUS_LANGUAGE = Language(tree_sitter_tlaplus.language(), 'tlaplus')
+    parser = Parser()
+    parser.set_language(TLAPLUS_LANGUAGE)
     imports_query = build_imports_query(TLAPLUS_LANGUAGE)
 
     modules = [

@@ -157,11 +157,8 @@ Follow these instructions:
 To combat bitrot, it is important to add your spec and model to the continuous integration system.
 To do this, you'll have to update the [`manifest.json`](manifest.json) file with machine-readable records of your spec files.
 If this process doesn't work for you, you can alternatively modify the [`.ciignore`](.ciignore) file to exclude your spec from validation.
-Otherwise, follow these directions:
+Modifying the `manifest.json` can be done manually or (recommended) following these directions:
 1. Ensure you have Python 3.11+ installed
-1. Download & extract tree-sitter-tlaplus ([zip](https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/refs/heads/main.zip), [tar.gz](https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/refs/heads/main.tar.gz)) to the root of the repository; ensure the extracted folder is named `tree-sitter-tlaplus`
-1. Open a shell and navigate to the repo root; ensure a C++ compiler is installed and on your path
-   - On Windows, this might entail running the below script from the visual studio developer command prompt
 1. It is considered best practice to create & initialize a Python virtual environment to preserve your system package store; run `python -m venv .` then `source ./bin/activate` on Linux & macOS or `.\Scripts\activate.bat` on Windows (run `deactivate` to exit)
 1. Run `pip install -r .github/scripts/requirements.txt`
 1. Run `python .github/scripts/generate_manifest.py`
