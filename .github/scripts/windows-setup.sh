@@ -47,7 +47,7 @@ main() {
   rm tlapm.zip
   # Get TLAUC
   mkdir -p "$DEPS_DIR/tlauc"
-  curl -L https://github.com/tlaplus-community/tlauc/releases/download/v0.2.0/tlauc-windows.zip --output tlauc.zip
+  curl -L https://github.com/tlaplus-community/tlauc/releases/latest/download/tlauc-windows.zip --output tlauc.zip
   7z x tlauc.zip
   mv tlauc.exe "$DEPS_DIR/tlauc/"
   rm tlauc.zip

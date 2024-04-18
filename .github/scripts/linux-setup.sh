@@ -59,7 +59,7 @@ main() {
     echo "Unknown OS: $kernel"
     exit 1
   fi
-  wget -nv "https://github.com/tlaplus-community/tlauc/releases/download/v0.2.0/tlauc-$TLAUC_OS_STR.tar.gz" -O /tmp/tlauc.tar.gz
+  wget -nv "https://github.com/tlaplus-community/tlauc/releases/latest/download/tlauc-$TLAUC_OS_STR.tar.gz" -O /tmp/tlauc.tar.gz
   tar -xzf /tmp/tlauc.tar.gz --directory "$DEPS_DIR/tlauc"
   # Install TLAPS
   if [ "$kernel" == "Linux" ]; then
