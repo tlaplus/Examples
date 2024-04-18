@@ -34,11 +34,6 @@ main() {
   fi
   # Put all dependencies in their own directory to ensure they aren't included implicitly
   mkdir -p "$DEPS_DIR"
-  # Get tree-sitter-tlaplus
-  curl -L https://github.com/tlaplus-community/tree-sitter-tlaplus/archive/main.zip --output tree-sitter-tlaplus.zip
-  7z x tree-sitter-tlaplus.zip
-  mv tree-sitter-tlaplus-main "$DEPS_DIR/tree-sitter-tlaplus"
-  rm tree-sitter-tlaplus.zip
   # Get TLA⁺ tools
   mkdir -p "$DEPS_DIR/tools"
   curl http://nightly.tlapl.us/dist/tla2tools.jar --output "$DEPS_DIR/tools/tla2tools.jar"

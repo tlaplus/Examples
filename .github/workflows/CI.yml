@@ -56,8 +56,7 @@ jobs:
       - name: Check manifest feature flags
         run: |
           python "$SCRIPT_DIR/check_manifest_features.py" \
-            --manifest_path manifest.json                 \
-            --ts_path $DEPS_DIR/tree-sitter-tlaplus
+            --manifest_path manifest.json
       - name: Check README spec table
         run: |
           python "$SCRIPT_DIR/check_markdown_table.py"  \
@@ -73,7 +72,6 @@ jobs:
         if: matrix.unicode
         run: |
           python "$SCRIPT_DIR/unicode_number_set_shim.py" \
-            --ts_path "$DEPS_DIR/tree-sitter-tlaplus"     \
             --manifest_path manifest.json
       - name: Translate PlusCal
         if: (!matrix.unicode) # PlusCal does not yet support unicode
@@ -171,10 +169,8 @@ jobs:
             --skip "${SKIP[@]}"
       - name: Smoke-test manifest generation script
         run: |
-          rm -r $DEPS_DIR/tree-sitter-tlaplus/build
           python $SCRIPT_DIR/generate_manifest.py \
             --manifest_path manifest.json         \
-            --ci_ignore_path .ciignore            \
-            --ts_path $DEPS_DIR/tree-sitter-tlaplus
+            --ci_ignore_path .ciignore
           git diff -a
 

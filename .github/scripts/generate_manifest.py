@@ -13,6 +13,8 @@ from os.path import basename, dirname, join, normpath, relpath, splitext
 from pathlib import PureWindowsPath
 import glob
 import tla_utils
+import tree_sitter_tlaplus
+from tree_sitter import Language, Parser
 
 def to_posix(path):
     """
@@ -165,7 +167,7 @@ if __name__ == '__main__':
     parser = ArgumentParser(description='Generates a new manifest.json derived from files in the repo.')
     parser.add_argument('--manifest_path', help='Path to the current tlaplus/examples manifest.json file', default='manifest.json')
     parser.add_argument('--ci_ignore_path', help='Path to the CI ignore file', default='.ciignore')
-    parser.add_argument('--ts_path', help='Path to tree-sitter-tlaplus directory', default='tree-sitter-tlaplus')
+    parser.add_argument('--ts_path', help='[DEPRECATED, UNUSED] Path to tree-sitter-tlaplus directory', required=False)
     args = parser.parse_args()
 
     manifest_path = normpath(args.manifest_path)
@@ -173,7 +175,9 @@ if __name__ == '__main__':
     ci_ignore_path = normpath(args.ci_ignore_path)
     ignored_dirs = tla_utils.get_ignored_dirs(ci_ignore_path)
 
-    (TLAPLUS_LANGUAGE, parser) = tla_utils.build_ts_grammar(normpath(args.ts_path))
+    TLAPLUS_LANGUAGE = Language(tree_sitter_tlaplus.language(), 'tlaplus')
+    parser = Parser()
+    parser.set_language(TLAPLUS_LANGUAGE)
     queries = build_queries(TLAPLUS_LANGUAGE)
 
     old_manifest = tla_utils.load_json(manifest_path)
