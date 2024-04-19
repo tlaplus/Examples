@@ -23,7 +23,7 @@ args = parser.parse_args()
 logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
 
 tlauc_path = normpath(args.tlauc_path)
-command = 'ascii' if args.to_ascii else 'unicode'
+to_ascii = args.to_ascii
 manifest_path = normpath(args.manifest_path)
 examples_root = dirname(manifest_path)
 skip_modules = [normpath(path) for path in args.skip]
@@ -44,9 +44,9 @@ for path in skip_modules:
     logging.info(f'Skipping {path}')
 
 def convert_module(module_path):
-    logging.info(f'Converting {module_path} to {command}')
+    logging.info(f'Converting {module_path}')
     result = subprocess.run(
-        [tlauc_path, command, '--input', module_path, '--output', module_path, '--overwrite'],
+        [tlauc_path, module_path] + (['--ascii'] if to_ascii else []),
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True
@@ -64,7 +64,7 @@ def convert_module(module_path):
 
 success = True
 thread_count = cpu_count() if not args.verbose else 1
-logging.info(f'Converting using {thread_count} threads')
+logging.info(f'Converting specs to {"ASCII" if to_ascii else "Unicode"} using {thread_count} threads')
 with ThreadPoolExecutor(thread_count) as executor:
     results = executor.map(convert_module, modules)
     exit(0 if all(results) else 1)
