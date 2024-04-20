@@ -454,9 +454,9 @@
           "models": [
             {
               "path": "specifications/EinsteinRiddle/Einstein.cfg",
-              "runtime": "unknown",
-              "size": "large",
-              "mode": "exhaustive search",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "symbolic",
               "features": [],
               "result": "safety failure"
             }

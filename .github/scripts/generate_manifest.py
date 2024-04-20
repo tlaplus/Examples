@@ -167,7 +167,6 @@ if __name__ == '__main__':
     parser = ArgumentParser(description='Generates a new manifest.json derived from files in the repo.')
     parser.add_argument('--manifest_path', help='Path to the current tlaplus/examples manifest.json file', default='manifest.json')
     parser.add_argument('--ci_ignore_path', help='Path to the CI ignore file', default='.ciignore')
-    parser.add_argument('--ts_path', help='[DEPRECATED, UNUSED] Path to tree-sitter-tlaplus directory', required=False)
     args = parser.parse_args()
 
     manifest_path = normpath(args.manifest_path)

@@ -46,3 +46,6 @@ tree-sitter-tlaplus/
 ## Ignore tools/ folder created by .devcontainer.json
 tools/
 
+# Ignore directory created by Apalache
+_apalache-out
+

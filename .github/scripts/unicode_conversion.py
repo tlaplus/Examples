@@ -26,8 +26,8 @@ tlauc_path = normpath(args.tlauc_path)
 to_ascii = args.to_ascii
 manifest_path = normpath(args.manifest_path)
 examples_root = dirname(manifest_path)
-skip_modules = [normpath(path) for path in args.skip]
-only_modules = [normpath(path) for path in args.only]
+skip_modules = args.skip
+only_modules = args.only
 
 manifest = tla_utils.load_json(manifest_path)
 
@@ -36,8 +36,8 @@ modules = [
     tla_utils.from_cwd(examples_root, module['path'])
     for spec in manifest['specifications']
     for module in spec['modules']
-        if normpath(module['path']) not in skip_modules
-        and (only_modules == [] or normpath(module['path']) in only_modules)
+        if module['path'] not in skip_modules
+        and (only_modules == [] or module['path'] in only_modules)
 ]
 
 for path in skip_modules:
@@ -54,6 +54,7 @@ def convert_module(module_path):
     match result:
         case CompletedProcess():
             if result.returncode == 0:
+                logging.debug(result.stdout)
                 return True
             else:
                 logging.error(f'Module {module_path} conversion failed with return code {result.returncode}; output:\n{result.stdout}')

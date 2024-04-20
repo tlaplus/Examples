@@ -38,7 +38,7 @@
 (* Instructions to run `^Apalache^' appear at the end of the file.               *)
 (*********************************************************************************)
 
-EXTENDS Naturals, FiniteSets
+EXTENDS Naturals, FiniteSets, Apalache
 
 House == 1..5
 
@@ -46,13 +46,17 @@ House == 1..5
 \* would be evaluated faster.  However, TLC!Permutations equals a
 \* set of records whereas Permutation below equals a set of tuples/
 \* sequences.  Also, Permutation expects Cardinality(S) = 5.
-Permutation(S) ==
-    { p \in [ House -> S ] :
-        /\ p[2] \in S \ {p[1]}
-        /\ p[3] \in S \ {p[1], p[2]}
-        /\ p[4] \in S \ {p[1], p[2], p[3]}
-        /\ p[5] \in S \ {p[1], p[2], p[3], p[4]} }
-                
+\* @type: Set(Str) => Set(Seq(Str));
+Permutation(S) == {
+  FunAsSeq(p, 5, 5) : p \in {
+    p \in [ House -> S ] :
+      /\ p[2] \in S \ {p[1]}
+      /\ p[3] \in S \ {p[1], p[2]}
+      /\ p[4] \in S \ {p[1], p[2], p[3]}
+      /\ p[5] \in S \ {p[1], p[2], p[3], p[4]}
+    }
+  }
+
 \* In most specs, the following parameterization would be defined as
 \* constants.  Given that Einstein's riddle has only this
 \* parameterization, the constants are replaced with constant-level
@@ -65,15 +69,15 @@ PETS == Permutation({ "bird", "cat", "dog", "fish", "horse" })
 CIGARS == Permutation({ "blend", "bm", "dh", "pm", "prince" })
 
 VARIABLES
-    \* @type: Int -> Str;
+    \* @type: Seq(Str);
     nationality,    \* tuple of nationalities
-    \* @type: Int -> Str;
+    \* @type: Seq(Str);
     colors,         \* tuple of house colors
-    \* @type: Int -> Str;
+    \* @type: Seq(Str);
     pets,           \* tuple of pets
-    \* @type: Int -> Str;
+    \* @type: Seq(Str);
     cigars,         \* tuple of cigars
-    \* @type: Int -> Str;
+    \* @type: Seq(Str);
     drinks          \* tuple of drinks
 
 ------------------------------------------------------------
@@ -136,7 +140,7 @@ Init ==
 
 \* Apalache cannot infer the type of `vars' because it could be a sequence or a tuple.
 \* So we explicitely tell Apalache that it is a sequence by adding the following annotation:
-\* @type: Seq(Int -> Str);
+\* @type: Seq(Seq(Str));
 vars == <<nationality, colors, cigars, pets, drinks>>
 
 Next ==

@@ -13,22 +13,25 @@ import tla_utils
 
 parser = ArgumentParser(description='Checks all small TLA+ models in the tlaplus/examples repo using TLC.')
 parser.add_argument('--tools_jar_path', help='Path to the tla2tools.jar file', required=True)
+parser.add_argument('--apalache_path', help='Path to the Apalache directory', required=True)
 parser.add_argument('--tlapm_lib_path', help='Path to the TLA+ proof manager module directory; .tla files should be in this directory', required=True)
 parser.add_argument('--community_modules_jar_path', help='Path to the CommunityModules-deps.jar file', required=True)
 parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
 parser.add_argument('--skip', nargs='+', help='Space-separated list of models to skip checking', required=False, default=[])
 parser.add_argument('--only', nargs='+', help='If provided, only check models in this space-separated list', required=False, default=[])
+parser.add_argument('--verbose', help='Set logging output level to debug', action='store_true')
 args = parser.parse_args()
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
 
 tools_jar_path = normpath(args.tools_jar_path)
+apalache_path = normpath(args.apalache_path)
 tlapm_lib_path = normpath(args.tlapm_lib_path)
 community_jar_path = normpath(args.community_modules_jar_path)
 manifest_path = normpath(args.manifest_path)
 examples_root = dirname(manifest_path)
-skip_models = [normpath(path) for path in args.skip]
-only_models = [normpath(path) for path in args.only]
+skip_models = args.skip
+only_models = args.only
 
 def check_model(module_path, model, expected_runtime):
     module_path = tla_utils.from_cwd(examples_root, module_path)
@@ -38,6 +41,7 @@ def check_model(module_path, model, expected_runtime):
     start_time = timer()
     tlc_result = tla_utils.check_model(
         tools_jar_path,
+        apalache_path,
         module_path,
         model_path,
         tlapm_lib_path,
@@ -46,10 +50,10 @@ def check_model(module_path, model, expected_runtime):
         hard_timeout_in_seconds
     )
     end_time = timer()
+    output = ' '.join(tlc_result.args) + '\n' + tlc_result.stdout
     match tlc_result:
         case CompletedProcess():
             logging.info(f'{model_path} in {end_time - start_time:.1f}s vs. {expected_runtime.seconds}s expected')
-            output = ' '.join(tlc_result.args) + '\n' + tlc_result.stdout
             expected_result = model['result']
             actual_result = tla_utils.resolve_tlc_exit_code(tlc_result.returncode)
             if expected_result != actual_result:
@@ -67,10 +71,11 @@ def check_model(module_path, model, expected_runtime):
                     logging.error(f"(distinct/total/depth); expected: {tla_utils.get_state_count_info(model)}, actual: {state_count_info}")
                     logging.error(output)
                     return False
+            logging.debug(output)
             return True
         case TimeoutExpired():
             logging.error(f'{model_path} hit hard timeout of {hard_timeout_in_seconds} seconds')
-            logging.error(tlc_result.output.decode('utf-8'))
+            logging.error(output)
             return False
         case _:
             logging.error(f'Unhandled TLC result type {type(tlc_result)}: {tlc_result}')
@@ -85,8 +90,8 @@ small_models = sorted(
         for module in spec['modules']
         for model in module['models']
             if model['size'] == 'small'
-            and normpath(model['path']) not in skip_models
-            and (only_models == [] or normpath(model['path']) in only_models)
+            and model['path'] not in skip_models
+            and (only_models == [] or model['path'] in only_models)
     ],
     key = lambda m: m[2],
     reverse=True

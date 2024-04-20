@@ -37,6 +37,11 @@ main() {
   # Get TLA⁺ tools
   mkdir -p "$DEPS_DIR/tools"
   curl http://nightly.tlapl.us/dist/tla2tools.jar --output "$DEPS_DIR/tools/tla2tools.jar"
+  # Get Apalache
+  curl -L https://github.com/informalsystems/apalache/releases/latest/download/apalache.zip --output apalache.zip
+  7z x apalache.zip
+  mv apalache "$DEPS_DIR/"
+  rm apalache.zip
   # Get TLA⁺ community modules
   mkdir -p "$DEPS_DIR/community"
   curl -L https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar --output "$DEPS_DIR/community/modules.jar"

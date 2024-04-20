@@ -112,7 +112,8 @@ tlc_modules = {
     'Sequences',
     'TLC',
     'TLCExt',
-    'Toolbox'
+    'Toolbox',
+    'Apalache'
 }
 
 # All the standard modules available when using TLAPS
@@ -230,7 +231,6 @@ def check_features(parser, queries, manifest, examples_root):
 if __name__ == '__main__':
     parser = ArgumentParser(description='Checks metadata in tlaplus/examples manifest.json against module and model files in repository.')
     parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
-    parser.add_argument('--ts_path', help='[DEPRECATED, UNUSED] Path to tree-sitter-tlaplus directory', required=False)
     args = parser.parse_args()
 
     manifest_path = normpath(args.manifest_path)
