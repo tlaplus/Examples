@@ -53,6 +53,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Snapshot Key-Value Store](specifications/KeyValueStore)                                            | Andrew Helwer, Murat Demirbas                       |          |             |    ✔    |     ✔     |          |
 | [Chang-Roberts Algorithm for Leader Election in a Ring](specifications/chang_roberts)               | Stephan Merz                                        |          |             |    ✔    |     ✔     |          |
 | [MultiPaxos in SMR-Style](specifications/MultiPaxos-SMR)                                            | Guanzhou Hu                                         |          |             |    ✔    |     ✔     |          |
+| [Einstein's Riddle](specifications/EinsteinRiddle)                                                  | Isaac DeFrain, Giuliano Losa                        |          |             |         |           |    ✔     |
 | [Resource Allocator](specifications/allocator)                                                      | Stephan Merz                                        |          |             |         |     ✔     |          |
 | [Transitive Closure](specifications/TransitiveClosure)                                              | Stephan Merz                                        |          |             |         |     ✔     |          |
 | [Atomic Commitment Protocol](specifications/acp)                                                    | Stephan Merz                                        |          |             |         |     ✔     |          |
@@ -70,7 +71,6 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Multi-Car Elevator System](specifications/MultiCarElevator)                                        | Andrew Helwer                                       |          |             |         |     ✔     |          |
 | [Nano Blockchain Protocol](specifications/NanoBlockchain)                                           | Andrew Helwer                                       |          |             |         |     ✔     |          |
 | [The Readers-Writers Problem](specifications/ReadersWriters)                                        | Isaac DeFrain                                       |          |             |         |     ✔     |          |
-| [Einstein's Riddle](specifications/EinsteinRiddle)                                                  | Isaac DeFrain, Giuliano Losa                        |          |             |         |     ✔     |    ✔     |
 | [Asynchronous Byzantine Consensus](specifications/aba-asyn-byz)                                     | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |     ✔     |          |
 | [Folklore Reliable Broadcast](specifications/bcastFolklore)                                         | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |     ✔     |          |
 | [The Bosco Byzantine Consensus Algorithm](specifications/bosco)                                     | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |     ✔     |          |
@@ -85,10 +85,10 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Chameneos, a Concurrency Game](specifications/Chameneos)                                           | Mariusz Ryndzionek                                  |          |             |         |     ✔     |          |
 | [PCR Testing for Snippets of DNA](specifications/glowingRaccoon)                                    | Martin Harrison                                     |          |             |         |     ✔     |          |
 | [RFC 3506: Voucher Transaction System](specifications/byihive)                                      | Santhosh Raju, Cherry G. Mathew, Fransisca Andriani |          |             |         |     ✔     |          |
-| [TLA⁺ Level Checking](specifications/LevelChecking)                                                 | Leslie Lamport                                      |          |             |         |           |          |
-| [Condition-Based Consensus](specifications/cbc_max)                                                 | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |           |          |
 | [Yo-Yo Leader Election](specifications/YoYo)                                                        | Ludovic Yvoz, Stephan Merz                          |          |             |         |      ✔    |          |
 | [TCP as defined in RFC 9293](specifications/tcp)                                                    | Markus Kuppe                                        |          |             |         |      ✔    |          |
+| [TLA⁺ Level Checking](specifications/LevelChecking)                                                 | Leslie Lamport                                      |          |             |         |           |          |
+| [Condition-Based Consensus](specifications/cbc_max)                                                 | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |           |          |
 
 ## Examples Elsewhere
 Here is a list of specs stored in locations outside this repository, including submodules.
