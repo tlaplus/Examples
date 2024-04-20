@@ -110,6 +110,7 @@ jobs:
           fi
           python $SCRIPT_DIR/parse_modules.py                            \
             --tools_jar_path $DEPS_DIR/tools/tla2tools.jar               \
+            --apalache_path $DEPS_DIR/apalache                           \
             --tlapm_lib_path $DEPS_DIR/tlapm/library                     \
             --community_modules_jar_path $DEPS_DIR/community/modules.jar \
             --manifest_path manifest.json                                \
@@ -124,6 +125,7 @@ jobs:
           fi
           python $SCRIPT_DIR/check_small_models.py                       \
             --tools_jar_path $DEPS_DIR/tools/tla2tools.jar               \
+            --apalache_path $DEPS_DIR/apalache                           \
             --tlapm_lib_path $DEPS_DIR/tlapm/library                     \
             --community_modules_jar_path $DEPS_DIR/community/modules.jar \
             --manifest_path manifest.json                                \
@@ -140,6 +142,7 @@ jobs:
           fi
           python $SCRIPT_DIR/smoke_test_large_models.py                  \
             --tools_jar_path $DEPS_DIR/tools/tla2tools.jar               \
+            --apalache_path $DEPS_DIR/apalache                           \
             --tlapm_lib_path $DEPS_DIR/tlapm/library                     \
             --community_modules_jar_path $DEPS_DIR/community/modules.jar \
             --manifest_path manifest.json                                \
