@@ -75,8 +75,6 @@ large_models = [
         if model['size'] != 'small'
         and model['path'] not in skip_models
         and (only_models == [] or model['path'] in only_models)
-    ],
-    key = lambda m: m[2],
 ]
 
 for path in skip_models:
