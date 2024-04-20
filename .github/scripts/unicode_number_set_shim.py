@@ -117,7 +117,6 @@ def write_module(examples_root, module_path, module_bytes):
 if __name__ == '__main__':
     parser = ArgumentParser(description='Adds ℕ/ℤ/ℝ Unicode number set shim definitions to modules as needed.')
     parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
-    parser.add_argument('--ts_path', help='[DEPRECATED, UNUSED] Path to tree-sitter-tlaplus directory', required=False)
     parser.add_argument('--skip', nargs='+', help='Space-separated list of .tla modules to skip', required=False, default=[])
     parser.add_argument('--only', nargs='+', help='If provided, only modify models in this space-separated list', required=False, default=[])
     args = parser.parse_args()
@@ -125,8 +124,8 @@ if __name__ == '__main__':
     manifest_path = normpath(args.manifest_path)
     manifest = tla_utils.load_json(manifest_path)
     examples_root = dirname(manifest_path)
-    skip_modules = [normpath(path) for path in args.skip]
-    only_modules = [normpath(path) for path in args.only]
+    skip_modules = args.skip
+    only_modules = args.only
 
     TLAPLUS_LANGUAGE = Language(tree_sitter_tlaplus.language(), 'tlaplus')
     parser = Parser()
@@ -137,8 +136,8 @@ if __name__ == '__main__':
         module['path']
         for spec in manifest['specifications']
         for module in spec['modules']
-            if normpath(module['path']) not in skip_modules
-            and (only_modules == [] or normpath(module['path']) in only_modules)
+            if module['path'] not in skip_modules
+            and (only_modules == [] or module['path'] in only_modules)
     ]
 
     for module_path in modules:

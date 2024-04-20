@@ -24,8 +24,8 @@ logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
 tools_path = normpath(args.tools_jar_path)
 manifest_path = normpath(args.manifest_path)
 examples_root = dirname(manifest_path)
-skip_modules = [normpath(path) for path in args.skip]
-only_modules = [normpath(path) for path in args.only]
+skip_modules = args.skip
+only_modules = args.only
 
 manifest = tla_utils.load_json(manifest_path)
 
@@ -35,8 +35,8 @@ modules = [
     for spec in manifest['specifications']
     for module in spec['modules']
         if 'pluscal' in module['features']
-        and normpath(module['path']) not in skip_modules
-        and (only_modules == [] or normpath(module['path']) in only_modules)
+        and module['path'] not in skip_modules
+        and (only_modules == [] or module['path'] in only_modules)
 ]
 
 for path in skip_modules:
@@ -53,6 +53,7 @@ def translate_module(module_path):
     match result:
         case CompletedProcess():
             if result.returncode == 0:
+                logging.debug(result.stdout)
                 return True
             else:
                 logging.error(f'Module {module_path} conversion failed with return code {result.returncode}; output:\n{result.stdout}')

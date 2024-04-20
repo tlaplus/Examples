@@ -87,37 +87,65 @@ def get_run_mode(mode):
     else:
         raise NotImplementedError(f'Undefined model-check mode {mode}')
 
-def check_model(tools_jar_path, module_path, model_path, tlapm_lib_path, community_jar_path, mode, hard_timeout_in_seconds):
+def check_model(
+        tools_jar_path,
+        apalache_path,
+        module_path,
+        model_path,
+        tlapm_lib_path,
+        community_jar_path,
+        mode,
+        hard_timeout_in_seconds
+    ):
     """
     Model-checks the given model against the given module.
     """
     tools_jar_path = normpath(tools_jar_path)
+    apalache_path = normpath(join(apalache_path, 'bin', 'apalache-mc'))
+    apalache_jar_path = normpath(join(apalache_path, 'lib', 'apalache.jar'))
     module_path = normpath(module_path)
     model_path = normpath(model_path)
     tlapm_lib_path = normpath(tlapm_lib_path)
     community_jar_path = normpath(community_jar_path)
     try:
-        tlc = subprocess.run(
-            [
+        if mode == 'symbolic':
+            apalache = subprocess.run([
+                    apalache_path, 'check',
+                    f'--config={model_path}',
+                    module_path
+                ],
+                timeout=hard_timeout_in_seconds,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True
+            )
+            return apalache
+        else:
+            tlc = subprocess.run([
                 'java',
                 '-Dtlc2.TLC.ide=Github',
                 '-Dutil.ExecutionStatisticsCollector.id=abcdef60f238424fa70d124d0c77ffff',
                 '-XX:+UseParallelGC',
                 # Jar paths must go first
-                '-cp', pathsep.join([tools_jar_path, community_jar_path, tlapm_lib_path]),
+                '-cp', pathsep.join([
+                    tools_jar_path,
+                    apalache_jar_path,
+                    community_jar_path,
+                    tlapm_lib_path
+                ]),
                 'tlc2.TLC',
                 module_path,
                 '-config', model_path,
                 '-workers', 'auto',
                 '-lncheck', 'final',
                 '-cleanup'
-            ] + get_run_mode(mode),
-            timeout=hard_timeout_in_seconds,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True
-        )
-        return tlc
+                ] + get_run_mode(mode),
+                timeout=hard_timeout_in_seconds,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True
+            )
+            return tlc
     except subprocess.TimeoutExpired as e:
         return e
 

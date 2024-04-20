@@ -27,8 +27,8 @@ tlaps_modules = normpath(args.tlapm_lib_path)
 community_modules = normpath(args.community_modules_jar_path)
 manifest_path = normpath(args.manifest_path)
 examples_root = dirname(manifest_path)
-skip_modules = [normpath(path) for path in args.skip]
-only_modules = [normpath(path) for path in args.only]
+skip_modules = args.skip
+only_modules = args.only
 
 def parse_module(path):
     """
@@ -63,8 +63,8 @@ modules = [
     tla_utils.from_cwd(examples_root, module['path'])
     for spec in manifest['specifications']
     for module in spec['modules']
-        if normpath(module['path']) not in skip_modules
-        and (only_modules == [] or normpath(module['path']) in only_modules)
+        if module['path'] not in skip_modules
+        and (only_modules == [] or module['path'] in only_modules)
 ]
 
 for path in skip_modules:
