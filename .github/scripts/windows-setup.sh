@@ -38,7 +38,7 @@ main() {
   mkdir -p "$DEPS_DIR/tools"
   curl http://nightly.tlapl.us/dist/tla2tools.jar --output "$DEPS_DIR/tools/tla2tools.jar"
   # Get Apalache
-  curl https://github.com/informalsystems/apalache/releases/download/v0.44.10/apalache.zip --output apalache.zip
+  curl https://github.com/informalsystems/apalache/releases/latest/download/apalache.zip --output apalache.zip
   7z x apalache.zip
   mv apalache "$DEPS_DIR/"
   rm apalache.zip
