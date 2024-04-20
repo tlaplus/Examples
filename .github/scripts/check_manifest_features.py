@@ -112,7 +112,8 @@ tlc_modules = {
     'Sequences',
     'TLC',
     'TLCExt',
-    'Toolbox'
+    'Toolbox',
+    'Apalache'
 }
 
 # All the standard modules available when using TLAPS
