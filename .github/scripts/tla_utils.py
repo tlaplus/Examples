@@ -62,6 +62,12 @@ def parse_module(examples_root, parser, path):
     tree = parser.parse(module_text)
     return (tree, module_text, tree.root_node.has_error)
 
+def node_to_string(module_bytes, node):
+    """
+    Gets the string covered by the given tree-sitter parse tree node.
+    """
+    return module_bytes[node.start_byte:node.end_byte].decode('utf-8')
+
 def parse_timespan(unparsed):
     """
     Parses the timespan format used in the manifest.json format.
