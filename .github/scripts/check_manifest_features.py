@@ -146,13 +146,13 @@ def get_community_imports(examples_root, tree, text, dir, has_proof, queries):
     """
     imports = set(
         [
-            text[node.start_byte:node.end_byte].decode('utf-8')
+            tla_utils.node_to_string(text, node)
             for node, _ in queries.imports.captures(tree.root_node)
         ]
     )
     modules_in_file = set(
         [
-            text[node.start_byte:node.end_byte].decode('utf-8')
+            tla_utils.node_to_string(text, node)
             for node, _ in queries.module_names.captures(tree.root_node)
         ]
     )

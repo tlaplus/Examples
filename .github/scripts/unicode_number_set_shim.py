@@ -75,12 +75,6 @@ def build_imports_query(language):
     ]
     return language.query(' '.join(queries))
 
-def node_to_string(module_bytes, node):
-    """
-    Gets the string covered by the given parse tree node.
-    """
-    return module_bytes[node.byte_range[0]:node.byte_range[1]].decode('utf-8')
-
 def replace_with_shim(module_bytes, node, byte_offset, shim):
     """
     Replace the text covered by the given parse tree node with a reference to
@@ -100,7 +94,7 @@ def replace_imports(module_bytes, tree, query):
     imported_modules = [
         (imported_module, shim_modules[module_name])
         for imported_module, _ in query.captures(tree.root_node)
-        if (module_name := node_to_string(module_bytes, imported_module)) in shim_modules
+        if (module_name := tla_utils.node_to_string(module_bytes, imported_module)) in shim_modules
     ]
     byte_offset = 0
     for imported_module, shim in imported_modules:

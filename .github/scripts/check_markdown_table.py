@@ -180,7 +180,6 @@ if any(different_tlc_flag):
     for path, json, md in different_tlc_flag:
         print(f'Spec {path} ' + ('incorrectly has' if md else 'is missing') + ' a TLC Model flag in README.md table')
 
-'''
 # Ensure Apalache flag is correct
 different_apalache_flag = [
     (manifest_spec.path, manifest_spec.apalache, table_spec.apalache)
@@ -192,7 +191,6 @@ if any(different_apalache_flag):
     print('ERROR: Apalache Model flags in README.md table differ from model records in manifest.json:')
     for path, json, md in different_tlc_flag:
         print(f'Spec {path} ' + ('incorrectly has' if md else 'is missing') + ' an Apalache Model flag in README.md table')
-'''
 
 if success:
     print('SUCCESS: manifest.json concords with README.md table')
