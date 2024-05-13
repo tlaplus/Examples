@@ -4,7 +4,7 @@ VARIABLES Keys, Values
 \* TODO InitValue could be bottom (_|_)
 
 \* TLA+ specifications of Client Centric Isolation Specification by Crooks et al: https://dl.acm.org/doi/10.1145/3087801.3087802
-\* TLA+ specifications by Tim Soethout (tim.soethout@ing.com)
+\* TLA+ specifications by Tim Soethout (tim.soethout@ing.com) et al: Automated Validation of State-Based Client-Centric Isolation with TLA+: https://doi.org/10.1007/978-3-030-67220-1_4
 
 \* A database `State` is represented by keys with corresponding values
 State == [Keys -> Values]
