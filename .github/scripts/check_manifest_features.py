@@ -238,8 +238,7 @@ if __name__ == '__main__':
     examples_root = dirname(manifest_path)
 
     TLAPLUS_LANGUAGE = Language(tree_sitter_tlaplus.language())
-    parser = Parser()
-    parser.set_language(TLAPLUS_LANGUAGE)
+    parser = Parser(TLAPLUS_LANGUAGE)
     queries = build_queries(TLAPLUS_LANGUAGE)
 
     if check_features(parser, queries, manifest, examples_root):

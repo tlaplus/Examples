@@ -122,8 +122,7 @@ if __name__ == '__main__':
     only_modules = args.only
 
     TLAPLUS_LANGUAGE = Language(tree_sitter_tlaplus.language())
-    parser = Parser()
-    parser.set_language(TLAPLUS_LANGUAGE)
+    parser = Parser(TLAPLUS_LANGUAGE)
     imports_query = build_imports_query(TLAPLUS_LANGUAGE)
 
     modules = [

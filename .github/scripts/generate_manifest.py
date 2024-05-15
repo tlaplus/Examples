@@ -175,8 +175,7 @@ if __name__ == '__main__':
     ignored_dirs = tla_utils.get_ignored_dirs(ci_ignore_path)
 
     TLAPLUS_LANGUAGE = Language(tree_sitter_tlaplus.language())
-    parser = Parser()
-    parser.set_language(TLAPLUS_LANGUAGE)
+    parser = Parser(TLAPLUS_LANGUAGE)
     queries = build_queries(TLAPLUS_LANGUAGE)
 
     old_manifest = tla_utils.load_json(manifest_path)
