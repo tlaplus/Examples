@@ -121,7 +121,7 @@ if __name__ == '__main__':
     skip_modules = args.skip
     only_modules = args.only
 
-    TLAPLUS_LANGUAGE = Language(tree_sitter_tlaplus.language(), 'tlaplus')
+    TLAPLUS_LANGUAGE = Language(tree_sitter_tlaplus.language())
     parser = Parser()
     parser.set_language(TLAPLUS_LANGUAGE)
     imports_query = build_imports_query(TLAPLUS_LANGUAGE)
