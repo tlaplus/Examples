@@ -237,7 +237,7 @@ if __name__ == '__main__':
     manifest = tla_utils.load_json(manifest_path)
     examples_root = dirname(manifest_path)
 
-    TLAPLUS_LANGUAGE = Language(tree_sitter_tlaplus.language(), 'tlaplus')
+    TLAPLUS_LANGUAGE = Language(tree_sitter_tlaplus.language())
     parser = Parser()
     parser.set_language(TLAPLUS_LANGUAGE)
     queries = build_queries(TLAPLUS_LANGUAGE)
