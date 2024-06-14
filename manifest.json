@@ -3436,7 +3436,8 @@
               "mode": "exhaustive search",
               "features": [
                 "alias",
-                "symmetry"
+                "symmetry",
+                "liveness"
               ],
               "result": "success",
               "distinctStates": 3316,
