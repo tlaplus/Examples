@@ -3416,6 +3416,38 @@
       ]
     },
     {
+      "path": "specifications/braf",
+      "title": "Buffered Random Access File",
+      "description": "Specification of a Java file caching layer",
+      "sources": ["https://github.com/tlaplus/tlaplus/tree/4613109641676389d97b8df209d6cf4d90d31c1c/tlatools/org.lamport.tlatools/src/tlc2/util/BufferedRandomAccessFile.tla"],
+      "authors": ["Calvin Loncaric"],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/braf/BufferedRandomAccessFile.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/braf/BufferedRandomAccessFile.cfg",
+              "runtime": "00:09:00",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "alias",
+                "symmetry"
+              ],
+              "result": "success",
+              "distinctStates": 3316,
+              "totalStates": 128581,
+              "stateDepth": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
       "path": "specifications/byihive",
       "title": "RFC 3506: Voucher Transaction System",
       "description": "Formal specification of a peer-to-peer ledger protocol",
