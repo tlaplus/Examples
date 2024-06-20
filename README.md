@@ -89,6 +89,7 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [TCP as defined in RFC 9293](specifications/tcp)                                                    | Markus Kuppe                                        |          |             |         |      ✔    |          |
 | [TLA⁺ Level Checking](specifications/LevelChecking)                                                 | Leslie Lamport                                      |          |             |         |           |          |
 | [Condition-Based Consensus](specifications/cbc_max)                                                 | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |           |          |
+| [Buffered Random Access File](specifications/braf)                                                  | Calvin Loncaric                                     |          |             |         |     ✔     |          |
 
 ## Examples Elsewhere
 Here is a list of specs stored in locations outside this repository, including submodules.
