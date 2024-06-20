@@ -3431,7 +3431,7 @@
           "models": [
             {
               "path": "specifications/braf/BufferedRandomAccessFile.cfg",
-              "runtime": "00:09:00",
+              "runtime": "00:00:09",
               "size": "small",
               "mode": "exhaustive search",
               "features": [
