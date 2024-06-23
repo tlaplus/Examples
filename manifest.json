@@ -2078,7 +2078,8 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [
-                "ignore deadlock"
+                "ignore deadlock",
+                "liveness"
               ],
               "result": "success"
             }
