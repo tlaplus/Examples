@@ -40,13 +40,6 @@ Edges ==
   (*    expression equals a set that depends on the value of n.            *)
   (*************************************************************************)
 
-(***************************************************************************)
-(* Refuse to run TLC with multiple workers because RandomElement is a hack *)
-(* and may cause bogus counterexamples to be reported.                     *)
-(* See: https://github.com/tlaplus/tlaplus/issues/866                      *)
-(***************************************************************************)
-ASSUME TLCGet("config").worker = 1
-
 ASSUME /\ Root \in Nodes
        /\ MaxCardinality \in Nat
        /\ MaxCardinality >= Cardinality(Nodes)
