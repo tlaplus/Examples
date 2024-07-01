@@ -74,7 +74,15 @@ jobs:
           python "$SCRIPT_DIR/unicode_number_set_shim.py" \
             --manifest_path manifest.json
       - name: Translate PlusCal
-        if: (!matrix.unicode) # PlusCal does not yet support unicode
+        # PlusCal translations will be reverted at the end of this step,
+        # since we want to support people manually editing the generated TLA+
+        # code in specs they submit as examples. However, running the PlusCal
+        # translator is currently the only way to ensure that specs contain
+        # valid PlusCal syntax. So, we have to run the translator and then
+        # discard the results. However, discarding the results with git reset
+        # also would discard the Unicode translation. So, only execute this
+        # step if we did not perform Unicode translation.
+        if: (!matrix.unicode)
         run: |
           # https://github.com/tlaplus/tlaplus/issues/906
           SKIP=(
@@ -86,12 +94,7 @@ jobs:
             --tools_jar_path $DEPS_DIR/tools/tla2tools.jar  \
             --manifest_path manifest.json                   \
             --skip "${SKIP[@]}"
-          if [[ "${{ matrix.unicode }}" == "false" ]]; then
-            git status
-            git diff
-            diff_count=$(git status --porcelain=v1 2>/dev/null | wc -l)
-            exit $diff_count
-          fi
+          git reset --hard HEAD # Restore specs to their original state
       - name: Parse all modules
         run: |
           python $SCRIPT_DIR/parse_modules.py                            \
