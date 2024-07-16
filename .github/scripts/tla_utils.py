@@ -129,6 +129,7 @@ def check_model(
         else:
             tlc = subprocess.run([
                 'java',
+                '-enableassertions',
                 '-Dtlc2.TLC.ide=Github',
                 '-Dutil.ExecutionStatisticsCollector.id=abcdef60f238424fa70d124d0c77ffff',
                 '-XX:+UseParallelGC',
