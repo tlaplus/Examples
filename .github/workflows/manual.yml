@@ -1,0 +1,23 @@
+name: manual
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Get (nightly) TLC
+      run: wget https://nightly.tlapl.us/dist/tla2tools.jar
+    - name: Get (nightly) CommunityModules
+      run: wget https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar
+    - name: Get TLAPS modules
+      run: |
+        wget https://raw.githubusercontent.com/tlaplus/tlapm/main/library/TLAPS.tla
+        wget https://raw.githubusercontent.com/tlaplus/tlapm/main/library/FunctionTheorems.tla
+        wget https://raw.githubusercontent.com/tlaplus/tlapm/main/library/FiniteSetTheorems.tla
+        wget https://raw.githubusercontent.com/tlaplus/tlapm/main/library/WellFoundedInduction.tla
+        wget https://raw.githubusercontent.com/tlaplus/tlapm/main/library/NaturalsInduction.tla
+        wget https://raw.githubusercontent.com/tlaplus/tlapm/main/library/SequenceTheorems.tla
+    - name: Run
+      run: /bin/bash .github/workflows/run.sh
