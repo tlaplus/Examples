@@ -15,8 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # macOS not used; see https://github.com/tlaplus/Examples/issues/119
-        os: [windows-latest, ubuntu-latest]
+        os: [windows-latest, ubuntu-latest, macos-latest]
         unicode: [true, false]
       fail-fast: false
     env:

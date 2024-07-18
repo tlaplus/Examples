@@ -52,8 +52,8 @@ def write_json(data, path):
 
 def parse_module(examples_root, parser, path):
     """
-    Parses a .tla file; returns the parse tree along with whether a parse
-    error was detected.
+    Parses a .tla file with tree-sitter; returns the parse tree along with
+    whether a parse error was detected.
     """
     module_text = None
     path = from_cwd(examples_root, path)
