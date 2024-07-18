@@ -48,15 +48,25 @@ def check_model(module_path, model):
     )
     match tlc_result:
         case TimeoutExpired():
-            logging.debug(tlc_result.stdout)
+            args, _ = tlc_result.args
+            logging.debug(' '.join(args))
+            logging.debug(
+                # Returns string on Windows, bytes everywhere else
+                tlc_result.stdout
+                if type(tlc_result.stdout) == str
+                else tlc_result.stdout.decode('utf-8')
+            )
             return True
         case CompletedProcess():
+            output = ' '.join(tlc_result.args) + '\n' + tlc_result.stdout
             logging.warning(f'Model {model_path} finished quickly, within {smoke_test_timeout_in_seconds} seconds; consider labeling it a small model')
             expected_result = model['result']
             actual_result = tla_utils.resolve_tlc_exit_code(tlc_result.returncode)
-            if expected_result != actual_result:
+            if expected_result == actual_result:
+                logging.debug(output)
+            else:
                 logging.error(f'Model {model_path} expected result {expected_result} but got {actual_result}')
-                logging.error(tlc_result.stdout)
+                logging.error(output)
                 return False
             return True
         case _:
