@@ -1,4 +1,4 @@
------------------------------ MODULE Disruptor_SPMC -------------------------
+----------------------------- MODULE Disruptor_SPMC ------------------------
 (***************************************************************************)
 (* Models a Single Producer, Multi Consumer Disruptor (SPMC).              *)
 (*                                                                         *)
@@ -9,7 +9,7 @@
 (* To see a data race, try and run the model with two publishers.          *)
 (***************************************************************************)
 
-EXTENDS Naturals, Integers, FiniteSets, Sequences
+EXTENDS Integers, FiniteSets, Sequences
 
 CONSTANTS
   Writers,      (* Writer/publisher thread ids.    *)
@@ -17,6 +17,8 @@ CONSTANTS
   MaxPublished, (* Max number of published events. *)
   Size,         (* Ringbuffer size.                *)
   NULL
+
+ASSUME Size \in Nat \ {0}
 
 VARIABLES
   ringbuffer,
@@ -45,7 +47,7 @@ Transition(t, from, to) ==
   /\ pc[t] = from
   /\ pc'   = [ pc EXCEPT ![t] = to ]
 
-Buffer  == INSTANCE RingBuffer
+Buffer == INSTANCE RingBuffer WITH Values <- Int
 
 Range(f) ==
   { f[x] : x \in DOMAIN(f) }

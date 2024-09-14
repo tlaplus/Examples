@@ -1,4 +1,4 @@
---------------------------- MODULE Disruptor_MPMC ---------------------------
+--------------------------- MODULE Disruptor_MPMC --------------------------
 (***************************************************************************)
 (*  Models a Multi Producer, Multi Consumer Disruptor (MPMC).              *)
 (* The model verifies that no data races occur between the publishers      *)
@@ -6,7 +6,7 @@
 (* values.                                                                 *)
 (***************************************************************************)
 
-EXTENDS Naturals, Integers, FiniteSets, Sequences
+EXTENDS Integers, FiniteSets, Sequences
 
 CONSTANTS
   Writers,          (* Writer/publisher thread ids.    *)
@@ -14,6 +14,8 @@ CONSTANTS
   MaxPublished,     (* Max number of published events. *)
   Size,             (* Ringbuffer size.                *)
   NULL
+
+ASSUME Size \in Nat \ {0}
 
 VARIABLES
   ringbuffer,
@@ -46,7 +48,7 @@ Transition(t, from, to) ==
   /\ pc[t] = from
   /\ pc'   = [ pc EXCEPT ![t] = to ]
 
-Buffer == INSTANCE RingBuffer
+Buffer == INSTANCE RingBuffer WITH Values <- Int
 
 Xor(A, B) == A = ~B
 

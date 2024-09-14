@@ -12,18 +12,31 @@
 (***************************************************************************)
 
 LOCAL INSTANCE Naturals
-LOCAL INSTANCE Integers
 LOCAL INSTANCE FiniteSets
 
 CONSTANTS
-  Size,
-  Readers,
-  Writers,
+  Size,    (* The number of slots in the RingBuffer.                *)
+  Readers, (* The set of readers to the RingBuffer.                 *)
+  Writers, (* The set of writers to the RingBuffer.                 *)
+  Values,  (* The set of values storable in the RingBuffer's slots. *)
   NULL
+
+ASSUME Size \in Nat \ {0}
+ASSUME NULL \notin Values
 
 VARIABLE ringbuffer
 
+(* Last index in the RingBuffer. *)
 LastIndex == Size - 1
+
+(***************************************************************************)
+(* Clients using the RingBuffer must ensure there are no data races.       *)
+(* I.e. NoDataRaces must be an invariant in the spec using the Ringbuffer. *)
+(***************************************************************************)
+NoDataRaces ==
+  \A i \in 0 .. LastIndex :
+    /\ ringbuffer.readers[i] = {} \/ ringbuffer.writers[i] = {}
+    /\ Cardinality(ringbuffer.writers[i]) <= 1
 
 (* Initial state of RingBuffer. *)
 Init ==
@@ -70,14 +83,9 @@ EndRead(index, reader) ==
 
 TypeOk ==
   ringbuffer \in [
-    slots:   UNION { [0 .. LastIndex -> Int \union { NULL }] },
-    readers: UNION { [0 .. LastIndex -> SUBSET(Readers)    ] },
-    writers: UNION { [0 .. LastIndex -> SUBSET(Writers)    ] }
+    slots:   UNION { [0 .. LastIndex -> Values \union { NULL }] },
+    readers: UNION { [0 .. LastIndex -> SUBSET(Readers)       ] },
+    writers: UNION { [0 .. LastIndex -> SUBSET(Writers)       ] }
   ]
-
-NoDataRaces ==
-  \A i \in 0 .. LastIndex :
-    /\ ringbuffer.readers[i] = {} \/ ringbuffer.writers[i] = {}
-    /\ Cardinality(ringbuffer.writers[i]) <= 1
 
 =============================================================================
