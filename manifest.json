@@ -458,7 +458,9 @@
               "runtime": "00:00:10",
               "size": "small",
               "mode": "exhaustive search",
-              "features": [],
+              "features": [
+                "ignore deadlock"
+              ],
               "result": "success",
               "distinctStates": 112929,
               "totalStates": 406505,
@@ -470,7 +472,8 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [
-                "liveness"
+                "liveness",
+                "ignore deadlock"
               ],
               "result": "success",
               "distinctStates": 14365,
@@ -491,7 +494,8 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [
-                "liveness"
+                "liveness",
+                "ignore deadlock"
               ],
               "result": "success",
               "distinctStates": 8153,
