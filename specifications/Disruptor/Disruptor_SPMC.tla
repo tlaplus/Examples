@@ -22,6 +22,8 @@ CONSTANTS
   Size,         (* Ringbuffer size.                                  *)
   NULL
 
+ASSUME Writers /= {}
+ASSUME Readers /= {}
 ASSUME Size \in Nat \ {0}
 
 VARIABLES
