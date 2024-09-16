@@ -2,30 +2,34 @@
 (***************************************************************************)
 (* Models a Single Producer, Multi Consumer Disruptor (SPMC).              *)
 (*                                                                         *)
-(* The model verifies that no data races occur between the publisher       *)
+(* The producer publishes the sequence number as value into the ring       *)
+(* buffer and the model verifies that all consumers read all published     *)
+(* values.                                                                 *)
+(*                                                                         *)
+(* The model also verifies that no data races occur between the producer   *)
 (* and consumers and that all consumers eventually read all published      *)
 (* values.                                                                 *)
 (*                                                                         *)
-(* To see a data race, try and run the model with two publishers.          *)
+(* To see a data race, try and run the model with two producers.           *)
 (***************************************************************************)
 
 EXTENDS Integers, FiniteSets, Sequences
 
 CONSTANTS
-  Writers,      (* Writer/publisher thread ids.    *)
-  Readers,      (* Reader/consumer  thread ids.    *)
-  MaxPublished, (* Max number of published events. *)
-  Size,         (* Ringbuffer size.                *)
+  MaxPublished, (* Max number of published events. Bounds the model. *)
+  Writers,      (* Writer/producer thread ids.                       *)
+  Readers,      (* Reader/consumer thread ids.                       *)
+  Size,         (* Ringbuffer size.                                  *)
   NULL
 
 ASSUME Size \in Nat \ {0}
 
 VARIABLES
   ringbuffer,
-  published,    (* Publisher Cursor.                           *)
-  read,         (* Read Cursors. One per consumer.             *)
-  consumed,     (* Sequence of all read events by the Readers. *)
-  pc            (* Program Counter of each Writer/Reader.      *)
+  published,    (* Write cursor. One for the producer.               *)
+  read,         (* Read cursors. One per consumer.                   *)
+  consumed,     (* Sequence of all read events by the Readers.       *)
+  pc            (* Program Counter of each Writer/Reader.            *)
 
 vars == <<
   ringbuffer,
@@ -36,7 +40,7 @@ vars == <<
 >>
 
 (***************************************************************************)
-(* Each publisher/consumer can be in one of two states:                    *)
+(* Each producer/consumer can be in one of two states:                     *)
 (* 1. Accessing a slot in the Disruptor or                                 *)
 (* 2. Advancing to the next slot.                                          *)
 (***************************************************************************)
@@ -56,7 +60,7 @@ MinReadSequence ==
   CHOOSE min \in Range(read) : \A r \in Readers : min <= read[r]
 
 (***************************************************************************)
-(* Publisher Actions:                                                      *)
+(* Producer Actions:                                                       *)
 (***************************************************************************)
 
 BeginWrite(writer) ==
@@ -151,6 +155,7 @@ NoDataRaces == Buffer!NoDataRaces
 (* Properties:                                                             *)
 (***************************************************************************)
 
+(* Eventually always, consumers must have read all published values.       *)
 Liveliness ==
   <>[] (\A r \in Readers : consumed[r] = [i \in 1..MaxPublished |-> i - 1])
 

@@ -1,7 +1,12 @@
 --------------------------- MODULE Disruptor_MPMC --------------------------
-(***************************************************************************)
-(*  Models a Multi Producer, Multi Consumer Disruptor (MPMC).              *)
-(* The model verifies that no data races occur between the publishers      *)
+***************************************************************************)
+(* Models a Multi Producer, Multi Consumer Disruptor (MPMC).               *)
+(*                                                                         *)
+(* The producers publish their claimed sequence number as value into       *)
+(* the RingBuffer and the model verifies that all consumers read all       *)
+(* published values.                                                       *)
+(*                                                                         *)
+(* The model also verifies that no data races occur between the producers  *)
 (* and consumers and that all consumers eventually read all published      *)
 (* values.                                                                 *)
 (***************************************************************************)
@@ -9,10 +14,10 @@
 EXTENDS Integers, FiniteSets, Sequences
 
 CONSTANTS
-  Writers,          (* Writer/publisher thread ids.    *)
-  Readers,          (* Reader/consumer  thread ids.    *)
-  MaxPublished,     (* Max number of published events. *)
-  Size,             (* Ringbuffer size.                *)
+  MaxPublished,     (* Max number of published events. Bounds the model.    *)
+  Writers,          (* Writer/producer thread ids.                          *)
+  Readers,          (* Reader/consumer thread ids.                          *)
+  Size,             (* Ringbuffer size.                                     *)
   NULL
 
 ASSUME Size \in Nat \ {0}
@@ -23,8 +28,8 @@ VARIABLES
   claimed_sequence, (* Claimed sequence by each Writer.                     *)
   published,        (* Encodes whether each slot is published.              *)
   read,             (* Read Cursors. One per Reader.                        *)
-  consumed,         (* Sequence of all read events by the Reader.           *)
-  pc                (* Program Counter of each Writer/Reader.               *)
+  consumed,         (* Sequence of all read events by the Readers.          *)
+  pc                (* Program Counter for each Writer/Reader.              *)
 
 vars == <<
   ringbuffer,
@@ -37,7 +42,7 @@ vars == <<
 >>
 
 (***************************************************************************)
-(* Each publisher/consumer can be in one of two states:                    *)
+(* Each producer/consumer can be in one of two states:                     *)
 (* 1. Accessing a slot in the Disruptor or                                 *)
 (* 2. Advancing to the next slot.                                          *)
 (***************************************************************************)
@@ -60,7 +65,7 @@ MinReadSequence ==
 
 (***************************************************************************)
 (* Encode whether an index is published by tracking if the slot was        *)
-(* published in an even or odd index. This works because publishers        *)
+(* published in an even or odd index. This works because producers         *)
 (* cannot overtake consumers.                                              *)
 (***************************************************************************)
 IsPublished(sequence) ==
@@ -80,7 +85,7 @@ Publish(sequence) ==
   IN  published' = [ published EXCEPT ![index] = Xor(TRUE, @) ]
 
 (***************************************************************************)
-(* Publisher Actions:                                                      *)
+(* Producer Actions:                                                       *)
 (***************************************************************************)
 
 BeginWrite(writer) ==
@@ -181,6 +186,7 @@ TypeOk ==
 (* Properties:                                                             *)
 (***************************************************************************)
 
+(* Eventually always, consumers must have read all published values. *)
 Liveliness ==
   <>[] (\A r \in Readers : consumed[r] = [i \in 1..MaxPublished |-> i - 1])
 

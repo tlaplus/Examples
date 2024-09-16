@@ -1,7 +1,7 @@
 ----------------------------- MODULE RingBuffer -----------------------------
 (***************************************************************************)
-(* Models a Ring Buffer where each slot can contain an integer.            *)
-(* Initially all slots contains NULL.                                      *)
+(* Models a RingBuffer where each slot can contain an element from         *)
+(* Values. Initially all slots contains NULL.                              *)
 (*                                                                         *)
 (* Read and write accesses to each slot are tracked to detect data races.  *)
 (* This entails that each write and read of a slot has multiple steps.     *)
