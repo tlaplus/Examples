@@ -1,5 +1,5 @@
 --------------------------- MODULE Disruptor_MPMC --------------------------
-***************************************************************************)
+(***************************************************************************)
 (* Models a Multi Producer, Multi Consumer Disruptor (MPMC).               *)
 (*                                                                         *)
 (* The producers publish their claimed sequence number as value into       *)
