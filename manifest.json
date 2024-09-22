@@ -494,6 +494,7 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [
+                "state constraint",
                 "liveness",
                 "ignore deadlock"
               ],
