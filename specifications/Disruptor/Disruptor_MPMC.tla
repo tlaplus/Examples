@@ -8,7 +8,7 @@
 (*                                                                         *)
 (* The model also verifies that no data races occur between the producers  *)
 (* and consumers and that all consumers eventually read all published      *)
-(* values.                                                                 *)
+(* values (in a Multicast fashion - i.e. all consumers read all events).   *)
 (***************************************************************************)
 
 EXTENDS Integers, FiniteSets, Sequences
@@ -22,7 +22,8 @@ CONSTANTS
 
 ASSUME Writers /= {}
 ASSUME Readers /= {}
-ASSUME Size \in Nat \ {0}
+ASSUME Size         \in Nat \ {0}
+ASSUME MaxPublished \in Nat \ {0}
 
 VARIABLES
   ringbuffer,
@@ -30,8 +31,10 @@ VARIABLES
   claimed_sequence, (* Claimed sequence by each Writer.                     *)
   published,        (* Encodes whether each slot is published.              *)
   read,             (* Read Cursors. One per Reader.                        *)
-  consumed,         (* Sequence of all read events by the Readers.          *)
-  pc                (* Program Counter for each Writer/Reader.              *)
+  pc,               (* Program Counter for each Writer/Reader.              *)
+  consumed          (* Sequence of all read events by the Readers.          *)
+                    (* This is a history variable used for liveliness       *)
+                    (* checking.                                            *)
 
 vars == <<
   ringbuffer,

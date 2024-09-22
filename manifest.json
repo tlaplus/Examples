@@ -498,9 +498,9 @@
                 "ignore deadlock"
               ],
               "result": "success",
-              "distinctStates": 8153,
-              "totalStates": 26481,
-              "stateDepth": 81
+              "distinctStates": 8496,
+              "totalStates": 28049,
+              "stateDepth": 82
             }
           ]
         },

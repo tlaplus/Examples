@@ -8,7 +8,7 @@
 (*                                                                         *)
 (* The model also verifies that no data races occur between the producer   *)
 (* and consumers and that all consumers eventually read all published      *)
-(* values.                                                                 *)
+(* values (in a Multicast fashion - i.e. all consumers read all events).   *)
 (*                                                                         *)
 (* To see a data race, try and run the model with two producers.           *)
 (***************************************************************************)
@@ -24,14 +24,17 @@ CONSTANTS
 
 ASSUME Writers /= {}
 ASSUME Readers /= {}
-ASSUME Size \in Nat \ {0}
+ASSUME Size         \in Nat \ {0}
+ASSUME MaxPublished \in Nat \ {0}
 
 VARIABLES
   ringbuffer,
   published,    (* Write cursor. One for the producer.               *)
   read,         (* Read cursors. One per consumer.                   *)
-  consumed,     (* Sequence of all read events by the Readers.       *)
-  pc            (* Program Counter of each Writer/Reader.            *)
+  pc,           (* Program Counter of each Writer/Reader.            *)
+  consumed      (* Sequence of all read events by the Readers.       *)
+                (* This is a history variable used for liveliness    *)
+                (* checking.                                         *)
 
 vars == <<
   ringbuffer,
@@ -73,7 +76,6 @@ BeginWrite(writer) ==
   IN
     \* Are we clear of all consumers? (Potentially a full cycle behind).
     /\ min_read >= next - Size
-    /\ next < MaxPublished
     /\ Transition(writer, Access, Advance)
     /\ Buffer!Write(index, writer, next)
     /\ UNCHANGED << consumed, published, read >>
@@ -132,13 +134,17 @@ Next ==
   \/ \E r \in Readers : EndRead(r)
 
 Fairness ==
-  /\ \A w \in Writers : WF_vars(BeginWrite(w))
-  /\ \A w \in Writers : WF_vars(EndWrite(w))
   /\ \A r \in Readers : WF_vars(BeginRead(r))
   /\ \A r \in Readers : WF_vars(EndRead(r))
 
 Spec ==
   Init /\ [][Next]_vars /\ Fairness
+
+(***************************************************************************)
+(* State constraint to bound model:                                        *)
+(***************************************************************************)
+
+StateConstraint == published < MaxPublished
 
 (***************************************************************************)
 (* Invariants:                                                             *)
@@ -159,6 +165,7 @@ NoDataRaces == Buffer!NoDataRaces
 
 (* Eventually always, consumers must have read all published values.       *)
 Liveliness ==
-  <>[] (\A r \in Readers : consumed[r] = [i \in 1..MaxPublished |-> i - 1])
+  \A r \in Readers : \A i \in 0 .. (MaxPublished - 1) :
+    <>[](i \in 0 .. published => Len(consumed[r]) >= i + 1 /\ consumed[r][i + 1] = i)
 
 =============================================================================
