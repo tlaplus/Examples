@@ -76,7 +76,7 @@ BeginWrite(writer) ==
   IN
     \* Are we clear of all consumers? (Potentially a full cycle behind).
     /\ min_read >= next - Size
-    /\ Transition(writer, Access, Advance)
+    /\ Transition(writer, Advance, Access)
     /\ Buffer!Write(index, writer, next)
     /\ UNCHANGED << consumed, published, read >>
 
@@ -85,7 +85,7 @@ EndWrite(writer) ==
     next  == published + 1
     index == Buffer!IndexOf(next)
   IN
-    /\ Transition(writer, Advance, Access)
+    /\ Transition(writer, Access, Advance)
     /\ Buffer!EndWrite(index, writer)
     /\ published' = next
     /\ UNCHANGED << consumed, read >>
@@ -100,7 +100,7 @@ BeginRead(reader) ==
     index == Buffer!IndexOf(next)
   IN
     /\ published >= next
-    /\ Transition(reader, Access, Advance)
+    /\ Transition(reader, Advance, Access)
     /\ Buffer!BeginRead(index, reader)
     \* Track what we read from the ringbuffer.
     /\ consumed' = [ consumed EXCEPT ![reader] = Append(@, Buffer!Read(index)) ]
@@ -111,7 +111,7 @@ EndRead(reader) ==
     next  == read[reader] + 1
     index == Buffer!IndexOf(next)
   IN
-    /\ Transition(reader, Advance, Access)
+    /\ Transition(reader, Access, Advance)
     /\ Buffer!EndRead(index, reader)
     /\ read' = [ read EXCEPT ![reader] = next ]
     /\ UNCHANGED << consumed, published >>
@@ -123,9 +123,9 @@ EndRead(reader) ==
 Init ==
   /\ Buffer!Init
   /\ published = -1
-  /\ read      = [ r \in Readers                |-> -1     ]
-  /\ consumed  = [ r \in Readers                |-> << >>  ]
-  /\ pc        = [ a \in Writers \union Readers |-> Access ]
+  /\ read      = [ r \in Readers                |-> -1      ]
+  /\ consumed  = [ r \in Readers                |-> << >>   ]
+  /\ pc        = [ a \in Writers \union Readers |-> Advance ]
 
 Next ==
   \/ \E w \in Writers : BeginWrite(w)
@@ -141,7 +141,7 @@ Spec ==
   Init /\ [][Next]_vars /\ Fairness
 
 (***************************************************************************)
-(* State constraint to bound model:                                        *)
+(* State constraint - bounds model:                                        *)
 (***************************************************************************)
 
 StateConstraint == published < MaxPublished
