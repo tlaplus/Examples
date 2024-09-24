@@ -66,7 +66,12 @@ Range(f) ==
   { f[x] : x \in DOMAIN(f) }
 
 MinReadSequence ==
-  CHOOSE min \in Range(read) : \A r \in Readers : min <= read[r]
+  CHOOSE min \in Range(read) :
+    \A r \in Readers : min <= read[r]
+
+MinClaimedSequence ==
+  CHOOSE min \in Range(claimed_sequence) :
+    \A w \in Writers : min <= claimed_sequence[w]
 
 (***************************************************************************)
 (* Encode whether an index is published by tracking if the slot was        *)
@@ -90,6 +95,20 @@ Publish(sequence) ==
   IN  published' = [ published EXCEPT ![index] = Xor(TRUE, @) ]
 
 (***************************************************************************)
+(* Computes the highest published sequence number that can be read.        *)
+(* This might seem strange but e.g. a producer P1 can be about to publish  *)
+(* sequence 5 while producer P2 has published sequence 6 and thus          *)
+(* consumers can neither read sequence 5 nor 6 (yet).                      *)
+(***************************************************************************)
+AvailablePublishedSequence ==
+  LET guaranteed_published == MinClaimedSequence - 1
+      candidate_sequences  == {guaranteed_published} \union Range(claimed_sequence)
+  IN  CHOOSE max \in candidate_sequences :
+        IsPublished(max) => ~ \E w \in Writers :
+          /\ claimed_sequence[w] = max + 1
+          /\ IsPublished(claimed_sequence[w])
+
+(***************************************************************************)
 (* Producer Actions:                                                       *)
 (***************************************************************************)
 
@@ -101,10 +120,9 @@ BeginWrite(writer) ==
   IN
     \* Are we clear of all consumers? (Potentially a full cycle behind).
     /\ min_read >= seq - Size
-    /\ seq < MaxPublished
     /\ claimed_sequence' = [ claimed_sequence EXCEPT ![writer] = seq ]
     /\ next_sequence'    = seq + 1
-    /\ Transition(writer, Access, Advance)
+    /\ Transition(writer, Advance, Access)
     /\ Buffer!Write(index, writer, seq)
     /\ UNCHANGED << consumed, published, read >>
 
@@ -113,7 +131,7 @@ EndWrite(writer) ==
     seq   == claimed_sequence[writer]
     index == Buffer!IndexOf(seq)
   IN
-    /\ Transition(writer, Advance, Access)
+    /\ Transition(writer, Access, Advance)
     /\ Buffer!EndWrite(index, writer)
     /\ Publish(seq)
     /\ UNCHANGED << claimed_sequence, next_sequence, consumed, read >>
@@ -128,7 +146,7 @@ BeginRead(reader) ==
     index == Buffer!IndexOf(next)
   IN
     /\ IsPublished(next)
-    /\ Transition(reader, Access, Advance)
+    /\ Transition(reader, Advance, Access)
     /\ Buffer!BeginRead(index, reader)
     \* Track what we read from the ringbuffer.
     /\ consumed' = [ consumed EXCEPT ![reader] = Append(@, Buffer!Read(index)) ]
@@ -139,7 +157,7 @@ EndRead(reader) ==
     next  == read[reader] + 1
     index == Buffer!IndexOf(next)
   IN
-    /\ Transition(reader, Advance, Access)
+    /\ Transition(reader, Access, Advance)
     /\ Buffer!EndRead(index, reader)
     /\ read' = [ read EXCEPT ![reader] = next ]
     /\ UNCHANGED << claimed_sequence, next_sequence, consumed, published >>
@@ -151,11 +169,11 @@ EndRead(reader) ==
 Init ==
   /\ Buffer!Init
   /\ next_sequence    = 0
-  /\ claimed_sequence = [ w \in Writers                |-> -1     ]
-  /\ published        = [ i \in 0..Size                |-> FALSE  ]
-  /\ read             = [ r \in Readers                |-> -1     ]
-  /\ consumed         = [ r \in Readers                |-> << >>  ]
-  /\ pc               = [ a \in Writers \union Readers |-> Access ]
+  /\ claimed_sequence = [ w \in Writers                |-> -1      ]
+  /\ published        = [ i \in 0..Buffer!LastIndex    |-> FALSE   ]
+  /\ read             = [ r \in Readers                |-> -1      ]
+  /\ consumed         = [ r \in Readers                |-> << >>   ]
+  /\ pc               = [ a \in Writers \union Readers |-> Advance ]
 
 Next ==
   \/ \E w \in Writers : BeginWrite(w)
@@ -164,13 +182,17 @@ Next ==
   \/ \E r \in Readers : EndRead(r)
 
 Fairness ==
-  /\ \A w \in Writers : WF_vars(BeginWrite(w))
-  /\ \A w \in Writers : WF_vars(EndWrite(w))
   /\ \A r \in Readers : WF_vars(BeginRead(r))
   /\ \A r \in Readers : WF_vars(EndRead(r))
 
 Spec ==
   Init /\ [][Next]_vars /\ Fairness
+
+(***************************************************************************)
+(* State constraint - bounds model:                                        *)
+(***************************************************************************)
+
+StateConstraint == next_sequence <= MaxPublished
 
 (***************************************************************************)
 (* Invariants:                                                             *)
@@ -182,7 +204,7 @@ TypeOk ==
   /\ Buffer!TypeOk
   /\ next_sequence    \in Nat
   /\ claimed_sequence \in [ Writers                -> Int                 ]
-  /\ published        \in [ 0..Size                -> { TRUE, FALSE }     ]
+  /\ published        \in [ 0..Buffer!LastIndex    -> { TRUE, FALSE }     ]
   /\ read             \in [ Readers                -> Int                 ]
   /\ consumed         \in [ Readers                -> Seq(Nat)            ]
   /\ pc               \in [ Writers \union Readers -> { Access, Advance } ]
@@ -191,8 +213,9 @@ TypeOk ==
 (* Properties:                                                             *)
 (***************************************************************************)
 
-(* Eventually always, consumers must have read all published values. *)
+(* Eventually always, consumers must have read all published values.       *)
 Liveliness ==
-  <>[] (\A r \in Readers : consumed[r] = [i \in 1..MaxPublished |-> i - 1])
+  \A r \in Readers : \A i \in 0..(MaxPublished - 1) :
+    <>[](i \in 0..AvailablePublishedSequence => Len(consumed[r]) >= i + 1 /\ consumed[r][i + 1] = i)
 
 =============================================================================

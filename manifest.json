@@ -459,11 +459,12 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [
+                "state constraint",
                 "ignore deadlock"
               ],
               "result": "success",
               "distinctStates": 112929,
-              "totalStates": 406505,
+              "totalStates": 422781,
               "stateDepth": 81
             },
             {
@@ -472,12 +473,13 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [
+                "state constraint",
                 "liveness",
                 "ignore deadlock"
               ],
               "result": "success",
               "distinctStates": 14365,
-              "totalStates": 42101,
+              "totalStates": 44581,
               "stateDepth": 61
             }
           ]
