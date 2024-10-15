@@ -44,16 +44,16 @@ THEOREM TypeInvariant == Spec => []TypeOK
 
 a|b == \E c \in Nat : a*c = b
 
-AlwaysEven == 2|x
+Even == 2|x
 
-THEOREM Spec => []AlwaysEven
-  <1>a. Init => AlwaysEven
-    BY DEF Init, AlwaysEven, |
-  <1>b. AlwaysEven /\ UNCHANGED vars => AlwaysEven'
-    BY DEF AlwaysEven, vars
-  <1>c. AlwaysEven /\ Next => AlwaysEven'
+THEOREM Spec => []Even
+  <1>a. Init => Even
+    BY DEF Init, Even, |
+  <1>b. Even /\ UNCHANGED vars => Even'
+    BY DEF Even, vars
+  <1>c. Even /\ Next => Even'
     BY \A c \in Nat : c+1 \in Nat /\ 2*(c+1) = 2*c + 2, Zenon
-    DEF TypeOK, AlwaysEven, Next, |
+    DEF TypeOK, Even, Next, |
   <1> QED BY PTL, <1>a, <1>b, <1>c DEF Spec
 
 =============================================================================
