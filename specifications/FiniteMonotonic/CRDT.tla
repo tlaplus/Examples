@@ -14,7 +14,7 @@ Monotonic == \A n, o \in Node : counter'[n][o] >= counter[n][o]
 
 Monotonicity == [][Monotonic]_counter
 
-Convergence == \A n, o \in Node : counter[n] = counter[o]
+Convergence == []<>(\A n, o \in Node : counter[n] = counter[o])
 
 Init == counter = [n \in Node |-> [o \in Node |-> 0]]
 
