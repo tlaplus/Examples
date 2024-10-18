@@ -5,6 +5,7 @@ EXTENDS Naturals
 CONSTANT Node
 
 VARIABLE counter
+vars == counter
 
 TypeOK == counter \in [Node -> [Node -> Nat]]
 
@@ -14,7 +15,7 @@ Monotonic == \A n, o \in Node : counter'[n][o] >= counter[n][o]
 
 Monotonicity == [][Monotonic]_counter
 
-Convergence == \A n, o \in Node : counter[n] = counter[o]
+Convergence == []<>(\A n, o \in Node : counter[n] = counter[o])
 
 Init == counter = [n \in Node |-> [o \in Node |-> 0]]
 
@@ -36,6 +37,20 @@ Next ==
 Spec ==
   /\ Init
   /\ [][Next]_counter
+
+THEOREM Spec => []TypeOK
+THEOREM Spec => []Safety
+
+Fairness ==
+    /\ WF_vars(Next)
+    /\ \A n, o \in Node : <>[][Gossip(n,o)]_vars
+
+FairSpec ==
+  /\ Spec
+  /\ Fairness  
+
+THEOREM FairSpec => Convergence
+THEOREM FairSpec => Monotonicity
 
 =============================================================================
 
