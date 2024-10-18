@@ -13,7 +13,7 @@ CmdLine ==
     <<"java", "-jar", TLCGet("config").install, "-note", "MCCRDT.tla">>
 
 ASSUME \A c \in [ D: 0..3, F: 0..7, G: BOOLEAN, C: BOOLEAN, O: {CSVFile} ] : 
-    PrintT(<<"conf", c, IOEnvExec(c, CmdLine).exitValue>>)
+            PrintT(c) /\ IOEnvExec(c, CmdLine).exitValue \in {0, 10, 13}
 
 =============================================================================
 ---- CONFIG SCCRDT ----
