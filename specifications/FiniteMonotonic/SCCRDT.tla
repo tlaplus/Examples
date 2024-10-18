@@ -9,7 +9,7 @@ EXTENDS TLC, Naturals, Sequences, IOUtils
 CmdLine == 
     <<"java", "-jar", TLCGet("config").install, "-note", "MCCRDT.tla">>
 
-ASSUME \A c \in [ D: 0..3, F: 0..6, G: BOOLEAN, C: BOOLEAN ] : 
+ASSUME \A c \in [ D: 0..3, F: 0..7, G: BOOLEAN, C: BOOLEAN ] : 
     PrintT(<<"conf", c, IOEnvExec(c, CmdLine).exitValue>>)
 
 =============================================================================

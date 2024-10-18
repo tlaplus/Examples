@@ -16,7 +16,7 @@ ASSUME GB \in BOOLEAN
 
 F ==
     atoi(IOEnv.F)
-ASSUME F \in 0..6
+ASSUME F \in 0..7
 
 ------
 
@@ -43,14 +43,14 @@ MCNext ==
 
 MCFairness ==
     \* Note that TLC doesn't accept the following fairness condition if written with CASE.
-    IF      F = 0 THEN WF_vars(Next) 
+    IF      F = 0 THEN TRUE
     ELSE IF F = 1 THEN WF_vars(GarbageCollect)
-    ELSE IF F = 2 THEN WF_vars(Next) /\ ~ \E n \in Node : <>[][Increment(n)]_vars
-    ELSE IF F = 3 THEN \A n, o \in Node : WF_vars(Gossip(n,o))
-    ELSE IF F = 4 THEN \A n    \in Node : WF_vars(Increment(n))
-    \* Fairness below are expected to to hold for an Divergence.
-    ELSE IF F = 5 THEN WF_vars(Next) /\ \A n, o \in Node : <>[][Gossip(n,o)]_vars
-    ELSE IF F = 6 THEN Convergence
+    ELSE IF F = 2 THEN \A n    \in Node : WF_vars(Increment(n))
+    ELSE IF F = 3 THEN WF_vars(Next)
+    ELSE IF F = 4 THEN \A n, o \in Node : WF_vars(Gossip(n,o))
+    ELSE IF F = 5 THEN WF_vars(Next) /\ ~ \E n \in Node : <>[][Increment(n)]_vars
+    ELSE IF F = 6 THEN WF_vars(Next) /\ \A n, o \in Node : <>[][Gossip(n,o)]_vars
+    ELSE IF F = 7 THEN Convergence
     ELSE FALSE
 
 MCMonotonicity == [][
