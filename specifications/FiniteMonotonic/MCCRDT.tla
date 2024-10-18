@@ -1,5 +1,5 @@
 ------ MODULE MCCRDT -----
-EXTENDS CRDT, IOUtils, TLC
+EXTENDS CRDT, IOUtils, TLC, TLCExt, Sequences, CSV
 
 Divergence == 
     \* D=0 means there is no divergence. D=1 means Gossip synchronizes the system in a single step. 
@@ -75,5 +75,44 @@ MCMonotonicity == [][
 
 StateConstraint == 
     IF Constraint THEN \A n, o \in Node : counter[n][o] <= Divergence ELSE TRUE
+
+------
+
+CSVFile ==
+    IOEnv.O
+
+NoCounterExample ==
+    CounterExample.action = {} /\ CounterExample.state = {}
+
+CounterExampleWithStuttering ==
+    \E a \in CounterExample.action : a[1][1] = a[3][1] \* stuttering condition
+
+CounterExampleWithLasso ==
+    \E a \in CounterExample.action : a[1][1] > a[3][1] \* lasso condition
+
+CounterExampleShape ==
+    CASE NoCounterExample -> "none"
+      [] CounterExampleWithStuttering -> "stuttering"
+      [] CounterExampleWithLasso -> "lasso"
+      [] OTHER -> "unexpected"
+
+PostCondition ==
+    CASE Divergence = 0 /\ NoCounterExample -> TRUE
+      [] Divergence > 0 /\ F \in 0..1 /\ CounterExampleWithStuttering -> TRUE
+      [] Divergence > 0 /\ F \in 0..1 /\ CounterExampleWithStuttering -> TRUE
+
+      \* Changing Increment's enablement by conjoining counter[n][n] < Divergence causes (bogus) stuttering.
+      [] Divergence = 1 /\ F = 2 /\~Constraint /\ CounterExampleWithStuttering -> TRUE
+      [] Divergence > 1 /\ F = 2 /\~Constraint /\ CounterExampleWithStuttering -> TRUE
+
+      [] Divergence = 1 /\ F = 2 /\ Constraint /\ NoCounterExample -> TRUE
+      [] Divergence > 1 /\ F = 2 /\ Constraint /\ CounterExampleWithLasso -> TRUE
+
+      [] Divergence = 1 /\ F \in 3..7 /\ NoCounterExample -> TRUE
+      [] Divergence > 1 /\ F \in 3..5 /\ CounterExampleWithLasso -> TRUE
+      [] Divergence > 1 /\ F \in 6..7 /\ NoCounterExample -> TRUE
+      [] OTHER -> 
+            /\ CSVRecords(CSVFile) = 0 => CSVWrite("F#D#G#C#CounterExample", <<>>, CSVFile) \* Write header if file is empty.
+            /\ CSVWrite("%1$s#%2$s#%3$s#%4$s#%5$s", <<F, Divergence, GB, Constraint, CounterExampleShape>>, CSVFile)
 
 ======
