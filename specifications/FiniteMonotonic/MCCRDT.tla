@@ -20,14 +20,26 @@ ASSUME F \in 0..7
 
 ------
 
+SetMin(s) == CHOOSE e \in s : \A o \in s : e <= o
+
 GarbageCollect ==
-  LET SetMin(s) == CHOOSE e \in s : \A o \in s : e <= o IN
   LET Transpose == SetMin({counter[n][o] : n, o \in Node}) IN
   counter' = [
       n \in Node |-> [
         o \in Node |-> counter[n][o] - Transpose
       ]
     ]
+
+------
+
+View ==
+    IF GB THEN vars ELSE 
+        LET Transpose == SetMin({counter[n][o] : n, o \in Node}) IN
+        [
+            n \in Node |-> [
+                o \in Node |-> counter[n][o] - Transpose
+            ]
+        ]
 
 ------
 
