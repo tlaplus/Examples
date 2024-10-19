@@ -3555,8 +3555,8 @@
     },
     {
       "path": "specifications/btree",
-      "title": "btree",
-      "description": "B-tree",
+      "title": "B-trees",
+      "description": "Operations on B-trees",
       "sources": ["https://surfingcomplexity.blog/2024/07/04/modeling-b-trees-in-tla/"],
       "authors": ["Lorin Hochstein"],
       "tags": ["beginner"],
