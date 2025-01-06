@@ -9,10 +9,7 @@ It serves as:
 - a collection of case studies in the application of formal specification in TLA<sup>+</sup>
 
 All TLA<sup>+</sup> specs can be found in the [`specifications`](specifications) directory.
-The table below lists all specs and their features, such as whether they are suitable for beginners, come with an additional PlusCal variant `(✔)`, or use PlusCal exclusively.
-The [`manifest.json`](manifest.json) file is the source of truth for this table, and is a detailed human- & machine-readable description of the specs & their models.
-Its schema is [`manifest-schema.json`](manifest-schema.json).
-All specs in this repository are subject to CI validation to ensure quality.
+The table below lists all specs and indicates whether a spec is beginner-friendly, includes an additional PlusCal variant `(✔)`, or uses PlusCal exclusively. Additionally, the table specifies which verification tool—[TLC](https://github.com/tlaplus/tlaplus), [Apalache](https://github.com/apalache-mc/apalache), or [TLAPS](https://github.com/tlaplus/tlapm)—can be used to verify each specification.
 
 ## Examples Included Here
 Here is a list of specs included in this repository, with links to the relevant directory and flags for various features:
@@ -154,6 +151,10 @@ Follow these instructions:
 1. Ensure name of each `.cfg` file matches the `.tla` file it models, or has its name as a prefix; for example `SpecName.tla` can have the models `SpecName.cfg` and `SpecNameLiveness.cfg`, etc.
 1. Consider including a `README.md` in the spec directory explaining the significance of the spec with links to any relevant websites or publications, or integrate this info as comments in the spec itself
 1. Add an entry to the table of specs included in this repo, summarizing your spec and its attributes
+
+The [`manifest.json`](manifest.json) file is the source of truth for this table, and is a detailed human- & machine-readable description of the specs & their models.
+Its schema is [`manifest-schema.json`](manifest-schema.json).
+All specs in this repository are subject to CI validation to ensure quality.
 
 ## Adding Spec to Continuous Integration
 To combat bitrot, it is important to add your spec and model to the continuous integration system.
