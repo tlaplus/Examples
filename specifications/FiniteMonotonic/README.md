@@ -4,4 +4,5 @@ Neither this approach nor the older approach have a proof of soundness and compl
 
 Specs & models include:
 - `CRDT.tla`: the spec of a basic grow-only counter CRDT
-- `ReplicatedLog.tla`: the "spec of a basic append-only replicated log
+- `ReplicatedLog.tla`: the spec of a basic append-only replicated log
+- `DistributedReplicatedLog.tla`: a spec of a distributed replicated log that demonstrates how the technique can be used to find violations of a liveness property (`Insync`).
