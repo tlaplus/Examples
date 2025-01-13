@@ -623,6 +623,31 @@
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
+        },
+        {
+          "path": "specifications/FiniteMonotonic/MCDistributedReplicatedLog.tla",
+          "communityDependencies": ["FiniteSetsExt"],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/FiniteMonotonic/MCDistributedReplicatedLog.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness", "view"
+              ],
+              "result": "liveness failure"
+            }
+          ]
+        },
+        {
+          "path": "specifications/FiniteMonotonic/DistributedReplicatedLog.tla",
+          "communityDependencies": ["SequencesExt", "FiniteSetsExt"],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
         }
       ]
     },
