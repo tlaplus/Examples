@@ -553,7 +553,9 @@
         "https://ahelwer.ca/post/2023-11-01-tla-finite-monotonic/"
       ],
       "authors": [
-        "Andrew Helwer"
+        "Andrew Helwer",
+        "Stephan Merz",
+        "Markus Kuppe"
       ],
       "tags": [
         "intermediate"
@@ -567,66 +569,44 @@
           "models": []
         },
         {
-          "path": "specifications/FiniteMonotonic/Constrain_CRDT.tla",
-          "communityDependencies": [],
+          "path": "specifications/FiniteMonotonic/MCCRDT.tla",
+          "communityDependencies": ["FiniteSetsExt"],
           "tlaLanguageVersion": 2,
-          "features": [],
+          "features": ["action composition"],
           "models": [
             {
-              "path": "specifications/FiniteMonotonic/Constrain_CRDT.cfg",
+              "path": "specifications/FiniteMonotonic/MCCRDT.cfg",
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
               "features": [
-                "liveness",
-                "state constraint"
+                "liveness", "state constraint"
               ],
               "result": "success",
-              "distinctStates": 50000,
-              "totalStates": 575001,
-              "stateDepth": 17
+              "distinctStates": 25000,
+              "totalStates": 1350001,
+              "stateDepth": 16
             }
           ]
         },
         {
-          "path": "specifications/FiniteMonotonic/Finitize_CRDT.tla",
-          "communityDependencies": [],
+          "path": "specifications/FiniteMonotonic/MCReplicatedLog.tla",
+          "communityDependencies": ["FiniteSetsExt"],
           "tlaLanguageVersion": 2,
-          "features": [],
+          "features": ["action composition"],
           "models": [
             {
-              "path": "specifications/FiniteMonotonic/Finitize_CRDT.cfg",
+              "path": "specifications/FiniteMonotonic/MCReplicatedLog.cfg",
               "runtime": "00:00:05",
               "size": "small",
               "mode": "exhaustive search",
               "features": [
-                "liveness"
+                "liveness", "state constraint"
               ],
               "result": "success",
-              "distinctStates": 50000,
-              "totalStates": 585401,
-              "stateDepth": 17
-            }
-          ]
-        },
-        {
-          "path": "specifications/FiniteMonotonic/Finitize_ReplicatedLog.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": [
-            {
-              "path": "specifications/FiniteMonotonic/Finitize_ReplicatedLog.cfg",
-              "runtime": "00:00:05",
-              "size": "small",
-              "mode": "exhaustive search",
-              "features": [
-                "liveness"
-              ],
-              "result": "success",
-              "distinctStates": 56492,
-              "totalStates": 237626,
-              "stateDepth": 17
+              "distinctStates": 1363,
+              "totalStates": 17425,
+              "stateDepth": 13
             }
           ]
         },
