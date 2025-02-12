@@ -5,6 +5,7 @@ EXTENDS Naturals
 CONSTANT Node
 
 VARIABLE counter
+vars == counter
 
 TypeOK == counter \in [Node -> [Node -> Nat]]
 
@@ -41,15 +42,21 @@ Spec ==
 THEOREM Spec => []Safety
 THEOREM Spec => []TypeOK
 
+(***************************************************************************)
+(* Fairness and liveness assumptions.                                      *)
+(* We assume that Gossip actions will eventually occur when enabled, and   *)
+(* that from some point onwards, only Gossip actions will be performed.    *)
+(* In other words, incrementation of counters happens only finitely often. *)
+(* Note that the second conjunct is not a standard fairness condition,     *)
+(* yet the overall specification is machine closed.                        *)
+(***************************************************************************)
+Fairness ==
+    /\ \A n, o \in Node : WF_vars(Gossip(n,o))
+    /\ <>[][\E n, o \in Node : Gossip(n,o)]_vars
+
 FairSpec ==
   /\ Spec
-  /\ \A n, o \in Node : WF_counter(Gossip(n,o))
-  \* The following conjunct causes the spec to not be machine
-  \* closed. This is orthogonal to the Finite Monotonic
-  \* approach. Instead, it is an artifact of this particular
-  \* spec. Alternatively, we could amend Spec to the effect that
-  \* there is a sufficient number of successive Gossip actions.
-  /\ \A n, o \in Node : <>[][Gossip(n,o)]_counter
+  /\ Fairness
 
 THEOREM FairSpec => Convergence
 THEOREM FairSpec => Monotonicity

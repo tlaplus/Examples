@@ -569,6 +569,13 @@
           "models": []
         },
         {
+          "path": "specifications/FiniteMonotonic/CRDT_proof.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["proof"],
+          "models": []
+        },
+        {
           "path": "specifications/FiniteMonotonic/MCCRDT.tla",
           "communityDependencies": ["FiniteSetsExt"],
           "tlaLanguageVersion": 2,
