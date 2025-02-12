@@ -161,7 +161,7 @@ LEMMA GossipDoesntIncreaseMeasure ==
 <1>1. CASE \E n,o \in Node : Gossip(n,o)
   <2>. ASSUME NEW v \in Node, NEW w \in Node
         PROVE  DistFun(v)'[w] <= DistFun(v)[w]
-    BY <1>1 DEF Gossip, TypeOK, Safety, DistFun
+    BY <1>1 DEF Gossip, TypeOK, Safety, DistFun, vars
   <2>. QED  
     BY SumWeaklyMonotonic, MeasureType, MeasureTypePrime, Zenon
        DEF Distance, Measure
