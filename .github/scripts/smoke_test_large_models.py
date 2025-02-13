@@ -31,8 +31,8 @@ examples_root = dirname(manifest_path)
 skip_models = args.skip
 only_models = args.only
 
-def check_model(module_path, model):
-    module_path = tla_utils.from_cwd(examples_root, module_path)
+def check_model(module, model):
+    module_path = tla_utils.from_cwd(examples_root, module['path'])
     model_path = tla_utils.from_cwd(examples_root, model['path'])
     logging.info(model_path)
     smoke_test_timeout_in_seconds = 5
@@ -44,6 +44,8 @@ def check_model(module_path, model):
         tlapm_lib_path,
         community_jar_path,
         model['mode'],
+        module['features'],
+        model['features'],
         smoke_test_timeout_in_seconds
     )
     match tlc_result:
@@ -78,7 +80,7 @@ logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
 manifest = tla_utils.load_json(manifest_path)
 
 large_models = [
-    (module['path'], model)
+    (module, model)
     for spec in manifest['specifications']
     for module in spec['modules']
     for model in module['models']

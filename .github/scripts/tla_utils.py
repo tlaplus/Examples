@@ -62,6 +62,17 @@ def parse_module(examples_root, parser, path):
     tree = parser.parse(module_text)
     return (tree, module_text, tree.root_node.has_error)
 
+def all_nodes_of(query_map):
+    """
+    Flatten a query result to get all matched nodes. Returned in order of
+    occurrence in file.
+    """
+    return sorted([
+        node
+        for capture in query_map.values()
+        for node in capture
+    ], key=lambda node: node.start_byte)
+
 def node_to_string(module_bytes, node):
     """
     Gets the string covered by the given tree-sitter parse tree node.
@@ -93,6 +104,15 @@ def get_run_mode(mode):
     else:
         raise NotImplementedError(f'Undefined model-check mode {mode}')
 
+def get_tlc_feature_flags(module_features, model_features):
+    """
+    Selectively enables experimental TLC features according to needs.
+    """
+    jvm_parameters = []
+    if 'action composition' in module_features:
+        jvm_parameters.append('-Dtlc2.tool.impl.Tool.cdot=true')
+    return jvm_parameters
+
 def check_model(
         tools_jar_path,
         apalache_path,
@@ -101,6 +121,8 @@ def check_model(
         tlapm_lib_path,
         community_jar_path,
         mode,
+        module_features,
+        model_features,
         hard_timeout_in_seconds
     ):
     """
@@ -127,8 +149,7 @@ def check_model(
             )
             return apalache
         else:
-            tlc = subprocess.run([
-                'java',
+            jvm_parameters = [
                 '-enableassertions',
                 '-Dtlc2.TLC.ide=Github',
                 '-Dutil.ExecutionStatisticsCollector.id=abcdef60f238424fa70d124d0c77ffff',
@@ -140,13 +161,16 @@ def check_model(
                     community_jar_path,
                     tlapm_lib_path
                 ]),
-                'tlc2.TLC',
+            ] + get_tlc_feature_flags(module_features, model_features)
+            tlc_parameters = [
                 module_path,
                 '-config', model_path,
                 '-workers', 'auto',
                 '-lncheck', 'final',
                 '-cleanup'
-                ] + get_run_mode(mode),
+            ] + get_run_mode(mode)
+            tlc = subprocess.run(
+                ['java'] + jvm_parameters + ['tlc2.TLC'] + tlc_parameters,
                 timeout=hard_timeout_in_seconds,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,

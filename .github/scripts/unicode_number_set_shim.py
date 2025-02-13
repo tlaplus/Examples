@@ -93,7 +93,7 @@ def replace_imports(module_bytes, tree, query):
     shim_modules = {shim.module : shim for shim in shims}
     imported_modules = [
         (imported_module, shim_modules[module_name])
-        for imported_module, _ in query.captures(tree.root_node)
+        for imported_module in tla_utils.all_nodes_of(query.captures(tree.root_node))
         if (module_name := tla_utils.node_to_string(module_bytes, imported_module)) in shim_modules
     ]
     byte_offset = 0
