@@ -70,18 +70,22 @@ if any(duplicate_cfg_paths):
     print('ERROR: .cfg file paths duplicated in manifest:\n' + '\n'.join(duplicate_cfg_paths))
 
 # Check paths in manifest match paths on filesystem
-if tla_mf_paths < tla_fs_paths:
+if tla_mf_paths != tla_fs_paths:
     success = False
-    print('ERROR: .tla files not recorded in manifest:\n' + '\n'.join(tla_fs_paths - tla_mf_paths))
-if tla_fs_paths < tla_mf_paths:
+    only_in_manifest = tla_mf_paths - tla_fs_paths
+    if any(only_in_manifest):
+        print('ERROR: Manifest .tla files not found in specifications dir:\n' + '\n'.join(only_in_manifest))
+    only_on_filesystem = tla_fs_paths - tla_mf_paths
+    if any(only_on_filesystem):
+        print('ERROR: .tla files not recorded in manifest:\n' + '\n'.join(only_on_filesystem))
+if cfg_mf_paths != cfg_fs_paths:
     success = False
-    print('ERROR: Manifest .tla files not found in specifications dir:\n' + '\n'.join(tla_mf_paths - tla_fs_paths))
-if cfg_mf_paths < cfg_fs_paths:
-    success = False
-    print('ERROR: .cfg files not recorded in manifest:\n' + '\n'.join(cfg_fs_paths - cfg_mf_paths))
-if cfg_fs_paths < cfg_mf_paths:
-    success = False
-    print('ERROR: Manifest .cfg files not found in specifications dir:\n' + '\n'.join(cfg_mf_paths - cfg_fs_paths))
+    only_in_manifest = cfg_mf_paths - cfg_fs_paths
+    if any(only_in_manifest):
+        print('ERROR: Manifest .cfg files not found in specifications dir:\n' + '\n'.join(only_in_manifest))
+    only_on_filesystem = cfg_fs_paths - cfg_mf_paths
+    if any(only_on_filesystem):
+        print('ERROR: .cfg files not recorded in manifest:\n' + '\n'.join(only_on_filesystem))
 
 if success:
     print('SUCCESS: manifest.json concords with files in repo')
