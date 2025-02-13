@@ -33,8 +33,8 @@ examples_root = dirname(manifest_path)
 skip_models = args.skip
 only_models = args.only
 
-def check_model(module_path, model, expected_runtime):
-    module_path = tla_utils.from_cwd(examples_root, module_path)
+def check_model(module, model, expected_runtime):
+    module_path = tla_utils.from_cwd(examples_root, module['path'])
     model_path = tla_utils.from_cwd(examples_root, model['path'])
     logging.info(model_path)
     hard_timeout_in_seconds = 60
@@ -47,6 +47,8 @@ def check_model(module_path, model, expected_runtime):
         tlapm_lib_path,
         community_jar_path,
         model['mode'],
+        module['features'],
+        model['features'],
         hard_timeout_in_seconds
     )
     end_time = timer()
@@ -85,7 +87,7 @@ def check_model(module_path, model, expected_runtime):
 manifest = tla_utils.load_json(manifest_path)
 small_models = sorted(
     [
-        (module['path'], model, tla_utils.parse_timespan(model['runtime']))
+        (module, model, tla_utils.parse_timespan(model['runtime']))
         for spec in manifest['specifications']
         for module in spec['modules']
         for model in module['models']

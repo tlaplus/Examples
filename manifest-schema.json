@@ -40,7 +40,7 @@
                 "tlaLanguageVersion": {"type": "number"},
                 "features": {
                   "type": "array",
-                  "items": {"enum": ["pluscal", "proof"]}
+                  "items": {"enum": ["pluscal", "proof", "action composition"]}
                 },
                 "models": {
                   "type": "array",

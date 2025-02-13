@@ -47,6 +47,7 @@ def build_queries(language):
     feature_query = language.query(
         '(pcal_algorithm_start) @pluscal'
         + '[(terminal_proof) (non_terminal_proof)] @proof'
+        + '(cdot) @action_composition'
     )
 
     return Queries(import_query, module_name_query, feature_query)
@@ -62,7 +63,11 @@ def get_tree_features(tree, queries):
     """
     Returns any notable features in the parse tree, such as pluscal or proofs
     """
-    return set([name for _, name in queries.features.captures(tree.root_node)])
+    return set([
+        capture_name.replace('_', ' ')
+        for capture_name, _
+        in queries.features.captures(tree.root_node).items()
+    ])
 
 def get_module_features(examples_root, path, parser, queries):
     """
@@ -147,13 +152,13 @@ def get_community_imports(examples_root, tree, text, dir, has_proof, queries):
     imports = set(
         [
             tla_utils.node_to_string(text, node)
-            for node, _ in queries.imports.captures(tree.root_node)
+            for node in tla_utils.all_nodes_of(queries.imports.captures(tree.root_node))
         ]
     )
     modules_in_file = set(
         [
             tla_utils.node_to_string(text, node)
-            for node, _ in queries.module_names.captures(tree.root_node)
+            for node in tla_utils.all_nodes_of(queries.module_names.captures(tree.root_node))
         ]
     )
     imports = (
