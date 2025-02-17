@@ -20,6 +20,7 @@ parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manife
 parser.add_argument('--skip', nargs='+', help='Space-separated list of models to skip checking', required=False, default=[])
 parser.add_argument('--only', nargs='+', help='If provided, only check models in this space-separated list', required=False, default=[])
 parser.add_argument('--verbose', help='Set logging output level to debug', action='store_true')
+parser.add_argument('--enable_assertions', help='Enable Java assertions (pass -enableassertions to JVM)', action='store_true')
 args = parser.parse_args()
 
 tools_jar_path = normpath(args.tools_jar_path)
@@ -30,6 +31,7 @@ manifest_path = normpath(args.manifest_path)
 examples_root = dirname(manifest_path)
 skip_models = args.skip
 only_models = args.only
+enable_assertions = args.enable_assertions
 
 def check_model(module, model):
     module_path = tla_utils.from_cwd(examples_root, module['path'])
@@ -46,6 +48,7 @@ def check_model(module, model):
         model['mode'],
         module['features'],
         model['features'],
+        enable_assertions,
         smoke_test_timeout_in_seconds
     )
     match tlc_result:

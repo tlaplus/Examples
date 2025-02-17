@@ -19,6 +19,7 @@ parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manife
 parser.add_argument('--skip', nargs='+', help='Space-separated list of .tla modules to skip parsing', required=False, default=[])
 parser.add_argument('--only', nargs='+', help='If provided, only parse models in this space-separated list', required=False, default=[])
 parser.add_argument('--verbose', help='Set logging output level to debug', action='store_true')
+parser.add_argument('--enable_assertions', help='Enable Java assertions (pass -enableassertions to JVM)', action='store_true')
 args = parser.parse_args()
 
 logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
@@ -31,6 +32,7 @@ manifest_path = normpath(args.manifest_path)
 examples_root = dirname(manifest_path)
 skip_modules = args.skip
 only_modules = args.only
+enable_assertions = args.enable_assertions
 
 def parse_module(path):
     """
@@ -38,20 +40,18 @@ def parse_module(path):
     """
     logging.info(path)
     # Jar paths must go first
-    search_paths = pathsep.join([
-        tools_jar_path,
-        apalache_jar_path,
-        dirname(path),
-        community_modules,
-        tlaps_modules
-    ])
-    sany = subprocess.run([
-            'java',
-            '-cp', search_paths,
-            'tla2sany.SANY',
-            '-error-codes',
-            path
-        ],
+    jvm_parameters = [
+        '-cp', pathsep.join([
+            tools_jar_path,
+            apalache_jar_path,
+            dirname(path),
+            community_modules,
+            tlaps_modules
+        ])
+    ] + (['-enableassertions'] if enable_assertions else [])
+    sany_parameters = ['-error-codes', path]
+    sany = subprocess.run(
+        ['java'] + jvm_parameters + ['tla2sany.SANY'] + sany_parameters,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True
