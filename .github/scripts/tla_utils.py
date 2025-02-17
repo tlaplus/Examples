@@ -123,6 +123,7 @@ def check_model(
         mode,
         module_features,
         model_features,
+        enable_assertions,
         hard_timeout_in_seconds
     ):
     """
@@ -149,8 +150,7 @@ def check_model(
             )
             return apalache
         else:
-            jvm_parameters = [
-                '-enableassertions',
+            jvm_parameters = (['-enableassertions'] if enable_assertions else []) + [
                 '-Dtlc2.TLC.ide=Github',
                 '-Dutil.ExecutionStatisticsCollector.id=abcdef60f238424fa70d124d0c77ffff',
                 '-XX:+UseParallelGC',
