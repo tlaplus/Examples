@@ -35,6 +35,7 @@ main() {
   else
     pip install -r "$SCRIPT_DIR/requirements.txt"
   fi
+  kernel=$(uname -s)
   # Put all dependencies in their own directory to ensure they aren't included implicitly
   mkdir -p "$DEPS_DIR"
   # Get TLA⁺ tools
@@ -51,9 +52,19 @@ main() {
   wget -nv https://github.com/tlaplus/tlapm/archive/main.tar.gz -O /tmp/tlapm.tar.gz
   tar -xzf /tmp/tlapm.tar.gz --directory "$DEPS_DIR"
   mv "$DEPS_DIR/tlapm-main" "$DEPS_DIR/tlapm"
+  # Install TLAPS
+  if [ "$kernel" == "Linux" ]; then
+    TLAPM_BIN_TYPE=x86_64-linux-gnu
+  elif [ "$kernel" == "Darwin" ]; then
+    TLAPM_BIN_TYPE=arm64-darwin
+  else
+    echo "Unknown OS: $kernel"
+    exit 1
+  fi
+  wget -nv "https://github.com/tlaplus/tlapm/releases/download/1.6.0-pre/tlapm-1.6.0-pre-$TLAPM_BIN_TYPE.tar.gz" -O /tmp/tlapm.tar.gz
+  tar -xzf /tmp/tlapm.tar.gz --directory "$DEPS_DIR"
   # Get TLAUC
   mkdir -p "$DEPS_DIR/tlauc"
-  kernel=$(uname -s)
   if [ "$kernel" == "Linux" ]; then
     TLAUC_OS_STR="linux"
   elif [ "$kernel" == "Darwin" ]; then
@@ -64,28 +75,6 @@ main() {
   fi
   wget -nv "https://github.com/tlaplus-community/tlauc/releases/latest/download/tlauc-$TLAUC_OS_STR.tar.gz" -O /tmp/tlauc.tar.gz
   tar -xzf /tmp/tlauc.tar.gz --directory "$DEPS_DIR/tlauc"
-  # Install TLAPS
-  if [ "$kernel" == "Linux" ]; then
-    TLAPM_BIN_TYPE=x86_64-linux-gnu
-  elif [ "$kernel" == "Darwin" ]; then
-    TLAPM_BIN_TYPE=i386-darwin
-  else
-    echo "Unknown OS: $kernel"
-    exit 1
-  fi
-  TLAPM_BIN="tlaps-1.5.0-$TLAPM_BIN_TYPE-inst.bin"
-  wget -nv "https://github.com/tlaplus/tlapm/releases/latest/download/$TLAPM_BIN" -O /tmp/tlapm-installer.bin
-  chmod +x /tmp/tlapm-installer.bin
-  # Workaround for https://github.com/tlaplus/tlapm/issues/88
-  set +e
-  for ((attempt = 1; attempt <= 5; attempt++)); do
-    rm -rf "$DEPS_DIR/tlapm-install"
-    /tmp/tlapm-installer.bin -d "$DEPS_DIR/tlapm-install"
-    if [ $? -eq 0 ]; then
-      exit 0
-    fi
-  done
-  exit 1
 }
 
 main "$@"
