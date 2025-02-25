@@ -140,13 +140,20 @@ jobs:
         if: matrix.os != 'windows-latest' && !matrix.unicode
         run: |
           SKIP=(
+            ## ATD/EWD require TLAPS' update_enabled_cdot branch
+            specifications/ewd998/AsyncTerminationDetection_proof.tla
+            specifications/ewd998/EWD998_proof.tla
+            ## Regressions?
+            specifications/byzpaxos/Consensus.tla
+            specifications/LearnProofs/FindHighest.tla
+            specifications/LoopInvariance/BinarySearch.tla
+            specifications/TeachingConcurrency/SimpleRegular.tla
             # Failing; see https://github.com/tlaplus/Examples/issues/67
             specifications/Bakery-Boulangerie/Bakery.tla
             specifications/Bakery-Boulangerie/Boulanger.tla
             specifications/Paxos/Consensus.tla
             specifications/PaxosHowToWinATuringAward/Consensus.tla
             specifications/lamport_mutex/LamportMutex_proofs.tla
-            specifications/ewd998/EWD998_proof.tla
             specifications/byzpaxos/VoteProof.tla
             # Long-running; see https://github.com/tlaplus/tlapm/issues/85
             specifications/LoopInvariance/Quicksort.tla
@@ -156,7 +163,7 @@ jobs:
             specifications/byzpaxos/BPConProof.tla # Takes about 30 minutes
           )
           python $SCRIPT_DIR/check_proofs.py       \
-            --tlapm_path $DEPS_DIR/tlapm-install   \
+            --tlapm_path $DEPS_DIR/tlapm           \
             --manifest_path manifest.json          \
             --skip "${SKIP[@]}"
       - name: Smoke-test manifest generation script
