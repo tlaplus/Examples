@@ -143,7 +143,7 @@ Inv ==  /\ TypeOK
 THEOREM Spec => []PCorrect
 <1> USE NAssump DEF ProcSet
 <1>1. Init => Inv
-  <2>1. Init => \E i \in 0..(N-1) : pc[i] /= "Done"
+  <2>1. Init => 0 \in 0..(N-1) /\ pc[0] /= "Done"
     BY DEF Init
   <2>. QED  BY <2>1 DEF Init, Inv, TypeOK
 <1>2. Inv /\ [Next]_vars => Inv'
