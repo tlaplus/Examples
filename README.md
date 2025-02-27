@@ -9,7 +9,17 @@ It serves as:
 - a collection of case studies in the application of formal specification in TLA<sup>+</sup>
 
 All TLA<sup>+</sup> specs can be found in the [`specifications`](specifications) directory.
-The table below lists all specs and indicates whether a spec is beginner-friendly, includes an additional PlusCal variant `(✔)`, or uses PlusCal exclusively. Additionally, the table specifies which verification tool—[TLC](https://github.com/tlaplus/tlaplus), [Apalache](https://github.com/apalache-mc/apalache), or [TLAPS](https://github.com/tlaplus/tlapm)—can be used to verify each specification.
+To contribute a spec of your own, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+The table below lists all specs and indicates whether a spec is beginner-friendly, includes an additional PlusCal variant `(✔)`, or uses PlusCal exclusively.
+Additionally, the table specifies which verification tool—[TLC](https://github.com/tlaplus/tlaplus), [Apalache](https://github.com/apalache-mc/apalache), or [TLAPS](https://github.com/tlaplus/tlapm)—can be used to verify each specification.
+
+Space contraints limit the information displayed in the table; detailed spec metadata can be found in the [`manifest.json`](manifest.json) file.
+You can search this file for examples exhibiting a number of features, like:
+ - Specs (`.tla` files) including `pluscal`, `proof`, or `action composition` (the `\cdot` operator)
+ - Specs intended for trace generation (`generate`), `simulate`, or checked symbolically with Apalache (`symbolic`)
+ - Models (`.cfg` files) using the `symmetry`, `view`, `alias`, `state constraint`, or `ignore deadlock` features
+ - Models failing in interesting ways, like `deadlock failure`, `safety failure`, `liveness failure`, or `assumption failure`
 
 ## Examples Included Here
 Here is a list of specs included in this repository, with links to the relevant directory and flags for various features:
@@ -134,63 +144,15 @@ Ideally these will be moved into this repo over time.
 | [CRDT](https://github.com/JYwellin/CRDT-TLA)                                                                                      | Specifying and Verifying CRDT Protocols                                                                                                   | Ye Ji, Hengfeng Wei                                                        |          |             |     ✔     |         |          |
 | [Azure Cosmos DB](https://github.com/tlaplus/azure-cosmos-tla)                                                                    | Consistency models provided by Azure Cosmos DB                                                                                            | Dharma Shukla, Ailidani Ailijiang, Murat Demirbas, Markus Kuppe            |          |             |     ✔     |    ✔    |          |
 
+## Contributing a Spec
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for instructions.
+
 ## License
 The repository is under the MIT license and you are encouraged to publish your spec under a similarly-permissive license.
 However, your spec can be included in this repo along with your own license if you wish.
 
 ## Support or Contact
 Do you have any questions or comments?
-Please open an issue or send an email to the [TLA+ group](https://groups.google.com/g/tlaplus).
-
-## Contributing
-Do you have your own case study or TLA<sup>+</sup> specification you'd like to share with the community?
-Follow these instructions:
-1. Fork this repository and create a new directory under `specifications` with the name of your spec
-1. Place all TLA<sup>+</sup> files in the directory, along with their `.cfg` model files
-1. You are encouraged to include at least one model that completes execution in less than 10 seconds, and (if possible) a model that fails in an interesting way - for example illustrating a system design you previously attempted that was found unsound by TLC
-1. Ensure name of each `.cfg` file matches the `.tla` file it models, or has its name as a prefix; for example `SpecName.tla` can have the models `SpecName.cfg` and `SpecNameLiveness.cfg`, etc.
-1. Consider including a `README.md` in the spec directory explaining the significance of the spec with links to any relevant websites or publications, or integrate this info as comments in the spec itself
-1. Add an entry to the table of specs included in this repo, summarizing your spec and its attributes
-
-The [`manifest.json`](manifest.json) file is the source of truth for this table, and is a detailed human- & machine-readable description of the specs & their models.
-Its schema is [`manifest-schema.json`](manifest-schema.json).
-All specs in this repository are subject to CI validation to ensure quality.
-
-## Adding Spec to Continuous Integration
-To combat bitrot, it is important to add your spec and model to the continuous integration system.
-To do this, you'll have to update the [`manifest.json`](manifest.json) file with machine-readable records of your spec files.
-If this process doesn't work for you, you can alternatively modify the [`.ciignore`](.ciignore) file to exclude your spec from validation.
-Modifying the `manifest.json` can be done manually or (recommended) following these directions:
-1. Ensure you have Python 3.11+ installed
-1. It is considered best practice to create & initialize a Python virtual environment to preserve your system package store; run `python -m venv .` then `source ./bin/activate` on Linux & macOS or `.\Scripts\activate.bat` on Windows (run `deactivate` to exit)
-1. Run `pip install -r .github/scripts/requirements.txt`
-1. Run `python .github/scripts/generate_manifest.py`
-1. Locate your spec's entry in the [`manifest.json`](manifest.json) file and ensure the following fields are filled out:
-   - Spec title: an appropriate title for your specification
-   - Spec description: a short description of your specification
-   - Spec sources: links relevant to the source of the spec (papers, blog posts, repositories)
-   - Spec authors: a list of people who authored the spec
-   - Spec tags:
-     - `"beginner"` if your spec is appropriate for TLA<sup>+</sup> newcomers
-   - Model runtime: approximate model runtime on an ordinary workstation, in `"HH:MM:SS"` format
-   - Model size:
-     - `"small"` if the model can be executed in less than 10 seconds
-     - `"medium"` if the model can be executed in less than five minutes
-     - `"large"` if the model takes more than five minutes to execute
-   - Model mode:
-     - `"exhaustive search"` by default
-     - `{"simulate": {"traceCount": N}}` for a simulation model
-     - `"generate"` for model trace generation
-   - Model result:
-     - `"success"` if the model completes successfully
-     - `"assumption failure"` if the model violates an assumption
-     - `"safety failure"` if the model violates an invariant
-     - `"liveness failure"` if the model fails to satisfy a liveness property
-     - `"deadlock failure"` if the model encounters deadlock
-   - (Optional) Model state count info: distinct states, total states, and state depth
-     - These are all individually optional and only valid if your model uses exhaustive search and results in success
-     - Recording these turns your model into a powerful regression test for TLC
-   - Other fields are auto-generated by the script; if you are adding an entry manually, ensure their values are present and correct (see other entries or the [`manifest-schema.json`](manifest-schema.json) file)
-
-Before submitted your changes to run in the CI, you can quickly check your [`manifest.json`](manifest.json) for errors and also check it against [`manifest-schema.json`](manifest-schema.json) at https://www.jsonschemavalidator.net/.
+Please open an issue or send an email to the [TLA⁺ mailing list](https://groups.google.com/g/tlaplus).
 

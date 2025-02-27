@@ -14,6 +14,7 @@ parser.add_argument('--tools_jar_path', help='Path to the tla2tools.jar file', r
 parser.add_argument('--tlapm_lib_path', help='Path to the TLA+ proof manager module directory; .tla files should be in this directory', required=True)
 parser.add_argument('--community_modules_jar_path', help='Path to the CommunityModules-deps.jar file', required=True)
 parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+parser.add_argument('--enable_assertions', help='Enable Java assertions (pass -enableassertions to JVM)', action='store_true')
 args = parser.parse_args()
 
 logging.basicConfig(level=logging.INFO)
@@ -23,19 +24,24 @@ tlapm_lib_path = normpath(args.tlapm_lib_path)
 community_jar_path = normpath(args.community_modules_jar_path)
 manifest_path = normpath(args.manifest_path)
 examples_root = dirname(manifest_path)
+enable_assertions = args.enable_assertions
 
-def check_model(module_path, model):
-    module_path = tla_utils.from_cwd(examples_root, module_path)
+def check_model(module, model):
+    module_path = tla_utils.from_cwd(examples_root, module['path'])
     model_path = tla_utils.from_cwd(examples_root, model['path'])
     logging.info(model_path)
     hard_timeout_in_seconds = 60
     tlc_result = tla_utils.check_model(
         tools_jar_path,
+        '.',
         module_path,
         model_path,
         tlapm_lib_path,
         community_jar_path,
         model['mode'],
+        module['features'],
+        model['features'],
+        enable_assertions,
         hard_timeout_in_seconds
     )
     match tlc_result:
@@ -66,7 +72,7 @@ def check_model(module_path, model):
 manifest = tla_utils.load_json(manifest_path)
 small_models = sorted(
     [
-        (module['path'], model, tla_utils.parse_timespan(model['runtime']))
+        (module, model, tla_utils.parse_timespan(model['runtime']))
         for spec in manifest['specifications']
         for module in spec['modules']
         for model in module['models']
@@ -84,8 +90,8 @@ small_models = sorted(
     reverse=True
 )
 
-for module_path, model, _ in small_models:
-    success = check_model(module_path, model)
+for module, model, _ in small_models:
+    success = check_model(module, model)
     if not success:
         exit(1)
     tla_utils.write_json(manifest, manifest_path)
