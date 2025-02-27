@@ -26,6 +26,14 @@ ASSUME ValAssump == Values \subseteq Int
 SortedSeqs == {ss \in Seq(Values) : 
                  \A i, j \in 1..Len(ss) : (i < j) => (ss[i] =< ss[j])}
 
+LEMMA SortedLess ==
+    ASSUME NEW s \in SortedSeqs, NEW i \in 1 .. Len(s), NEW j \in 1 .. Len(s),
+           s[i] < s[j]
+    PROVE  i < j
+<1>. SUFFICES ASSUME j <= i PROVE FALSE
+    OBVIOUS
+<1>. QED  BY ValAssump DEF SortedSeqs
+
 (***************************************************************************
 --fair algorithm BinarySearch {
    variables seq \in SortedSeqs, val \in Values, 
@@ -135,7 +143,7 @@ THEOREM Spec => []resultCorrect
       <4> DEFINE mid == (low + high) \div 2 
                  mval == seq[mid]  
       <4> (low =< mid) /\ (mid =< high) /\ (mid \in 1..Len(seq))
-        BY <3>1, Z3 DEF Inv, TypeOK
+        BY <3>1, Z3 DEF Inv, TypeOK, SortedSeqs
       <4>1. TypeOK'
         <5>1. seq' \in SortedSeqs
           BY <2>1 DEF a, Inv, TypeOK
@@ -145,14 +153,14 @@ THEOREM Spec => []resultCorrect
           <6>1. CASE seq[mid] = val 
             BY <6>1, <2>1, <3>1, Z3 DEF Inv, TypeOK, a
           <6>2. CASE seq[mid] /= val 
-            BY <6>2, <2>1, <3>1, Z3 DEF Inv, TypeOK, a
+            BY <6>2, <2>1, <3>1, Z3 DEF Inv, TypeOK, a, SortedSeqs
           <6>3. QED
             BY <6>1, <6>2
         <5>4. (high  \in 0..Len(seq))'
           <6>1. CASE seq[mid] = val 
             BY <6>1, <2>1, <3>1, Z3 DEF Inv, TypeOK, a
           <6>2. CASE seq[mid] /= val 
-            BY <6>2, <2>1, <3>1, Z3 DEF Inv, TypeOK, a
+            BY <6>2, <2>1, <3>1, Z3 DEF Inv, TypeOK, a, SortedSeqs
           <6>3. QED
             BY <6>1, <6>2
         <5>5. (result \in 0..Len(seq))'
@@ -180,56 +188,47 @@ THEOREM Spec => []resultCorrect
         <5>1. CASE seq[mid] = val 
           BY <5>1, <2>1, <3>1 DEF Inv, TypeOK, a
         <5>2. CASE seq[mid] /= val    
-          <6>1. /\ (low =< mid) /\ (mid =< high) /\ (mid \in 1..Len(seq))
-                /\ Len(seq) > 0 /\ Len(seq) \in Nat
+          <6>1. /\ Len(seq) > 0 \* /\ Len(seq) \in Nat
                 /\ low \in 1..Len(seq)
                 /\ high \in 1..Len(seq)    
-            BY ValAssump  DEF Inv, TypeOK
+            BY ValAssump  DEF Inv, TypeOK, SortedSeqs
           <6>2. CASE \E i \in 1..Len(seq) : seq[i] = val
             <7>1. PICK i \in low..high : seq[i] = val
              BY <6>2, <2>1 DEF a, Inv
-            <7>2. /\ (low =< mid) /\ (mid =< high) /\ (mid \in 1..Len(seq))
-                  /\ Len(seq) > 0 /\ Len(seq) \in Nat
+            <7>2. /\ Len(seq) > 0 /\ Len(seq) \in Nat
                   /\ low \in 1..Len(seq)
                   /\ high \in 1..Len(seq)
                   /\ seq[i] = val
-              BY ValAssump, <6>2, <7>1 DEF Inv, TypeOK
+              BY ValAssump, <6>2, <7>1 DEF Inv, TypeOK, SortedSeqs
             <7>3. \A j \in 1..Len(seq) : seq[j] \in Int
-              <8>1. seq \in Seq(Values)
-                BY  DEF Inv, TypeOK, SortedSeqs
-              <8>2. seq \in Seq(Int)
-                BY <8>1, ValAssump
-              <8>3. QED
-                BY <8>2 DEF Inv, TypeOK, SortedSeqs 
-            <7>4. \A j, k \in 1..Len(seq) : j < k => seq[j] =< seq[k]
-                BY DEF Inv, TypeOK, SortedSeqs
-            <7>5. CASE val < seq[mid]
+              BY ValAssump DEF Inv, TypeOK, SortedSeqs
+            <7>4. CASE val < seq[mid]
               <8>1. seq[i] < seq[mid] 
-               BY <7>2, <7>5 \*, <8>5 
+               BY <7>2, <7>4
               <8>2. i < mid
-                BY   ValAssump, <7>2, <8>1,  <7>4, <7>3, Z3 
+                BY <7>2, <8>1, SortedLess DEF Inv, TypeOK
               <8>3. i \in low .. mid-1
                 BY ONLY <7>2, <8>1, <8>2, Z3  
               <8>4. /\ (pc' = "a") /\ (low' = low) /\ (high' = mid-1)
                     /\ \E j \in 1..Len(seq) : seq[j] = val
-                BY <2>1, <3>1, <5>2, <6>2, <7>5 DEF a, mid
-              <8>5. QED
-               BY <7>2, <8>4, <8>3 \* , <8>5
-            <7>6. CASE ~(val < seq[mid])
+                BY <2>1, <3>1, <5>2, <6>2, <7>4 DEF a, mid
+              <8>. QED
+               BY <7>2, <8>4, <8>3
+            <7>5. CASE ~(val < seq[mid])
               <8> HIDE DEF mid 
               <8>1. seq[mid] < seq[i]
-                  BY ValAssump, <7>2, <7>6, <5>2, <7>3, Z3                  
+                  BY ValAssump, <7>2, <7>5, <5>2, <7>3, Z3
               <8>2. mid < i
-                BY   ValAssump, <7>2, <8>1,  (* <8>a,  <9>1, *) <7>3, <7>4, Z3 
+                BY <7>2, <8>1, SortedLess DEF Inv, TypeOK
               <8>3. i \in mid+1 .. high
                 BY <7>2, <8>1, <8>2, Z3  
               <8>4. /\ (pc' = "a") /\ (low' = mid+1) /\ (high' = high)
                     /\ \E j \in 1..Len(seq) : seq[j] = val
-                BY <2>1, <3>1, <5>2, <6>2, <7>6 DEF a, mid
+                BY <2>1, <3>1, <5>2, <6>2, <7>5 DEF a, mid
               <8>5. QED
                BY <7>2, <8>4, <8>3 \* , <8>5
             <7>7. QED
-              BY <7>5, <7>6            
+              BY <7>4, <7>5
           <6>3. CASE ~ \E i \in 1..Len(seq) : seq[i] = val
             BY <6>3, <5>2, <2>1, <3>1 DEF Inv, TypeOK, a           
           <6>4. QED
