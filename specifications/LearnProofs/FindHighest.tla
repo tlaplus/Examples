@@ -140,7 +140,7 @@ Correctness ==
     \A idx \in DOMAIN f : f[idx] <= h
 
 \* Correctness is implied by the preceding invariants.
-THEOREM Spec => []Correctness
+THEOREM IsCorrect == Spec => []Correctness
 <1>1. TypeOK /\ InductiveInvariant /\ DoneIndexValue => Correctness
   BY DEF TypeOK, InductiveInvariant, DoneIndexValue, Correctness
 <1>. QED
