@@ -143,11 +143,6 @@ jobs:
             ## ATD/EWD require TLAPS' update_enabled_cdot branch
             specifications/ewd998/AsyncTerminationDetection_proof.tla
             specifications/ewd998/EWD998_proof.tla
-            ## Regressions?
-            specifications/byzpaxos/Consensus.tla
-            specifications/LearnProofs/FindHighest.tla
-            specifications/LoopInvariance/BinarySearch.tla
-            specifications/TeachingConcurrency/SimpleRegular.tla
             # Failing; see https://github.com/tlaplus/Examples/issues/67
             specifications/Bakery-Boulangerie/Bakery.tla
             specifications/Bakery-Boulangerie/Boulanger.tla
