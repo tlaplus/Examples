@@ -459,8 +459,8 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [
-                "state constraint",
-                "ignore deadlock"
+                "ignore deadlock",
+                "state constraint"
               ],
               "result": "success",
               "distinctStates": 112929,
@@ -473,9 +473,9 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [
-                "state constraint",
+                "ignore deadlock",
                 "liveness",
-                "ignore deadlock"
+                "state constraint"
               ],
               "result": "success",
               "distinctStates": 14365,
@@ -496,9 +496,9 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [
-                "state constraint",
+                "ignore deadlock",
                 "liveness",
-                "ignore deadlock"
+                "state constraint"
               ],
               "result": "success",
               "distinctStates": 8496,
@@ -572,14 +572,30 @@
           "path": "specifications/FiniteMonotonic/CRDT_proof.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["proof"],
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/FiniteMonotonic/DistributedReplicatedLog.tla",
+          "communityDependencies": [
+            "FiniteSetsExt",
+            "SequencesExt"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
           "models": []
         },
         {
           "path": "specifications/FiniteMonotonic/MCCRDT.tla",
-          "communityDependencies": ["FiniteSetsExt"],
+          "communityDependencies": [
+            "FiniteSetsExt"
+          ],
           "tlaLanguageVersion": 2,
-          "features": ["action composition"],
+          "features": [
+            "action composition"
+          ],
           "models": [
             {
               "path": "specifications/FiniteMonotonic/MCCRDT.cfg",
@@ -587,7 +603,8 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [
-                "liveness", "state constraint"
+                "liveness",
+                "state constraint"
               ],
               "result": "success",
               "distinctStates": 25000,
@@ -597,10 +614,35 @@
           ]
         },
         {
-          "path": "specifications/FiniteMonotonic/MCReplicatedLog.tla",
-          "communityDependencies": ["FiniteSetsExt"],
+          "path": "specifications/FiniteMonotonic/MCDistributedReplicatedLog.tla",
+          "communityDependencies": [
+            "FiniteSetsExt"
+          ],
           "tlaLanguageVersion": 2,
-          "features": ["action composition"],
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/FiniteMonotonic/MCDistributedReplicatedLog.cfg",
+              "runtime": "00:00:05",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness",
+                "view"
+              ],
+              "result": "liveness failure"
+            }
+          ]
+        },
+        {
+          "path": "specifications/FiniteMonotonic/MCReplicatedLog.tla",
+          "communityDependencies": [
+            "FiniteSetsExt"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "action composition"
+          ],
           "models": [
             {
               "path": "specifications/FiniteMonotonic/MCReplicatedLog.cfg",
@@ -608,7 +650,8 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [
-                "liveness", "state constraint"
+                "liveness",
+                "state constraint"
               ],
               "result": "success",
               "distinctStates": 1363,
@@ -620,31 +663,6 @@
         {
           "path": "specifications/FiniteMonotonic/ReplicatedLog.tla",
           "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/FiniteMonotonic/MCDistributedReplicatedLog.tla",
-          "communityDependencies": ["FiniteSetsExt"],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": [
-            {
-              "path": "specifications/FiniteMonotonic/MCDistributedReplicatedLog.cfg",
-              "runtime": "00:00:05",
-              "size": "small",
-              "mode": "exhaustive search",
-              "features": [
-                "liveness", "view"
-              ],
-              "result": "liveness failure"
-            }
-          ]
-        },
-        {
-          "path": "specifications/FiniteMonotonic/DistributedReplicatedLog.tla",
-          "communityDependencies": ["SequencesExt", "FiniteSetsExt"],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
@@ -1411,6 +1429,16 @@
           "features": [],
           "models": [
             {
+              "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC.cfg",
+              "runtime": "00:07:53",
+              "size": "large",
+              "mode": "exhaustive search",
+              "features": [
+                "symmetry"
+              ],
+              "result": "success"
+            },
+            {
               "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC_small.cfg",
               "runtime": "00:00:10",
               "size": "small",
@@ -1422,16 +1450,6 @@
               "distinctStates": 343796,
               "totalStates": 736012,
               "stateDepth": 28
-            },
-            {
-              "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC.cfg",
-              "runtime": "00:07:53",
-              "size": "large",
-              "mode": "exhaustive search",
-              "features": [
-                "symmetry"
-              ],
-              "result": "success"
             }
           ]
         }
@@ -2781,14 +2799,14 @@
           "models": []
         },
         {
-          "path": "specifications/SpecifyingSystems/RealTime/RealTime_SS.tla",
+          "path": "specifications/SpecifyingSystems/RealTime/RealTimeHourClock.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
         },
         {
-          "path": "specifications/SpecifyingSystems/RealTime/RealTimeHourClock.tla",
+          "path": "specifications/SpecifyingSystems/RealTime/RealTime_SS.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
@@ -3178,6 +3196,106 @@
       ]
     },
     {
+      "path": "specifications/YoYo",
+      "title": "Yo-Yo Leader Election",
+      "description": "Algorithm due to Nicola Santoro for leader election in a connected undirected network",
+      "sources": [
+        "https://research.nicola-santoro.com/DADA.html"
+      ],
+      "authors": [
+        "Ludovic Yvoz",
+        "Stephan Merz"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/YoYo/MCYoYoNoPruning.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/YoYo/MCYoYoNoPruning.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success",
+              "distinctStates": 60,
+              "totalStates": 110,
+              "stateDepth": 19
+            }
+          ]
+        },
+        {
+          "path": "specifications/YoYo/MCYoYoPruning.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/YoYo/MCYoYoPruning.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success",
+              "distinctStates": 102,
+              "totalStates": 157,
+              "stateDepth": 31
+            }
+          ]
+        },
+        {
+          "path": "specifications/YoYo/YoYoAllGraphs.tla",
+          "communityDependencies": [
+            "UndirectedGraphs"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/YoYo/YoYoAllGraphs.cfg",
+              "runtime": "00:00:02",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [
+                "ignore deadlock",
+                "liveness"
+              ],
+              "result": "success",
+              "distinctStates": 26731,
+              "totalStates": 48535,
+              "stateDepth": 39
+            }
+          ]
+        },
+        {
+          "path": "specifications/YoYo/YoYoNoPruning.tla",
+          "communityDependencies": [
+            "UndirectedGraphs"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/YoYo/YoYoPruning.tla",
+          "communityDependencies": [
+            "UndirectedGraphs"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
       "path": "specifications/aba-asyn-byz",
       "title": "Asynchronous Byzantine Consensus",
       "description": "Spec of the protocol from paper *Asynchronous Consensus and Broadcast Protocols* (1985)",
@@ -3513,8 +3631,12 @@
       "path": "specifications/braf",
       "title": "Buffered Random Access File",
       "description": "Specification of a Java file caching layer",
-      "sources": ["https://github.com/tlaplus/tlaplus/tree/4613109641676389d97b8df209d6cf4d90d31c1c/tlatools/org.lamport.tlatools/src/tlc2/util/BufferedRandomAccessFile.tla"],
-      "authors": ["Calvin Loncaric"],
+      "sources": [
+        "https://github.com/tlaplus/tlaplus/tree/4613109641676389d97b8df209d6cf4d90d31c1c/tlatools/org.lamport.tlatools/src/tlc2/util/BufferedRandomAccessFile.tla"
+      ],
+      "authors": [
+        "Calvin Loncaric"
+      ],
       "tags": [],
       "modules": [
         {
@@ -3530,8 +3652,8 @@
               "mode": "exhaustive search",
               "features": [
                 "alias",
-                "symmetry",
-                "liveness"
+                "liveness",
+                "symmetry"
               ],
               "result": "success",
               "distinctStates": 3316,
@@ -4458,28 +4580,6 @@
           ]
         },
         {
-          "path": "specifications/ewd998/EWD998PCal.tla",
-          "communityDependencies": [
-            "BagsExt"
-          ],
-          "tlaLanguageVersion": 2,
-          "features": ["pluscal"],
-          "models": [
-            {
-              "path": "specifications/ewd998/EWD998PCal.cfg",
-              "runtime": "00:00:21",
-              "size": "medium",
-              "mode": "exhaustive search",
-              "features": [
-                "state constraint",
-                "liveness",
-                "alias"
-              ],
-              "result": "success"
-            }
-          ]
-        },
-        {
           "path": "specifications/ewd998/EWD998Chan.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
@@ -4563,6 +4663,28 @@
           ]
         },
         {
+          "path": "specifications/ewd998/EWD998ChanTrace.tla",
+          "communityDependencies": [
+            "IOUtils",
+            "VectorClocks"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/ewd998/EWD998ChanTrace.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "alias",
+                "view"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
           "path": "specifications/ewd998/EWD998Chan_opts.tla",
           "communityDependencies": [
             "CSV",
@@ -4571,6 +4693,30 @@
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
+        },
+        {
+          "path": "specifications/ewd998/EWD998PCal.tla",
+          "communityDependencies": [
+            "BagsExt"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal"
+          ],
+          "models": [
+            {
+              "path": "specifications/ewd998/EWD998PCal.cfg",
+              "runtime": "00:00:21",
+              "size": "medium",
+              "mode": "exhaustive search",
+              "features": [
+                "alias",
+                "liveness",
+                "state constraint"
+              ],
+              "result": "success"
+            }
+          ]
         },
         {
           "path": "specifications/ewd998/EWD998_anim.tla",
@@ -4675,22 +4821,6 @@
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
-        },
-        {
-          "path": "specifications/ewd998/EWD998ChanTrace.tla",
-          "communityDependencies": ["VectorClocks", "IOUtils"],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": [
-            {
-              "path": "specifications/ewd998/EWD998ChanTrace.cfg",
-              "runtime": "00:00:01",
-              "size": "small",
-              "mode": "exhaustive search",
-              "features": ["alias", "view"],
-              "result": "success"
-            }
-          ]
         }
       ]
     },
@@ -5014,6 +5144,51 @@
       ]
     },
     {
+      "path": "specifications/tcp",
+      "title": "TCP as defined in RFC 9293",
+      "description": "Transmission Control Protocol (TCP)",
+      "sources": [
+        "https://datatracker.ietf.org/doc/html/rfc9293"
+      ],
+      "authors": [
+        "Markus Kuppe"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/tcp/MCtcp.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/tcp/MCtcp.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness",
+                "state constraint"
+              ],
+              "result": "success",
+              "distinctStates": 1182,
+              "totalStates": 6322,
+              "stateDepth": 14
+            }
+          ]
+        },
+        {
+          "path": "specifications/tcp/tcp.tla",
+          "communityDependencies": [
+            "SequencesExt"
+          ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        }
+      ]
+    },
+    {
       "path": "specifications/tower_of_hanoi",
       "title": "The Tower of Hanoi Puzzle",
       "description": "Famous puzzle involving stacking disks on towers",
@@ -5169,147 +5344,6 @@
               "distinctStates": 288,
               "totalStates": 1146,
               "stateDepth": 11
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "path": "specifications/YoYo",
-      "title": "Yo-Yo Leader Election",
-      "description": "Algorithm due to Nicola Santoro for leader election in a connected undirected network",
-      "sources": ["https://research.nicola-santoro.com/DADA.html"],
-      "authors": [
-        "Ludovic Yvoz",
-        "Stephan Merz"
-      ],
-      "tags": [],
-      "modules": [
-        {
-          "path": "specifications/YoYo/YoYoNoPruning.tla",
-          "communityDependencies": [
-            "UndirectedGraphs"
-          ],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/YoYo/MCYoYoNoPruning.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": [
-            {
-              "path": "specifications/YoYo/MCYoYoNoPruning.cfg",
-              "runtime": "00:00:01",
-              "size": "small",
-              "mode": "exhaustive search",
-              "features": [
-                "liveness"
-              ],
-              "result": "success",
-              "distinctStates": 60,
-              "totalStates": 110,
-              "stateDepth": 19
-            }
-          ]
-        },
-        {
-          "path": "specifications/YoYo/YoYoPruning.tla",
-          "communityDependencies": [
-            "UndirectedGraphs"
-          ],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/YoYo/MCYoYoPruning.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": [
-            {
-              "path": "specifications/YoYo/MCYoYoPruning.cfg",
-              "runtime": "00:00:01",
-              "size": "small",
-              "mode": "exhaustive search",
-              "features": [
-                "ignore deadlock",
-                "liveness"
-              ],
-              "result": "success",
-              "distinctStates": 102,
-              "totalStates": 157,
-              "stateDepth": 31
-            }
-          ]
-        },
-        {
-          "path": "specifications/YoYo/YoYoAllGraphs.tla",
-          "communityDependencies": [
-            "UndirectedGraphs"
-          ],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": [
-            {
-              "path": "specifications/YoYo/YoYoAllGraphs.cfg",
-              "runtime": "00:00:02",
-              "size": "medium",
-              "mode": "exhaustive search",
-              "features": [
-                "ignore deadlock",
-                "liveness"
-              ],
-              "result": "success",
-              "distinctStates": 26731,
-              "totalStates": 48535,
-              "stateDepth": 39
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "path": "specifications/tcp",
-      "title": "TCP as defined in RFC 9293",
-      "description": "Transmission Control Protocol (TCP)",
-      "sources": ["https://datatracker.ietf.org/doc/html/rfc9293"],
-      "authors": [
-        "Markus Kuppe"
-      ],
-      "tags": [],
-      "modules": [
-        {
-          "path": "specifications/tcp/tcp.tla",
-          "communityDependencies": [
-            "SequencesExt"
-          ],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/tcp/MCtcp.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": [
-            {
-              "path": "specifications/tcp/MCtcp.cfg",
-              "runtime": "00:00:01",
-              "size": "small",
-              "mode": "exhaustive search",
-              "features": [
-                "state constraint",
-                "liveness"
-              ],
-              "result": "success",
-              "distinctStates": 1182,
-              "totalStates": 6322,
-              "stateDepth": 14
             }
           ]
         }
