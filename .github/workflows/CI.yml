@@ -144,10 +144,12 @@ jobs:
         run: |
           SKIP=(
             # Long-running; see https://github.com/tlaplus/tlapm/issues/85
+            specifications/ewd998/EWD998_proof.tla
             specifications/Bakery-Boulangerie/Bakery.tla
             specifications/Bakery-Boulangerie/Boulanger.tla
             specifications/LoopInvariance/Quicksort.tla
             specifications/LoopInvariance/SumSequence.tla
+            specifications/lamport_mutex/LamportMutex_proofs.tla
             specifications/bcastByz/bcastByz.tla
             # specifications/MisraReachability/ReachabilityProofs.tla
             specifications/byzpaxos/VoteProof.tla
