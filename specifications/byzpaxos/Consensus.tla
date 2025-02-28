@@ -170,7 +170,7 @@ THEOREM Invariance == Spec => []Inv
 (* be chosen.                                                              *)
 (***************************************************************************)
 LiveSpec == Spec /\ WF_vars(Next)
-Success == chosen # {}
+Success == <>(chosen # {})
 
 (***************************************************************************)
 (* For liveness, we need to assume that there exists at least one value.   *)
@@ -204,16 +204,16 @@ BY ValueNonempty, ExpandENABLED DEF Next, vars
 (* about the liveness of more complex specifications, an additional        *)
 (* invariant would typically be required.                                  *)
 (***************************************************************************)
-THEOREM LiveSpec => <>Success
-<1>1. [][Next]_vars /\ WF_vars(Next) => [](Init => <>Success)
-  <2>1. Init /\ [Next]_vars => Init' \/ Success'
-    BY DEF Init, Next, vars, Success
-  <2>2. Init /\ <<Next>>_vars => Success'
-    BY DEF Init, Next, vars, Success
+THEOREM LiveSpec => Success
+<1>1. [][Next]_vars /\ WF_vars(Next) => [](Init => Success)
+  <2>1. Init' \/ (chosen # {})'
+    BY DEF Init
+  <2>2. Init /\ <<Next>>_vars => (chosen # {})'
+    BY DEF Init, Next, vars
   <2>3. Init => ENABLED <<Next>>_vars
     BY EnabledNext DEF Init
-  <2>. QED  BY <2>1, <2>2, <2>3, PTL
-<1>2. QED  BY <1>1, PTL DEF LiveSpec, Spec
+  <2>. QED  BY <2>1, <2>2, <2>3, PTL DEF Success
+<1>2. QED  BY <1>1, PTL DEF LiveSpec, Spec, Success
 
 -----------------------------------------------------------------------------
 (***************************************************************************)
