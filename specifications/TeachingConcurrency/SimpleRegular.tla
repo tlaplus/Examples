@@ -49,7 +49,7 @@
 (* regular registers was proposed by Yuri Abraham in                       *)
 (*                                                                         *)
 (*    On Lamport's "Teaching Concurrency"                                  *)
-(*    Bulletin of EATS (European Association for Theoretical Computer      *)
+(*    Bulletin of EATCS (European Association for Theoretical Computer     *)
 (*      Science) No. 127, February 2019                                    *)
 (*    http://bulletin.eatcs.org/index.php/beatcs/article/view/569          *)
 (***************************************************************************)
@@ -141,9 +141,11 @@ Inv ==  /\ TypeOK
 (* generated with the Toolbox's Decompose Proof command.                   *)
 (***************************************************************************)
 THEOREM Spec => []PCorrect
-<1> USE NAssump
+<1> USE NAssump DEF ProcSet
 <1>1. Init => Inv
-  BY DEF Init, Inv, TypeOK, ProcSet 
+  <2>1. Init => 0 \in 0..(N-1) /\ pc[0] /= "Done"
+    BY DEF Init
+  <2>. QED  BY <2>1 DEF Init, Inv, TypeOK
 <1>2. Inv /\ [Next]_vars => Inv'
   <2> SUFFICES ASSUME Inv,
                       [Next]_vars

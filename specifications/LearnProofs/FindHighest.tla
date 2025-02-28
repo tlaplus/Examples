@@ -139,32 +139,12 @@ Correctness ==
   pc = "Done" =>
     \A idx \in DOMAIN f : f[idx] <= h
 
+\* Correctness is implied by the preceding invariants.
 THEOREM IsCorrect == Spec => []Correctness
-PROOF
-  <1>a. Init => Correctness
-    BY DEF Init, Correctness
-  <1>b. Correctness /\ UNCHANGED vars => Correctness'
-    BY DEF Correctness, vars
-  <1>c. /\ Correctness
-        /\ InductiveInvariant'
-        /\ DoneIndexValue'
-        /\ Next
-        => Correctness'
-    <2>a. Correctness /\ Terminating => Correctness'
-      BY DEF Correctness, Terminating, vars
-    <2>b.
-        /\ Correctness
-        /\ InductiveInvariant'
-        /\ DoneIndexValue'
-        /\ lb
-        => Correctness'
-      BY DEFS Correctness, InductiveInvariant, DoneIndexValue, lb
-    <2> QED BY <2>a, <2>b DEF Next
-  <1> QED
-    BY
-      <1>a, <1>b, <1>c,
-      InductiveInvariantHolds, DoneIndexValueThm, PTL
-    DEF Spec
+<1>1. TypeOK /\ InductiveInvariant /\ DoneIndexValue => Correctness
+  BY DEF TypeOK, InductiveInvariant, DoneIndexValue, Correctness
+<1>. QED
+  BY <1>1, TypeInvariantHolds, InductiveInvariantHolds, DoneIndexValueThm, PTL
 
 =============================================================================
 
