@@ -14,6 +14,8 @@ parser.add_argument('--tools_jar_path', help='Path to the tla2tools.jar file', r
 parser.add_argument('--tlapm_lib_path', help='Path to the TLA+ proof manager module directory; .tla files should be in this directory', required=True)
 parser.add_argument('--community_modules_jar_path', help='Path to the CommunityModules-deps.jar file', required=True)
 parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+parser.add_argument('--skip', nargs='+', help='Space-separated list of models to skip checking', required=False, default=[])
+parser.add_argument('--only', nargs='+', help='If provided, only check models in this space-separated list', required=False, default=[])
 parser.add_argument('--enable_assertions', help='Enable Java assertions (pass -enableassertions to JVM)', action='store_true')
 args = parser.parse_args()
 
@@ -24,6 +26,8 @@ tlapm_lib_path = normpath(args.tlapm_lib_path)
 community_jar_path = normpath(args.community_modules_jar_path)
 manifest_path = normpath(args.manifest_path)
 examples_root = dirname(manifest_path)
+skip_models = args.skip
+only_models = args.only
 enable_assertions = args.enable_assertions
 
 def check_model(module, model):
@@ -85,10 +89,17 @@ small_models = sorted(
             )
             # This model is nondeterministic due to use of the Random module
             and model['path'] != 'specifications/SpanningTree/SpanTreeRandom.cfg'
+            # This model generates the same distinct states but order varies
+            and model['path'] != 'specifications/ewd998/EWD998ChanTrace.cfg'
+            and model['path'] not in skip_models
+            and (only_models == [] or model['path'] in only_models)
     ],
     key = lambda m: m[2],
     reverse=True
 )
+
+for path in skip_models:
+    logging.info(f'Skipping {path}')
 
 for module, model, _ in small_models:
     success = check_model(module, model)

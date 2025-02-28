@@ -170,4 +170,13 @@ jobs:
             --manifest_path manifest.json         \
             --ci_ignore_path .ciignore
           git diff -a
+      - name: Smoke-test state space script
+        run: |
+          git reset --hard HEAD
+          python $SCRIPT_DIR/record_model_state_space.py                  \
+            --tools_jar_path $DEPS_DIR/tools/tla2tools.jar                \
+            --tlapm_lib_path $DEPS_DIR/tlapm/library                      \
+            --community_modules_jar_path $DEPS_DIR/community/modules.jar  \
+            --manifest_path manifest.json
+          git diff -a
 
