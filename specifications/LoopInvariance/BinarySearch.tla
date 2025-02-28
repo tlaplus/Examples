@@ -130,7 +130,7 @@ Inv == /\ TypeOK
 (***************************************************************************)
 THEOREM Spec => []resultCorrect
 <1>1. Init => Inv
-  BY DEF Init, Inv, TypeOK
+  BY DEF Init, Inv, TypeOK, SortedSeqs
 <1>2. Inv /\ [Next]_vars => Inv'
   <2> SUFFICES ASSUME Inv,
                       [Next]_vars
