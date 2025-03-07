@@ -151,10 +151,10 @@ jobs:
             specifications/LearnProofs/FindHighest.tla
             specifications/LoopInvariance/BinarySearch.tla
             # Failing; see https://github.com/tlaplus/Examples/issues/67
-            specifications/Bakery-Boulangerie/Bakery.tla
-            specifications/Bakery-Boulangerie/Boulanger.tla
-            specifications/Paxos/Consensus.tla
-            specifications/PaxosHowToWinATuringAward/Consensus.tla
+            # specifications/Bakery-Boulangerie/Bakery.tla
+            # specifications/Bakery-Boulangerie/Boulanger.tla
+            # specifications/Paxos/Consensus.tla
+            # specifications/PaxosHowToWinATuringAward/Consensus.tla
             specifications/lamport_mutex/LamportMutex_proofs.tla
             specifications/byzpaxos/VoteProof.tla
             # Long-running; see https://github.com/tlaplus/tlapm/issues/85

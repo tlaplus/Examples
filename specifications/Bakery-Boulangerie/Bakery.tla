@@ -223,6 +223,47 @@ TypeOK == /\ num \in [Procs -> Nat]
           /\ pc \in [Procs -> {"ncs", "e1", "e2", "e3",
                                "e4", "w1", "w2", "cs", "exit"}]             
 
+THEOREM TypeCorrect == Spec => []TypeOK
+<1>. USE N \in Nat DEF ProcSet, Procs
+<1>1. Init => TypeOK
+  BY DEF Init, TypeOK
+<1>2. TypeOK /\ [Next]_vars => TypeOK'
+  <2>. SUFFICES ASSUME TypeOK, [Next]_vars
+                PROVE  TypeOK'
+    OBVIOUS
+  <2>1. ASSUME NEW self \in Procs, ncs(self)
+        PROVE  TypeOK'
+    BY <2>1 DEF TypeOK, ncs
+  <2>2. ASSUME NEW self \in Procs, e1(self)
+        PROVE  TypeOK'
+    BY <2>2 DEF TypeOK, e1
+  <2>3. ASSUME NEW self \in Procs, e2(self)
+        PROVE  TypeOK'
+    BY <2>3 DEF TypeOK, e2
+  <2>4. ASSUME NEW self \in Procs, e3(self)
+        PROVE  TypeOK'
+    BY <2>4 DEF TypeOK, e3
+  <2>5. ASSUME NEW self \in Procs, e4(self)
+        PROVE  TypeOK'
+    BY <2>5 DEF TypeOK, e4
+  <2>6. ASSUME NEW self \in Procs, w1(self)
+        PROVE  TypeOK'
+    BY <2>6 DEF TypeOK, w1
+  <2>7. ASSUME NEW self \in Procs, w2(self)
+        PROVE  TypeOK'
+    BY <2>7 DEF TypeOK, w2
+  <2>8. ASSUME NEW self \in Procs, cs(self)
+        PROVE  TypeOK'
+    BY <2>8 DEF TypeOK, cs
+  <2>9. ASSUME NEW self \in Procs, exit(self)
+        PROVE  TypeOK'
+    BY <2>9 DEF TypeOK, exit
+  <2>10. CASE UNCHANGED vars
+    BY <2>10 DEF TypeOK, vars
+  <2>. QED
+    BY <2>1, <2>2, <2>3, <2>4, <2>5, <2>6, <2>7, <2>8, <2>9, <2>10 DEF Next, p
+<1>. QED  BY <1>1, <1>2, PTL DEF Spec
+
 (***************************************************************************)
 (* Before(i, j) is a condition that implies that num[i] > 0 and, if j is   *)
 (* trying to enter its critical section and i does not change num[i], then *)
@@ -247,21 +288,21 @@ Before(i,j) == /\ num[i] > 0
 (***************************************************************************)
 (* Inv is the complete inductive invariant.                                *)
 (***************************************************************************)  
-Inv == /\ TypeOK 
-       /\ \A i \in Procs : 
+IInv == \A i \in Procs : 
 \*             /\ (pc[i] \in {"ncs", "e1", "e2"}) => (num[i] = 0)
-             /\ (pc[i] \in {"e4", "w1", "w2", "cs"}) => (num[i] # 0)
-             /\ (pc[i] \in {"e2", "e3"}) => flag[i] 
-             /\ (pc[i] = "w2") => (nxt[i] # i)
-             /\ pc[i] \in {(*"e2",*) "w1", "w2"} => i \notin unchecked[i]
-             /\ (pc[i] \in {"w1", "w2"}) =>
-                   \A j \in (Procs \ unchecked[i]) \ {i} : Before(i, j)
-             /\ /\ (pc[i] = "w2")
-                /\ \/ (pc[nxt[i]] = "e2") /\ (i \notin unchecked[nxt[i]])
-                   \/ pc[nxt[i]] = "e3"
-                => max[nxt[i]] >= num[i]
-             /\ (pc[i] = "cs") => \A j \in Procs \ {i} : Before(i, j)
+           /\ (pc[i] \in {"e4", "w1", "w2", "cs"}) => (num[i] # 0)
+           /\ (pc[i] \in {"e2", "e3"}) => flag[i] 
+           /\ (pc[i] = "w2") => (nxt[i] # i)
+           /\ pc[i] \in {"w1", "w2"} => i \notin unchecked[i]
+           /\ (pc[i] \in {"w1", "w2"}) =>
+                 \A j \in (Procs \ unchecked[i]) \ {i} : Before(i, j)
+           /\ /\ (pc[i] = "w2")
+              /\ \/ (pc[nxt[i]] = "e2") /\ (i \notin unchecked[nxt[i]])
+                 \/ pc[nxt[i]] = "e3"
+              => max[nxt[i]] >= num[i]
+           /\ (pc[i] = "cs") => \A j \in Procs \ {i} : Before(i, j)
 
+Inv == TypeOK /\ IInv
 -----------------------------------------------------------------------------
 (***************************************************************************)
 (* Proof of Mutual Exclusion                                               *)
@@ -274,35 +315,35 @@ Inv == /\ TypeOK
 THEOREM Spec => []MutualExclusion
 <1> USE N \in Nat DEFS Procs, TypeOK, Before, \prec, ProcSet 
 <1>1. Init => Inv
-  BY DEF Init, Inv
-<1>2. Inv /\ [Next]_vars => Inv'
-  <2> SUFFICES ASSUME Inv,
+  BY DEF Init, Inv, IInv
+<1>2. Inv /\ [Next]_vars => IInv'
+  <2> SUFFICES ASSUME TypeOK, IInv,
                       [Next]_vars
-               PROVE  Inv'
-    OBVIOUS
+               PROVE  IInv'
+    BY DEF Inv
   <2>1. ASSUME NEW self \in Procs,
                ncs(self)
-        PROVE  Inv'
-    BY <2>1 DEF ncs, Inv
+        PROVE  IInv'
+    BY <2>1 DEF ncs, IInv
   <2>2. ASSUME NEW self \in Procs,
                e1(self)
-        PROVE  Inv'
+        PROVE  IInv'
     <3>. /\ pc[self] = "e1"
          /\ UNCHANGED <<num,nxt>>
       BY <2>2 DEF e1
     <3>1. CASE /\ flag' = [flag EXCEPT ![self] = ~ flag[self]]
                /\ pc' = [pc EXCEPT ![self] = "e1"]
                /\ UNCHANGED <<unchecked, max>>
-      BY <3>1 DEF Inv
+      BY <3>1 DEF IInv
     <3>2. CASE /\ flag' = [flag EXCEPT ![self] = TRUE]
                /\ unchecked' = [unchecked EXCEPT ![self] = Procs \ {self}]
                /\ max' = [max EXCEPT ![self] = 0]
                /\ pc' = [pc EXCEPT ![self] = "e2"]
-      BY <3>2 DEF Inv
+      BY <3>2 DEF IInv
     <3>. QED  BY <3>1, <3>2, <2>2 DEF e1
   <2>3. ASSUME NEW self \in Procs,
                e2(self)
-        PROVE  Inv'
+        PROVE  IInv'
     <3>. /\ pc[self] = "e2"
          /\ UNCHANGED << num, flag, nxt >>
       BY <2>3 DEF e2
@@ -311,117 +352,142 @@ THEOREM Spec => []MutualExclusion
                  num[i] > max[self],
                  max' = [max EXCEPT ![self] = num[i]],
                  pc' = [pc EXCEPT ![self] = "e2"]
-          PROVE  Inv'
-       BY <3>1, Z3T(10) DEF Inv
+          PROVE  IInv'
+       \* BY <3>1, SMTT(30) DEF IInv  -- works
+       <4>. SUFFICES ASSUME NEW p \in Procs
+                     PROVE  IInv!(p)'
+         BY DEF IInv
+       <4>1. CASE p = self
+         BY <3>1, <4>1 DEF IInv
+       <4>2. CASE p # self
+         BY <3>1, <4>2 DEF IInv
+       <4>. QED  BY <4>1, <4>2
     <3>2. ASSUME NEW i \in unchecked[self],
                  unchecked' = [unchecked EXCEPT ![self] = unchecked[self] \ {i}],
                  ~(num[i] > max[self]),
                  max' = max,
                  pc' = [pc EXCEPT ![self] = "e2"]
-          PROVE  Inv'
-       <4>. TypeOK'  BY <3>2 DEF Inv
-       <4>1. \A ii \in Procs : (pc'[ii] \in {"e4", "w1", "w2", "cs"}) => (num'[ii] # 0)
-         BY <3>2 DEF Inv
-       <4>2. \A ii \in Procs : (pc'[ii] \in {"e2", "e3"}) => flag'[ii]
-         BY <3>2 DEF Inv
-       <4>3. \A ii \in Procs : (pc'[ii] = "w2") => (nxt'[ii] # ii)
-         BY <3>2 DEF Inv
-       <4>4. \A ii \in Procs : pc'[ii] \in {(*"e2",*) "w1", "w2"} => ii \notin unchecked'[ii]
-         BY <3>2 DEF Inv
-       <4>5. \A ii \in Procs : (pc'[ii] \in {"w1", "w2"}) =>
-                   \A j \in (Procs \ unchecked'[ii]) \ {ii} : Before(ii, j)'
-         BY <3>2 DEF Inv
-       <4>6. \A ii \in Procs : 
-                /\ (pc'[ii] = "w2")
-                /\ \/ (pc'[nxt'[ii]] = "e2") /\ (ii \notin unchecked'[nxt'[ii]])
-                   \/ pc'[nxt'[ii]] = "e3"
-                => max'[nxt'[ii]] >= num'[ii]
-         BY <3>2 DEF Inv
-       <4>7. \A ii \in Procs : (pc'[ii] = "cs") => \A j \in Procs \ {ii} : Before(ii, j)'
-         BY <3>2 DEF Inv
-       <4>. QED  BY (*<4>0,*) <4>1, <4>2, <4>3, <4>4, <4>5, <4>6, <4>7 DEF Inv
+          PROVE  IInv'
+       BY <3>2 DEF IInv
     <3>3. CASE /\ unchecked[self] = {}
                /\ pc' = [pc EXCEPT ![self] = "e3"]
                /\ UNCHANGED << unchecked, max >>
-       BY <3>3 DEF Inv
+       <4>. SUFFICES ASSUME NEW i \in Procs
+                     PROVE  IInv!(i)'
+         BY DEF IInv
+       <4>1. CASE i = self
+         BY <3>3, <4>1 DEF IInv
+       <4>2. CASE i # self
+         BY <3>3, <4>2 DEF IInv
+       <4>. QED  BY <4>1, <4>2
     <3>. QED  BY <3>1, <3>2, <3>3, <2>3 DEF e2
   <2>4. ASSUME NEW self \in Procs,
                e3(self)
-        PROVE  Inv'
+        PROVE  IInv'
     <3>. /\ pc[self] = "e3"
          /\ UNCHANGED << flag, unchecked, max, nxt >>
       BY <2>4 DEF e3
     <3>1. CASE /\ \E k \in Nat:
                        num' = [num EXCEPT ![self] = k]
                /\ pc' = [pc EXCEPT ![self] = "e3"]
-      BY <3>1 DEF Inv
+      BY <3>1 DEF IInv
     <3>2. CASE /\ \E i \in {j \in Nat : j > max[self]}:
                        num' = [num EXCEPT ![self] = i]
                /\ pc' = [pc EXCEPT ![self] = "e4"]
-      BY <3>2, SMTT(60) DEF Inv
+      BY <3>2 DEF IInv
     <3>3. QED  BY <3>1, <3>2, <2>4 DEF e3
   <2>5. ASSUME NEW self \in Procs,
                e4(self)
-        PROVE  Inv'
+        PROVE  IInv'
     <3>. /\ pc[self] = "e4"
          /\ UNCHANGED << num, max, nxt >>
       BY <2>5 DEF e4
     <3>1. CASE /\ flag' = [flag EXCEPT ![self] = ~ flag[self]]
                /\ pc' = [pc EXCEPT ![self] = "e4"]
                /\ UNCHANGED unchecked
-      BY <3>1 DEF Inv
+      BY <3>1 DEF IInv
     <3>2. CASE /\ flag' = [flag EXCEPT ![self] = FALSE]
                /\ unchecked' = [unchecked EXCEPT ![self] = Procs \ {self}]
                /\ pc' = [pc EXCEPT ![self] = "w1"]
-      BY <3>2, Z3T(30) DEF Inv
+      BY <3>2 DEF IInv
     <3>. QED  BY <3>1, <3>2, <2>5 DEF e4
   <2>6. ASSUME NEW self \in Procs,
                w1(self)
-        PROVE  Inv'
+        PROVE  IInv'
     <3>. /\ pc[self] = "w1"
          /\ UNCHANGED << num, flag, unchecked, max >>
       BY <2>6 DEF w1
-    <3>1. CASE /\ unchecked[self] # {}
-               /\ \E i \in unchecked[self]:
-                            nxt' = [nxt EXCEPT ![self] = i]
-               /\ ~ flag[nxt'[self]]
-               /\ pc' = [pc EXCEPT ![self] = "w2"]
-      BY <3>1, Z3 DEF Inv
+    <3>1. ASSUME NEW i \in unchecked[self],
+                 nxt' = [nxt EXCEPT ![self] = i],
+                 ~ flag[nxt'[self]],
+                 pc' = [pc EXCEPT ![self] = "w2"]
+          PROVE  IInv'
+      \* BY <3>1, SMTT(30) DEF IInv  -- works
+      <4>. SUFFICES ASSUME NEW j \in Procs 
+                    PROVE  IInv!(j)'
+        BY DEF IInv
+      <4>1. CASE j = self
+        BY <3>1, <4>1 DEF IInv
+      <4>2. CASE j # self
+        BY <3>1, <4>2, SMTT(10) DEF IInv
+      <4>. QED  BY <4>1, <4>2
     <3>2. CASE /\ unchecked[self] = {}
                /\ pc' = [pc EXCEPT ![self] = "cs"]
                /\ nxt' = nxt
-      BY <3>2, Z3 DEF Inv
+      <4>. SUFFICES ASSUME NEW j \in Procs 
+                    PROVE  IInv!(j)'
+        BY DEF IInv
+      <4>1. CASE j = self
+        BY <3>2, <4>1 DEF IInv
+      <4>2. CASE j # self
+        BY <3>2, <4>2 DEF IInv
+      <4>. QED  BY <4>1, <4>2
     <3>. QED  BY <3>1, <3>2, <2>6 DEF w1
   <2>7. ASSUME NEW self \in Procs,
                w2(self)
-        PROVE  Inv'
-    BY <2>7, Z3T(30) DEF w2, Inv
+        PROVE  IInv'
+    <3>. /\ pc[self] = "w2"
+         /\ unchecked' = [unchecked EXCEPT ![self] = @ \ {nxt[self]}]
+         /\ pc' = [pc EXCEPT ![self] = "w1"]
+         /\ UNCHANGED << num, flag, max, nxt >>
+      BY <2>7 DEF w2
+    <3>1. CASE num[nxt[self]] = 0
+      BY <3>1 DEF IInv
+    <3>2. CASE num[self] < num[nxt[self]]
+      BY <3>2 DEF IInv
+    <3>3. CASE num[self] = num[nxt[self]] /\ self < nxt[self]
+      BY <3>3 DEF IInv
+    <3>. QED  BY <2>7, <3>1, <3>2, <3>3 DEF w2
   <2>8. ASSUME NEW self \in Procs,
                cs(self)
-        PROVE  Inv'
-    BY <2>8, Z3 DEF cs, Inv
+        PROVE  IInv'
+    \* BY <2>8, SMTT(30) DEF cs, IInv  -works
+    <3>1. \A i,j \in Procs: Before(i,j) => Before(i,j)'
+      BY <2>8 DEF cs
+    <3>. HIDE DEF Before
+    <3>. QED  BY <2>8, <3>1 DEF cs, IInv
   <2>9. ASSUME NEW self \in Procs,
                exit(self)
-        PROVE  Inv'
+        PROVE  IInv'
     <3>. /\ pc[self] = "exit"
          /\ UNCHANGED << flag, unchecked, max, nxt >>
       BY <2>9 DEF exit
     <3>1. CASE /\ \E k \in Nat:
                          num' = [num EXCEPT ![self] = k]
                /\ pc' = [pc EXCEPT ![self] = "exit"]
-      BY <3>1 DEF Inv
+      BY <3>1 DEF IInv
     <3>2. CASE /\ num' = [num EXCEPT ![self] = 0]
                /\ pc' = [pc EXCEPT ![self] = "ncs"]
-      BY <3>2 DEF Inv
+      BY <3>2 DEF IInv
     <3>. QED  BY <3>1, <3>2, <2>9 DEF exit
   <2>10. CASE UNCHANGED vars
-    BY <2>10 DEF vars, Inv
+    BY <2>10 DEF vars, IInv
   <2>11. QED
     BY <2>1, <2>10, <2>2, <2>3, <2>4, <2>5, <2>6, <2>7, <2>8, <2>9 DEF Next, p
 <1>3. Inv => MutualExclusion
-  BY SMT DEF MutualExclusion, Inv
+  BY SMT DEF MutualExclusion, Inv, IInv
 <1>4. QED
-  BY <1>1, <1>2, <1>3, PTL DEF Spec
+  BY <1>1, <1>2, <1>3, TypeCorrect, PTL DEF Spec, Inv
 ------------------------------------------------------------------------------ 
 Trying(i) == pc[i] = "e1"
 InCS(i)   == pc[i] = "cs"
@@ -429,45 +495,15 @@ DeadlockFree == (\E i \in Procs : Trying(i)) ~> (\E i \in Procs : InCS(i))
 StarvationFree == \A i \in Procs : Trying(i) ~> InCS(i)
 
 -----------------------------------------------------------------------------
-II == \A i \in Procs : 
-\*        /\ (pc[i] \in {"ncs", "e1", "e2"}) => (num[i] = 0)             \* not found Test 1 (21993 states)
-        /\ (pc[i] \in {"e4", "w1", "w2", "cs"}) => (num[i] # 0)        \* found Test 1
-        /\ (pc[i] \in {"e2", "e3"}) => flag[i]                         \* found Test 1
-        /\ (pc[i] = "w2") => (nxt[i] # i)                              \* not found Test 1 (12115 states) or with N=2
-        /\ pc[i] \in {"e2", "w1", "w2"} => i \notin unchecked[i]       \* found Test 1 
-        /\ (pc[i] \in {"w1", "w2"}) =>                                 \* found Test 1
-              \A j \in (Procs \ unchecked[i]) \ {i} : Before(i, j)
-        /\ /\ (pc[i] = "w2")                                           \* found Test 1
-           /\ \/ (pc[nxt[i]] = "e2") /\ (i \notin unchecked[nxt[i]])
-              \/ pc[nxt[i]] = "e3"
-           => max[nxt[i]] >= num[i]
-        /\ (pc[i] = "cs") => \A j \in Procs \ {i} : Before(i, j)     \* found Test 1
-             
-IInit == /\ num \in [Procs -> Nat]
-         /\ flag \in [Procs -> BOOLEAN]
-         /\ unchecked \in [Procs -> SUBSET Procs]
-         /\ max \in [Procs ->  Nat]
-         /\ nxt \in [Procs ->  Procs]
-         /\ pc \in [Procs -> {"ncs", "e1", "e2", "e3",
-                               "e4", "w1", "w2", "cs", "exit"}] 
-         /\ II  
-
-ISpec == IInit /\ [][Next]_vars
+(***************************************************************************)
+(* The following spec can be used to check inductiveness of the invariant  *)
+(* with the help of TLC.                                                   *)
+(***************************************************************************)
+ISpec == Inv /\ [][Next]_vars
              
 =============================================================================
 \* Modification History
-\* Last modified Mon Mar 06 13:47:10 CET 2023 by merz
-\* Last modified Tue Aug 27 12:23:10 PDT 2019 by loki
-\* Last modified Sat May 19 16:40:23 CEST 2018 by merz
-\* Last modified Thu May 17 07:02:45 PDT 2018 by lamport
 \* Created Thu Nov 21 15:54:32 PST 2013 by lamport
 
 Test 1:  5248 distinct initial states  151056 full initial states
-IInit == /\ num \in [Procs -> Nat]
-         /\ flag \in [Procs -> BOOLEAN]
-         /\ unchecked \in [Procs -> SUBSET Procs]
-         /\ max \in [Procs ->  {0}] \* Nat]
-         /\ nxt \in [Procs ->  {1}]
-         /\ pc \in [Procs -> {"ncs", "e1", "e2", "e3",
-                               "e4", "w1", "w2", "cs"}] 
-         /\ II  
+IInit == TypeOK /\ IInv 
