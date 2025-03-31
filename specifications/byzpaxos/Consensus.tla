@@ -147,7 +147,7 @@ LEMMA InductiveInvariance ==
   OBVIOUS
 <1>1. CASE Next 
   \* In the following BY proof, <1>1 denotes the case assumption Next 
-  BY <1>1, FS_EmptySet, FS_AddElement DEF Inv, TypeOK, Next
+  BY <1>1, FS_Singleton DEF Inv, TypeOK, Next
 <1>2. CASE vars' = vars
   BY <1>2 DEF Inv, TypeOK, vars  
 <1>3. QED
@@ -177,81 +177,24 @@ Success == <>(chosen # {})
 ASSUME ValueNonempty == Value # {}
 
 (***************************************************************************)
-(* TLAPS does not yet reason about ENABLED.  Therefore, we must omit all   *)
-(* proofs that involve ENABLED formulas.  To perform as much of the proof  *)
-(* as possible, as much as possible we restrict the use of an ENABLED      *)
-(* expression to a step asserting that it equals its definition.  ENABLED  *)
-(* A is true of a state s iff there is a state t such that the step s -> t *)
-(* satisfies A.  It follows from this semantic definition that ENABLED A   *)
-(* equals the formula obtained by                                          *)
-(*                                                                         *)
-(*  1. Expanding all definitions of defined symbols in A until all primes  *)
-(*     are priming variables.                                              *)
-(*                                                                         *)
-(*  2. For each primed variable, replacing every instance of that primed   *)
-(*     variable by a new symbol (the same symbol for each primed           *)
-(*     variable).                                                          *)
-(*                                                                         *)
-(*  3. Existentially quantifying over those new symbols.                   *)
+(* Proving liveness requires reasoning about fairness assumptions, which   *)
+(* are defined in terms of enabledness of actions. It is usually a good    *)
+(* idea to prove a lemma that reduces ENABLED to a simple state predicate. *)
 (***************************************************************************)
-LEMMA EnabledDef ==
-        TypeOK => 
-          ((ENABLED <<Next>>_vars) <=> (chosen = {}))
-<1> DEFINE E == 
-       \E chosenp :
-               /\ /\ chosen = {}
-                  /\ \E v \in Value: chosenp = {v}
-               /\ ~ (<<chosenp>> = <<chosen>>)
-<1>1. E = ENABLED <<Next>>_vars
-  \* BY DEF Next, vars (* and def of ENABLED *)
-  PROOF OMITTED
-<1>2. SUFFICES ASSUME TypeOK
-               PROVE  E = (chosen = {})
-  BY <1>1, Zenon
-<1>3. E = \E chosenp : E!(chosenp)!1
-  BY <1>2, Isa  DEF TypeOK
-<1>4. @ = (chosen = {})
- BY <1>2, ValueNonempty, Zenon DEF TypeOK
-<1>5. QED
- BY <1>3, <1>4, Zenon
+LEMMA EnabledDef == (ENABLED <<Next>>_vars) <=> (chosen = {})
+BY ValueNonempty, ExpandENABLED DEF Next, vars 
 
-(***************************************************************************)
-(* Here is our proof that Livespec implies Success.  It uses the standard  *)
-(* TLA proof rules.  For example RuleWF1 is defined in the TLAPS module to *)
-(* be the rule WF1 discussed in                                            *)
-(*                                                                         *)
-(* `. AUTHOR  = "Leslie Lamport",                                          *)
-(*    TITLE   = "The Temporal Logic of Actions",                           *)
-(*    JOURNAL = toplas,                                                    *)
-(*    volume  = 16,                                                        *)
-(*    number  = 3,                                                         *)
-(*    YEAR    = 1994,                                                      *)
-(*    month   = may,                                                       *)
-(*    PAGES   = "872--923"         .'                                      *)
-(*                                                                         *)
-(* PTL stands for propositional temporal logic reasoning.  We expect that, *)
-(* when TLAPS handles temporal reasoning, it will use a decision procedure *)
-(* for PTL.                                                                *)
-(***************************************************************************)
-THEOREM LiveSpec => Success
-<1>1. []Inv /\ [][Next]_vars /\ WF_vars(Next) => (chosen = {} ~> chosen # {})
-  <2>. DEFINE P == chosen = {}
-              Q == chosen # {}
-  <2>1. SUFFICES [][Next]_vars /\ WF_vars(Next) => ((Inv /\ P) ~> Q)
-    BY PTL
-  <2>2. (Inv /\ P) /\ [Next]_vars => ((Inv' /\ P') \/ Q')
-    BY InductiveInvariance
-  <2>3. (Inv /\ P) /\ <<Next>>_vars => Q'
-    BY DEF Inv, Next, vars
-  <2>4. (Inv /\ P) => ENABLED <<Next>>_vars
-    BY EnabledDef DEF Inv
-  <2>. HIDE DEF P,Q
-  <2>. QED
-    BY <2>2, <2>3, <2>4, PTL
-<1>2. (chosen = {} ~> chosen # {}) => ((chosen = {}) => <>(chosen # {}))
-  BY PTL
-<1>3. QED
-  BY Invariance, <1>1, <1>2, PTL DEF LiveSpec, Spec, Init, Success
+THEOREM Liveness == LiveSpec => Success
+<1>. DEFINE P == chosen = {}
+            Q == chosen # {}
+<1>1. P /\ [Next]_vars => P' \/ Q'
+  OBVIOUS
+<1>2. P /\ <<Next>>_vars => Q'
+  BY DEF Next
+<1>3. P => ENABLED <<Next>>_vars
+  BY EnabledDef
+<1>. QED
+  BY <1>1, <1>2, <1>3, PTL DEF LiveSpec, Spec, Init, Success
 
 -----------------------------------------------------------------------------
 (***************************************************************************)
@@ -260,19 +203,6 @@ THEOREM LiveSpec => Success
 (***************************************************************************)
 THEOREM LiveSpecEquals ==
           LiveSpec <=> Spec /\ ([]<><<Next>>_vars \/ []<>(chosen # {}))
-<1>1. /\ Spec <=> Spec /\ []TypeOK
-      /\ LiveSpec <=> LiveSpec /\ []TypeOK
-  BY Invariance, PTL DEF LiveSpec, Inv
-<1>2. (chosen # {}) <=> ~(chosen = {})
-  OBVIOUS
-<1>3. []TypeOK => (([]<>~ENABLED <<Next>>_vars) <=> []<>(chosen # {}))
-  BY <1>2, EnabledDef, PTL
-<1>4. QED
-  BY <1>1, <1>3, PTL DEF LiveSpec
+BY (chosen # {}) <=> ~(chosen = {}), EnabledDef, PTL DEF LiveSpec, Spec
+
 =============================================================================
-\* Modification History
-\* Last modified Mon May 11 18:36:27 CEST 2020 by merz
-\* Last modified Mon Aug 18 15:00:45 CEST 2014 by tomer
-\* Last modified Mon Aug 18 14:58:57 CEST 2014 by tomer
-\* Last modified Tue Feb 14 13:35:49 PST 2012 by lamport
-\* Last modified Mon Feb 07 14:46:59 PST 2011 by lamport

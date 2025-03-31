@@ -24,7 +24,7 @@ CONSTANT Value,     \* As in module Consensus, the set of choosable values.
 (***************************************************************************)
 ASSUME QA == /\ \A Q \in Quorum : Q \subseteq Acceptor
              /\ \A Q1, Q2 \in Quorum : Q1 \cap Q2 # {}  
- 
+
 THEOREM QuorumNonEmpty == \A Q \in Quorum : Q # {}
 PROOF BY QA
 -----------------------------------------------------------------------------
@@ -298,7 +298,7 @@ THEOREM SafeAtProp ==
                   /\ \A d \in (c+1)..(bb-1), a \in Q : DidNotVoteIn(a, d)
       SA[bb \in Ballot] == Def(SA, bb)
 <1>2. \A b : SafeAt(b, v) = SA[b]
-  BY DEF SafeAt
+  BY Zenon DEF SafeAt
 <1>3. ASSUME NEW n \in Nat, NEW g, NEW h,
              \A i \in 0..(n-1) : g[i] = h[i]
       PROVE  Def(g, n) = Def(h, n)
@@ -400,7 +400,9 @@ LEMMA SafeLemma ==
     <3>5. QED
       BY <3>3, <3>4      
   <2>8. CASE c < cc
-    BY <2>8, <1>2, <2>5
+    <3>. cc \in 0 .. b /\ c \in 0 .. cc-1
+      BY <2>8
+    <3>. QED  BY <1>2, <2>5
   <2>9. QED
     BY <2>6, <2>7, <2>8
 <1>3. \A b \in Ballot : P(b)
@@ -491,7 +493,9 @@ LEMMA VT0 == /\ TypeOK
     <3> PICK aa \in QQ \cap Q : TRUE
       BY QA
     <3>4. c \leq d
-      BY <3>1, <3>2, <3>3 DEF DidNotVoteIn
+      <4>. SUFFICES ASSUME c \in d+1 .. b-1 PROVE FALSE 
+        BY <3>1
+      <4>. QED  BY <3>2, <3>3 DEF DidNotVoteIn
     <3>5. CASE c = d
       BY <3>2, <3>3, <3>4, <3>5
     <3>6. CASE d > c
@@ -775,6 +779,8 @@ THEOREM InductiveInvariance == VInv /\ [Next]_vars => VInv'
               PROVE  /\ SafeAt(cc, w)'
                      /\ \A ax \in Q : \A z \in Value :
                            VotedFor(ax, cc, z)' => (z = w)
+          <6>. cc \in 0 .. e-1
+            BY <5>3
           <6>1. /\ SafeAt(cc, w)
                 /\ \A ax \in Q :
                      \A z \in Value : VotedFor(ax, cc, z) => (z = w)
@@ -786,7 +792,7 @@ THEOREM InductiveInvariance == VInv /\ [Next]_vars => VInv'
             <7>1. CASE VotedFor(ax, cc, z)
               BY <6>1, <7>1
             <7>2. CASE ~ VotedFor(ax, cc, z)
-              BY <7>2, <6>3, <5>1, <5>3
+              BY <7>2, <6>3, <5>1
             <7>3. QED
               BY <7>1, <7>2
           <6>4. QED
@@ -951,7 +957,7 @@ THEOREM VT3 == Spec => C!Spec
     BY <2>1, NextDef DEF VInv 
   <2>3. ASSUME IncreaseMaxBal(self, b)
         PROVE  C!vars' = C!vars
-    BY <2>3 DEF IncreaseMaxBal, C!vars, chosen, ChosenIn, VotedFor
+    BY <2>3, Zenon DEF IncreaseMaxBal, C!vars, chosen, ChosenIn, VotedFor
   <2>4. ASSUME NEW v \in Value,
                VoteFor(self, b, v)
         PROVE  [C!Next]_C!vars
@@ -985,7 +991,7 @@ THEOREM VT3 == Spec => C!Spec
       <4>6. QED
         BY <4>4, <4>5
     <3>. QED
-      BY <3>3, <3>1, <3>2 DEF C!Next, C!vars
+      BY <3>3, <3>1, <3>2, Zenon DEF C!Next, C!vars
   <2>5. QED
     BY <2>2, <2>3, <2>4 DEF BallotAction
 <1>3. QED
@@ -1057,7 +1063,11 @@ THEOREM VT4 == TypeOK /\ VInv2 /\ VInv3  =>
                    /\ \A d \in (c+1)..(b-1), a \in Q : DidNotVoteIn(a, d)
   BY <1>1, <1>2, SafeAtProp
 <1>5. CASE \A a \in Q, c \in 0..(b-1) : DidNotVoteIn(a, c)
-  BY <1>5, ValueNonempty
+  <2>. PICK v \in Value : TRUE
+    BY ValueNonempty
+  <2>. WITNESS v \in Value
+  <2>. WITNESS -1 \in -1 .. (b-1)
+  <2>. QED  BY <1>5
 <1>6. CASE \E a \in Q, c \in 0..(b-1) : ~DidNotVoteIn(a, c)
   <2>1. PICK c \in 0..(b-1) : 
                /\ \E a \in Q : ~DidNotVoteIn(a, c)
@@ -1241,10 +1251,40 @@ THEOREM Liveness == LiveSpec => C!LiveSpec
     
 <1>5. Spec /\ LiveAssumption!(Q, b) => 
          <>[](\A self \in Q : maxBal[self] = b)
+  <2>. DEFINE MB(s) == maxBal[s] = b
+  <2>0. (\A self \in Q : <>[]MB(self)) => <>[](\A self \in Q : MB(self))
+    \* BY <1>a, EventuallyAlwaysForall    \* fails, even when hiding the definition of MB
+    <3>. HIDE DEF MB
+    <3>. DEFINE A(x) == <>[]MB(x)
+                L(T) == \A self \in T : A(self)   \* NB: changing the names of the bound vars makes the QED step fail!
+                R(T) == \A self \in T : MB(self)
+                I(T) == L(T) => <>[]R(T)
+    <3>1. I({})
+      <4>1. R({})    OBVIOUS
+      <4>. QED       BY <4>1, PTL
+    <3>2. ASSUME NEW T, NEW x
+          PROVE  I(T) => I(T \cup {x})
+      <4>1. L(T \cup {x}) => A(x)
+        <5>. HIDE DEF A
+        <5>. QED  OBVIOUS
+      <4>2. L(T \cup {x}) /\ I(T) => <>[]R(T)
+        OBVIOUS
+      <4>3. <>[]R(T) /\ A(x) => <>[](R(T) /\ MB(x))
+        BY PTL
+      <4>4. R(T) /\ MB(x) => R(T \cup {x})
+        OBVIOUS
+      <4>5. <>[](R(T) /\ MB(x)) => <>[]R(T \cup {x})
+        BY <4>4, PTL
+      <4>. QED  BY <4>1, <4>2, <4>3, <4>5
+    <3>. HIDE DEF I
+    <3>3. \A T : IsFiniteSet(T) => I(T)
+      BY <3>1, <3>2, FS_Induction, IsaM("blast")
+    <3>4. I(Q)
+      BY <1>a, <3>3
+    <3>. QED  BY <3>4 DEF I
   <2>1. SUFFICES ASSUME NEW self \in Q
-                 PROVE  Spec /\ LiveAssumption!(Q, b) => <>[](maxBal[self] = b)
-\*    BY <1>a, EventuallyAlwaysForall   \* doesn't check, even when introducing definitions
-    PROOF OMITTED
+                 PROVE  Spec /\ LiveAssumption!(Q, b) => <>[]MB(self)
+    BY <2>0, Isa
   <2> DEFINE P ==  LInv1 /\ ~(maxBal[self] = b)
              QQ == LInv1 /\ (maxBal[self] = b)
              A == BallotAction(self, b)
@@ -1264,31 +1304,14 @@ THEOREM Liveness == LiveSpec => C!LiveSpec
       <4>5. QED
         BY <4>1, <4>3, <4>4 DEF BallotAction
     <3>3. P => ENABLED <<A>>_vars
-      <4>1. (ENABLED <<A>>_vars) <=>
-              \E votesp, maxBalp:
-                 /\ \/ /\ b > maxBal[self]
-                       /\ maxBalp = [maxBal EXCEPT ![self] = b]
-                       /\ votesp = votes
-                    \/ \E v \in Value :
-                          /\ maxBal[self] \leq b
-                          /\ DidNotVoteIn(self, b)
-                          /\ \A p \in Acceptor \ {self} :
-                                \A w \in Value : VotedFor(p, b, w) => (w = v)
-                          /\ SafeAt(b, v)
-                          /\ votesp = [votes EXCEPT ![self] = votes[self] 
-                                                                \cup {<<b, v>>}]
-                          /\ maxBalp = [maxBal EXCEPT ![self] = b]
-                 /\ <<votesp, maxBalp>> # <<votes, maxBal>>  
-\*        BY DEF BallotAction, IncreaseMaxBal, VoteFor, vars, SafeAt, 
-\*               DidNotVoteIn, VotedFor
-        PROOF OMITTED
       <4>. SUFFICES ASSUME P
                     PROVE \E votesp, maxBalp:
                               /\ b > maxBal[self]
                               /\ maxBalp = [maxBal EXCEPT ![self] = b]
                               /\ votesp = votes
                               /\ <<votesp, maxBalp>> # <<votes, maxBal>>
-        BY <4>1
+        BY ExpandENABLED
+           DEF BallotAction, IncreaseMaxBal, VoteFor, vars, SafeAt, DidNotVoteIn, VotedFor
       <4> WITNESS votes, [maxBal EXCEPT ![self] = b]
       <4>. QED  BY QA DEF VInv, TypeOK, Ballot
     <3>. QED  BY <3>1, <3>2, <3>3, PTL
@@ -1309,7 +1332,7 @@ THEOREM Liveness == LiveSpec => C!LiveSpec
   <2>. QED
     BY <2>2, <2>3, <2>4, <2>5, <2>6, <1>2, PTL
 
-<1> DEFINE LNInv2 == \A a \in Q : maxBal[a] = b
+<1> DEFINE LNInv2 == \A self \in Q : maxBal[self] = b  \* again, the bound var must be called self!
            LInv2  == VInv /\ LNInv2
 
 <1>6. LInv2 /\ [LNext]_vars => LInv2'
@@ -1319,10 +1342,9 @@ THEOREM Liveness == LiveSpec => C!LiveSpec
   <2> DEFINE Voted(a) == \E v \in Value : VotedFor(a, b, v)
   <2>1. Spec /\ LiveAssumption!(Q, b) => <>[]LInv2
     <3>1. Spec /\ LiveAssumption!(Q,b) => <>[]LNInv2
-\*      BY <1>5  \* doesn't check
-      PROOF OMITTED
+      BY <1>5, Isa
     <3>. QED  BY <3>1, VT2, PTL
-  <2>2. LInv2 /\ (\A a \in Q : Voted(a)) => (chosen # {})
+  <2>2. LInv2 /\ (\A self \in Q : Voted(self)) => (chosen # {})
     <3>1. SUFFICES ASSUME LInv2,
                           \A a \in Q : Voted(a)
                    PROVE  chosen # {}
@@ -1337,11 +1359,10 @@ THEOREM Liveness == LiveSpec => C!LiveSpec
         BY <4>3
     <3>3. QED
       BY <3>2 DEF chosen, ChosenIn
-  <2>3. Spec /\ LiveAssumption!(Q, b) => (\A a \in Q : <>[]Voted(a))
+  <2>3. Spec /\ LiveAssumption!(Q, b) => (\A self \in Q : <>[]Voted(self))
     <3>1. SUFFICES ASSUME NEW self \in Q
                    PROVE  Spec /\ LiveAssumption!(Q, b) => <>[]Voted(self)
-\*    OBVIOUS   \* doesn't check?!
-    PROOF OMITTED
+    BY Isa
     <3>2. Spec /\ LiveAssumption!(Q, b) => <>Voted(self)
       <4>2. [][LNext]_vars /\ WF_vars(BallotAction(self, b))
                => ((LInv2 /\ ~Voted(self)) ~> LInv2 /\ Voted(self))
@@ -1363,40 +1384,21 @@ THEOREM Liveness == LiveSpec => C!LiveSpec
           <6>4. QED
             BY <6>1, <6>2, <6>3 DEF BallotAction
         <5>3. P => ENABLED <<A>>_vars
-          <6>1. SUFFICES ASSUME P
-                         PROVE  ENABLED <<A>>_vars
-            OBVIOUS
-          <6>2. (ENABLED <<A>>_vars) <=>
-                  \E votesp, maxBalp :
-                     /\ \/ /\ b > maxBal[self]
-                           /\ maxBalp = [maxBal EXCEPT ![self] = b]
-                           /\ votesp = votes
-                        \/ \E v \in Value :
-                              /\ maxBal[self] \leq b
-                              /\ DidNotVoteIn(self, b)
-                              /\ \A p \in Acceptor \ {self} :
-                                  \A w \in Value : VotedFor(p, b, w) => (w = v)
-                              /\ SafeAt(b, v)
-                              /\ votesp = [votes EXCEPT ![self] = votes[self] 
+          <6>1. SUFFICES 
+                  ASSUME P
+                  PROVE  \E maxBalp, votesp:
+                            /\ \E v \in Value :
+                                  /\ maxBal[self] \leq b
+                                  /\ DidNotVoteIn(self, b)
+                                  /\ \A p \in Acceptor \ {self} :
+                                        \A w \in Value : VotedFor(p, b, w) => (w = v)
+                                  /\ SafeAt(b, v)
+                                  /\ votesp = [votes EXCEPT ![self] = votes[self] 
                                                                 \cup {<<b, v>>}]
-                              /\ maxBalp = [maxBal EXCEPT ![self] = b]
-                     /\ <<votesp, maxBalp>> #  <<votes, maxBal>>  
-\*        BY DEF BallotAction, IncreaseMaxBal, VoteFor, vars, SafeAt, 
-\*               DidNotVoteIn, VotedFor
-        PROOF OMITTED        
-          <6> SUFFICES
-                  \E votesp, maxBalp:
-                     /\ \E v \in Value :
-                           /\ maxBal[self] \leq b
-                           /\ DidNotVoteIn(self, b)
-                           /\ \A p \in Acceptor \ {self} :
-                                \A w \in Value : VotedFor(p, b, w) => (w = v)
-                           /\ SafeAt(b, v)
-                           /\ votesp = [votes EXCEPT ![self] = votes[self] 
-                                                                \cup {<<b, v>>}]
-                           /\ maxBalp = [maxBal EXCEPT ![self] = b]
-                     /\ <<votesp, maxBalp>> #  <<votes, maxBal>>  
-            BY <6>2
+                                  /\ maxBalp = [maxBal EXCEPT ![self] = b]
+                            /\ <<votesp, maxBalp>> #  <<votes, maxBal>>
+             BY ExpandENABLED
+                DEF BallotAction, IncreaseMaxBal, VoteFor, vars
           <6> DEFINE someVoted == \E p \in Acceptor \ {self} :
                                    \E w \in Value : VotedFor(p, b, w)
                      vp == CHOOSE p \in Acceptor \ {self} :
@@ -1412,13 +1414,14 @@ THEOREM Liveness == LiveSpec => C!LiveSpec
             BY <6>1, <6>3, VT4 DEF VInv, VInv2, Ballot
           <6> DEFINE votesp == [votes EXCEPT ![self] = votes[self] \cup {<<b, v>>}]
                      maxBalp == [maxBal EXCEPT ![self] = b]
-          <6> WITNESS votesp, maxBalp
+          <6> WITNESS maxBalp, votesp
           <6> SUFFICES /\ maxBal[self] \leq b
                        /\ DidNotVoteIn(self, b)
                        /\ \A p \in Acceptor \ {self} :
                                 \A w \in Value : VotedFor(p, b, w) => (w = v)
                        /\ votesp # votes
-            BY <6>4, Zenon
+            <7>. HIDE DEF v
+            <7>. QED  BY <6>4
           <6>5. maxBal[self] \leq b
             BY <6>1 DEF Ballot
           <6>6. DidNotVoteIn(self, b)
@@ -1473,9 +1476,35 @@ THEOREM Liveness == LiveSpec => C!LiveSpec
         BY <4>1, VT2, PTL DEF Spec
     <3>4. QED
       BY <3>2, <3>3, PTL 
-  <2>4. (\A a \in Q : <>[]Voted(a)) => <>[](\A a \in Q : Voted(a))
-\*    BY <1>a, EventuallyAlwaysForall   \* doesn't check
-    PROOF OMITTED
+  <2>4. (\A self \in Q : <>[]Voted(self)) => <>[](\A self \in Q : Voted(self))
+    \* again, we need to redo the proof instead of using lemma EventuallyAlwaysForall
+    <3>. DEFINE A(x) == <>[]Voted(x)
+                L(T) == \A self \in T : A(self)
+                R(T) == \A self \in T : Voted(self)
+                I(T) == L(T) => <>[]R(T)
+    <3>1. I({})
+      <4>1. R({})  OBVIOUS
+      <4>. QED     BY <4>1, PTL
+    <3>2. ASSUME NEW T, NEW x
+          PROVE  I(T) => I(T \cup {x})
+      <4>1. L(T \cup {x}) => A(x)
+        <5>. HIDE DEF A
+        <5>. QED  OBVIOUS
+      <4>2. L(T \cup {x}) /\ I(T) => <>[]R(T)
+        OBVIOUS
+      <4>3. <>[]R(T) /\ A(x) => <>[](R(T) /\ Voted(x))
+        BY PTL
+      <4>4. R(T) /\ Voted(x) => R(T \cup {x})
+        OBVIOUS
+      <4>5. <>[](R(T) /\ Voted(x)) => <>[]R(T \cup {x})
+        BY <4>4, PTL
+      <4>. QED  BY <4>1, <4>2, <4>3, <4>5
+    <3>. HIDE DEF I
+    <3>3. \A T : IsFiniteSet(T) => I(T)
+      BY <3>1, <3>2, FS_Induction, IsaM("blast")
+    <3>4. I(Q)
+      BY <1>a, <3>3
+    <3>. QED  BY <3>4 DEF I
   <2>. QED
     BY <2>1, VT2, <2>2, <2>3, <2>4, PTL
 
@@ -1488,9 +1517,3 @@ THEOREM Liveness == LiveSpec => C!LiveSpec
     BY <2>2, <1>1, Isa
 
 ===============================================================================
-\* Modification History
-\* Last modified Fri Jul 24 18:20:31 CEST 2020 by merz
-\* Last modified Wed Apr 29 12:24:23 CEST 2020 by merz
-\* Last modified Mon May 28 08:53:38 PDT 2012 by lamport
-
-
