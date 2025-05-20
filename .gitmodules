@@ -7,3 +7,6 @@
 [submodule "specifications/BlockingQueue"]
 	path = specifications/BlockingQueue
 	url = https://github.com/lemmy/BlockingQueue.git
+[submodule "specifications/microwave"]
+	path = specifications/microwave
+	url = https://github.com/lucformalmethodscourse/microwave-tla
