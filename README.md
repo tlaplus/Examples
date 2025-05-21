@@ -98,7 +98,6 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Condition-Based Consensus](specifications/cbc_max)                                                 | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |           |          |
 | [Buffered Random Access File](specifications/braf)                                                  | Calvin Loncaric                                     |          |             |         |     ✔     |          |
 | [Disruptor](specifications/Disruptor)                                                               | Nicholas Schultz-Møller                             |          |             |         |     ✔     |          |
-| [Simple Microwave Oven](specifications/microwave)                                                   | Konstantin Läufer, George K. Thiruvathukal          |     ✔    |             |         |     ✔     |          |
 
 
 ## Examples Elsewhere
@@ -145,6 +144,7 @@ Ideally these will be moved into this repo over time.
 | [Petri Nets](https://github.com/elh/petri-tlaplus)                                                                                | Instantiable Petri Nets with liveness properties                                                                                          | Eugene Huang                                                               |          |             |     ✔     |         |          |
 | [CRDT](https://github.com/JYwellin/CRDT-TLA)                                                                                      | Specifying and Verifying CRDT Protocols                                                                                                   | Ye Ji, Hengfeng Wei                                                        |          |             |     ✔     |         |          |
 | [Azure Cosmos DB](https://github.com/tlaplus/azure-cosmos-tla)                                                                    | Consistency models provided by Azure Cosmos DB                                                                                            | Dharma Shukla, Ailidani Ailijiang, Murat Demirbas, Markus Kuppe            |          |             |     ✔     |    ✔    |          |
+| [Simple Microwave Oven](specifications/microwave)                                                                                 | Spec of a microwave oven                                                                                                                  | Konstantin Läufer, George K. Thiruvathukal                        |    ✔    |         |             |     ✔     |         |          |
 
 ## Contributing a Spec
 
