@@ -30,6 +30,8 @@ jobs:
     steps:
       - name: Clone repo
         uses: actions/checkout@v4
+        with: 
+          submodules: true
       - name: Install python
         uses: actions/setup-python@v5
         with:
