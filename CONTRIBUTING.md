@@ -8,6 +8,8 @@ The spec will also enjoy basic maintenance over the years, ensuring it remains f
 To ensure a high bar of quality, all specs in this repo are subject to automated continuous integration tests.
 This means the spec contribution process has some amount of configuration & overhead, which can occasionally bring frustration.
 If you are willing to push through this yourself that is greatly appreciated, but if it becomes an undue obstacle you can also add your spec directory to the [`.ciignore`](.ciignore) file to exclude your spec from validation; maintainers can then integrate it into the CI system at a later date.
+Your spec must be contributed to the repository directly.
+For reproducibility, contributing your spec as a git submodule is not supported.
 
 Licensing your contributed specs under MIT is most appreciated, for consistency; however, other compatible permissive licenses are accepted.
 
