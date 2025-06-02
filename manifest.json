@@ -1870,6 +1870,68 @@
       ]
     },
     {
+      "path": "specifications/Prisoners_Single_Switch",
+      "title": "The Prisoners & Switch Puzzle",
+      "description": "Given a room containing a single light switch prisoners enter one by one, they must develop a strategy to free themselves.",
+      "sources": [],
+      "authors": [
+          "Florian Schanda"
+      ],
+      "tags": [
+        "beginner"
+      ],
+      "modules": [
+        {
+          "path": "specifications/Prisoners_Single_Switch/Prisoner.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Prisoners_Single_Switch/Prisoner.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            },
+            {
+              "path": "specifications/Prisoners_Single_Switch/PrisonerLightUnknown.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            },
+            {
+              "path": "specifications/Prisoners_Single_Switch/SoloPrisoner.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            },
+            {
+              "path": "specifications/Prisoners_Single_Switch/SoloPrisonerLightUnknown.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "path": "specifications/ReadersWriters",
       "title": "The Readers-Writers Problem",
       "description": "Controlling concurrent access to a resource",
