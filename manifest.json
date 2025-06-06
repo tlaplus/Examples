@@ -1345,6 +1345,40 @@
       ]
     },
     {
+      "path": "specifications/Moving_Cat_Puzzle",
+      "title": "The Moving Cat Puzzle",
+      "description": "Demonstrating the solution for the moving cat puzzle is correct.",
+      "sources": [],
+      "authors": ["Florian Schanda"],
+      "tags": ["beginner"],
+      "modules": [
+        {
+          "path": "specifications/Moving_Cat_Puzzle/Cat.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/Moving_Cat_Puzzle/OddBoxes.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": ["liveness"],
+              "result": "success"
+            },
+            {
+              "path": "specifications/Moving_Cat_Puzzle/EvenBoxes.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": ["liveness"],
+              "result": "success"
+            }
+          ]
+	}
+      ]
+    },
+    {
       "path": "specifications/MultiCarElevator",
       "title": "Multi-Car Elevator System",
       "description": "A simple multi-car elevator system servicing a multi-floor building",
