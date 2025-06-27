@@ -21,7 +21,7 @@
 (*                                                                         *)
 (*    http://lamport.azurewebsites.net/tla/proving-safety.pdf              *)
 (***************************************************************************)
-EXTENDS Integers, Sequences, FiniteSets, TLAPS, SequenceTheorems
+EXTENDS Integers, Sequences, FiniteSets, TLAPS, SequenceTheorems, FiniteSetTheorems
   (*************************************************************************)
   (* This statement imports some standard modules, including ones used by  *)
   (* the TLAPS proof system.                                               *)
@@ -48,19 +48,143 @@ ASSUME ValAssump == Values \subseteq Int
 (*                                                                         *)
 (* In TLA+, DOMAIN f is the domain of a function f.                        *)
 (***************************************************************************)
-PermsOf(s) ==
-  LET Automorphisms(S) == { f \in [S -> S] : 
-                              \A y \in S : \E x \in S : f[x] = y }
-      f ** g == [x \in DOMAIN g |-> f[g[x]]]
-  IN  { s ** f : f \in Automorphisms(DOMAIN s) }
- 
- (**************************************************************************)
- (* We define Max(S) and Min(S) to be the maximum and minimum,             *)
- (* respectively, of a finite, non-empty set S of integers.                *)
- (**************************************************************************)
- Max(S) == CHOOSE x \in S : \A y \in S : x >= y
- Min(S) == CHOOSE x \in S : \A y \in S : x =< y
- 
+Automorphisms(S) == { f \in [S -> S] : 
+                        \A y \in S : \E x \in S : f[x] = y }
+
+f ** g == [x \in DOMAIN g |-> f[g[x]]]
+
+PermsOf(s) == { s ** f : f \in Automorphisms(DOMAIN s) }
+
+LEMMA AutomorphismsCompose ==
+    ASSUME NEW S, NEW f \in Automorphisms(S), NEW g \in Automorphisms(S)
+    PROVE  f ** g \in Automorphisms(S)
+BY DEF Automorphisms, **
+
+LEMMA PermsOfLemma ==
+    ASSUME NEW T, NEW s \in Seq(T), NEW t \in PermsOf(s)
+    PROVE  /\ t \in Seq(T)
+           /\ Len(t) = Len(s)
+           /\ \A i \in 1 .. Len(s) : \E j \in 1 .. Len(s) : t[i] = s[j]
+           /\ \A i \in 1 .. Len(s) : \E j \in 1 .. Len(t) : t[j] = s[i]
+BY DOMAIN t = DOMAIN s DEF PermsOf, Automorphisms, **
+
+LEMMA PermsOfPermsOf ==
+    ASSUME NEW T, NEW s \in Seq(T), NEW t \in PermsOf(s), NEW u \in PermsOf(t)
+    PROVE  u \in PermsOf(s)
+<1>1. PICK f \in Automorphisms(DOMAIN s) : t = s ** f
+  BY DEF PermsOf
+<1>2. PICK g \in Automorphisms(DOMAIN t) : u = t ** g
+  BY DEF PermsOf
+<1>3. DOMAIN t = DOMAIN s 
+  BY PermsOfLemma
+<1>4. f ** g \in Automorphisms(DOMAIN s)
+  BY <1>3, AutomorphismsCompose
+<1>5. u = s ** (f ** g)
+  BY <1>1, <1>2, <1>3, Zenon DEF Automorphisms, **
+<1>. QED  BY <1>4, <1>5 DEF PermsOf
+
+(**************************************************************************)
+(* We define Max(S) and Min(S) to be the maximum and minimum,             *)
+(* respectively, of a finite, non-empty set S of integers.                *)
+(**************************************************************************)
+Max(S) == CHOOSE x \in S : \A y \in S : x >= y
+Min(S) == CHOOSE x \in S : \A y \in S : x =< y
+
+LEMMA MinIsMin == 
+    ASSUME NEW S \in SUBSET Int, NEW x \in S, \A y \in S : x <= y
+    PROVE  x = Min(S)
+BY DEF Min
+
+LEMMA MaxIsMax == 
+    ASSUME NEW S \in SUBSET Int, NEW x \in S, \A y \in S : x >= y
+    PROVE  x = Max(S)
+BY DEF Max
+
+LEMMA NonemptyMin ==
+    ASSUME NEW S \in SUBSET Int, IsFiniteSet(S), NEW x \in S
+    PROVE  /\ Min(S) \in S 
+           /\ Min(S) <= x
+<1>. DEFINE P(T) == T \in SUBSET Int =>
+                      /\ T # {} => Min(T) \in T
+                      /\ \A x \in T : Min(T) <= x
+<1>1. P({})
+  OBVIOUS
+<1>2. ASSUME NEW T, NEW x, x \notin T, P(T)
+      PROVE  P(T \cup {x})
+  <2>. HAVE T \cup {x} \in SUBSET Int
+  <2>1. CASE T = {}
+    <3>1. x = Min(T \cup {x})
+      BY <2>1 DEF Min
+    <3>. QED  BY <2>1, <3>1
+  <2>2. CASE T # {}
+    <3>1. CASE x < Min(T)
+      <4>1. /\ x \in T \cup {x}
+            /\ \A y \in T \cup {x} : x <= y
+        BY <1>2, <3>1
+      <4>2. x = Min(T \cup {x})
+        BY <4>1 DEF Min
+      <4>. QED  BY <4>1, <4>2
+    <3>2. CASE ~(x < Min(T))
+      <4>. DEFINE mn == Min(T)
+      <4>1. /\ mn \in T \cup {x}
+            /\ \A y \in T \cup {x} : mn <= y
+        BY <1>2, <2>2, <3>2
+      <4>. HIDE DEF mn
+      <4>2. mn = Min(T \cup {x})
+        BY <4>1 DEF Min
+      <4>. QED  BY <4>1, <4>2
+    <3>. QED  BY <3>1, <3>2
+  <2>. QED  BY <2>1, <2>2
+<1>3. \A T : IsFiniteSet(T) => P(T)
+  <2>. HIDE DEF P
+  <2>. QED  BY <1>1, <1>2, FS_Induction, IsaM("blast")
+<1>. QED BY <1>3
+
+LEMMA NonemptyMax ==
+    ASSUME NEW S \in SUBSET Int, IsFiniteSet(S), NEW x \in S
+    PROVE  /\ Max(S) \in S
+           /\ x <= Max(S)
+<1>. DEFINE P(T) == T \in SUBSET Int =>
+                      /\ T # {} => Max(T) \in T
+                      /\ \A x \in T : x <= Max(T)
+<1>1. P({})
+  OBVIOUS
+<1>2. ASSUME NEW T, NEW x, x \notin T, P(T)
+      PROVE  P(T \cup {x})
+  <2>. HAVE T \cup {x} \in SUBSET Int
+  <2>1. CASE T = {}
+    <3>1. x = Max(T \cup {x})
+      BY <2>1 DEF Max
+    <3>. QED  BY <2>1, <3>1
+  <2>2. CASE T # {}
+    <3>1. CASE x > Max(T)
+      <4>1. /\ x \in T \cup {x}
+            /\ \A y \in T \cup {x} : x >= y
+        BY <1>2, <3>1
+      <4>2. x = Max(T \cup {x})
+        BY <4>1 DEF Max
+      <4>. QED  BY <4>1, <4>2
+    <3>2. CASE ~(x > Max(T))
+      <4>. DEFINE mx == Max(T)
+      <4>1. /\ mx \in T \cup {x}
+            /\ \A y \in T \cup {x} : y <= mx
+        BY <1>2, <2>2, <3>2
+      <4>. HIDE DEF mx
+      <4>2. mx = Max(T \cup {x})
+        BY <4>1 DEF Max
+      <4>. QED  BY <4>1, <4>2
+    <3>. QED  BY <3>1, <3>2
+  <2>. QED  BY <2>1, <2>2
+<1>3. \A T : IsFiniteSet(T) => P(T)
+  <2>. HIDE DEF P
+  <2>. QED  BY <1>1, <1>2, FS_Induction, IsaM("blast")
+<1>. QED BY <1>3
+
+LEMMA IntervalMinMax ==
+    ASSUME NEW i \in Int, NEW j \in Int, i <= j
+    PROVE  i = Min(i .. j) /\ j = Max(i .. j)
+BY DEF Min, Max
+
 (***************************************************************************)
 (* The operator Partitions is defined so that if I is an interval that's a *)
 (* subset of 1..Len(s) and p \in Min(I) ..  Max(I)-1, the Partitions(I, p, *)
@@ -74,8 +198,19 @@ PermsOf(s) ==
 Partitions(I, p, s) ==
   {t \in PermsOf(s) : 
       /\ \A i \in (1..Len(s)) \ I : t[i] = s[i]
+      /\ \A i \in I : \E j \in I : t[i] = s[j]
       /\ \A i, j \in I : (i =< p) /\ (p < j) => (t[i] =< t[j])}
-      
+
+LEMMA PartitionsLemma ==
+    ASSUME NEW T, NEW s \in Seq(T), NEW I \in SUBSET (1 .. Len(s)),
+           NEW p \in I, NEW t \in Partitions(I, p, s)
+    PROVE  /\ t \in Seq(T)
+           /\ Len(t) = Len(s)
+           /\ \A i \in (1 .. Len(s)) \ I : t[i] = s[i]
+           /\ \A i \in I : \E j \in I : t[i] = s[j]
+           /\ \A i,j \in I : i <= p /\ p < j => t[i] <= t[j]
+BY PermsOfLemma DEF Partitions
+
 (***************************************************************************)
 (* Our algorithm has three variables:                                      *)
 (*                                                                         *)
@@ -188,7 +323,8 @@ UV == U \cup {{i} : i \in 1..Len(seq) \ UNION U}
 
 DomainPartitions == {DP \in SUBSET SUBSET (1..Len(seq0)) :
                       /\ (UNION DP) = 1..Len(seq0)
-                      /\ \A I \in DP : I = Min(I)..Max(I)
+                      \* /\ \A I \in DP : I = Min(I)..Max(I)
+                      /\ \A I \in DP : \E mn,mx \in 1 .. Len(seq0) : I = mn .. mx
                       /\ \A I, J \in DP : (I # J) => (I \cap J = {}) }
 
 RelSorted(I, J) == \A i \in I, j \in J : (i < j) => (seq[i] =< seq[j])
@@ -197,7 +333,7 @@ TypeOK == /\ seq \in Seq(Values) \ {<<>>}
           /\ seq0 \in Seq(Values) \ {<<>>}
           /\ U \in SUBSET ( (SUBSET (1..Len(seq0))) \ {{}} )
           /\ pc \in {"a", "Done"}
-          
+
 Inv == /\ TypeOK
        /\ (pc = "Done") => (U = {})
        /\ UV \in DomainPartitions
@@ -229,32 +365,16 @@ THEOREM Spec => []PCorrect
   <2>2. pc = "Done" => U = {}
     BY DEF Init
   <2>3. UV \in DomainPartitions
-    <3>1. UV = {1..Len(seq0)}
-      (*********************************************************************)
-      (* Follows easily from definition of UV, seq0 = seq, and seq a       *)
-      (* non-empty sequence.                                               *)
-      (*********************************************************************)
-    <3>2. UV \in SUBSET SUBSET (1..Len(seq0))
-      BY <3>1 DEF Inv
-    <3>3. (UNION UV) = 1..Len(seq0)
-      BY <3>1
-    <3>4. 1..Len(seq0) = Min(1..Len(seq0))..Max(1..Len(seq0))
-      (*********************************************************************)
-      (* Because seq0 = seq and seq a non-empty sequence imply Len(seq0) a *)
-      (* positive natural number.                                          *)
-      (*********************************************************************)
-    <3>5. \A I, J \in UV : I = J
-      BY <3>1
-    <3>6. QED
-      BY <3>1, <3>2, <3>3, <3>4, <3>5 DEF DomainPartitions
+    BY DEF Init, UV, DomainPartitions
   <2>4. seq \in PermsOf(seq0)
     <3>1. seq \in PermsOf(seq)
-      (*********************************************************************)
-      (* This is obvious because the identity function is a permutation of *)
-      (* 1..Len(seq).                                                      *)
-      (*********************************************************************)
+      <4>. DEFINE f == [i \in 1 .. Len(seq) |-> i]
+      <4>. /\ f \in [DOMAIN seq -> DOMAIN seq]
+           /\ \A y \in DOMAIN seq : \E x \in DOMAIN seq : f[x] = y
+        BY DEF Init
+      <4>. QED  BY DEF Init, PermsOf, Automorphisms, **
     <3>2. QED
-      BY <3>1 DEF Init \* , Inv, TypeOK, DomainPartitions, RelSorted, UV, PermsOf
+      BY <3>1 DEF Init
   <2>5. UNION UV = 1..Len(seq0)
     BY DEF Init, Inv, TypeOK, DomainPartitions, RelSorted, UV
   <2>6. \A I, J \in UV : (I # J) => RelSorted(I, J)
@@ -283,6 +403,14 @@ THEOREM Spec => []PCorrect
               /\ seq' = seq
               /\ seq0' = seq0
           BY <4>2, <4>3 DEF a
+        <5>. IsFiniteSet(I)
+          <6>. IsFiniteSet(1 .. Len(seq0))
+            BY FS_Interval DEF Inv, TypeOK
+          <6>. I \subseteq 1 .. Len(seq0)
+            BY DEF Inv, TypeOK
+          <6>. QED  BY FS_Subset
+        <5>j. PICK j : I = {j}
+          BY <4>3, FS_Singleton
         <5>2. QED
           <6>1. UV' = UV
             (***************************************************************)
@@ -290,6 +418,11 @@ THEOREM Spec => []PCorrect
             (* to the set {{i} : i \in 1..Len(seq) \ UNION U}, thereby     *)
             (* keeping it in UV.                                           *)
             (***************************************************************)
+            <7>1. j \in 1 .. Len(seq)
+              BY <5>j, PermsOfLemma DEF Inv, TypeOK
+            <7>2. \A J \in U : I # J => j \notin J
+              BY <5>j, Zenon DEF Inv, TypeOK, DomainPartitions, UV
+            <7>. QED  BY <5>1, <5>j, <7>1, <7>2 DEF UV
           <6>2. TypeOK'
             BY <4>1, <4>3, <5>1 
             DEF Inv, TypeOK, DomainPartitions, PermsOf, RelSorted, Min, Max, UV
@@ -300,7 +433,7 @@ THEOREM Spec => []PCorrect
             BY <4>1, <4>3, <5>1, <6>1
             DEF Inv, TypeOK, DomainPartitions 
           <6>5. (seq \in PermsOf(seq0))'
-            BY <4>1, <4>3, <5>1 
+            BY <4>1, <4>3, <5>1, Isa
             DEF Inv, TypeOK,  PermsOf 
           <6>6. (UNION UV = 1..Len(seq0))'
             BY  <5>1, <6>1 DEF Inv 
@@ -312,21 +445,43 @@ THEOREM Spec => []PCorrect
       <4>4. CASE Cardinality(I) # 1 
         <5>1. seq0' = seq0
           BY DEF a
-        <5> DEFINE I1(p) == Min(I)..p 
-                   I2(p) == (p+1)..Max(I)
-        <5>2. PICK p \in Min(I) .. (Max(I)-1) : 
+        <5>I. PICK mn \in 1 .. Len(seq0), mx \in 1 .. Len(seq0) : I = mn .. mx
+          BY DEF Inv, UV, DomainPartitions
+        <5>mn. mn < mx
+          <6>. SUFFICES ASSUME mn >= mx PROVE FALSE 
+            OBVIOUS
+          <6>1. CASE mn > mx 
+            <7>. I = {}
+              BY <5>I, <6>1
+            <7>. QED  BY DEF Inv, TypeOK
+          <6>2. CASE mn = mx
+            <7>. I = {mn}
+              BY <5>I, <6>2
+            <7>. QED  BY <4>4, FS_Singleton
+          <6>. QED  BY <6>1, <6>2
+        <5> DEFINE I1(p) == mn .. p 
+                   I2(p) == (p+1).. mx
+        <5>2. PICK p \in mn .. (mx-1) : 
                     /\ seq' \in Partitions(I, p, seq)
                     /\ U' = ((U \ {I}) \cup {I1(p), I2(p)})
-          BY <4>2, <4>4
+          BY <4>2, <4>4, <5>I, <5>mn, IntervalMinMax
+        <5>p. mn <= p /\ p < mx
+          BY <5>mn
         <5>3. /\ /\ I1(p) # {} 
-                 /\ I1(p) = Min(I1(p)).. Max(I1(p))
                  /\ I1(p) \subseteq 1..Len(seq0)
               /\ /\ I2(p) # {} 
-                 /\ I2(p) = Min(I2(p)).. Max(I2(p))
                  /\ I2(p) \subseteq 1..Len(seq0)
               /\ I1(p) \cap I2(p) = {}
               /\ I1(p) \cup I2(p) = I
-              /\ \A i \in I1(p), j \in I2(p) : (i < j) /\ (seq[i] =< seq[j])
+              \* /\ \A i \in I1(p), j \in I2(p) : (i < j) /\ (seq[i] =< seq[j])
+          <6>1. mn \in I1(p) /\ mx \in I2(p)
+            BY <5>p
+          <6>2. /\ I1(p) \subseteq 1 .. Len(seq0)
+                /\ I2(p) \subseteq 1 .. Len(seq0)
+            BY DEF Inv, TypeOK
+          <6>4. I1(p) \cup I2(p) = I
+            BY <5>I
+          <6>. QED  BY <6>1, <6>2, <6>4
           (*****************************************************************)
           (* Since I is in U, invariant Inv implies I is a non-empty       *)
           (* subinterval of 1..Len(seq), and the <4>4 case assumption      *)
@@ -336,35 +491,21 @@ THEOREM Spec => []PCorrect
           (* whose union is I.  The final conjunct follows from the        *)
           (* definition of Partitions(I, p, seq).                          *)
           (*****************************************************************) 
-        <5>4. /\ Len(seq) = Len(seq')
+        <5>4. /\ seq' \in Seq(Values)
+              /\ Len(seq) = Len(seq')
               /\ Len(seq) = Len(seq0)
-          (*****************************************************************)
-          (* By <5>2 and definition of Partitions.                         *)
-          (*****************************************************************)
+          BY <5>2, PermsOfLemma DEF Partitions, Inv, TypeOK
         <5>5. UNION U = UNION U'
-          (*****************************************************************)
-          (* By <5>2 and <5>3, since the action removes I from U and adds  *)
-          (* I1(p) and I2(p) to it.                                        *)
-          (*****************************************************************)
+          BY <5>2, <5>3
         <5>6. UV' = (UV \ {I}) \cup {I1(p), I2(p)}
           BY <5>1, <5>2, <5>3, <5>4, <5>5 DEF UV
-          (*****************************************************************)
-          (* By <5>2, <5>3, and definition of UV, since Len(seq) =         *)
-          (* Len(seq').                                                    *)
-          (*****************************************************************)        
         <5>7. TypeOK'
           <6>1. (seq \in Seq(Values) \ {<<>>})'
-            (***************************************************************)
-            (* By <5>2 and definitions of Partitions and PermsOf, since    *)
-            (* seq a non-empty sequence of Values implies PermsOf(seq) is  *)
-            (* one too.                                                    *)
-            (***************************************************************)
+            BY <5>4 DEF Inv, TypeOK
           <6>2. (seq0 \in Seq(Values) \ {<<>>})'
             BY <5>1 DEF TypeOK, Inv
           <6>3. (U \in SUBSET ( (SUBSET (1..Len(seq0))) \ {{}} ))'
-            (***************************************************************)
-            (* By <5>2 and <5>3.                                           *)
-            (***************************************************************)
+            BY <5>1, <5>2, <5>3 DEF Inv, TypeOK
           <6>4. (pc \in {"a", "Done"})'
             BY <4>1
           <6>5. QED
@@ -372,60 +513,93 @@ THEOREM Spec => []PCorrect
         <5>8. ((pc = "Done") => (U = {}))'
           BY <4>1
         <5>9. (UV \in DomainPartitions)'
-          <6> HIDE DEF I1, I2
+          \* <6> HIDE DEF I1, I2
           <6>1. UV' \in SUBSET SUBSET (1..Len(seq0'))
             BY <5>6, <5>3, <5>4, <5>1  DEF Inv
           <6>2. UNION UV' = 1..Len(seq0')
             BY <5>6, <5>3, <5>4, <5>1  DEF Inv
           <6>3. ASSUME NEW J \in UV' 
-                PROVE  J = Min(J)..Max(J)
-            <7>1. CASE J \in UV
-              BY <7>1 DEF Inv, DomainPartitions
-            <7>2. CASE J = I1(p)
-              BY <7>2, <5>3
-            <7>3. CASE J = I2(p)
-              BY <7>3, <5>3
-            <7>4. QED
-              BY <7>1, <7>2, <7>3, <5>6
+                PROVE  \E i,j \in 1 .. Len(seq0') : J = i .. j
+            BY <5>1, <5>mn, <5>6 DEF Inv, TypeOK, DomainPartitions
           <6>4. ASSUME NEW J \in UV', NEW K \in UV', J # K 
                 PROVE  J \cap K = {}
-            (***************************************************************)
-            (* If J and K are in UV, then this follows from Inv.  If one   *)
-            (* of them is in UV and the other equals I1(p) or I2(p), it    *)
-            (* follows because I1(p) \cup I2(p) = I and I is disjoint from *)
-            (* other elements of UV.  If J and K are I1(p) and I2(p), then *)
-            (* it follows from the definitions of I1(p) and I2(p).  By     *)
-            (* <5>6, this covers all possibilities.                        *)
-            (***************************************************************)
+            <7>1. CASE J \in UV /\ K \in UV
+              BY <6>4, <7>1 DEF Inv, DomainPartitions
+            <7>2. CASE J \in (UV \ {I}) /\ K \in {I1(p), I2(p)}
+              <8>. J \cap I = {}
+                BY <7>2 DEF UV, Inv, DomainPartitions
+              <8>. QED  BY <7>2, <5>I
+            <7>3. CASE J \in {I1(p), I2(p)} /\ K \in (UV \ {I})
+              <8>. K \cap I = {}
+                BY <7>3 DEF UV, Inv, DomainPartitions
+              <8>. QED  BY <7>3, <5>I
+            <7>4. CASE J \in {I1(p), I2(p)} /\ K \in {I1(p), I2(p)}
+              BY <6>4, <7>4
+            <7>. QED  BY <5>6, <7>1, <7>2, <7>3, <7>4
           <6>5. QED
-            BY <6>1, <6>2, <6>3, <6>4 DEF DomainPartitions, Min, Max
+            BY <6>1, <6>2, <6>3, <6>4 DEF DomainPartitions \*, Min, Max
         <5>10. (seq \in PermsOf(seq0))'
-          (*****************************************************************)
-          (* By <5>2 and definition of Partitions, seq' \in PermsOf(seq),  *)
-          (* and seq \in PermsOf(seq0) implies PermsOf(seq) =              *)
-          (* PermsOf(seq0).                                                *)
-          (*****************************************************************)
+          BY <5>1, <5>2, PermsOfPermsOf DEF Inv, TypeOK, Partitions
         <5>11. (UNION UV = 1..Len(seq0))'
-          <6> HIDE DEF I1, I2
-          <6> QED
-            BY <5>6, <5>3, <5>4, <5>1  DEF Inv
-        <5>12. (\A I_1, J \in UV : (I_1 # J) => RelSorted(I_1, J))'
-          <6> SUFFICES ASSUME NEW I_1 \in UV', NEW J \in UV',
-                              (I_1 # J)',
-                              NEW i \in I_1', NEW j \in J',
-                              (i < j)'
-                       PROVE  (seq[i] =< seq[j])'
+          BY <5>6, <5>3, <5>4, <5>1  DEF Inv
+        <5>12. (\A II, JJ \in UV : (II # JJ) => RelSorted(II, JJ))'
+          <6> SUFFICES ASSUME NEW II \in UV', NEW JJ \in UV',
+                              II # JJ,
+                              NEW i \in II, NEW j \in JJ,
+                              i < j
+                       PROVE  seq'[i] =< seq'[j]
             BY DEF RelSorted
-          <6> QED
-            (***************************************************************)
-            (* IF I_1 and J are in UV, then this follows from Inv.  If one *)
-            (* of them is in UV and the other equals I1(p) or I2(p), it    *)
-            (* follows from Inv because RelSorted(I, K) and RelSorted(K,   *)
-            (* I) holds for all K in UV and I1(p) and I2(p) are subsets of *)
-            (* I.  If I_1 and J are I1(p) and I2(p), then it follows from  *)
-            (* the definitions of I1 and I2.  By <5>6, this covers all     *)
-            (* possibilities.                                              *)
-            (***************************************************************)
+          <6>. /\ i \in 1 .. Len(seq)
+               /\ j \in 1 .. Len(seq)
+            BY <5>1, <5>4, <5>9 DEF DomainPartitions
+          <6>I. /\ I \in SUBSET (1 .. Len(seq))
+                /\ p \in I
+            BY <5>I, <5>2, PermsOfLemma DEF Inv, TypeOK
+          <6>1. CASE II \in UV \ {I} /\ JJ \in UV \ {I}
+            BY <5>2, <6>1, Zenon
+               DEF Inv, TypeOK, UV, DomainPartitions, Partitions, RelSorted
+          <6>2. CASE II \in UV \ {I} /\ JJ \in {I1(p), I2(p)}
+            <7>1. JJ \subseteq  I
+              BY <5>3, <6>2
+            <7>3. PICK k \in I : seq'[j] = seq[k]
+              BY <5>2, <7>1, <6>I, PartitionsLemma DEF Inv, TypeOK
+            <7>4. II \cap I = {}
+              BY <6>2, Zenon DEF UV, Inv, DomainPartitions
+            <7>5. PICK mnI, mxI \in 1 .. Len(seq0) : II = mnI .. mxI
+              BY <6>2 DEF Inv, DomainPartitions
+            <7>5. i < k
+              BY <5>I, <6>2, <7>1, <7>4 DEF Inv, TypeOK
+            <7>6. seq[i] <= seq[k]
+              BY <6>2, <7>1, <7>5 DEF Inv, RelSorted, UV
+            <7>7. seq'[i] = seq[i]
+              BY <5>2, <6>2, <6>I, <7>4, PartitionsLemma DEF Inv, TypeOK
+            <7>. QED  BY <7>3, <7>6, <7>7
+          <6>3. CASE II \in {I1(p), I2(p)} /\ JJ \in UV \ {I}
+            <7>1. II \subseteq  I
+              BY <5>3, <6>3
+            <7>3. PICK k \in I : seq'[i] = seq[k]
+              BY <5>2, <7>1, <6>I, PartitionsLemma DEF Inv, TypeOK
+            <7>4. JJ \cap I = {}
+              BY <6>3, Zenon DEF UV, Inv, DomainPartitions
+            <7>5. PICK mnJ, mxJ \in 1 .. Len(seq0) : JJ = mnJ .. mxJ
+              BY <6>3 DEF Inv, DomainPartitions
+            <7>5. k < j
+              BY <5>I, <6>3, <7>1, <7>4 DEF Inv, TypeOK
+            <7>6. seq[k] <= seq[j]
+              BY <6>3, <7>1, <7>5 DEF Inv, RelSorted, UV
+            <7>7. seq'[j] = seq[j]
+              <8>1. j \in (1 .. Len(seq)) \ I
+                BY <7>4
+              <8>2. /\ seq \in Seq(Values)
+                    /\ seq' \in Partitions(I, p, seq)
+                BY <5>2 DEF Inv, TypeOK
+              <8>. QED  BY <6>I, <8>1, <8>2, PartitionsLemma
+            <7>. QED  BY <7>3, <7>6, <7>7
+          <6>4. CASE II = I1(p) /\ JJ = I2(p)
+            BY <5>2, <5>3, <6>I, <6>4, PartitionsLemma DEF Inv, TypeOK
+          <6>5. CASE II = I2(p) /\ JJ = I2(p)
+            BY <6>5  \* contradiction: i < j impossible
+          <6> QED  BY <5>6, <6>1, <6>2, <6>3, <6>4, <6>5
         <5>13. QED
           BY <5>7, <5>8, <5>9, <5>10, <5>11, <5>12 DEF Inv
       <4>5. QED
@@ -437,34 +611,34 @@ THEOREM Spec => []PCorrect
       <4>2. ((pc = "Done") => (U = {}))'
         OBVIOUS
       <4>3. (UV \in DomainPartitions)'
-        OBVIOUS
+        BY Isa
       <4>4. (seq \in PermsOf(seq0))'
-        OBVIOUS
+        BY Isa
       <4>5. (UNION UV = 1..Len(seq0))'
         OBVIOUS
       <4>6. (\A I, J \in UV : (I # J) => RelSorted(I, J))'
         OBVIOUS
       <4>7. QED
-        BY <4>1, <4>2, <4>3, <4>4, <4>5, <4>6 DEF Inv
+        BY <4>1, <4>2, <4>3, <4>4, <4>5, <4>6, Zenon DEF Inv
     <3>3. QED
       BY <3>1, <3>2
   <2>2. CASE UNCHANGED vars
     <3>1. TypeOK'
-      BY <2>2 DEF vars, Inv, TypeOK, DomainPartitions, PermsOf, RelSorted, Min, Max
+      BY <2>2 DEF vars, Inv, TypeOK
     <3>2. ((pc = "Done") => (U = {}))'
-      BY <2>2 DEF vars, Inv, TypeOK, DomainPartitions, PermsOf, RelSorted, Min, Max
+      BY <2>2 DEF vars, Inv
     <3>3. (UV \in DomainPartitions)'
-      BY <2>2 DEF vars, Inv, TypeOK, DomainPartitions, PermsOf, RelSorted, Min, Max, UV
+      BY <2>2, Isa DEF vars, Inv, TypeOK, DomainPartitions, UV
     <3>4. (seq \in PermsOf(seq0))'
-      BY <2>2 DEF vars, Inv, TypeOK, DomainPartitions, PermsOf, RelSorted, Min, Max
+      BY <2>2, Isa DEF vars, Inv, TypeOK, DomainPartitions, PermsOf
     <3>5. (UNION UV = 1..Len(seq0))'
-      BY <2>2 DEF vars, Inv, TypeOK, DomainPartitions, PermsOf, RelSorted, Min, Max, UV
+      BY <2>2 DEF vars, Inv, UV
     <3>6. (\A I, J \in UV : (I # J) => RelSorted(I, J))'
-      BY <2>2 DEF vars, Inv, TypeOK, DomainPartitions, PermsOf, RelSorted, Min, Max, UV
+      BY <2>2 DEF vars, Inv, TypeOK, DomainPartitions, PermsOf, RelSorted, UV
     <3>7. QED
       BY <3>1, <3>2, <3>3, <3>4, <3>5, <3>6 DEF Inv    
   <2>3. QED
-    BY <2>1, <2>2 DEF Next
+    BY <2>1, <2>2 DEF Next, Terminating
 <1>3. Inv => PCorrect
   <2> SUFFICES ASSUME Inv,
                       pc = "Done"
@@ -481,10 +655,7 @@ THEOREM Spec => []PCorrect
     <3>1. /\ Len(seq) = Len(seq0)
           /\ Len(seq) \in Nat
           /\ Len(seq) > 0
-      (*********************************************************************)
-      (* By seq \in PermsOf(seq0), seq a non-empty sequence, and           *)
-      (* definition of PermsOf.                                            *)
-      (*********************************************************************)
+      BY PermsOfLemma DEF Inv, TypeOK
     <3>2. UV = {{i} : i \in 1..Len(seq)}
       BY U = {} DEF Inv, TypeOK, UV
     <3>3. {p} \in UV /\ {q} \in UV
@@ -496,6 +667,4 @@ THEOREM Spec => []PCorrect
 <1>4. QED
   BY <1>1, <1>2, <1>3, PTL DEF Spec
 =============================================================================
-\* Modification History
-\* Last modified Fri May 03 16:28:36 PDT 2019 by lamport
 \* Created Mon Jun 27 08:20:07 PDT 2016 by lamport

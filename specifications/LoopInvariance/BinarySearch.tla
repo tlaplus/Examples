@@ -130,7 +130,7 @@ Inv == /\ TypeOK
 (***************************************************************************)
 THEOREM Spec => []resultCorrect
 <1>1. Init => Inv
-  BY DEF Init, Inv, TypeOK
+  BY DEF Init, Inv, TypeOK, SortedSeqs
 <1>2. Inv /\ [Next]_vars => Inv'
   <2> SUFFICES ASSUME Inv,
                       [Next]_vars
@@ -252,8 +252,3 @@ THEOREM Spec => []resultCorrect
 <1>4. QED
   BY <1>1, <1>2, <1>3, PTL DEF Spec
 =============================================================================
-\* Modification History
-\* Last modified Fri Feb 17 16:12:03 CET 2023 by merz
-\* Last modified Tue Aug 27 12:59:52 PDT 2019 by loki
-\* Last modified Fri May 03 16:28:58 PDT 2019 by lamport
-\* Created Wed Apr 17 15:15:12 PDT 2019 by lamport
