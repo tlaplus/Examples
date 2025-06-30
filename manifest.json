@@ -576,6 +576,20 @@
           "models": []
         },
         {
+          "path": "specifications/FiniteMonotonic/Functions.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["proof"],
+          "models": []
+        },
+        {
+          "path": "specifications/FiniteMonotonic/Folds.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": ["proof"],
+          "models": []
+        },
+        {
           "path": "specifications/FiniteMonotonic/MCCRDT.tla",
           "communityDependencies": ["FiniteSetsExt"],
           "tlaLanguageVersion": 2,
@@ -3158,15 +3172,6 @@
           ]
         },
         {
-          "path": "specifications/TwoPhase/TLAPS.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
-          "models": []
-        },
-        {
           "path": "specifications/TwoPhase/TwoPhase.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
@@ -4370,13 +4375,10 @@
           ]
         },
         {
-          "path": "specifications/ewd840/TLAPS.tla",
+          "path": "specifications/ewd840/SyncTerminationDetection_proof.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
-          "models": []
+          "features": ["proof"]
         }
       ]
     },
@@ -4612,6 +4614,24 @@
           "models": []
         },
         {
+          "path": "specifications/ewd998/Functions.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
+          "path": "specifications/ewd998/Folds.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": []
+        },
+        {
           "path": "specifications/ewd998/SmokeEWD998.tla",
           "communityDependencies": [
             "CSV",
@@ -4656,15 +4676,6 @@
               "result": "unknown"
             }
           ]
-        },
-        {
-          "path": "specifications/ewd998/TLAPS.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
-          "models": []
         },
         {
           "path": "specifications/ewd998/Utils.tla",
@@ -4824,36 +4835,6 @@
               "stateDepth": 61
             }
           ]
-        },
-        {
-          "path": "specifications/lamport_mutex/NaturalsInduction.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/lamport_mutex/SequenceTheorems.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/lamport_mutex/TLAPS.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
-          "models": []
-        },
-        {
-          "path": "specifications/lamport_mutex/WellFoundedInduction.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
         }
       ]
     },
@@ -4992,15 +4973,6 @@
               "stateDepth": 0
             }
           ]
-        },
-        {
-          "path": "specifications/sums_even/TLAPS.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
-          "models": []
         },
         {
           "path": "specifications/sums_even/sums_even.tla",
