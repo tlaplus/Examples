@@ -143,22 +143,13 @@ jobs:
         if: matrix.os != 'windows-latest' && !matrix.unicode
         run: |
           SKIP=(
-            ## ATD/EWD require TLAPS' update_enabled_cdot branch
-            # specifications/ewd998/AsyncTerminationDetection_proof.tla
-            # specifications/ewd998/EWD998_proof.tla
-            ## Regressions?
-            # specifications/LearnProofs/FindHighest.tla
-            # specifications/LoopInvariance/BinarySearch.tla
-            # Failing; see https://github.com/tlaplus/Examples/issues/67
-            # specifications/PaxosHowToWinATuringAward/Consensus.tla
-            # specifications/lamport_mutex/LamportMutex_proofs.tla
             # Long-running; see https://github.com/tlaplus/tlapm/issues/85
             specifications/Bakery-Boulangerie/Bakery.tla
             specifications/Bakery-Boulangerie/Boulanger.tla
             specifications/LoopInvariance/Quicksort.tla
             specifications/LoopInvariance/SumSequence.tla
             specifications/bcastByz/bcastByz.tla
-            specifications/MisraReachability/ReachabilityProofs.tla
+            # specifications/MisraReachability/ReachabilityProofs.tla
             specifications/byzpaxos/VoteProof.tla
             specifications/byzpaxos/BPConProof.tla # Takes about 30 minutes
           )
@@ -171,5 +162,14 @@ jobs:
           python $SCRIPT_DIR/generate_manifest.py \
             --manifest_path manifest.json         \
             --ci_ignore_path .ciignore
+          git diff -a
+      - name: Smoke-test state space script
+        run: |
+          git reset --hard HEAD
+          python $SCRIPT_DIR/record_model_state_space.py                  \
+            --tools_jar_path $DEPS_DIR/tools/tla2tools.jar                \
+            --tlapm_lib_path $DEPS_DIR/tlapm/library                      \
+            --community_modules_jar_path $DEPS_DIR/community/modules.jar  \
+            --manifest_path manifest.json
           git diff -a
 

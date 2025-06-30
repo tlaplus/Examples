@@ -1080,8 +1080,12 @@ THEOREM VT4 == TypeOK /\ VInv2 /\ VInv3  =>
         BY FS_Interval, FS_Subset, 0 \in Int, b-1 \in Int, Zenon
       <4>3. QED
         BY <3>1, <4>2, FiniteSetHasMax
+    <3>3. /\ c \in 0 .. (b-1)
+          /\ \E a \in Q : ~DidNotVoteIn(a,c)
+          /\ \A d \in (c+1)..(b-1), a \in Q : DidNotVoteIn(a, d)
+      BY <3>2
     <3>. QED
-      BY <3>2 DEF Ballot
+      BY <3>3
   <2>4. PICK a0 \in Q, v \in Value : VotedFor(a0, c, v)
     BY <2>1 DEF DidNotVoteIn
   <2>5. \A a \in Q : \A w \in Value :
