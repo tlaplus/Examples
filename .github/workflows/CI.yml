@@ -144,14 +144,14 @@ jobs:
         run: |
           SKIP=(
             ## ATD/EWD require TLAPS' update_enabled_cdot branch
-            specifications/ewd998/AsyncTerminationDetection_proof.tla
-            specifications/ewd998/EWD998_proof.tla
+            # specifications/ewd998/AsyncTerminationDetection_proof.tla
+            # specifications/ewd998/EWD998_proof.tla
             ## Regressions?
-            specifications/LearnProofs/FindHighest.tla
-            specifications/LoopInvariance/BinarySearch.tla
+            # specifications/LearnProofs/FindHighest.tla
+            # specifications/LoopInvariance/BinarySearch.tla
             # Failing; see https://github.com/tlaplus/Examples/issues/67
             # specifications/PaxosHowToWinATuringAward/Consensus.tla
-            specifications/lamport_mutex/LamportMutex_proofs.tla
+            # specifications/lamport_mutex/LamportMutex_proofs.tla
             # Long-running; see https://github.com/tlaplus/tlapm/issues/85
             specifications/Bakery-Boulangerie/Bakery.tla
             specifications/Bakery-Boulangerie/Boulanger.tla
