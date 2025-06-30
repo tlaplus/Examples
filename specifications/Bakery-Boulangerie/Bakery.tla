@@ -339,7 +339,7 @@ THEOREM Spec => []MutualExclusion
                /\ unchecked' = [unchecked EXCEPT ![self] = Procs \ {self}]
                /\ max' = [max EXCEPT ![self] = 0]
                /\ pc' = [pc EXCEPT ![self] = "e2"]
-      BY <3>2 DEF IInv
+      BY <3>2, SMTT(30) DEF IInv
     <3>. QED  BY <3>1, <3>2, <2>2 DEF e1
   <2>3. ASSUME NEW self \in Procs,
                e2(self)
@@ -429,7 +429,7 @@ THEOREM Spec => []MutualExclusion
       <4>1. CASE j = self
         BY <3>1, <4>1 DEF IInv
       <4>2. CASE j # self
-        BY <3>1, <4>2, SMTT(10) DEF IInv
+        BY <3>1, <4>2, SMTT(30) DEF IInv
       <4>. QED  BY <4>1, <4>2
     <3>2. CASE /\ unchecked[self] = {}
                /\ pc' = [pc EXCEPT ![self] = "cs"]
@@ -440,7 +440,7 @@ THEOREM Spec => []MutualExclusion
       <4>1. CASE j = self
         BY <3>2, <4>1 DEF IInv
       <4>2. CASE j # self
-        BY <3>2, <4>2 DEF IInv
+        BY <3>2, <4>2, SMTT(30) DEF IInv
       <4>. QED  BY <4>1, <4>2
     <3>. QED  BY <3>1, <3>2, <2>6 DEF w1
   <2>7. ASSUME NEW self \in Procs,
@@ -454,9 +454,9 @@ THEOREM Spec => []MutualExclusion
     <3>1. CASE num[nxt[self]] = 0
       BY <3>1 DEF IInv
     <3>2. CASE num[self] < num[nxt[self]]
-      BY <3>2 DEF IInv
+      BY <3>2, SMTT(30) DEF IInv
     <3>3. CASE num[self] = num[nxt[self]] /\ self < nxt[self]
-      BY <3>3 DEF IInv
+      BY <3>3, SMTT(30) DEF IInv
     <3>. QED  BY <2>7, <3>1, <3>2, <3>3 DEF w2
   <2>8. ASSUME NEW self \in Procs,
                cs(self)
