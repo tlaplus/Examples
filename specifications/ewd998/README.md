@@ -67,7 +67,7 @@ of a set of behaviors; not a single behavior. If random simulation is
 good enough in practice to predict statistical properties, it could help
 short-circuit modeling of an algorithm that currently requires empirical
 analysis of an algorithm’s implementation. In other words, traditionally
-we would model EWD998 in TLA+ and check safey and liveness properties up
+we would model EWD998 in TLA+ and check safety and liveness properties up
 to proving correctness. Then, we would implement EWD998 in a suitable
 programming language and analyze its statistical properties by running
 the implementation. If the statistical properties are unsatisfactory, we

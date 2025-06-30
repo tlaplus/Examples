@@ -14,7 +14,7 @@ LEMMA BroadcastType ==
   ASSUME network \in [Proc -> [Proc -> Seq(Message)]],
          NEW s \in Proc, NEW m \in Message
   PROVE  Broadcast(s,m) \in [Proc -> Seq(Message)]
-BY AppendProperties DEF Broadcast
+BY DEF Broadcast
 
 LEMMA TypeCorrect == Spec => []TypeOK
 <1>1. Init => TypeOK
@@ -120,7 +120,13 @@ LEMMA PrecedesHead ==
          s # << >>,
          Precedes(s,mt1,mt2), Head(s).type = mt2
   PROVE  ~ Contains(s,mt1)
-BY DEF Precedes, Contains
+<1>. SUFFICES ASSUME Contains(s, mt1)  PROVE FALSE 
+  OBVIOUS
+<1>1. PICK i \in 1 .. Len(s) : s[i].type = mt1
+  BY DEF Contains
+<1>2. i < 1
+  BY <1>1 DEF Precedes
+<1>. QED  BY <1>1, <1>2
 
 LEMMA AtMostOneTail ==
   ASSUME NEW s \in Seq(Message), NEW mtype,
@@ -132,7 +138,13 @@ LEMMA ContainsTail ==
   ASSUME NEW s \in Seq(Message), s # << >>,
          NEW mtype, AtMostOne(s, mtype)
   PROVE  Contains(Tail(s), mtype) <=> Contains(s, mtype) /\ Head(s).type # mtype
-BY DEF Contains, AtMostOne
+<1>1. ASSUME Contains(Tail(s), mtype)
+      PROVE  Contains(s, mtype) /\ Head(s).type # mtype
+  BY <1>1 DEF Contains, AtMostOne
+<1>2. ASSUME Contains(s, mtype), Head(s).type # mtype
+      PROVE  Contains(Tail(s), mtype)
+  BY <1>2 DEF Contains, AtMostOne
+<1>. QED  BY <1>1, <1>2
 
 LEMMA AtMostOneHead ==
   ASSUME NEW s \in Seq(Message), NEW mtype,
@@ -161,7 +173,13 @@ LEMMA PrecedesSend ==
   ASSUME NEW s \in Seq(Message), NEW mt1, NEW mt2,
          NEW m \in Message, m.type # mt1
   PROVE  Precedes(Append(s,m), mt1, mt2) <=> Precedes(s, mt1, mt2)
-BY DEF Precedes
+<1>1. ASSUME Precedes(Append(s,m), mt1, mt2)
+      PROVE  Precedes(s, mt1, mt2)
+  BY <1>1 DEF Precedes
+<1>2. ASSUME Precedes(s, mt1, mt2)
+      PROVE  Precedes(Append(s,m), mt1, mt2)
+  BY <1>2 DEF Precedes
+<1>. QED  BY <1>1, <1>2
 
 LEMMA PrecedesTail ==
   ASSUME NEW s \in Seq(Message), s # << >>,
