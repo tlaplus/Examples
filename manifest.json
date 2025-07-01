@@ -591,14 +591,14 @@
           "path": "specifications/FiniteMonotonic/Functions.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["proof"],
+          "features": [],
           "models": []
         },
         {
           "path": "specifications/FiniteMonotonic/Folds.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["proof"],
+          "features": [],
           "models": []
         },
         {
@@ -4649,7 +4649,6 @@
         {
           "path": "specifications/ewd998/EWD998.tla",
           "communityDependencies": [
-            "Functions",
             "SequencesExt"
           ],
           "tlaLanguageVersion": 2,
@@ -4862,18 +4861,14 @@
           "path": "specifications/ewd998/Functions.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
+          "features": [],
           "models": []
         },
         {
           "path": "specifications/ewd998/Folds.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
+          "features": [],
           "models": []
         },
         {
@@ -4925,7 +4920,6 @@
         {
           "path": "specifications/ewd998/Utils.tla",
           "communityDependencies": [
-            "Functions",
             "SequencesExt"
           ],
           "tlaLanguageVersion": 2,
