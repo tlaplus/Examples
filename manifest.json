@@ -5022,13 +5022,6 @@
       "tags": [],
       "modules": [
         {
-          "path": "specifications/lamport_mutex/Functions.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
           "path": "specifications/lamport_mutex/LamportMutex.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
