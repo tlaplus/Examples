@@ -17,6 +17,7 @@ parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manife
 parser.add_argument('--skip', nargs='+', help='Space-separated list of models to skip checking', required=False, default=[])
 parser.add_argument('--only', nargs='+', help='If provided, only check models in this space-separated list', required=False, default=[])
 parser.add_argument('--enable_assertions', help='Enable Java assertions (pass -enableassertions to JVM)', action='store_true')
+parser.add_argument('--all', help='Redo all state counts, not just missing ones', action='store_true')
 args = parser.parse_args()
 
 logging.basicConfig(level=logging.INFO)
@@ -28,6 +29,7 @@ manifest_path = normpath(args.manifest_path)
 examples_root = dirname(manifest_path)
 skip_models = args.skip
 only_models = args.only
+run_all = args.all
 enable_assertions = args.enable_assertions
 
 def check_model(module, model):
@@ -48,28 +50,30 @@ def check_model(module, model):
         enable_assertions,
         hard_timeout_in_seconds
     )
+    output = ' '.join(tlc_result.args) + '\n' + tlc_result.stdout
     match tlc_result:
         case CompletedProcess():
             expected_result = model['result']
             actual_result = tla_utils.resolve_tlc_exit_code(tlc_result.returncode)
             if expected_result != actual_result:
                 logging.error(f'Model {model_path} expected result {expected_result} but got {actual_result}')
-                logging.error(tlc_result.stdout)
+                logging.error(output)
                 return False
             state_count_info = tla_utils.extract_state_count_info(tlc_result.stdout)
             if state_count_info is None:
                 logging.error("Failed to find state info in TLC output")
-                logging.error(tlc_result.stdout)
+                logging.error(output)
                 return False
             logging.info(f'States (distinct, total, depth): {state_count_info}')
             model['distinctStates'], model['totalStates'], model['stateDepth'] = state_count_info
             return True
         case TimeoutExpired():
             logging.error(f'{model_path} hit hard timeout of {hard_timeout_in_seconds} seconds')
-            logging.error(tlc_result.output.decode('utf-8'))
+            logging.error(output)
             return False
         case _:
             logging.error(f'Unhandled TLC result type {type(tlc_result)}: {tlc_result}')
+            logging.error(output)
             return False
 
 # Ensure longest-running modules go first
@@ -82,17 +86,17 @@ small_models = sorted(
         for model in module['models']
             if model['size'] == 'small'
             and tla_utils.is_state_count_valid(model)
-            and (
-                'distinctStates' not in model
-                or 'totalStates' not in model
-                or 'stateDepth' not in model
-            )
             # This model is nondeterministic due to use of the Random module
             and model['path'] != 'specifications/SpanningTree/SpanTreeRandom.cfg'
             # This model generates the same distinct states but order varies
             and model['path'] != 'specifications/ewd998/EWD998ChanTrace.cfg'
             and model['path'] not in skip_models
             and (only_models == [] or model['path'] in only_models)
+            and (run_all or (
+                'distinctStates' not in model
+                or 'totalStates' not in model
+                or 'stateDepth' not in model
+            ))
     ],
     key = lambda m: m[2],
     reverse=True

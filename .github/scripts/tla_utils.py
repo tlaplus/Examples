@@ -1,3 +1,4 @@
+import locale
 from datetime import datetime
 import json
 from os.path import join, normpath, pathsep
@@ -223,19 +224,20 @@ def is_state_count_info_correct(model, distinct_states, total_states, state_dept
     # State depth not yet deterministic due to TLC bug: https://github.com/tlaplus/tlaplus/issues/883
     return none_or_equal(expected_distinct_states, distinct_states) and none_or_equal(expected_total_states, total_states) #and none_or_equal(expected_state_depth, state_depth)
 
-state_count_regex = re.compile(r'(?P<total_states>\d+) states generated, (?P<distinct_states>\d+) distinct states found, 0 states left on queue.')
-state_depth_regex = re.compile(r'The depth of the complete state graph search is (?P<state_depth>\d+).')
+state_count_regex = re.compile(r'(?P<total_states>[\d,]+) states generated, (?P<distinct_states>[\d,]+) distinct states found, 0 states left on queue.')
+state_depth_regex = re.compile(r'The depth of the complete state graph search is (?P<state_depth>[\d,]+).')
 
 def extract_state_count_info(tlc_output):
     """
     Parse & extract state count info from TLC output.
     """
+    locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
     state_count_findings = state_count_regex.search(tlc_output)
     state_depth_findings = state_depth_regex.search(tlc_output)
     if state_count_findings is None or state_depth_findings is None:
         return None
-    distinct_states = int(state_count_findings.group('distinct_states'))
-    total_states = int(state_count_findings.group('total_states'))
-    state_depth = int(state_depth_findings.group('state_depth'))
+    distinct_states = locale.atoi(state_count_findings.group('distinct_states'))
+    total_states = locale.atoi(state_count_findings.group('total_states'))
+    state_depth = locale.atoi(state_depth_findings.group('state_depth'))
     return (distinct_states, total_states, state_depth)
 
