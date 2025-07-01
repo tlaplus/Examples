@@ -106,31 +106,31 @@ LEMMA NonemptyMin ==
            /\ Min(S) <= x
 <1>. DEFINE P(T) == T \in SUBSET Int =>
                       /\ T # {} => Min(T) \in T
-                      /\ \A x \in T : Min(T) <= x
+                      /\ \A y \in T : Min(T) <= y
 <1>1. P({})
   OBVIOUS
-<1>2. ASSUME NEW T, NEW x, x \notin T, P(T)
-      PROVE  P(T \cup {x})
-  <2>. HAVE T \cup {x} \in SUBSET Int
+<1>2. ASSUME NEW T, NEW y, y \notin T, P(T)
+      PROVE  P(T \cup {y})
+  <2>. HAVE T \cup {y} \in SUBSET Int
   <2>1. CASE T = {}
-    <3>1. x = Min(T \cup {x})
+    <3>1. y = Min(T \cup {y})
       BY <2>1 DEF Min
     <3>. QED  BY <2>1, <3>1
   <2>2. CASE T # {}
-    <3>1. CASE x < Min(T)
-      <4>1. /\ x \in T \cup {x}
-            /\ \A y \in T \cup {x} : x <= y
+    <3>1. CASE y < Min(T)
+      <4>1. /\ y \in T \cup {y}
+            /\ \A z \in T \cup {y} : y <= z
         BY <1>2, <3>1
-      <4>2. x = Min(T \cup {x})
+      <4>2. y = Min(T \cup {y})
         BY <4>1 DEF Min
       <4>. QED  BY <4>1, <4>2
-    <3>2. CASE ~(x < Min(T))
+    <3>2. CASE ~(y < Min(T))
       <4>. DEFINE mn == Min(T)
-      <4>1. /\ mn \in T \cup {x}
-            /\ \A y \in T \cup {x} : mn <= y
+      <4>1. /\ mn \in T \cup {y}
+            /\ \A z \in T \cup {y} : mn <= z
         BY <1>2, <2>2, <3>2
       <4>. HIDE DEF mn
-      <4>2. mn = Min(T \cup {x})
+      <4>2. mn = Min(T \cup {y})
         BY <4>1 DEF Min
       <4>. QED  BY <4>1, <4>2
     <3>. QED  BY <3>1, <3>2
@@ -146,31 +146,31 @@ LEMMA NonemptyMax ==
            /\ x <= Max(S)
 <1>. DEFINE P(T) == T \in SUBSET Int =>
                       /\ T # {} => Max(T) \in T
-                      /\ \A x \in T : x <= Max(T)
+                      /\ \A y \in T : y <= Max(T)
 <1>1. P({})
   OBVIOUS
-<1>2. ASSUME NEW T, NEW x, x \notin T, P(T)
-      PROVE  P(T \cup {x})
-  <2>. HAVE T \cup {x} \in SUBSET Int
+<1>2. ASSUME NEW T, NEW y, y \notin T, P(T)
+      PROVE  P(T \cup {y})
+  <2>. HAVE T \cup {y} \in SUBSET Int
   <2>1. CASE T = {}
-    <3>1. x = Max(T \cup {x})
+    <3>1. y = Max(T \cup {y})
       BY <2>1 DEF Max
     <3>. QED  BY <2>1, <3>1
   <2>2. CASE T # {}
-    <3>1. CASE x > Max(T)
-      <4>1. /\ x \in T \cup {x}
-            /\ \A y \in T \cup {x} : x >= y
+    <3>1. CASE y > Max(T)
+      <4>1. /\ y \in T \cup {y}
+            /\ \A z \in T \cup {y} : y >= z
         BY <1>2, <3>1
-      <4>2. x = Max(T \cup {x})
+      <4>2. y = Max(T \cup {y})
         BY <4>1 DEF Max
       <4>. QED  BY <4>1, <4>2
-    <3>2. CASE ~(x > Max(T))
+    <3>2. CASE ~(y > Max(T))
       <4>. DEFINE mx == Max(T)
-      <4>1. /\ mx \in T \cup {x}
-            /\ \A y \in T \cup {x} : y <= mx
+      <4>1. /\ mx \in T \cup {y}
+            /\ \A z \in T \cup {y} : z <= mx
         BY <1>2, <2>2, <3>2
       <4>. HIDE DEF mx
-      <4>2. mx = Max(T \cup {x})
+      <4>2. mx = Max(T \cup {y})
         BY <4>1 DEF Max
       <4>. QED  BY <4>1, <4>2
     <3>. QED  BY <3>1, <3>2
@@ -561,40 +561,40 @@ THEOREM Spec => []PCorrect
           <6>2. CASE II \in UV \ {I} /\ JJ \in {I1(p), I2(p)}
             <7>1. JJ \subseteq  I
               BY <5>3, <6>2
-            <7>3. PICK k \in I : seq'[j] = seq[k]
+            <7>2. PICK k \in I : seq'[j] = seq[k]
               BY <5>2, <7>1, <6>I, PartitionsLemma DEF Inv, TypeOK
-            <7>4. II \cap I = {}
+            <7>3. II \cap I = {}
               BY <6>2, Zenon DEF UV, Inv, DomainPartitions
-            <7>5. PICK mnI, mxI \in 1 .. Len(seq0) : II = mnI .. mxI
+            <7>4. PICK mnI, mxI \in 1 .. Len(seq0) : II = mnI .. mxI
               BY <6>2 DEF Inv, DomainPartitions
             <7>5. i < k
-              BY <5>I, <6>2, <7>1, <7>4 DEF Inv, TypeOK
+              BY <5>I, <6>2, <7>1, <7>3 DEF Inv, TypeOK
             <7>6. seq[i] <= seq[k]
               BY <6>2, <7>1, <7>5 DEF Inv, RelSorted, UV
             <7>7. seq'[i] = seq[i]
-              BY <5>2, <6>2, <6>I, <7>4, PartitionsLemma DEF Inv, TypeOK
-            <7>. QED  BY <7>3, <7>6, <7>7
+              BY <5>2, <6>2, <6>I, <7>3, PartitionsLemma DEF Inv, TypeOK
+            <7>. QED  BY <7>2, <7>6, <7>7
           <6>3. CASE II \in {I1(p), I2(p)} /\ JJ \in UV \ {I}
             <7>1. II \subseteq  I
               BY <5>3, <6>3
-            <7>3. PICK k \in I : seq'[i] = seq[k]
+            <7>2. PICK k \in I : seq'[i] = seq[k]
               BY <5>2, <7>1, <6>I, PartitionsLemma DEF Inv, TypeOK
-            <7>4. JJ \cap I = {}
+            <7>3. JJ \cap I = {}
               BY <6>3, Zenon DEF UV, Inv, DomainPartitions
-            <7>5. PICK mnJ, mxJ \in 1 .. Len(seq0) : JJ = mnJ .. mxJ
+            <7>4. PICK mnJ, mxJ \in 1 .. Len(seq0) : JJ = mnJ .. mxJ
               BY <6>3 DEF Inv, DomainPartitions
             <7>5. k < j
-              BY <5>I, <6>3, <7>1, <7>4 DEF Inv, TypeOK
+              BY <5>I, <6>3, <7>1, <7>3 DEF Inv, TypeOK
             <7>6. seq[k] <= seq[j]
               BY <6>3, <7>1, <7>5 DEF Inv, RelSorted, UV
             <7>7. seq'[j] = seq[j]
               <8>1. j \in (1 .. Len(seq)) \ I
-                BY <7>4
+                BY <7>3
               <8>2. /\ seq \in Seq(Values)
                     /\ seq' \in Partitions(I, p, seq)
                 BY <5>2 DEF Inv, TypeOK
               <8>. QED  BY <6>I, <8>1, <8>2, PartitionsLemma
-            <7>. QED  BY <7>3, <7>6, <7>7
+            <7>. QED  BY <7>2, <7>6, <7>7
           <6>4. CASE II = I1(p) /\ JJ = I2(p)
             BY <5>2, <5>3, <6>I, <6>4, PartitionsLemma DEF Inv, TypeOK
           <6>5. CASE II = I2(p) /\ JJ = I2(p)

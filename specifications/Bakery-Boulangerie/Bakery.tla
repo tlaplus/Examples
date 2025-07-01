@@ -354,12 +354,12 @@ THEOREM Spec => []MutualExclusion
                  pc' = [pc EXCEPT ![self] = "e2"]
           PROVE  IInv'
        \* BY <3>1, SMTT(30) DEF IInv  -- works
-       <4>. SUFFICES ASSUME NEW p \in Procs
-                     PROVE  IInv!(p)'
+       <4>. SUFFICES ASSUME NEW q \in Procs
+                     PROVE  IInv!(q)'
          BY DEF IInv
-       <4>1. CASE p = self
+       <4>1. CASE q = self
          BY <3>1, <4>1 DEF IInv
-       <4>2. CASE p # self
+       <4>2. CASE q # self
          BY <3>1, <4>2 DEF IInv
        <4>. QED  BY <4>1, <4>2
     <3>2. ASSUME NEW i \in unchecked[self],
