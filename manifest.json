@@ -4507,7 +4507,8 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [
-                "ignore deadlock"
+                "ignore deadlock",
+                "liveness"
               ],
               "result": "success",
               "distinctStates": 302,
@@ -4596,7 +4597,8 @@
           "path": "specifications/ewd840/SyncTerminationDetection_proof.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["proof"]
+          "features": ["proof"],
+          "models": []
         }
       ]
     },
@@ -4660,7 +4662,8 @@
               "mode": "exhaustive search",
               "features": [
                 "ignore deadlock",
-                "state constraint"
+                "state constraint",
+                "liveness"
               ],
               "result": "success"
             },
