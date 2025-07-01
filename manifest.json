@@ -1335,8 +1335,12 @@
       "title": "The Moving Cat Puzzle",
       "description": "Demonstrating the solution for the moving cat puzzle is correct.",
       "sources": [],
-      "authors": ["Florian Schanda"],
-      "tags": ["beginner"],
+      "authors": [
+        "Florian Schanda"
+      ],
+      "tags": [
+        "beginner"
+      ],
       "modules": [
         {
           "path": "specifications/Moving_Cat_Puzzle/Cat.tla",
@@ -1349,19 +1353,29 @@
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "features": ["liveness"],
-              "result": "success"
+              "features": [
+                "liveness"
+              ],
+              "result": "success",
+              "distinctStates": 30,
+              "totalStates": 78,
+              "stateDepth": 1
             },
             {
               "path": "specifications/Moving_Cat_Puzzle/EvenBoxes.cfg",
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
-              "features": ["liveness"],
-              "result": "success"
+              "features": [
+                "liveness"
+              ],
+              "result": "success",
+              "distinctStates": 48,
+              "totalStates": 128,
+              "stateDepth": 1
             }
           ]
-	}
+        }
       ]
     },
     {
@@ -1427,7 +1441,7 @@
               "result": "success",
               "distinctStates": 4122,
               "totalStates": 14296,
-              "stateDepth": 36
+              "stateDepth": 37
             }
           ]
         }
@@ -1712,7 +1726,7 @@
               "result": "success",
               "distinctStates": 77,
               "totalStates": 451,
-              "stateDepth": 12
+              "stateDepth": 11
             }
           ]
         },
@@ -1895,7 +1909,7 @@
       "description": "Given a room containing a single light switch prisoners enter one by one, they must develop a strategy to free themselves.",
       "sources": [],
       "authors": [
-          "Florian Schanda"
+        "Florian Schanda"
       ],
       "tags": [
         "beginner"
@@ -1915,7 +1929,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 16,
+              "totalStates": 49,
+              "stateDepth": 5
             },
             {
               "path": "specifications/Prisoners_Single_Switch/PrisonerLightUnknown.cfg",
@@ -1925,7 +1942,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 62,
+              "totalStates": 188,
+              "stateDepth": 11
             },
             {
               "path": "specifications/Prisoners_Single_Switch/SoloPrisoner.cfg",
@@ -1935,7 +1955,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 2,
+              "totalStates": 3,
+              "stateDepth": 2
             },
             {
               "path": "specifications/Prisoners_Single_Switch/SoloPrisonerLightUnknown.cfg",
@@ -1945,7 +1968,10 @@
               "features": [
                 "liveness"
               ],
-              "result": "success"
+              "result": "success",
+              "distinctStates": 4,
+              "totalStates": 6,
+              "stateDepth": 2
             }
           ]
         }
@@ -2269,7 +2295,7 @@
               "result": "success",
               "distinctStates": 1236,
               "totalStates": 10278,
-              "stateDepth": 5
+              "stateDepth": 6
             }
           ]
         },
@@ -3061,7 +3087,7 @@
               ],
               "result": "success",
               "distinctStates": 240,
-              "totalStates": 392,
+              "totalStates": 1392,
               "stateDepth": 10
             }
           ]
@@ -3604,7 +3630,7 @@
               ],
               "result": "success",
               "distinctStates": 400,
-              "totalStates": 633,
+              "totalStates": 1633,
               "stateDepth": 6
             }
           ]
@@ -3754,7 +3780,7 @@
               "result": "success",
               "distinctStates": 3316,
               "totalStates": 128581,
-              "stateDepth": 10
+              "stateDepth": 11
             }
           ]
         }
@@ -4507,7 +4533,7 @@
               "result": "success",
               "distinctStates": 302,
               "totalStates": 2001,
-              "stateDepth": 9
+              "stateDepth": 10
             }
           ]
         },
@@ -4582,7 +4608,7 @@
               ],
               "result": "success",
               "distinctStates": 129,
-              "totalStates": 722,
+              "totalStates": 3722,
               "stateDepth": 1
             }
           ]
