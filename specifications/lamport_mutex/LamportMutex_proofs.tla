@@ -68,7 +68,7 @@ LEMMA TypeCorrect == Spec => []TypeOK
                NEW q \in Proc \ {p},
                ReceiveAck(p,q)
         PROVE  TypeOK'
-    BY <2>5 DEF ReceiveAck
+    BY <2>5, SMTT(30) DEF ReceiveAck
   <2>6. ASSUME NEW p \in Proc,
                NEW q \in Proc \ {p},
                ReceiveRelease(p,q)
@@ -399,11 +399,11 @@ THEOREM BasicInvariant == Spec => []BasicInv
     <3>4. ASSUME NEW p \in Proc, NEW q \in Proc
           PROVE  NetworkInv(p,q)'
       <4>1. AtMostOne(network'[p][q], "req")
-        BY <3>1, AtMostOneTail, AtMostOneSend, Zenon DEF BasicInv, NetworkInv
+        BY <3>1, AtMostOneTail, AtMostOneSend, ZenonT(30) DEF BasicInv, NetworkInv
       <4>2. AtMostOne(network'[p][q], "ack")
         <5>. DEFINE nw == [network EXCEPT ![k][n] = Tail(network[k][n])]
         <5>1. nw \in [Proc -> [Proc -> Seq(Message)]]
-          BY <3>1
+          BY <3>1, SMTT(30)
         <5>2. AtMostOne(nw[p][q], "ack")
           BY <3>1, AtMostOneTail DEF BasicInv, NetworkInv
         <5>3. ~ Contains(nw[n][k], "ack")
@@ -414,7 +414,7 @@ THEOREM BasicInvariant == Spec => []BasicInv
           BY <3>3, <5>1, <5>2, <5>3, NotContainsSend
         <5>. QED  BY <3>1, <5>5 DEF nw
       <4>3. AtMostOne(network'[p][q], "rel")
-        BY <3>1, AtMostOneTail, AtMostOneSend, Zenon DEF BasicInv, NetworkInv
+        BY <3>1, AtMostOneTail, AtMostOneSend, ZenonT(30) DEF BasicInv, NetworkInv
       <4>4. network'[p][p] = << >>
         BY <3>1 DEF BasicInv, NetworkInv
       <4>. QED  BY <4>1, <4>2, <4>3, <4>4 DEF NetworkInv
