@@ -46,8 +46,8 @@
                 "ignore deadlock"
               ],
               "result": "success",
-              "distinctStates": 598608,
-              "totalStates": 3141768,
+              "distinctStates": 655200,
+              "totalStates": 3403584,
               "stateDepth": 1
             }
           ]
