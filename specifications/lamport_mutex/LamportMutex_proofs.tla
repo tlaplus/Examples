@@ -675,7 +675,7 @@ THEOREM ClockInvariant == Spec => []ClockInv
               /\ Precedes(network'[n][p], "ack", "req") <=> Precedes(network[n][p], "ack", "req")
           BY <3>1, <4>2, ContainsSend, PrecedesSend DEF Broadcast
         <5>4. \A i \in 1 .. Len(network'[n][p]) : network'[n][p][i].type # "req"
-          BY <3>1 DEF Broadcast, Contains, RelMessage
+          BY <3>1, SMTT(30) DEF Broadcast, Contains, RelMessage
         <5>. QED  BY <5>1, <5>2, <5>3, <5>4 DEF ClockInv, ClockInvInner, beats
       <4>. QED  BY <4>1, <4>2
     <3>. QED  BY <3>2 DEF ClockInv
