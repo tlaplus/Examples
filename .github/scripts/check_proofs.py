@@ -49,7 +49,7 @@ for module_path in proof_module_paths:
         [
             tlapm_path, module_path,
             '-I', module_dir,
-            '--stretch 5'
+            '--stretch', '5'
         ],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
