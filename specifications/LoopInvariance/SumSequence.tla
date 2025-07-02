@@ -173,7 +173,7 @@ LEMMA Lemma1 ==
 (***************************************************************************)
 THEOREM FrontDef  ==  \A S : \A s \in Seq(S) :
                         Front(s) = [i \in 1..(Len(s)-1) |-> s[i]]
-BY DEF Front, SubSeq
+BY DEF Front
 
 
 
@@ -258,7 +258,7 @@ THEOREM Spec => []PCorrect
           <6>4. s \in Seq(Int)
             BY <6>3, <5>2, <4>2
           <6>5. Front(s) = [i \in 1 .. Len(s)-1 |-> s[i]]
-            BY <5>1 DEF Front
+            BY <6>4, FrontDef
           <6> QED
             BY <6>4, <6>5, <5>1, <4>2, Lemma5 
         <5>5. curseq = [i \in 1..(Len(s)-1) |-> s[i]]
@@ -276,7 +276,7 @@ THEOREM Spec => []PCorrect
   <2>2. CASE UNCHANGED vars
     BY <2>2 DEF Inv, TypeOK, vars
   <2>3. QED
-    BY <2>1,  <2>2 DEF Next
+    BY <2>1,  <2>2 DEF Next, Terminating
 <1>3. Inv => PCorrect
   <2> SUFFICES ASSUME Inv,
                       pc = "Done"
@@ -306,14 +306,14 @@ LEMMA Lemma1_Proof ==
            SS[ss \in Seq(Int)] == 
               IF ss = << >> THEN 0 ELSE DefSS(SS[Tail(ss)], ss)         
 <1>1. TailInductiveDefHypothesis(SS, Int, 0, DefSS)
-  BY DEF TailInductiveDefHypothesis
+  BY Zenon DEF TailInductiveDefHypothesis
 <1>2. TailInductiveDefConclusion(SS, Int, 0, DefSS) 
-  BY <1>1, TailInductiveDef
+  BY <1>1, TailInductiveDef, Zenon
 <1>3. SS = [ss \in Seq(Int) |-> IF ss = << >> THEN 0 
                                               ELSE ss[1] +  SS[Tail(ss)]]
-  BY <1>2 DEF TailInductiveDefConclusion
+  BY <1>2, Zenon DEF TailInductiveDefConclusion
 <1> QED 
-  BY <1>3 DEF SeqSum
+  BY <1>3, Zenon DEF SeqSum
 
  
 (***************************************************************************)
@@ -351,7 +351,7 @@ LEMMA Lemma2a ==
   OBVIOUS
 <1>3. \A i \in 1 .. Len(Tail(s)) : Tail(s)[i] = t[i]
   OBVIOUS
-<1>. QED  BY <1>1, <1>2, <1>3, SeqEqual, Zenon
+<1>. QED  BY <1>1, <1>2, <1>3
 
                    
 LEMMA Lemma3 ==
@@ -371,7 +371,7 @@ LEMMA Lemma3 ==
     <2>2. Len(Front(s)) > 0
       BY <2>1
      <2>3. Front(s) # << >>
-      BY <2>1, <2>2
+      BY <2>1, <2>2, Isa
     <2>4. Tail(Front(s)) = [i \in 1..(Len(Front(s))-1) |-> Front(s)[i+1]]
       BY <2>1, <2>3, Lemma2a
     <2>5. \A i \in 0..(Len(s)-2) : Front(s)[i+1] = s[i+1]
@@ -387,7 +387,7 @@ LEMMA Lemma3 ==
   <1>2. Front(Tail(s)) = [i \in 1..(Len(s) - 2) |-> s[i+1]]
     BY Len(s) \in Nat, Lemma2a DEF Front
   <1>3. QED
-    BY <1>1, <1>2
+    BY <1>1, <1>2, Zenon
 
 
 (***************************************************************************)
@@ -402,11 +402,11 @@ LEMMA Lemma4 == \A s \in Seq(Int) : SeqSum(s) \in Int
   <2> SUFFICES ASSUME NEW s \in Seq(Int),
                       Len(s) = 0
                PROVE  SeqSum(s) \in Int
-    BY DEF P
+    BY Zenon DEF P
   <2>1. s = << >>
     OBVIOUS
   <2> QED
-    BY <2>1, Lemma1
+    BY <2>1, Lemma1, Isa
 <1>2. ASSUME NEW N \in Nat, P(N)
       PROVE  P(N+1)
   <2> SUFFICES ASSUME NEW s \in Seq(Int),
@@ -423,12 +423,12 @@ LEMMA Lemma4 == \A s \in Seq(Int) : SeqSum(s) \in Int
         /\ Tail(s) \in Seq(Int)
     BY <2>2, Lemma2
   <2>5. SeqSum(Tail(s)) \in Int
-    BY <1>2, <2>4
+    BY <1>2, <2>4, Zenon
   <2>6. QED
     BY <2>2, <2>3, <2>5
 <1> HIDE DEF P
 <1>3. \A N \in Nat : P(N)
-   BY <1>1, <1>2, NatInduction
+   BY <1>1, <1>2, NatInduction, Isa
 <1>4. QED
   BY <1>3 DEF P
 
@@ -448,9 +448,9 @@ LEMMA Lemma5_Proof ==
                PROVE  SeqSum(s) = IF Len(s) = 0
                                    THEN 0
                                    ELSE SeqSum(Front(s)) + s[Len(s)]
-    BY DEF P
+    BY Zenon DEF P
   <2> QED
-    BY s = << >>,  Lemma1  
+    BY s = << >>,  Lemma1, Zenon
 <1>2. ASSUME NEW N \in Nat, P(N)
       PROVE  P(N+1)
   <2> SUFFICES ASSUME NEW s \in Seq(Int),
@@ -474,12 +474,12 @@ LEMMA Lemma5_Proof ==
     <3> USE <2>3
     <3> HIDE FrontDef \* DEF Front
     <3>1. SeqSum(Front(s)) = 0
-      BY Lemma1, <2>1, Front(s) = << >>
+      BY Lemma1, <2>1, Front(s) = << >>, Zenon
     <3>2. Len(Tail(s)) = 0
       BY HeadTailProperties
     <3>3. SeqSum(Tail(s)) = 
            IF Tail(s) = << >> THEN 0 ELSE Tail(s)[1] + SeqSum(Tail(Tail(s)))
-      BY <2>2, Lemma1
+      BY <2>2, Lemma1, Zenon
     <3>4. SeqSum(Tail(s)) = 0
       BY <3>2, <2>2, EmptySeq, Tail(s) = << >>, <3>3
     <3>5. QED
@@ -491,24 +491,15 @@ LEMMA Lemma5_Proof ==
       <4>1. Front(s) \in Seq(Int)
         BY <2>4, <2>2, Lemma2
       <4>2. Front(t) \in Seq(Int)
-        BY <2>4, <2>2, Lemma2
+        BY <2>4, <2>2, Lemma2, Zenon
       <4>3. Tail(Front(s)) \in Seq(Int)
-        <5> Len(s) > 1
-          BY <2>4
-        <5> Len(Front(s)) > 0
-          BY Lemma2
-        <5> Front(s) \in Seq(Int)
-          BY Lemma2
-        <5> Tail(Front(s)) \in Seq(Int)
-          BY Lemma2
-        <5> QED
-          BY Lemma2
+        BY <2>4, Lemma2
       <4>4. QED
         BY <4>1, <4>2, <4>3    
     <3>1. SeqSum(t) = SeqSum(Front(t)) +  t[N]
-      BY <1>2, <2>2, <2>4
+      BY <1>2, <2>2, <2>4, Isa
     <3>2. SeqSum(t) = SeqSum(Tail(Front(s))) + t[N]
-      BY <3>1, <2>4, Len(s) > 1, Lemma3 
+      BY <3>1, <2>4, Len(s) > 1, Lemma3, Zenon
     <3>3. t[N] = s[N+1]
       BY <2>2, <2>4
     <3> HIDE DEF Front
@@ -520,7 +511,7 @@ LEMMA Lemma5_Proof ==
       <4>1. SeqSum(s) \in Int
         BY <2>4, <2>2, <2>1, Lemma4
       <4>2. SeqSum(t) \in Int
-        BY <2>4, <2>2, <2>1, Lemma4
+        BY <2>4, <2>2, <2>1, Lemma4, Zenon
       <4>3. SeqSum(Tail(Front(s))) \in Int
         <5>1. Len(s) > 1
           BY <2>4
@@ -531,7 +522,7 @@ LEMMA Lemma5_Proof ==
          <5>4. Tail(Front(s)) \in Seq(Int)
            BY <5>3 
          <5>5. QED
-        BY <2>4, <2>2, <2>1, <5>3, Lemma4
+        BY <2>4, <2>2, <2>1, <5>3, Lemma4, Zenon
       <4>4. t[N] \in Int
         BY <2>4, <2>2, <2>1
       <4>4a. s[1] \in Int
@@ -554,12 +545,9 @@ LEMMA Lemma5_Proof ==
   <2>5. QED
     BY <2>3, <2>4
 <1>3. \A N \in Nat : P(N)
-  BY <1>1, <1>2, NatInduction
+  BY <1>1, <1>2, NatInduction, Isa
 <1>4. QED
   BY <1>3
 =============================================================================
 \* Modification History
-\* Last modified Fri Jan 27 10:03:14 CET 2023 by merz
-\* Last modified Tue Aug 27 12:59:10 PDT 2019 by loki
-\* Last modified Fri May 03 16:40:42 PDT 2019 by lamport
 \* Created Fri Apr 19 14:13:06 PDT 2019 by lamport

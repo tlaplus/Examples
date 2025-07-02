@@ -54,5 +54,16 @@ THEOREM Invariance == Spec => []Inv
 Success == <>(chosen # {})
 LiveSpec == Spec /\ WF_chosen(Next)  
 
+ASSUME ValuesNonempty == Value # {}
+
 THEOREM LivenessTheorem == LiveSpec =>  Success
+<1>1. [][Next]_chosen /\ WF_chosen(Next) => [](Init => Success)
+  <2>1. Init' \/ (chosen # {})'
+    BY DEF Init
+  <2>2. Init /\ <<Next>>_chosen => (chosen # {})'
+    BY DEF Init, Next
+  <2>3. Init => ENABLED <<Next>>_chosen
+    BY ValuesNonempty, ExpandENABLED DEF Init, Next
+  <2>. QED  BY <2>1, <2>2, <2>3, PTL DEF Success
+<1>. QED  BY <1>1, PTL DEF LiveSpec, Spec
 =============================================================================

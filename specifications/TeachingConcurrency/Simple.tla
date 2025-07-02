@@ -116,7 +116,6 @@ Inv ==  /\ TypeOK
         /\ \/ \E i \in 0..(N-1) : pc[i] /= "Done"
            \/ \E i \in 0..(N-1) : y[i] = 1
 
-
 (***************************************************************************)
 (* Here is the proof of correctness.  The top-level steps <1>1 - <1>4 are  *)
 (* the standard ones for an invariance proof, and the decomposition of the *)
@@ -124,7 +123,7 @@ Inv ==  /\ TypeOK
 (* was trivial to get TLAPS to check the proof, except for the proof of    *)
 (* <2>2.  A comment explains the problem I had with that step.             *)
 (***************************************************************************)
-THEOREM Spec => []PCorrect
+THEOREM Correctness == Spec => []PCorrect
 <1> USE NAssump
 <1>1. Init => Inv
   BY DEF Init, Inv, TypeOK, ProcSet 
@@ -156,6 +155,21 @@ THEOREM Spec => []PCorrect
   BY DEF Inv, TypeOK, PCorrect
 <1>4. QED
   BY <1>1, <1>2, <1>3, PTL DEF Spec
+
+(***************************************************************************)
+(* It turns out that decomposing step <1>2 is not really necessary: the    *)
+(* following shorter proof is also accepted by TLAPS.                      *)
+(***************************************************************************)
+THEOREM Correctness2 == Spec => []PCorrect
+<1>. USE NAssump DEF Inv, TypeOK, ProcSet
+<1>1. Init => Inv 
+  BY DEF Init
+<1>2. Inv /\ [Next]_vars => Inv'
+  BY DEF Next, a, b, vars, Terminating, proc
+<1>3. Inv => PCorrect 
+  BY DEF PCorrect
+<1>. QED  BY <1>1, <1>2, <1>3, PTL DEF Spec
+
 =============================================================================
 \* Modification History
 \* Last modified Wed May 15 02:33:18 PDT 2019 by lamport

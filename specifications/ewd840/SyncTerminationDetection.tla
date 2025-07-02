@@ -1,7 +1,8 @@
 ---------------------- MODULE SyncTerminationDetection ----------------------
 (***************************************************************************)
-(* An abstract specification of the termination detection problem in a     *)
-(* ring with synchronous communication.                                    *)
+(* This module contains an abstract specification of the termination       *)
+(* detection problem in a ring with synchronous communication. We will     *)
+(* prove that the EWD840 algorithm refines this specification.             *)
 (***************************************************************************)
 EXTENDS Naturals
 CONSTANT N
@@ -51,11 +52,15 @@ Next ==
 vars == <<active, terminationDetected>>
 Spec == Init /\ [][Next]_vars /\ WF_vars(DetectTermination)
 
-Stable == [](terminationDetected => []terminated)
+------------------------------------------------------------------------------
+(* Correctness properties *)
 
-Live == terminated ~> terminationDetected
+TDCorrect == terminationDetected => terminated
+
+Quiescence == [](terminated => []terminated)
+
+Liveness == terminated ~> terminationDetected
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jan 21 16:08:09 CET 2021 by merz
 \* Created Sun Jan 10 15:19:20 CET 2021 by merz

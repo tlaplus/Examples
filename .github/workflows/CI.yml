@@ -108,7 +108,9 @@ jobs:
       - name: Check small models
         run: |
           # Need to have a nonempty list to pass as a skip parameter
-          SKIP=("does/not/exist")
+          # SKIP=("does/not/exist")
+          # strange issue with parsing TLC output
+          SKIP=("specifications/ewd840/EWD840.cfg")
           if [ ${{ matrix.unicode }} ]; then
             # Apalache does not yet support Unicode
             SKIP+=("specifications/EinsteinRiddle/Einstein.cfg")
@@ -143,21 +145,16 @@ jobs:
         if: matrix.os != 'windows-latest' && !matrix.unicode
         run: |
           SKIP=(
-            ## ATD/EWD require TLAPS' update_enabled_cdot branch
-            specifications/ewd998/AsyncTerminationDetection_proof.tla
+            # Long-running; see https://github.com/tlaplus/tlapm/issues/85
             specifications/ewd998/EWD998_proof.tla
-            # Failing; see https://github.com/tlaplus/Examples/issues/67
             specifications/Bakery-Boulangerie/Bakery.tla
             specifications/Bakery-Boulangerie/Boulanger.tla
-            specifications/Paxos/Consensus.tla
-            specifications/PaxosHowToWinATuringAward/Consensus.tla
-            specifications/lamport_mutex/LamportMutex_proofs.tla
-            specifications/byzpaxos/VoteProof.tla
-            # Long-running; see https://github.com/tlaplus/tlapm/issues/85
             specifications/LoopInvariance/Quicksort.tla
             specifications/LoopInvariance/SumSequence.tla
+            specifications/lamport_mutex/LamportMutex_proofs.tla
             specifications/bcastByz/bcastByz.tla
-            specifications/MisraReachability/ReachabilityProofs.tla
+            # specifications/MisraReachability/ReachabilityProofs.tla
+            specifications/byzpaxos/VoteProof.tla
             specifications/byzpaxos/BPConProof.tla # Takes about 30 minutes
           )
           python $SCRIPT_DIR/check_proofs.py       \

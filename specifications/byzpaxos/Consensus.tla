@@ -147,7 +147,7 @@ LEMMA InductiveInvariance ==
   OBVIOUS
 <1>1. CASE Next 
   \* In the following BY proof, <1>1 denotes the case assumption Next 
-  BY <1>1, FS_EmptySet, FS_Singleton DEF Inv, TypeOK, Next
+  BY <1>1, FS_Singleton DEF Inv, TypeOK, Next
 <1>2. CASE vars' = vars
   BY <1>2 DEF Inv, TypeOK, vars  
 <1>3. QED
@@ -178,42 +178,24 @@ Success == <>(chosen # {})
 ASSUME ValueNonempty == Value # {}
 
 (***************************************************************************)
-(* Since fairness is defined in terms of the ENABLED operator, we must     *)
-(* characterize states at which an action is enabled. It is usually a good *)
-(* idea to prove a separate lemma for this.                                *)
+(* Proving liveness requires reasoning about fairness assumptions, which   *)
+(* are defined in terms of enabledness of actions. It is usually a good    *)
+(* idea to prove a lemma that reduces ENABLED to a simple state predicate. *)
 (***************************************************************************)
-LEMMA EnabledNext ==
-    (ENABLED <<Next>>_vars) <=> (chosen = {})
-BY ValueNonempty, ExpandENABLED DEF Next, vars
+LEMMA EnabledDef == (ENABLED <<Next>>_vars) <=> (chosen = {})
+BY ValueNonempty, ExpandENABLED DEF Next, vars 
 
-(***************************************************************************)
-(* Here is our proof that Livespec implies Success. The overall approach   *)
-(* to the proof follows the rule WF1 discussed in                          *)
-(*                                                                         *)
-(* `. AUTHOR  = "Leslie Lamport",                                          *)
-(*    TITLE   = "The Temporal Logic of Actions",                           *)
-(*    JOURNAL = toplas,                                                    *)
-(*    volume  = 16,                                                        *)
-(*    number  = 3,                                                         *)
-(*    YEAR    = 1994,                                                      *)
-(*    month   = may,                                                       *)
-(*    PAGES   = "872--923"         .'                                      *)
-(*                                                                         *)
-(* In the actual proof, use of this rule is subsumed by appealing to the   *)
-(* PTL decision procedure for propositional temporal logic. When reasoning *)
-(* about the liveness of more complex specifications, an additional        *)
-(* invariant would typically be required.                                  *)
-(***************************************************************************)
-THEOREM LiveSpec => Success
-<1>1. [][Next]_vars /\ WF_vars(Next) => [](Init => Success)
-  <2>1. Init' \/ (chosen # {})'
-    BY DEF Init
-  <2>2. Init /\ <<Next>>_vars => (chosen # {})'
-    BY DEF Init, Next, vars
-  <2>3. Init => ENABLED <<Next>>_vars
-    BY EnabledNext DEF Init
-  <2>. QED  BY <2>1, <2>2, <2>3, PTL DEF Success
-<1>2. QED  BY <1>1, PTL DEF LiveSpec, Spec, Success
+THEOREM Liveness == LiveSpec => Success
+<1>. DEFINE P == chosen = {}
+            Q == chosen # {}
+<1>1. P /\ [Next]_vars => P' \/ Q'
+  OBVIOUS
+<1>2. P /\ <<Next>>_vars => Q'
+  BY DEF Next
+<1>3. P => ENABLED <<Next>>_vars
+  BY EnabledDef
+<1>. QED
+  BY <1>1, <1>2, <1>3, PTL DEF LiveSpec, Spec, Init, Success
 
 -----------------------------------------------------------------------------
 (***************************************************************************)
@@ -222,16 +204,6 @@ THEOREM LiveSpec => Success
 (***************************************************************************)
 THEOREM LiveSpecEquals ==
           LiveSpec <=> Spec /\ ([]<><<Next>>_vars \/ []<>(chosen # {}))
-<1>1. (chosen # {}) <=> ~(chosen = {})
-  OBVIOUS
-<1>2. ([]<>~ENABLED <<Next>>_vars) <=> []<>(chosen # {})
-  BY <1>1, EnabledNext, PTL
-<1>4. QED
-  BY <1>2, PTL DEF LiveSpec
+BY (chosen # {}) <=> ~(chosen = {}), EnabledDef, PTL DEF LiveSpec, Spec
+
 =============================================================================
-\* Modification History
-\* Last modified Mon May 11 18:36:27 CEST 2020 by merz
-\* Last modified Mon Aug 18 15:00:45 CEST 2014 by tomer
-\* Last modified Mon Aug 18 14:58:57 CEST 2014 by tomer
-\* Last modified Tue Feb 14 13:35:49 PST 2012 by lamport
-\* Last modified Mon Feb 07 14:46:59 PST 2011 by lamport

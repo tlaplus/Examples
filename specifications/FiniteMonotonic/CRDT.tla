@@ -1,8 +1,9 @@
 ------------------------------- MODULE CRDT ---------------------------------
 
-EXTENDS Naturals
+EXTENDS Naturals, FiniteSets
 
 CONSTANT Node
+ASSUME NodeAssumption == IsFiniteSet(Node)
 
 VARIABLE counter
 vars == counter
@@ -39,9 +40,8 @@ Spec ==
   /\ Init
   /\ [][Next]_counter
 
-THEOREM Spec => []Safety
-THEOREM Spec => []TypeOK
 
+-----------------------------------------------------------------------------
 (***************************************************************************)
 (* Fairness and liveness assumptions.                                      *)
 (* We assume that Gossip actions will eventually occur when enabled, and   *)
@@ -58,7 +58,5 @@ FairSpec ==
   /\ Spec
   /\ Fairness
 
-THEOREM FairSpec => Convergence
-THEOREM FairSpec => Monotonicity
 =============================================================================
 

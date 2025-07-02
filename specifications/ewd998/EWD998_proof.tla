@@ -116,7 +116,7 @@ BY DEF IsAssociativeOn, IsCommutativeOn, IsIdentityOn
 LEMMA SumEmpty ==
   ASSUME NEW fun
   PROVE  Sum(fun, {}) = 0 
-BY FoldFunctionOnSetEmpty DEF Sum
+BY FoldFunctionOnSetEmpty, Zenon DEF Sum
 
 LEMMA SumIterate ==
   ASSUME NEW fun \in [Node -> Int], 
@@ -151,7 +151,7 @@ LEMMA SumIsNat ==
   ASSUME NEW fun \in [Node -> Nat],
          NEW inds \in SUBSET Node
   PROVE  Sum(fun, inds) \in Nat
-BY FoldFunctionOnSetType, NodeIsFinite, Isa DEF Sum
+BY FoldFunctionOnSetType, NodeIsFinite, \A x,y \in Nat: x+y \in Nat, IsaM("blast") DEF Sum
 
 LEMMA SumZero ==
   ASSUME NEW fun \in [Node -> Int], NEW inds \in SUBSET Node,
@@ -164,7 +164,13 @@ LEMMA SumZero ==
   BY SumEmpty
 <1>3. ASSUME NEW T, NEW x, IsFiniteSet(T), P(T), x \notin T
       PROVE  P(T \cup {x})
-  BY <1>3, SumIterate
+  <2>. HAVE T \cup {x} \in SUBSET inds 
+  <2>1. Sum(fun, T \cup {x}) = fun[x] + Sum(fun, (T \cup {x}) \ {x})
+    BY SumIterate
+  <2>2. /\ fun[x] = 0
+        /\ (T \cup {x}) \ {x} = T
+    BY <1>3
+  <2>. QED  BY <1>3, <2>1, <2>2
 <1>4. P(inds)
   <2>. HIDE DEF P
   <2>. QED  BY <1>1, <1>2, <1>3, FS_Induction, IsaM("blast")
@@ -209,7 +215,7 @@ THEOREM Invariance == Init /\ [][Next]_vars => []Inv
           BY <5>a, SumIsInt DEF TypeOK
         <5>3. token.q = Sum(counter, Rng(token.pos+1, N-1))
           <6>1. CASE token.pos = N-1
-            BY <4>1, <6>1, SumEmpty DEF Rng, Node
+            BY <4>1, <6>1, SumEmpty, Rng(token.pos+1, N-1) = {} DEF Rng, Node
           <6>2. CASE token.pos # N-1
             BY <4>1, <6>2
           <6>. QED  BY <6>1, <6>2
@@ -257,7 +263,7 @@ THEOREM Invariance == Init /\ [][Next]_vars => []Inv
           <6>1. j \in Rng(0, token'.pos)
             BY <2>2, <5>3 DEF PassToken, TypeOK, Token, Node, Rng
           <6>2. color'[j] = color[j]
-            BY <2>2, <5>3 DEF PassToken
+            BY <2>2, <5>3 DEF PassToken, TypeOK, Node, Rng
           <6>. QED  BY <5>1, <6>1, <6>2
         <5>. QED  BY <5>2, <5>3
       <4>4. ASSUME Inv!P4 PROVE Inv!P4'
@@ -275,6 +281,9 @@ THEOREM Invariance == Init /\ [][Next]_vars => []Inv
       BY <2>3, Zenon DEF SendMsg
     <3>2. B' = Sum(counter, Node)'
       <4>1. B' = B + 1
+        <5>. /\ pending \in [Node -> Int]
+             /\ pending' \in [Node -> Int]
+          BY DEF TypeOK
         <5>1. /\ B = pending[j] + Sum(pending, Node \ {j})
               /\ B' = pending'[j] + Sum(pending', Node \ {j})
           BY SumIterate DEF B, TypeOK
@@ -332,9 +341,12 @@ THEOREM Invariance == Init /\ [][Next]_vars => []Inv
         PROVE  Inv'
     <3>1. B' = Sum(counter, Node)'
       <4>1. B' = B - 1
+        <5>. /\ pending \in [Node -> Int]
+             /\ pending' \in [Node -> Int]
+          BY DEF TypeOK
         <5>1. /\ B = pending[i] + Sum(pending, Node \ {i})
               /\ B' = pending'[i] + Sum(pending', Node \ {i})
-          BY SumIterate DEF B, TypeOK
+          BY SumIterate DEF B
         <5>2. \A x \in Node \ {i} : pending'[x] = pending[x]
           BY <2>4 DEF TypeOK, RecvMsg
         <5>3. Sum(pending', Node \ {i}) = Sum(pending, Node \ {i})
@@ -363,8 +375,10 @@ THEOREM Invariance == Init /\ [][Next]_vars => []Inv
           BY <2>4 DEF RecvMsg, Rng
         <5>1. ASSUME Inv!P1 PROVE Inv!P2  \* then step <5>2 will show that P2 is preserved
           <6>1. B \in Nat \ {0}
+            <7>. pending \in [Node -> Int]
+              BY DEF TypeOK
             <7>. B = pending[i] + Sum(pending, Node \ {i})
-              BY SumIterate DEF TypeOK, B
+              BY SumIterate DEF B
             <7>. QED  BY <2>4, SumIsNat DEF RecvMsg, TypeOK
           <6>2. CASE token.pos = N-1
             <7>1. token.q = 0
@@ -403,7 +417,7 @@ THEOREM Invariance == Init /\ [][Next]_vars => []Inv
   <2>5. ASSUME NEW i \in Node,
                Deactivate(i)
         PROVE  Inv'
-    BY <2>5 DEF Deactivate, TypeOK, Token, Node, Range, Inv, B
+    BY <2>5, Zenon DEF Deactivate, TypeOK, Token, Node, Rng, Inv, B
   <2>6. CASE UNCHANGED vars
     BY <2>6 DEF vars, Inv, B
   <2>7. QED
@@ -428,19 +442,25 @@ THEOREM Safety ==
     <3>3. ~ Inv!P2
       <4>1. Sum(counter, Rng(0,0)) = counter[0] + Sum(counter, Rng(0,0) \ {0})
         BY SumIterate DEF TypeOK, Rng, Node
-      <4>2. Sum(counter, Rng(0,0)) = counter[0]
-        BY <4>1, SumEmpty DEF TypeOK, Rng, Node
-      <4>. QED  BY <4>2 DEF terminationDetected, TypeOK, Token
+      <4>2. Rng(0,0) \ {0} = {}
+        BY DEF Rng, Node
+      <4>3. Sum(counter, Rng(0,0)) = counter[0]
+        BY <4>1, <4>2, SumEmpty DEF TypeOK, Node
+      <4>. QED  BY <4>3 DEF terminationDetected, TypeOK, Token
     <3>. QED  BY <3>1, <3>2, <3>3 DEF Inv
   <2>2. \A i \in Node : active[i] = FALSE
-    BY <2>1 DEF TypeOK, Token, Node, Rng, terminationDetected
+    <3>1. active[0] = FALSE
+      BY DEF TypeOK, Node, terminationDetected
+    <3>2. \A i \in Rng(1, N-1) : active[i] = FALSE
+      BY <2>1 DEF terminationDetected
+    <3>. QED  BY <3>1, <3>2 DEF Rng, Node
   <2>3. Sum(counter, Node) = 0
     <3>1. token.q = Sum(counter, Rng(1, N-1))
       <4>1. CASE token.pos = N-1
         <5>1. N = 1
           BY <4>1 DEF terminationDetected
         <5>2. Sum(counter, Rng(1, N-1)) = 0
-          BY <5>1, SumEmpty DEF Rng, Node
+          BY <5>1, SumEmpty, Isa DEF Rng, Node
         <5>3. Rng(token.pos+1, N-1) = {}
           BY <4>1, NAssumption DEF TypeOK, Token, Rng, Node
         <5>. QED  BY <2>1, <4>1, <5>2, <5>3, SumEmpty
@@ -448,7 +468,7 @@ THEOREM Safety ==
         BY <2>1, <4>2 DEF terminationDetected
       <4>. QED  BY <4>1, <4>2 
     <3>2. Sum(counter, Node) = counter[0] + Sum(counter, Rng(1, N-1))
-      BY SumIterate DEF TypeOK, Node, Rng
+      BY SumIterate, Rng(1, N-1) = Node \ {0} DEF TypeOK, Node, Rng
     <3>. QED  BY <3>1, <3>2 DEF TypeOK, Token, terminationDetected
   <2>. QED  BY <2>2, <2>3 DEF Inv, Termination
 <1>2. TypeOK' /\ Inv' /\ terminationDetected' => Termination'
@@ -465,8 +485,10 @@ LEMMA B0NoMessagePending ==
   <2>. SUFFICES ASSUME TypeOK, B = 0, NEW i \in Node, pending[i] # 0
                 PROVE  FALSE
     OBVIOUS
+  <2>. pending \in [Node -> Int]
+    BY DEF TypeOK
   <2>. B = pending[i] + Sum(pending, Node \ {i})
-    BY SumIterate DEF TypeOK, B
+    BY SumIterate DEF B
   <2>. QED  BY SumIsNat DEF TypeOK
 <1>2. (TypeOK /\ B=0 => \A i \in Node : pending[i] = 0)'
   BY <1>1, PTL
@@ -489,16 +511,15 @@ LEMMA EnabledSystem ==
                 /\ token.color = "black" \/ color[0] = "black" \/ counter[0]+token.q > 0
              \/ \E i \in Node \ {0} : ~ active[i] /\ token.pos = i
 <1>1. <<System>>_vars <=> System
-  <2>1. InitiateProbe => <<InitiateProbe>>_vars
-    BY DEF InitiateProbe, TypeOK, Token, vars, Node
-  <2>2. \A i \in Node \ {0} : PassToken(i) => <<PassToken(i)>>_vars
-    BY DEF PassToken, TypeOK, Token, vars, Node
-  <2>. QED  BY <2>1, <2>2 DEF System
+  BY DEF System, vars, InitiateProbe, PassToken, TypeOK, Node
 <1>2. (ENABLED <<System>>_vars) <=> (ENABLED System)
-  BY <1>1, ENABLEDrules
-<1>3. ENABLED UNCHANGED <<active, counter, pending>> 
-  BY ExpandENABLED
-<1>. QED  BY <1>2, <1>3, ENABLEDrewrites DEF System, InitiateProbe, PassToken
+  BY <1>1, ENABLEDaxioms
+<1>3. (ENABLED System) 
+      <=> \/ /\ token.pos = 0 
+             /\ token.color = "black" \/ color[0] = "black" \/ counter[0]+token.q > 0
+          \/ \E i \in Node \ {0} : ~ active[i] /\ token.pos = i
+  BY ExpandENABLED DEF System, vars, InitiateProbe, PassToken
+<1>. QED  BY <1>2, <1>3
 
 (***************************************************************************)
 (* In particular, a system transition is enabled when the token is at the  *)
@@ -513,13 +534,23 @@ COROLLARY EnabledAtMaster ==
 <1>2. /\ token.pos = 0 
       /\ token.color = "black" \/ color[0] = "black" \/ counter[0]+token.q > 0
   <2>1. CASE Inv!P1
+    <3>0. Sum(counter, Node) = 0
+      BY DEF Inv
     <3>1. Sum(counter, Node) = counter[0] + Sum(counter, Rng(token.pos+1, N-1))
-      BY SumIterate DEF Rng
+      BY SumIterate, Rng(token.pos+1, N-1) = Node \ {0} DEF Rng
+    <3>3. token.q = Sum(counter, Rng(token.pos+1, N-1))
+      <4>1. CASE N = 1
+        <5>. Rng(token.pos+1, N-1) = {}
+          BY <4>1 DEF Rng
+        <5>. QED  BY <2>1, <4>1, SumEmpty
+      <4>2. CASE N # 1
+        BY <2>1, <4>2
+      <4>. QED  BY <4>1, <4>2
     <3>2. counter[0] + token.q = 0
-      BY <2>1, <3>1 DEF Inv
+      BY <3>0, <3>1, <3>3
     <3>. QED  BY <3>2, B0NoMessagePending DEF terminationDetected, Color
   <2>2. CASE Inv!P2
-    BY <2>2, SumSingleton DEF Rng
+    BY <2>2, SumSingleton, Rng(0, token.pos) = {0} DEF Rng
   <2>3. CASE Inv!P3
     BY <2>3 DEF Rng
   <2>4. CASE Inv!P4
@@ -693,7 +724,7 @@ LEMMA Round3 == BSpec => (Termination /\ atMaster /\ allWhite
       <4>2. ASSUME TypeOK, Pn1, NEW i \in Node \ {0}, PassToken(i)
             PROVE  Pn'
         <5>. Sum(counter, Rng(i, N-1)) = counter[i] + Sum(counter, Rng(i+1, N-1))
-          BY <4>2, SumIterate DEF Rng
+          BY <4>2, SumIterate, Rng(i+1, N-1) = Rng(i, N-1) \ {i} DEF Rng
         <5>. QED  BY <4>2 DEF PassToken
       <4>. QED  BY <4>1, <4>2 DEF System
     <3>1. TypeOK /\ Pn1 /\ [Next]_vars => Pn1' \/ Pn'
@@ -732,7 +763,7 @@ LEMMA Detection ==
   BY B0NoMessagePending DEF Termination, atMaster, allWhite, tknWhite, Node
 <1>2. token.q + counter[0] = 0
   <2>1. Sum(counter, Node) = counter[0] + Sum(counter, Rng(1,N-1))
-    BY SumIterate DEF Node, TypeOK, Rng
+    BY SumIterate, Rng(1, N-1) = Node \ {0} DEF Node, TypeOK, Rng
   <2>2. Sum(counter, Node) = token.q + counter[0]
     BY <2>1 DEF tknCount, TypeOK, Token, Node
   <2>3. Sum(counter, Node) = 0
@@ -776,15 +807,13 @@ THEOREM Refinement == Spec => TD!Spec
     (* but then terminated must also be TRUE.                              *)
     (***********************************************************************)
     <3>4. CASE terminationDetected' = TRUE
-      <4>1. /\ token'.pos = 0
-            /\ ~ active[0]
-            /\ pending[0] = 0
-        BY <3>2, <3>4 DEF terminationDetected
-      <4>2. N = 1
-        BY <2>1, <4>1 DEF InitiateProbe, TypeOK, Token, Node
+      <4>1. Termination'
+        BY <3>4, Safety
+      <4>2. \A i \in Node : pending'[i] = 0
+        BY <4>1, B0NoMessagePending DEF Termination
       <4>3. TD!terminated
-        BY <4>1, <4>2 DEF Node, TD!terminated
-      <4>. QED  BY <3>2, <3>4, <4>3 DEF TD!Next, TD!DetectTermination
+        BY <3>2, <4>1, <4>2 DEF Termination, TD!terminated
+      <4>. QED BY <3>2, <3>4, <4>3 DEF TD!Next, TD!DetectTermination
     <3>. QED  BY <3>3, <3>4 DEF terminationDetected
   <2>2. ASSUME NEW i \in Node \ {0},
                PassToken(i)
@@ -811,7 +840,7 @@ THEOREM Refinement == Spec => TD!Spec
       BY <2>3, Zenon DEF SendMsg
     <3>2. /\ terminationDetected = FALSE
           /\ terminationDetected' = FALSE
-      BY <3>1, Safety DEF Termination
+      BY <3>1, Safety DEF Termination, terminationDetected
     <3>. QED  BY <3>1, <3>2, Zenon DEF TD!Next, TD!SendMsg
   <2>4. ASSUME NEW i \in Node,
                RecvMsg(i)
@@ -824,7 +853,7 @@ THEOREM Refinement == Spec => TD!Spec
                Deactivate(i)
         PROVE  [TD!Next]_(TD!vars)
     <3>1. terminationDetected = FALSE
-      BY <2>5, Safety DEF Termination, Deactivate
+      BY <2>5, Safety DEF Termination, Deactivate, terminationDetected
     <3>2. CASE terminationDetected' = FALSE
       BY <2>5, <3>1, <3>2, Zenon DEF Deactivate, TD!Terminate, TD!Next
     <3>3. CASE terminationDetected' = TRUE
@@ -851,7 +880,7 @@ THEOREM Refinement == Spec => TD!Spec
     <3>2. \A n \in Node : ~ active[n] /\ pending[n] = 0
       BY <3>1 DEF TD!terminated
     <3>3. B = 0
-      BY <3>2, SumZero DEF TypeOK, B
+      BY <3>2, SumZero, pending \in [Node -> Int] DEF TypeOK, B
     <3>. QED  BY <3>1, <3>2, <3>3 DEF Termination
   <2>. QED  BY <2>2, Live, TypeCorrect, Invariance, PTL DEF Liveness
 <1>. QED  BY <1>1, <1>2, <1>4, TypeCorrect, Invariance, PTL DEF Spec, TD!Spec

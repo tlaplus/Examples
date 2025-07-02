@@ -13,7 +13,7 @@
 (* All the lemmas except Reachable1 are obvious consequences of the        *)
 (* definition of ReachableFrom.                                            *)
 (***************************************************************************)
-EXTENDS Reachability, NaturalsInduction
+EXTENDS Reachability, NaturalsInduction, TLAPS
 
 
 (***************************************************************************)
@@ -225,7 +225,7 @@ LEMMA Reachable1 ==
           BY <4>2, <4>3, <4>4 
       <3> HIDE DEF R
       <3>3. QED
-        BY <3>1, <3>2, NatInduction
+        BY <3>1, <3>2, NatInduction, Isa
     (***********************************************************************)
     (* Proving q \in S \cup ReachableFrom(T) from <2>1 is straightforward. *)
     (***********************************************************************)

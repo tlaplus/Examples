@@ -63,11 +63,11 @@ LEMMA Correctness == Spec => []Correct
   BY OccurrencesOne DEF Init, Inv
 <1>2. TypeOK /\ Inv /\ [Next]_vars => Inv'
   <2>. SUFFICES ASSUME TypeOK, Inv, Next PROVE Inv'
-    BY DEF Inv, vars, OccurrencesBefore, PositionsBefore
+    BY Zenon DEF Inv, vars, OccurrencesBefore, PositionsBefore
   <2>. i <= Len(seq) /\ i' = i+1 /\ seq' = seq
     BY DEF Next
   <2>0. \A v \in Value : OccurrencesBefore(v, i)' = OccurrencesBefore(v, i')
-    BY DEF OccurrencesBefore, PositionsBefore
+    BY Zenon DEF OccurrencesBefore, PositionsBefore
   <2>. USE OccurrencesType DEF TypeOK
   <2>1. CASE cnt = 0 /\ cand' = seq[i] /\ cnt' = 1
     <3>1. i \in PositionsBefore(seq[i], i+1)
@@ -83,14 +83,14 @@ LEMMA Correctness == Spec => []Correct
   <2>2. CASE cnt # 0 /\ cand = seq[i] /\ cand' = cand /\ cnt' = cnt + 1
     BY <2>0, <2>2, OccurrencesPlusOne DEF Inv
   <2>3. CASE cnt # 0 /\ cand # seq[i] /\ cand' = cand /\ cnt' = cnt - 1
-    <3>10. cnt' <= OccurrencesBefore(cand', i')
+    <3>1. cnt' <= OccurrencesBefore(cand', i')
       BY <2>3, OccurrencesPlusOne DEF Inv
-    <3>20. 2 * (OccurrencesBefore(cand', i') - cnt') <= i' - 1 - cnt'
+    <3>2. 2 * (OccurrencesBefore(cand', i') - cnt') <= i' - 1 - cnt'
       BY <2>3, OccurrencesPlusOne DEF Inv
-    <3>30. ASSUME NEW v \in Value \ {cand'}
+    <3>3. ASSUME NEW v \in Value \ {cand'}
            PROVE  2 * OccurrencesBefore(v, i') <= i' - 1 - cnt'
       BY <2>3, OccurrencesPlusOne DEF Inv
-    <3>. QED  BY <2>0, <2>3, <3>10, <3>20, <3>30 DEF Inv
+    <3>. QED  BY <2>0, <2>3, <3>1, <3>2, <3>3 DEF Inv
   <2>. QED  BY <2>1, <2>2, <2>3 DEF Next
 <1>3. TypeOK /\ Inv => Correct
   BY OccurrencesType DEF TypeOK, Inv, Correct, Occurrences

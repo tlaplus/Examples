@@ -140,7 +140,7 @@ Inv ==  /\ TypeOK
 (* As before, the decomposition of the proof of <1>2 was essentially       *)
 (* generated with the Toolbox's Decompose Proof command.                   *)
 (***************************************************************************)
-THEOREM Spec => []PCorrect
+THEOREM Correctness == Spec => []PCorrect
 <1> USE NAssump DEF ProcSet
 <1>1. Init => Inv
   <2>1. Init => 0 \in 0..(N-1) /\ pc[0] /= "Done"
@@ -176,6 +176,22 @@ THEOREM Spec => []PCorrect
   BY DEF Inv, TypeOK, PCorrect
 <1>4. QED
   BY <1>1, <1>2, <1>3, PTL DEF Spec
+
+(***************************************************************************)
+(* As for the specification in module Simple, the proof can be shortened   *)
+(* avoiding the decomposition of step <1>2. In order to find the witness   *)
+(* for the existential quantifier, the proof of step <1>1 requires a small *)
+(* hint showing that 0 is a suitable value.                                *)
+(***************************************************************************)
+THEOREM Correctness2 == Spec => []PCorrect
+<1>. USE NAssump DEF Inv, TypeOK, ProcSet 
+<1>1. Init => Inv 
+  BY 0 \in 0 .. N-1 DEF Init
+<1>2. Inv /\ [Next]_vars => Inv'
+  BY DEF Next, vars, a1, a2, b, Terminating, proc
+<1>3. Inv => PCorrect 
+  BY DEF PCorrect
+<1>. QED  BY <1>1, <1>2, <1>3, PTL DEF Spec
 ======================================       
 \* Modification History
 \* Last modified Tue May 14 07:18:15 PDT 2019 by lamport

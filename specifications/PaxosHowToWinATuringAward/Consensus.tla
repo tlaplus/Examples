@@ -1,6 +1,6 @@
 ----------------------------- MODULE Consensus ------------------------------ 
 (***************************************************************************)
-(* This is an very abstract specification of the consensus problem, in     *)
+(* This is a very abstract specification of the consensus problem, in      *)
 (* which a set of processes must choose a single value.  We abstract away  *)
 (* even the processes.  We specify the simple requirement that at most one *)
 (* value is chosen by describing the set of all chosen values.  The naive  *)
