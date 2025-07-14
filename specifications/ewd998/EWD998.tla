@@ -5,7 +5,7 @@
 (* Shmuel Safra's version of termination detection.                        *)
 (* https://www.cs.utexas.edu/users/EWD/ewd09xx/EWD998.PDF                  *)
 (***************************************************************************)
-EXTENDS Integers, FiniteSets, Functions, SequencesExt, Randomization
+EXTENDS Integers, FiniteSets, Functions, SequencesExt
 
 CONSTANT
     \* @type: Int;

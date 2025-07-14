@@ -17,6 +17,7 @@ ASSUME QuorumAssumption == /\ \A Q \in Quorum : Q \subseteq Acceptor
                            /\ \A Q1, Q2 \in Quorum : Q1 \cap Q2 # {}  
 
 THEOREM QuorumNonEmpty == \A Q \in Quorum : Q # {}
+BY QuorumAssumption
 -----------------------------------------------------------------------------
 (***************************************************************************)
 (* Ballot is a set of "ballot numbers".  For simplicity, we let it be the  *)

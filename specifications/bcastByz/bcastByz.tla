@@ -276,7 +276,7 @@ THEOREM NTFRel == N \in Nat /\ T \in Nat /\ F \in Nat /\ (N > 3 * T) /\ (T >= F)
   
 (* Proc is always a finite set and its cardinality is N*)  
  THEOREM ProcProp == Cardinality(Proc) = N /\ IsFiniteSet(Proc) /\ Cardinality(Proc) \in Nat
-  BY FS_Interval, NTFRel DEF Proc    
+  BY FS_Interval, NTFRel, Isa DEF Proc    
 
 (* If we have 
       1/ X, Y, and Z are finite,
@@ -444,7 +444,7 @@ THEOREM FCConstraints_TypeOK_Init ==
     <2>2 Cardinality(Proc) - Cardinality(Corr) <= T
       BY <1>7, <2>1, ProcProp, NTFRel
     <2>3 QED
-      BY <1>3, <1>4, <1>5, <1>6, <2>2, UMFS_CardinalityType, ProcProp 
+      BY <1>3, <1>4, <1>5, <1>6, <2>2, UMFS_CardinalityType, ProcProp, Zenon
   <1>9 ByzMsgs \subseteq Proc \X M
     BY  <1>2 
   <1>10 IsFiniteSet(ByzMsgs)
@@ -479,7 +479,7 @@ THEOREM FCConstraints_TypeOK_Init ==
     OBVIOUS      
   <1> QED
     BY <1>1, <1>2, <1>3, <1>4, <1>5, <1>6, <1>7, <1>8, <1>9, 
-       <1>10, <1>11, <1>12, <1>13, <1>14, <1>15, <1>16 
+       <1>10, <1>11, <1>12, <1>13, <1>14, <1>15, <1>16, Zenon
        
                                         
 THEOREM FCConstraints_TypeOK_IndInv_Unforg_NoBcast ==  
@@ -517,7 +517,7 @@ THEOREM FCConstraints_TypeOK_IndInv_Unforg_NoBcast_TLC ==
       <3> QED
         BY <1>7, <2>1, ProcProp, NTFRel
     <2>3 QED
-      BY <1>3, <1>4, <1>5, <1>6, <2>2, UMFS_CardinalityType, ProcProp 
+      BY <1>3, <1>4, <1>5, <1>6, <2>2, UMFS_CardinalityType, ProcProp, Zenon 
   <1>9 ByzMsgs \subseteq Proc \X M
     BY  <1>2 
   <1>10 IsFiniteSet(ByzMsgs)
@@ -553,7 +553,7 @@ THEOREM FCConstraints_TypeOK_IndInv_Unforg_NoBcast_TLC ==
     OBVIOUS      
   <1> QED
     BY <1>1, <1>2, <1>3, <1>4, <1>5, <1>6, <1>7, <1>8, <1>9, 
-       <1>10, <1>11, <1>12, <1>13, <1>14, <1>15, <1>16 
+       <1>10, <1>11, <1>12, <1>13, <1>14, <1>15, <1>16, Zenon 
          
           
 THEOREM FCConstraints_TypeOK_Next ==
@@ -717,7 +717,7 @@ THEOREM FCConstraints_TypeOK_Next ==
           BY <4>1, <4>2
       <3>4 CASE ReceiveFromAnySender(i) /\ UponAcceptNotSentBefore(i)
         <4>1 FCConstraints'
-          BY <3>4 DEF Receive, UponAcceptNotSentBefore, FCConstraints, ByzMsgs
+          BY <3>4, Zenon DEF Receive, UponAcceptNotSentBefore, FCConstraints, ByzMsgs
         <4>2 TypeOK'
           <5>1 pc' \in [ Proc -> {"V0", "V1", "SE", "AC"} ]
             BY <3>4 DEFS UponAcceptNotSentBefore, TypeOK   
@@ -752,7 +752,7 @@ THEOREM FCConstraints_TypeOK_Next ==
             <6> QED             
               BY <3>4, <6>1, <6>2, <6>3, <6>4 DEFS UponAcceptNotSentBefore, TypeOK, Receive  
           <5>7 Corr' = Corr
-            BY <3>4 DEFS UponAcceptNotSentBefore        
+            BY <3>4, Zenon DEFS UponAcceptNotSentBefore        
           <5> QED
             BY <1>2, <3>4, <4>1, <5>1, <5>5, <5>6, <5>7 DEF TypeOK, FCConstraints
         <4> QED
@@ -794,7 +794,7 @@ THEOREM FCConstraints_TypeOK_Next ==
             <6> QED             
               BY <3>5, <6>1, <6>2, <6>3, <6>4 DEFS UponAcceptSentBefore, TypeOK, Receive            
           <5>7 Corr' = Corr
-            BY <3>5 DEFS UponAcceptSentBefore 
+            BY <3>5, Zenon DEFS UponAcceptSentBefore 
           <5> QED
             BY <1>2, <3>5, <4>1, <5>1, <5>5, <5>6, <5>7 DEF TypeOK, FCConstraints
         <4> QED
@@ -962,7 +962,7 @@ THEOREM Unforg_Step2 == IndInv_Unforg_NoBcast /\ [Next]_vars => IndInv_Unforg_No
             <6>6 Receive(i, TRUE) <=>
                     (\E newMessages \in SUBSET ByzMsgs :
                         rcvd' = [ j \in Proc |-> IF j # i THEN rcvd[j] ELSE rcvd[i] \cup newMessages ])
-              BY <5>1, <6>5            
+              BY <5>1, <6>5, Zenon
             <6>7 Receive(i, TRUE)
               BY <6>3      
             <6>8 \E newMessages \in SUBSET ByzMsgs :
@@ -1036,7 +1036,7 @@ THEOREM Unforg_Step2 == IndInv_Unforg_NoBcast /\ [Next]_vars => IndInv_Unforg_No
                   \/ ~(pc' = [pc EXCEPT ![i] = "SE"])
                   \/ ~(sent' = sent \cup { <<i, "ECHO">> })
                   \/ ~(UNCHANGED << Corr, Faulty >>)
-            BY DEF UponNonFaulty      
+            BY Zenon DEF UponNonFaulty      
           <5>2 (Cardinality(rcvd'[i]) <= T) => ~UponNonFaulty(i)
             <6>1 T < N - 2 * T 
               BY NTFRel

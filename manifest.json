@@ -46,8 +46,8 @@
                 "ignore deadlock"
               ],
               "result": "success",
-              "distinctStates": 598608,
-              "totalStates": 3141768,
+              "distinctStates": 655200,
+              "totalStates": 3403584,
               "stateDepth": 1
             }
           ]
@@ -583,6 +583,20 @@
             "FiniteSetsExt",
             "SequencesExt"
           ],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/FiniteMonotonic/Functions.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/FiniteMonotonic/Folds.tla",
+          "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
@@ -3298,15 +3312,6 @@
           ]
         },
         {
-          "path": "specifications/TwoPhase/TLAPS.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
-          "models": []
-        },
-        {
           "path": "specifications/TwoPhase/TwoPhase.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
@@ -4528,7 +4533,8 @@
               "size": "small",
               "mode": "exhaustive search",
               "features": [
-                "ignore deadlock"
+                "ignore deadlock",
+                "liveness"
               ],
               "result": "success",
               "distinctStates": 302,
@@ -4614,12 +4620,10 @@
           ]
         },
         {
-          "path": "specifications/ewd840/TLAPS.tla",
+          "path": "specifications/ewd840/SyncTerminationDetection_proof.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
+          "features": ["proof"],
           "models": []
         }
       ]
@@ -4671,7 +4675,6 @@
         {
           "path": "specifications/ewd998/EWD998.tla",
           "communityDependencies": [
-            "Functions",
             "SequencesExt"
           ],
           "tlaLanguageVersion": 2,
@@ -4684,7 +4687,8 @@
               "mode": "exhaustive search",
               "features": [
                 "ignore deadlock",
-                "state constraint"
+                "state constraint",
+                "liveness"
               ],
               "result": "success"
             },
@@ -4880,6 +4884,20 @@
           "models": []
         },
         {
+          "path": "specifications/ewd998/Functions.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
+          "path": "specifications/ewd998/Folds.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
+        },
+        {
           "path": "specifications/ewd998/SmokeEWD998.tla",
           "communityDependencies": [
             "CSV",
@@ -4926,18 +4944,8 @@
           ]
         },
         {
-          "path": "specifications/ewd998/TLAPS.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
-          "models": []
-        },
-        {
           "path": "specifications/ewd998/Utils.tla",
           "communityDependencies": [
-            "Functions",
             "SequencesExt"
           ],
           "tlaLanguageVersion": 2,
@@ -5034,13 +5042,6 @@
       "tags": [],
       "modules": [
         {
-          "path": "specifications/lamport_mutex/Functions.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
           "path": "specifications/lamport_mutex/LamportMutex.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
@@ -5076,36 +5077,6 @@
               "stateDepth": 61
             }
           ]
-        },
-        {
-          "path": "specifications/lamport_mutex/NaturalsInduction.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/lamport_mutex/SequenceTheorems.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
-        },
-        {
-          "path": "specifications/lamport_mutex/TLAPS.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
-          "models": []
-        },
-        {
-          "path": "specifications/lamport_mutex/WellFoundedInduction.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [],
-          "models": []
         }
       ]
     },
@@ -5220,7 +5191,7 @@
       "description": "Two proofs that x+x is even for every natural number x",
       "sources": [],
       "authors": [
-        "Stephan Merz"
+        "Martin Riener"
       ],
       "tags": [
         "beginner"
@@ -5244,15 +5215,6 @@
               "stateDepth": 0
             }
           ]
-        },
-        {
-          "path": "specifications/sums_even/TLAPS.tla",
-          "communityDependencies": [],
-          "tlaLanguageVersion": 2,
-          "features": [
-            "proof"
-          ],
-          "models": []
         },
         {
           "path": "specifications/sums_even/sums_even.tla",

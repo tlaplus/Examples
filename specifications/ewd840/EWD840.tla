@@ -114,18 +114,18 @@ NeverChangeColor == [][ UNCHANGED color ]_vars
 (* Main safety property: if there is a white token at node 0 then every    *)
 (* node is inactive.                                                       *)
 (***************************************************************************)
+terminated == \A i \in Node : ~ active[i]
+
 terminationDetected ==
   /\ tpos = 0 /\ tcolor = "white"
   /\ color[0] = "white" /\ ~ active[0]
 
-TerminationDetection ==
-  terminationDetected => \A i \in Node : ~ active[i]
+TerminationDetection == terminationDetected => terminated
 
 (***************************************************************************)
 (* Liveness property: termination is eventually detected.                  *)
 (***************************************************************************)
-Liveness ==
-  (\A i \in Node : ~ active[i]) ~> terminationDetected
+Liveness == terminated ~> terminationDetected
 
 (***************************************************************************)
 (* The following property asserts that when every process always           *)
@@ -170,9 +170,7 @@ CheckInductiveSpec == TypeOK /\ Inv /\ [][Next]_vars
 (* instantiated by the symbols of the same name in the present module.     *)
 (***************************************************************************)
 TD == INSTANCE SyncTerminationDetection
-
-THEOREM Spec => TD!Spec
+TDSpec == TD!Spec
 =============================================================================
 \* Modification History
-\* Last modified Thu Jan 21 16:09:40 CET 2021 by merz
 \* Created Mon Sep 09 11:33:10 CEST 2013 by merz
