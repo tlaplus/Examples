@@ -13,9 +13,6 @@ EXTENDS EWD998ChanID, TLCExt, TLC, IOUtils, Json
 MCInit ==
   (* Rule 0 *)
   /\ counter = [n \in Node |-> 0] \* c properly initialized
-  /\ inbox = [n \in Node |-> IF n = Initiator 
-                              THEN << [type |-> "tok", q |-> 0, color |-> "black" ] >> 
-                              ELSE <<>>] \* with empty channels.
   (* EWD840 *)
   \* Reduce the number of initial states. 
   /\ active \in [Node -> {TRUE}]
@@ -23,6 +20,9 @@ MCInit ==
   (* Each node maintains a (local) vector clock *)
   (* https://en.wikipedia.org/wiki/Vector_clock *)
   /\ clock = [n \in Node |-> [m \in Node |-> 0] ]
+  /\ inbox = [n \in Node |-> IF n = Initiator 
+                              THEN << [type |-> "tok", q |-> 0, color |-> "black", vc |-> clock[n] ] >> 
+                              ELSE <<>>] \* with empty channels.
 
 ----------------------------------------------------------------------------
 
