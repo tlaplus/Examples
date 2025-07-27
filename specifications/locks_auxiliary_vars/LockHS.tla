@@ -16,7 +16,7 @@
 (* the Stuttering module.                                                    *)
 (*****************************************************************************)
 
-EXTENDS Lock
+EXTENDS Lock, NaturalsInduction
 
 \* History variable to remember the turn variable
 VARIABLE h_turn
@@ -26,7 +26,47 @@ NoHistoryChange(A) == A /\ UNCHANGED h_turn
 VARIABLE s
 INSTANCE Stuttering
 
-ASSUME AltStutterConstantCondition(1..2, 1, LAMBDA j : j-1)
+THEOREM StutterConstantCondition(1..2, 1, LAMBDA j : j-1)
+<1>. DEFINE InvD(S) == {sig \in (1..2) \ S : sig-1 \in S}
+            R[n \in Nat] == IF n = 0 THEN {1}
+                            ELSE R[n-1] \cup InvD(R[n-1])
+<1>. SUFFICES (1..2) = UNION {R[n] : n \in Nat}
+  BY Zenon DEF StutterConstantCondition
+<1>. HIDE DEF R
+<1>1. \A n \in Nat : R[n] = IF n = 0 THEN {1}
+                            ELSE R[n-1] \cup InvD(R[n-1])
+  <2>. DEFINE RDef(g,n) == g \cup InvD(g)
+  <2>1. NatInductiveDefHypothesis(R, {1}, RDef)
+    BY Zenon DEF R, NatInductiveDefHypothesis
+  <2>2. NatInductiveDefConclusion(R, {1}, RDef)
+    BY <2>1, NatInductiveDef, Zenon
+  <2>. QED  BY <2>2 DEF NatInductiveDefConclusion
+<1>2. ASSUME NEW n \in Nat
+      PROVE  R[n] \subseteq 1 .. 2
+  <2>. DEFINE P(_n) == R[_n] \subseteq 1 .. 2
+  <2>1. P(0)
+    BY <1>1
+  <2>2. ASSUME NEW m \in Nat, P(m)
+        PROVE  P(m+1)
+    <3>1. \A S : InvD(S) \subseteq 1 .. 2
+      OBVIOUS
+    <3> DEFINE _m == m+1
+    <3>2. _m \in Nat \ {0}
+      OBVIOUS
+    <3> HIDE DEF _m
+    <3>3. R[_m] = R[_m-1] \cup InvD(R[_m-1])
+      BY <1>1, <3>2, Isa
+    <3> USE DEF _m
+    <3>4. R[m+1] = R[m] \cup InvD(R[m])
+      BY <3>3
+    <3>. QED  BY <2>2, <3>1, <3>4
+  <2>. HIDE DEF P
+  <2>3. \A m \in Nat : P(m)
+    BY <2>1, <2>2, NatInduction, Isa
+  <2>. QED  BY <2>3 DEF P
+<1>3. R[1] = 1 .. 2
+  BY <1>1
+<1>. QED  BY <1>2, <1>3
 
 -------------------------------------------------------------------------------
 
