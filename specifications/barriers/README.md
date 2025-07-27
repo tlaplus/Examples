@@ -33,6 +33,9 @@ provided.
 
 A refinement towards an abstract Barrier specification is proven with TLAPS.
 
+A model `MCBarriers.cfg` and its companion `MCBarriers.tla` verifies if
+`B!Spec` (the abstract Barrier specification) holds for `Spec` 
+
 ## Barrier.tla
 
 A specification of an abstract Barrier.
