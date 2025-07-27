@@ -100,6 +100,8 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Condition-Based Consensus](specifications/cbc_max)                                                 | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |           |          |
 | [Buffered Random Access File](specifications/braf)                                                  | Calvin Loncaric                                     |          |             |         |     ✔     |          |
 | [Disruptor](specifications/Disruptor)                                                               | Nicholas Schultz-Møller                             |          |             |         |     ✔     |          |
+| [Barrier Synchronization](specifications/barriers)                                                   | Jarod Differdange                                |          |      ✔      |    ✔    |     ✔     |          |
+| [Lock refinement using auxiliary variables](specifications/locks_auxiliary_vars)                     | Jarod Differdange                                |          |      ✔      |    ✔    |     ✔     |          |
 
 
 ## Examples Elsewhere
