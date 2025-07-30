@@ -6,12 +6,12 @@ CONSTANTS
   N
 
 (**
---algorithm Barrier {
+--algorithm Barriers {
     variables
-      lock = 1,
-      gate_1 = 0,
-      gate_2 = 0,
-      rdv = 0;
+      lock = 1,   \* lock variable used for critical sections
+      gate_1 = 0, \* semaphore for the first chamber
+      gate_2 = 0, \* semaphore for the second chamber
+      rdv = 0;    \* counts the processes entering/leaving the barrier
 
     macro Lock(l) {
         await l = 1;
@@ -31,20 +31,30 @@ CONSTANTS
         s := s + N;
     }
 
+    \* The algorithm uses two waiting chambers which wait for all processes to
+    \* to enter before allowing them to continue.
+    \* The usage of two chambers ensures no process can leave the barrier and
+    \* pass through the whole barrier again while blocking others inside.
     process (proc \in 1..N) {
 a0:   while (TRUE) {
         skip; \* Some code
+        \* first waiting chamber a1-a6
 a1:     Lock(lock);
-a2:     rdv := rdv + 1;
+a2:     rdv := rdv + 1; \* protect read/write of shared variable with a lock
 a3:     if (rdv = N) {
+          \* when all processes are in the first chamber
 a4:       Signal(gate_1);
+          \* open the chamber
         };
 a5:     Unlock(lock);
 a6:     Wait(gate_1);
+        \* second waiting chamber a7-a12
 a7:     Lock(lock);
-a8:     rdv := rdv - 1;
+a8:     rdv := rdv - 1; \* protect read/write of shared variable with a lock
 a9:     if (rdv = 0) {
+          \* when all processes are in the second chamber
 a10:      Signal(gate_2);
+          \* open the chamber
         };
 a11:    Unlock(lock);
 a12:    Wait(gate_2);
@@ -52,7 +62,7 @@ a12:    Wait(gate_2);
     }
 }
 **)
-\* BEGIN TRANSLATION (chksum(pcal) = "fa4cafb2" /\ chksum(tla) = "4cd2e9fd")
+\* BEGIN TRANSLATION (chksum(pcal) = "7a2331f4" /\ chksum(tla) = "4cd2e9fd")
 VARIABLES pc, lock, gate_1, gate_2, rdv
 
 vars == << pc, lock, gate_1, gate_2, rdv >>
@@ -239,6 +249,7 @@ pc_translation(self) ==
   ELSE "b1"
 
 B == INSTANCE Barrier WITH pc <- [p \in ProcSet |-> pc_translation(p)]
+BSpec == B!Spec
 
 -------------------------------------------------------------------------------
 
