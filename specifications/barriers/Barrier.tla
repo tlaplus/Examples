@@ -32,4 +32,9 @@ Spec == Init /\ [][Next]_vars
 TypeOK ==
   /\ pc \in [ProcSet -> {"b0", "b1"}]
 
+\* A process cannot leave the barrier if there are still other processes
+\* that need to enter it
+BarrierProperty ==
+  /\ [][\A p,q \in ProcSet : pc[p] = "b0" /\ pc[q] = "b1" => pc'[q] = "b1"]_vars
+
 ===============================================================================

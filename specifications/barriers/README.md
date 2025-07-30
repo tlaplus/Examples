@@ -1,5 +1,15 @@
 # Barrier synchronization
--
+
+## Barrier.tla
+
+A specification of an abstract Barrier.
+
+The usual typing `TypeOK` invariant is defined.
+
+Another property to show that processes cannot leave the barrier as long as 
+there are others outside of it is also given (see `BarrierProperty`)
+
+A model with $N = 6$ that verifies both properties is provided. 
 
 ## Barriers.tla
 
@@ -7,10 +17,10 @@ A specification of a Reusable Barrier synchronization facility using as
 presented in the INFO09012 Parallel Programming course in ULiège by 
 Prof. Pascal Fontaine.
 
-The barrier consists of two waiting rooms `a1-a6` and `a7-a12`. 
-The last process entering a waiting room signals the appropriate semaphore
+The barrier consists of two waiting chambers `a1-a6` and `a7-a12`. 
+The last process entering a waiting chamber signals the appropriate semaphore
 and allows processes to pass to the next section.
-Using two such waiting rooms makes sure a process leaving the barrier cannot
+Using two such waiting chambers makes sure a process leaving the barrier cannot
 reenter and pass through the whole barrier again.
 
 ## Invariants
@@ -26,7 +36,7 @@ reenter and pass through the whole barrier again.
 - `FlushInv` are two additional clauses needed to prove the refinement.
   It shows that once a waiting section is opened, all processes can pass.
 
-A model `Barriers.cfg` with $N = 7$ that verifies these four invariants is 
+A model `Barriers.cfg` with $N = 6$ that verifies these four invariants is 
 provided.
 
 ## Refinement
@@ -35,11 +45,3 @@ A refinement towards an abstract Barrier specification is proven with TLAPS.
 
 A model `MCBarriers.cfg` and its companion `MCBarriers.tla` verifies if
 `B!Spec` (the abstract Barrier specification) holds for `Spec` 
-
-## Barrier.tla
-
-A specification of an abstract Barrier.
-
-The usual typing invariant is defined.
-
-A model with the same amount of processes as above is provided. 
