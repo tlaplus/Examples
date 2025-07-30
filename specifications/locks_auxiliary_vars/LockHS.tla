@@ -26,6 +26,8 @@ NoHistoryChange(A) == A /\ UNCHANGED h_turn
 VARIABLE s
 INSTANCE Stuttering
 
+\* This theorem justifies the validity of the introduced stuttering variable
+\* in definition l1HS
 THEOREM StutterConstantCondition(1..2, 1, LAMBDA j : j-1)
 <1>. DEFINE InvD(S) == {sig \in (1..2) \ S : sig-1 \in S}
             R[n \in Nat] == IF n = 0 THEN {1}
@@ -125,6 +127,7 @@ P == INSTANCE Peterson WITH
       pc <- [p \in ProcSet |-> pc_translation(p, pc[p], s)],
       c <- [p \in ProcSet |-> c_translation(pc_translation(p, pc[p], s))],
       turn <- h_turn
+PSpec == P!Spec
 
 -------------------------------------------------------------------------------
 
