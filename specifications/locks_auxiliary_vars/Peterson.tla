@@ -106,6 +106,7 @@ lock_translation == IF \E p \in ProcSet : pc[p] \in {"cs", "a4"} THEN 0 ELSE 1
 L == INSTANCE Lock
      WITH pc <- [p \in ProcSet |-> pc_translation(pc[p])], 
      lock <- lock_translation
+LSpec == L!Spec
 
 -------------------------------------------------------------------------------
 
