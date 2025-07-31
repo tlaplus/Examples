@@ -588,14 +588,14 @@
           "models": []
         },
         {
-          "path": "specifications/FiniteMonotonic/Functions.tla",
+          "path": "specifications/FiniteMonotonic/Folds.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
         },
         {
-          "path": "specifications/FiniteMonotonic/Folds.tla",
+          "path": "specifications/FiniteMonotonic/Functions.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
@@ -1361,34 +1361,7 @@
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
-          "models": [
-            {
-              "path": "specifications/Moving_Cat_Puzzle/OddBoxes.cfg",
-              "runtime": "00:00:01",
-              "size": "small",
-              "mode": "exhaustive search",
-              "features": [
-                "liveness"
-              ],
-              "result": "success",
-              "distinctStates": 30,
-              "totalStates": 78,
-              "stateDepth": 1
-            },
-            {
-              "path": "specifications/Moving_Cat_Puzzle/EvenBoxes.cfg",
-              "runtime": "00:00:01",
-              "size": "small",
-              "mode": "exhaustive search",
-              "features": [
-                "liveness"
-              ],
-              "result": "success",
-              "distinctStates": 48,
-              "totalStates": 128,
-              "stateDepth": 1
-            }
-          ]
+          "models": []
         }
       ]
     },
@@ -1960,32 +1933,6 @@
               "distinctStates": 62,
               "totalStates": 188,
               "stateDepth": 11
-            },
-            {
-              "path": "specifications/Prisoners_Single_Switch/SoloPrisoner.cfg",
-              "runtime": "00:00:01",
-              "size": "small",
-              "mode": "exhaustive search",
-              "features": [
-                "liveness"
-              ],
-              "result": "success",
-              "distinctStates": 2,
-              "totalStates": 3,
-              "stateDepth": 2
-            },
-            {
-              "path": "specifications/Prisoners_Single_Switch/SoloPrisonerLightUnknown.cfg",
-              "runtime": "00:00:01",
-              "size": "small",
-              "mode": "exhaustive search",
-              "features": [
-                "liveness"
-              ],
-              "result": "success",
-              "distinctStates": 4,
-              "totalStates": 6,
-              "stateDepth": 2
             }
           ]
         }
@@ -3643,6 +3590,59 @@
       ]
     },
     {
+      "path": "specifications/barriers",
+      "title": "Barrier Synchronization Method",
+      "description": "A barrier makes all threads stop until all threads have reached the barrier",
+      "sources": [
+        "https://matheo.uliege.be/bitstream/2268.2/23374/5/tfe_s202356.pdf"
+      ],
+      "authors": [
+        "Jarod Differdange"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/barriers/Barrier.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": [
+            {
+              "path": "specifications/barriers/Barrier.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/barriers/Barriers.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": [
+            {
+              "path": "specifications/barriers/Barriers.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "path": "specifications/bcastByz",
       "title": "Asynchronous Reliable Broadcast",
       "description": "Algorithm from paper *Simulating authenticated broadcasts to derive simple fault-tolerant algorithms* (1987)",
@@ -4623,7 +4623,9 @@
           "path": "specifications/ewd840/SyncTerminationDetection_proof.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
-          "features": ["proof"],
+          "features": [
+            "proof"
+          ],
           "models": []
         }
       ]
@@ -4687,8 +4689,8 @@
               "mode": "exhaustive search",
               "features": [
                 "ignore deadlock",
-                "state constraint",
-                "liveness"
+                "liveness",
+                "state constraint"
               ],
               "result": "success"
             },
@@ -4884,14 +4886,14 @@
           "models": []
         },
         {
-          "path": "specifications/ewd998/Functions.tla",
+          "path": "specifications/ewd998/Folds.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
           "models": []
         },
         {
-          "path": "specifications/ewd998/Folds.tla",
+          "path": "specifications/ewd998/Functions.tla",
           "communityDependencies": [],
           "tlaLanguageVersion": 2,
           "features": [],
@@ -5077,6 +5079,87 @@
               "stateDepth": 61
             }
           ]
+        }
+      ]
+    },
+    {
+      "path": "specifications/locks_auxiliary_vars",
+      "title": "Peterson's Algorithm Refining a Lock with Auxiliary Variables",
+      "description": "A two-way refinement relation between Peterson's Algorithm and an abstract lock, using auxiliary variables as in *Prophecy Made Simple* by Lamport & Merz",
+      "sources": [
+        "https://matheo.uliege.be/bitstream/2268.2/23374/5/tfe_s202356.pdf"
+      ],
+      "authors": [
+        "Jarod Differdange"
+      ],
+      "tags": [],
+      "modules": [
+        {
+          "path": "specifications/locks_auxiliary_vars/Lock.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": [
+            {
+              "path": "specifications/locks_auxiliary_vars/Lock.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/locks_auxiliary_vars/LockHS.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "proof"
+          ],
+          "models": [
+            {
+              "path": "specifications/locks_auxiliary_vars/LockHS.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/locks_auxiliary_vars/Peterson.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [
+            "pluscal",
+            "proof"
+          ],
+          "models": [
+            {
+              "path": "specifications/locks_auxiliary_vars/Peterson.cfg",
+              "runtime": "00:00:01",
+              "size": "small",
+              "mode": "exhaustive search",
+              "features": [
+                "liveness"
+              ],
+              "result": "success"
+            }
+          ]
+        },
+        {
+          "path": "specifications/locks_auxiliary_vars/Stuttering.tla",
+          "communityDependencies": [],
+          "tlaLanguageVersion": 2,
+          "features": [],
+          "models": []
         }
       ]
     },
