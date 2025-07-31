@@ -48,33 +48,30 @@ jobs:
       - name: Check manifest.json format
         run: |
           python "$SCRIPT_DIR/check_manifest_schema.py" \
-            --manifest_path manifest.json               \
             --schema_path manifest-schema.json
       - name: Check manifest files
         run: |
           python "$SCRIPT_DIR/check_manifest_files.py"  \
-            --manifest_path manifest.json               \
             --ci_ignore_path .ciignore
       - name: Check manifest feature flags
         run: |
           python "$SCRIPT_DIR/check_manifest_features.py" \
-            --manifest_path manifest.json
+            --examples_root .
       - name: Check README spec table
         run: |
           python "$SCRIPT_DIR/check_markdown_table.py"  \
-            --manifest_path manifest.json               \
             --readme_path README.md
       - name: Convert specs to unicode
         if: matrix.unicode
         run: |
           python "$SCRIPT_DIR/unicode_conversion.py"  \
             --tlauc_path "$DEPS_DIR/tlauc/tlauc"      \
-            --manifest_path manifest.json
+            --examples_root .
       - name: Add unicode shims
         if: matrix.unicode
         run: |
           python "$SCRIPT_DIR/unicode_number_set_shim.py" \
-            --manifest_path manifest.json
+            --examples_root .
       - name: Translate PlusCal
         # PlusCal translations will be reverted at the end of this step,
         # since we want to support people manually editing the generated TLA+
@@ -94,7 +91,7 @@ jobs:
           )
           python $SCRIPT_DIR/translate_pluscal.py           \
             --tools_jar_path $DEPS_DIR/tools/tla2tools.jar  \
-            --manifest_path manifest.json                   \
+            --examples_root .                               \
             --skip "${SKIP[@]}"
           git reset --hard HEAD # Restore specs to their original state
       - name: Parse all modules
@@ -104,7 +101,7 @@ jobs:
             --apalache_path $DEPS_DIR/apalache                           \
             --tlapm_lib_path $DEPS_DIR/tlapm/library                     \
             --community_modules_jar_path $DEPS_DIR/community/modules.jar \
-            --manifest_path manifest.json
+            --examples_root .
       - name: Check small models
         run: |
           # Need to have a nonempty list to pass as a skip parameter
@@ -121,7 +118,7 @@ jobs:
             --apalache_path $DEPS_DIR/apalache                           \
             --tlapm_lib_path $DEPS_DIR/tlapm/library                     \
             --community_modules_jar_path $DEPS_DIR/community/modules.jar \
-            --manifest_path manifest.json                                \
+            --examples_root .                                            \
             --skip "${SKIP[@]}"
       - name: Smoke-test large models
         run: |
@@ -139,7 +136,7 @@ jobs:
             --apalache_path $DEPS_DIR/apalache                           \
             --tlapm_lib_path $DEPS_DIR/tlapm/library                     \
             --community_modules_jar_path $DEPS_DIR/community/modules.jar \
-            --manifest_path manifest.json                                \
+            --examples_root .                                            \
             --skip "${SKIP[@]}"
       - name: Check proofs
         if: matrix.os != 'windows-latest' && !matrix.unicode
@@ -159,12 +156,12 @@ jobs:
           )
           python $SCRIPT_DIR/check_proofs.py       \
             --tlapm_path $DEPS_DIR/tlapm           \
-            --manifest_path manifest.json          \
+            --examples_root .                      \
             --skip "${SKIP[@]}"
       - name: Smoke-test manifest generation script
         run: |
           python $SCRIPT_DIR/generate_manifest.py \
-            --manifest_path manifest.json         \
+            --examples_root .                     \
             --ci_ignore_path .ciignore
           git diff -a
       - name: Smoke-test state space script
@@ -174,6 +171,6 @@ jobs:
             --tools_jar_path $DEPS_DIR/tools/tla2tools.jar                \
             --tlapm_lib_path $DEPS_DIR/tlapm/library                      \
             --community_modules_jar_path $DEPS_DIR/community/modules.jar  \
-            --manifest_path manifest.json
+            --examples_root .
           git diff -a
 

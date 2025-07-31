@@ -183,7 +183,7 @@ def check_features(parser, queries, manifest, examples_root):
     Validates every field of the manifest that can be validated.
     """
     success = True
-    for spec in manifest['specifications']:
+    for spec in manifest:
         if spec['title'] == '':
             success = False
             logging.error(f'Spec {spec["path"]} does not have a title')
@@ -235,18 +235,16 @@ def check_features(parser, queries, manifest, examples_root):
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Checks metadata in tlaplus/examples manifest.json against module and model files in repository.')
-    parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+    parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=True)
     args = parser.parse_args()
 
-    manifest_path = normpath(args.manifest_path)
-    manifest = tla_utils.load_json(manifest_path)
-    examples_root = dirname(manifest_path)
+    manifest = tla_utils.load_all_manifests(args.examples_root)
 
     TLAPLUS_LANGUAGE = Language(tree_sitter_tlaplus.language())
     parser = Parser(TLAPLUS_LANGUAGE)
     queries = build_queries(TLAPLUS_LANGUAGE)
 
-    if check_features(parser, queries, manifest, examples_root):
+    if check_features(parser, queries, manifest, args.examples_root):
         logging.info('SUCCESS: metadata in manifest is correct')
         exit(0)
     else:

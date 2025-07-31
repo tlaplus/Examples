@@ -11,17 +11,15 @@ from os.path import dirname, normpath
 import glob
 import tla_utils
 
-parser = ArgumentParser(description='Checks tlaplus/examples manifest.json against module and model files in repository.')
-parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+parser = ArgumentParser(description='Checks manifests against module and model files in repository.')
 parser.add_argument('--ci_ignore_path', help='Path to the .ciignore file', required=True)
 args = parser.parse_args()
 
-manifest_path = normpath(args.manifest_path)
 ci_ignore_path = normpath(args.ci_ignore_path)
-examples_root = dirname(manifest_path)
-manifest = tla_utils.load_json(manifest_path)
+examples_root = dirname(ci_ignore_path)
+manifest = tla_utils.load_all_manifests(examples_root)
 
-module_lists = [spec["modules"] for spec in manifest["specifications"]]
+module_lists = [spec["modules"] for spec in manifest]
 modules = [module for module_list in module_lists for module in module_list]
 model_lists = [module["models"] for module in modules]
 
