@@ -161,7 +161,6 @@ jobs:
       - name: Smoke-test manifest generation script
         run: |
           python $SCRIPT_DIR/generate_manifest.py \
-            --examples_root .                     \
             --ci_ignore_path .ciignore
           git diff -a
       - name: Smoke-test state space script

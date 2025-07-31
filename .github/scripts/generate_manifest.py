@@ -9,7 +9,7 @@ manifest.json file or set as blank/unknown as appropriate.
 
 from check_manifest_features import *
 import os
-from os.path import basename, dirname, join, normpath, relpath, splitext
+from os.path import basename, dirname, join, normpath, relpath, splitext, isfile
 from pathlib import PureWindowsPath
 import glob
 import tla_utils
@@ -104,17 +104,14 @@ def generate_new_manifest(examples_root, spec_path, spec_name, parser, queries):
 
 # Integrate human-written info from existing manifest.json
 
-def find_corresponding_spec(old_manifest, new_spec):
-    specs = [
-        spec for spec in old_manifest['specifications']
-        if spec['path'] == new_spec['path']
-    ]
-    return specs[0] if any(specs) else None
+def get_old_manifest(spec_path):
+    old_manifest_path = join(spec_path, 'manifest.json')
+    return tla_utils.load_json(old_manifest_path) if isfile(old_manifest_path) else None
 
-def integrate_spec_info(old_spec, new_spec):
+def integrate_spec_info(old_manifest, new_spec):
     fields = ['title', 'description', 'authors', 'sources', 'tags']
     for field in fields:
-        new_spec[field] = old_spec[field]
+        new_spec[field] = old_manifest[field]
 
 def find_corresponding_module(old_module, new_spec):
     modules = [
@@ -142,9 +139,10 @@ def integrate_model_info(old_model, new_model):
             new_model[field] = old_model[field]
 
 def integrate_old_manifest_into_new(old_manifest, new_spec):
-    old_spec = find_corresponding_spec(old_manifest, new_spec)
-    integrate_spec_info(old_spec, new_spec)
-    for old_module in old_spec['modules']:
+    if old_manifest is None:
+        return
+    integrate_spec_info(old_manifest, new_spec)
+    for old_module in old_manifest['modules']:
         new_module = find_corresponding_module(old_module, new_spec)
         if new_module is None:
             continue
@@ -156,22 +154,20 @@ def integrate_old_manifest_into_new(old_manifest, new_spec):
             integrate_model_info(old_model, new_model)
 
 if __name__ == '__main__':
-    parser = ArgumentParser(description='Generates a new manifest.json derived from files in the repo.')
-    parser.add_argument('--manifest_path', help='Path to the current tlaplus/examples manifest.json file', default='manifest.json')
+    parser = ArgumentParser(description='Generates new manifest.json files derived from files in the repo.')
     parser.add_argument('--ci_ignore_path', help='Path to the CI ignore file', default='.ciignore')
     args = parser.parse_args()
 
-    manifest_path = normpath(args.manifest_path)
-    examples_root = dirname(manifest_path)
     ci_ignore_path = normpath(args.ci_ignore_path)
+    examples_root = dirname(ci_ignore_path)
     ignored_dirs = tla_utils.get_ignored_dirs(ci_ignore_path)
 
     TLAPLUS_LANGUAGE = Language(tree_sitter_tlaplus.language())
     parser = Parser(TLAPLUS_LANGUAGE)
     queries = build_queries(TLAPLUS_LANGUAGE)
 
-    old_manifest = tla_utils.load_json(manifest_path)
     for (spec_path, spec_name) in get_spec_dirs(examples_root, ignored_dirs):
+        old_manifest = get_old_manifest(spec_path)
         new_manifest = generate_new_manifest(examples_root, spec_path, spec_name, parser, queries)
         integrate_old_manifest_into_new(old_manifest, new_manifest)
         tla_utils.write_json(new_manifest, join(spec_path, 'manifest.json'))
