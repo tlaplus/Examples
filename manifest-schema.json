@@ -1,93 +1,83 @@
 {
-  "type" : "object",
-  "required": ["specifications"],
+  "type": "object",
+  "required": ["title", "description", "sources", "authors", "path", "tags", "modules"],
   "additionalProperties": false,
-  "properties" : {
-    "specifications" : {
+  "properties": {
+    "path": {"type": "string"},
+    "title": {"type": "string"},
+    "description": {"type": "string"},
+    "sources": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "authors": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "tags": {
+      "type": "array",
+      "items": {"enum": ["beginner", "intermediate", "ewd"]}
+    },
+    "modules": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["title", "description", "sources", "authors", "path", "tags", "modules"],
+        "required": ["path", "communityDependencies", "tlaLanguageVersion", "features", "models"],
         "additionalProperties": false,
         "properties": {
           "path": {"type": "string"},
-          "title": {"type": "string"},
-          "description": {"type": "string"},
-          "sources": {
+          "communityDependencies": {
             "type": "array",
             "items": {"type": "string"}
           },
-          "authors": {
+          "tlaLanguageVersion": {"type": "number"},
+          "features": {
             "type": "array",
-            "items": {"type": "string"}
+            "items": {"enum": ["pluscal", "proof", "action composition"]}
           },
-          "tags": {
-            "type": "array",
-            "items": {"enum": ["beginner", "intermediate", "ewd"]}
-          },
-          "modules": {
+          "models": {
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["path", "communityDependencies", "tlaLanguageVersion", "features", "models"],
               "additionalProperties": false,
+              "required": ["path", "runtime", "size", "mode", "features", "result"],
               "properties": {
                 "path": {"type": "string"},
-                "communityDependencies": {
-                  "type": "array",
-                  "items": {"type": "string"}
+                "runtime": {
+                  "type": "string",
+                  "pattern": "^(([0-9][0-9]:[0-9][0-9]:[0-9][0-9])|unknown)$"
                 },
-                "tlaLanguageVersion": {"type": "number"},
+                "size": {"enum": ["small", "medium", "large", "unknown"]},
+                "distinctStates": {"type": "integer"},
+                "totalStates": {"type": "integer"},
+                "stateDepth": {"type": "integer"},
+                "mode": {
+                  "oneOf": [
+                    {
+                      "enum": ["exhaustive search", "generate", "symbolic"]
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["simulate"],
+                      "properties": {
+                        "simulate": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": ["traceCount"],
+                          "properties": {
+                            "traceCount": {"type": "number"}
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
                 "features": {
                   "type": "array",
-                  "items": {"enum": ["pluscal", "proof", "action composition"]}
+                  "items": {"enum": ["liveness", "symmetry", "view", "alias", "state constraint", "ignore deadlock"]}
                 },
-                "models": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "required": ["path", "runtime", "size", "mode", "features", "result"],
-                    "properties": {
-                      "path": {"type": "string"},
-                      "runtime": {
-                        "type": "string",
-                        "pattern": "^(([0-9][0-9]:[0-9][0-9]:[0-9][0-9])|unknown)$"
-                      },
-                      "size": {"enum": ["small", "medium", "large", "unknown"]},
-                      "distinctStates": {"type": "integer"},
-                      "totalStates": {"type": "integer"},
-                      "stateDepth": {"type": "integer"},
-                      "mode": {
-                        "oneOf": [
-                          {
-                            "enum": ["exhaustive search", "generate", "symbolic"]
-                          },
-                          {
-                            "type": "object",
-                            "additionalProperties": false,
-                            "required": ["simulate"],
-                            "properties": {
-                              "simulate": {
-                                "type": "object",
-                                "additionalProperties": false,
-                                "required": ["traceCount"],
-                                "properties": {
-                                  "traceCount": {"type": "number"}
-                                }
-                              }
-                            }
-                          }
-                        ]
-                      },
-                      "features": {
-                        "type": "array",
-                        "items": {"enum": ["liveness", "symmetry", "view", "alias", "state constraint", "ignore deadlock"]}
-                      },
-                      "result": {"enum": ["success", "assumption failure", "deadlock failure", "safety failure", "liveness failure", "unknown"]}
-                    }
-                  }
-                }
+                "result": {"enum": ["success", "assumption failure", "deadlock failure", "safety failure", "liveness failure", "unknown"]}
               }
             }
           }

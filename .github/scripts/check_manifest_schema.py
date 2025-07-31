@@ -1,29 +1,38 @@
 """
-Checks to ensure manifest.json is valid according to schema; this can also
-be done manually at https://www.jsonschemavalidator.net/
+Checks to ensure manifest.json in each specifications/ subdirectory is valid
+according to schema; this can also be done manually at
+https://www.jsonschemavalidator.net/
+
 Learn about the JSON schema format at
 https://json-schema.org/understanding-json-schema/
 """
 
 from argparse import ArgumentParser
 from jsonschema import validate
-from os.path import normpath
+from jsonschema.exceptions import ValidationError
+from os.path import normpath, dirname, join
+from sys import stderr
 import tla_utils
 
-parser = ArgumentParser(description='Checks tlaplus/examples manifest.json against JSON schema file.')
-parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+parser = ArgumentParser(description='Checks tlaplus/examples manifest.json files against JSON schema file.')
 parser.add_argument('--schema_path', help='Path to the tlaplus/examples manifest-schema.json file', required=True)
 args = parser.parse_args()
 
+examples_root = dirname(args.schema_path)
 schema = tla_utils.load_json(normpath(args.schema_path))
-manifest = tla_utils.load_json(normpath(args.manifest_path))
+failures = []
+for manifest in tla_utils.load_all_manifests(examples_root):
+    manifest_path = join(manifest['path'], "manifest.json")
+    try:
+        validate(instance=manifest, schema=schema)
+    except ValidationError as error:
+        print(f'FAILURE: schema NOT matched by {manifest_path}', file=stderr)
+        failures.append((manifest_path, error))
+    else:
+        print(f'SUCCESS: schema matched by {manifest_path}')
 
-result = validate(instance=manifest, schema=schema)
-if None == result:
-    print('SUCCESS: Manifest correctly follows schema')
-    exit(0)
-else:
-    print('ERROR: Manifest does not follow schema')
-    print(result)
-    exit(1)
+for (manifest_path, manifest_error) in failures:
+    print(f'\nSchema failure in {manifest_path}:\n{manifest_error}\n', file=stderr)
+
+exit(1 if any(failures) else 0)
 
