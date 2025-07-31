@@ -1,0 +1,54 @@
+{
+  "path": "specifications/SimplifiedFastPaxos",
+  "title": "Simplified Fast Paxos",
+  "description": "Spec of simplified Fast Paxos from Lamport's 2006 paper Fast Paxos",
+  "sources": [],
+  "authors": [
+    "Lim Ngian Xin Terry",
+    "Gaurav Gandhi"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/SimplifiedFastPaxos/FastPaxos.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SimplifiedFastPaxos/FastPaxos.cfg",
+          "runtime": "00:00:30",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness",
+            "symmetry"
+          ],
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/SimplifiedFastPaxos/Paxos.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SimplifiedFastPaxos/Paxos.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness",
+            "symmetry"
+          ],
+          "result": "success",
+          "distinctStates": 1207,
+          "totalStates": 13290,
+          "stateDepth": 22
+        }
+      ]
+    }
+  ]
+}

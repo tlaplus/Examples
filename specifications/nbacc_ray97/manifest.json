@@ -1,0 +1,33 @@
+{
+  "path": "specifications/nbacc_ray97",
+  "title": "Asynchronous Non-Blocking Atomic Commit",
+  "description": "Algorithm from paper *A case study of agreement problems in distributed systems: non-blocking atomic commitment* (1997)",
+  "sources": [],
+  "authors": [
+    "Igor Konnov",
+    "Josef Widder",
+    "Thanh Hai Tran"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/nbacc_ray97/nbacc_ray97.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/nbacc_ray97/nbacc_ray97.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success",
+          "distinctStates": 3016,
+          "totalStates": 49592,
+          "stateDepth": 7
+        }
+      ]
+    }
+  ]
+}

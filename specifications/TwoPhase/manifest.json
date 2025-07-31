@@ -1,0 +1,48 @@
+{
+  "path": "specifications/TwoPhase",
+  "title": "Two-Phase Handshaking",
+  "description": "Specification of a very simple hardware protocol called two-phase handshaking",
+  "sources": [],
+  "authors": [
+    "Leslie Lamport",
+    "Stephan Merz"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/TwoPhase/Alternate.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/TwoPhase/MCTwoPhase.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/TwoPhase/MCTwoPhase.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success",
+          "distinctStates": 4,
+          "totalStates": 5,
+          "stateDepth": 4
+        }
+      ]
+    },
+    {
+      "path": "specifications/TwoPhase/TwoPhase.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "proof"
+      ],
+      "models": []
+    }
+  ]
+}

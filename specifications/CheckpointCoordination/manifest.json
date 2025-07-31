@@ -1,0 +1,52 @@
+{
+  "path": "specifications/CheckpointCoordination",
+  "title": "Checkpoint Coordination",
+  "description": "An algorithm for controlling checkpoint leases in a Paxos ring",
+  "sources": [
+    "https://github.com/Azure/RingMaster",
+    "https://ahelwer.ca/post/2023-04-05-checkpoint-coordination/"
+  ],
+  "authors": [
+    "Andrew Helwer"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/CheckpointCoordination/CheckpointCoordination.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/CheckpointCoordination/MCCheckpointCoordination.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/CheckpointCoordination/MCCheckpointCoordination.cfg",
+          "runtime": "00:01:00",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [
+            "state constraint",
+            "symmetry"
+          ],
+          "result": "success"
+        },
+        {
+          "path": "specifications/CheckpointCoordination/MCCheckpointCoordinationFailure.cfg",
+          "runtime": "00:00:10",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "state constraint",
+            "symmetry"
+          ],
+          "result": "safety failure"
+        }
+      ]
+    }
+  ]
+}

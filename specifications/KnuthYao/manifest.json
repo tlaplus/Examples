@@ -1,0 +1,55 @@
+{
+  "path": "specifications/KnuthYao",
+  "title": "The Knuth-Yao Method",
+  "description": "A method for simulating a fair 6-sided die using only coin flips",
+  "sources": [
+    "https://old.reddit.com/r/tlaplus/comments/j06ohw/how_do_you_reason_about_a_probabilistic/g6owlxy/"
+  ],
+  "authors": [
+    "Markus Kuppe",
+    "Ron Pressler"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/KnuthYao/KnuthYao.tla",
+      "communityDependencies": [
+        "DyadicRationals"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/KnuthYao/Prob.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/KnuthYao/SimKnuthYao.tla",
+      "communityDependencies": [
+        "CSV",
+        "Functions",
+        "IOUtils",
+        "Statistics"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/KnuthYao/SimKnuthYao.cfg",
+          "runtime": "unknown",
+          "size": "unknown",
+          "mode": "generate",
+          "features": [
+            "ignore deadlock",
+            "state constraint"
+          ],
+          "result": "unknown"
+        }
+      ]
+    }
+  ]
+}

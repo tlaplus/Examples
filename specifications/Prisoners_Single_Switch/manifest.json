@@ -1,0 +1,74 @@
+{
+  "path": "specifications/Prisoners_Single_Switch",
+  "title": "The Prisoners & Switch Puzzle",
+  "description": "Given a room containing a single light switch prisoners enter one by one, they must develop a strategy to free themselves.",
+  "sources": [],
+  "authors": [
+    "Florian Schanda"
+  ],
+  "tags": [
+    "beginner"
+  ],
+  "modules": [
+    {
+      "path": "specifications/Prisoners_Single_Switch/Prisoner.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/Prisoners_Single_Switch/Prisoner.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 16,
+          "totalStates": 49,
+          "stateDepth": 5
+        },
+        {
+          "path": "specifications/Prisoners_Single_Switch/PrisonerLightUnknown.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 62,
+          "totalStates": 188,
+          "stateDepth": 11
+        },
+        {
+          "path": "specifications/Prisoners_Single_Switch/PrisonerSolo.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 2,
+          "totalStates": 3,
+          "stateDepth": 2
+        },
+        {
+          "path": "specifications/Prisoners_Single_Switch/PrisonerSoloLightUnknown.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 4,
+          "totalStates": 6,
+          "stateDepth": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "path": "specifications/sums_even",
+  "title": "Proof x+x is Even",
+  "description": "Two proofs that x+x is even for every natural number x",
+  "sources": [],
+  "authors": [
+    "Martin Riener"
+  ],
+  "tags": [
+    "beginner"
+  ],
+  "modules": [
+    {
+      "path": "specifications/sums_even/MC_sums_even.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/sums_even/MC_sums_even.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success",
+          "distinctStates": 0,
+          "totalStates": 0,
+          "stateDepth": 0
+        }
+      ]
+    },
+    {
+      "path": "specifications/sums_even/sums_even.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "proof"
+      ],
+      "models": []
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "path": "specifications/TLC",
+  "title": "The TLC Safety Checking Algorithm",
+  "description": "Spec of the safety checking algorithm used by the TLC model-checker",
+  "sources": [],
+  "authors": [
+    "Markus Kuppe"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/TLC/TLCMC.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/TLC/TestGraphs.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/TLC/TestGraphs.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 2790,
+          "totalStates": 2990,
+          "stateDepth": 52
+        }
+      ]
+    }
+  ]
+}

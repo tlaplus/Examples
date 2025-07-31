@@ -1,0 +1,95 @@
+{
+  "path": "specifications/transaction_commit",
+  "title": "Transaction Commit Models",
+  "description": "Ordinary transaction commit, two-phase commit, and Paxos commit",
+  "sources": [
+    "http://research.microsoft.com/en-us/um/people/lamport/pubs/pubs.html#paxos-commit",
+    "https://www.microsoft.com/en-us/research/uploads/prod/2004/01/consensus-on-transaction-commit.pdf",
+    "https://github.com/muratdem/PlusCal-examples/tree/master/2PCTM"
+  ],
+  "authors": [
+    "Jim Gray",
+    "Leslie Lamport",
+    "Murat Demirbas"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/transaction_commit/2PCwithBTM.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal"
+      ],
+      "models": [
+        {
+          "path": "specifications/transaction_commit/2PCwithBTM.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success",
+          "distinctStates": 1245,
+          "totalStates": 5841,
+          "stateDepth": 15
+        }
+      ]
+    },
+    {
+      "path": "specifications/transaction_commit/PaxosCommit.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/transaction_commit/PaxosCommit.cfg",
+          "runtime": "00:00:30",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/transaction_commit/TCommit.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/transaction_commit/TCommit.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock"
+          ],
+          "result": "success",
+          "distinctStates": 34,
+          "totalStates": 94,
+          "stateDepth": 7
+        }
+      ]
+    },
+    {
+      "path": "specifications/transaction_commit/TwoPhase.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/transaction_commit/TwoPhase.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success",
+          "distinctStates": 288,
+          "totalStates": 1146,
+          "stateDepth": 11
+        }
+      ]
+    }
+  ]
+}

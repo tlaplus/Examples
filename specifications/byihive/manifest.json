@@ -1,0 +1,122 @@
+{
+  "path": "specifications/byihive",
+  "title": "RFC 3506: Voucher Transaction System",
+  "description": "Formal specification of a peer-to-peer ledger protocol",
+  "sources": [
+    "https://github.com/byisystems/byihive"
+  ],
+  "authors": [
+    "Santhosh Raju",
+    "Cherry G. Mathew",
+    "Fransisca Andriani"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/byihive/VoucherCancel.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/byihive/VoucherCancel.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock"
+          ],
+          "result": "success",
+          "distinctStates": 4199,
+          "totalStates": 26848,
+          "stateDepth": 11
+        }
+      ]
+    },
+    {
+      "path": "specifications/byihive/VoucherIssue.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/byihive/VoucherIssue.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 4199,
+          "totalStates": 26848,
+          "stateDepth": 11
+        }
+      ]
+    },
+    {
+      "path": "specifications/byihive/VoucherLifeCycle.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/byihive/VoucherLifeCycle.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock"
+          ],
+          "result": "success",
+          "distinctStates": 64,
+          "totalStates": 193,
+          "stateDepth": 7
+        }
+      ]
+    },
+    {
+      "path": "specifications/byihive/VoucherRedeem.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/byihive/VoucherRedeem.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock"
+          ],
+          "result": "success",
+          "distinctStates": 4199,
+          "totalStates": 26848,
+          "stateDepth": 11
+        }
+      ]
+    },
+    {
+      "path": "specifications/byihive/VoucherTransfer.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/byihive/VoucherTransfer.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock"
+          ],
+          "result": "success",
+          "distinctStates": 4197,
+          "totalStates": 26848,
+          "stateDepth": 11
+        }
+      ]
+    }
+  ]
+}

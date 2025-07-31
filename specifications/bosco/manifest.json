@@ -1,0 +1,30 @@
+{
+  "path": "specifications/bosco",
+  "title": "The Bosco Byzantine Consensus Algorithm",
+  "description": "Algorithm from paper *Bosco: One-step byzantine asynchronous consensus* (2008)",
+  "sources": [],
+  "authors": [
+    "Igor Konnov",
+    "Josef Widder",
+    "Thanh Hai Tran"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/bosco/bosco.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/bosco/bosco.cfg",
+          "runtime": "00:03:00",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success"
+        }
+      ]
+    }
+  ]
+}

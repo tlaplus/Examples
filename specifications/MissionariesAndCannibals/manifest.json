@@ -1,0 +1,30 @@
+{
+  "path": "specifications/MissionariesAndCannibals",
+  "title": "Missionaries and Cannibals",
+  "description": "Spec of a river-crossing puzzle",
+  "sources": [],
+  "authors": [
+    "Leslie Lamport"
+  ],
+  "tags": [
+    "beginner"
+  ],
+  "modules": [
+    {
+      "path": "specifications/MissionariesAndCannibals/MissionariesAndCannibals.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/MissionariesAndCannibals/MissionariesAndCannibals.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "safety failure"
+        }
+      ]
+    }
+  ]
+}

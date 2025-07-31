@@ -1,0 +1,82 @@
+{
+  "path": "specifications/N-Queens",
+  "title": "The N-Queens Puzzle",
+  "description": "Place N queens on an NxN chess board such that no two queens threaten each other",
+  "sources": [],
+  "authors": [
+    "Stephan Merz"
+  ],
+  "tags": [
+    "beginner"
+  ],
+  "modules": [
+    {
+      "path": "specifications/N-Queens/Queens.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/N-Queens/Queens.toolbox/FourQueens/MC.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/N-Queens/Queens.toolbox/FourQueens/MC.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock"
+          ],
+          "result": "safety failure"
+        }
+      ]
+    },
+    {
+      "path": "specifications/N-Queens/Queens.toolbox/FourQueens/Queens.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/N-Queens/QueensPluscal.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/N-Queens/QueensPluscal.toolbox/FourQueens/MC.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/N-Queens/QueensPluscal.toolbox/FourQueens/MC.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "safety failure"
+        }
+      ]
+    },
+    {
+      "path": "specifications/N-Queens/QueensPluscal.toolbox/FourQueens/QueensPluscal.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal"
+      ],
+      "models": []
+    }
+  ]
+}

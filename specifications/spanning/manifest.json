@@ -1,0 +1,37 @@
+{
+  "path": "specifications/spanning",
+  "title": "Spanning Tree Broadcast Algorithm",
+  "description": "A spanning tree broadcast algorithm",
+  "sources": [],
+  "authors": [
+    "Igor Konnov",
+    "Josef Widder",
+    "Thanh Hai Tran"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/spanning/MC_spanning.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/spanning/MC_spanning.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "safety failure"
+        }
+      ]
+    },
+    {
+      "path": "specifications/spanning/spanning.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    }
+  ]
+}

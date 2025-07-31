@@ -1,0 +1,76 @@
+{
+  "path": "specifications/SDP_Verification",
+  "title": "Software-Defined Perimeter",
+  "description": "Specifying and verifying SDP-protocol-based zero trust architecture",
+  "sources": [
+    "https://github.com/10227694/SDP_Verification"
+  ],
+  "authors": [
+    "Luming Dong",
+    "Zhi Niu"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/MC.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/MC.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 2881,
+          "totalStates": 6826,
+          "stateDepth": 21
+        }
+      ]
+    },
+    {
+      "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/SPA_Attack_New.tla",
+      "communityDependencies": [
+        "Bitwise",
+        "Functions"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/SDP_Verification/SDP_Attack_Spec/MC.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SDP_Verification/SDP_Attack_Spec/MC.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "safety failure"
+        }
+      ]
+    },
+    {
+      "path": "specifications/SDP_Verification/SDP_Attack_Spec/SPA_Attack.tla",
+      "communityDependencies": [
+        "Bitwise",
+        "Functions"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    }
+  ]
+}

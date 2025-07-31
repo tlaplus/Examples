@@ -1,0 +1,75 @@
+{
+  "path": "specifications/dijkstra-mutex",
+  "title": "Dijkstra's Mutual Exclusion Algorithm",
+  "description": "Algorithm from paper *Solution of a Problem in Concurrent Programming Control* (1965)",
+  "sources": [],
+  "authors": [
+    "Leslie Lamport"
+  ],
+  "tags": [
+    "ewd"
+  ],
+  "modules": [
+    {
+      "path": "specifications/dijkstra-mutex/DijkstraMutex.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/DijkstraMutex.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/MC.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/MC.cfg",
+          "runtime": "00:00:50",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/Safety-4-processors/DijkstraMutex.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/Safety-4-processors/MC.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/Safety-4-processors/MC.cfg",
+          "runtime": "00:02:00",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success"
+        }
+      ]
+    }
+  ]
+}

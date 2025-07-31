@@ -1,0 +1,47 @@
+{
+  "path": "specifications/echo",
+  "title": "The Echo Algorithm",
+  "description": "Algorithm for constructing a spanning tree in an undirected graph",
+  "sources": [],
+  "authors": [
+    "Stephan Merz"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/echo/Echo.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/echo/MCEcho.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/echo/MCEcho.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success",
+          "distinctStates": 75,
+          "totalStates": 116,
+          "stateDepth": 16
+        }
+      ]
+    },
+    {
+      "path": "specifications/echo/Relation.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    }
+  ]
+}

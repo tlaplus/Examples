@@ -1,0 +1,42 @@
+{
+  "path": "specifications/Prisoners",
+  "title": "The Prisoners & Switches Puzzle",
+  "description": "Given a room containing two switches prisoners enter one by one, they must develop a strategy to free themselves",
+  "sources": [],
+  "authors": [
+    "Leslie Lamport"
+  ],
+  "tags": [
+    "beginner"
+  ],
+  "modules": [
+    {
+      "path": "specifications/Prisoners/MCPrisoners.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/Prisoners/Prisoners.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/Prisoners/Prisoners.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 214,
+          "totalStates": 860,
+          "stateDepth": 14
+        }
+      ]
+    }
+  ]
+}

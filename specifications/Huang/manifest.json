@@ -1,0 +1,37 @@
+{
+  "path": "specifications/Huang",
+  "title": "Huang's Algorithm",
+  "description": "An algorithm for detecting termination in a distributed system",
+  "sources": [],
+  "authors": [
+    "Markus Kuppe"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/Huang/Huang.tla",
+      "communityDependencies": [
+        "DyadicRationals",
+        "Functions",
+        "SequencesExt"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/Huang/Huang.cfg",
+          "runtime": "00:00:40",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [
+            "alias",
+            "ignore deadlock",
+            "liveness",
+            "state constraint"
+          ],
+          "result": "success"
+        }
+      ]
+    }
+  ]
+}

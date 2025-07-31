@@ -1,0 +1,28 @@
+{
+  "path": "specifications/SlidingPuzzles",
+  "title": "Sliding Block Puzzle",
+  "description": "A spec of the Klotski sliding block puzzle",
+  "sources": [],
+  "authors": [
+    "Mariusz Ryndzionek"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/SlidingPuzzles/SlidingPuzzles.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SlidingPuzzles/SlidingPuzzles.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "safety failure"
+        }
+      ]
+    }
+  ]
+}

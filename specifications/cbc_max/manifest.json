@@ -1,0 +1,21 @@
+{
+  "path": "specifications/cbc_max",
+  "title": "Condition-Based Consensus",
+  "description": "Algorithm from paper *Evaluating the condition-based approach to solve consensus* (2003)",
+  "sources": [],
+  "authors": [
+    "Igor Konnov",
+    "Josef Widder",
+    "Thanh Hai Tran"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/cbc_max/cbc_max.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    }
+  ]
+}

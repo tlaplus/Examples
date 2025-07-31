@@ -1,0 +1,33 @@
+{
+  "path": "specifications/GameOfLife",
+  "title": "Conway's Game of Life",
+  "description": "The famous cellular automata simulation",
+  "sources": [
+    "https://github.com/mryndzionek/tlaplus_specs#gameoflifetla"
+  ],
+  "authors": [
+    "Mariusz Ryndzionek"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/GameOfLife/GameOfLife.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/GameOfLife/GameOfLife.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success",
+          "distinctStates": 65536,
+          "totalStates": 131072,
+          "stateDepth": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,326 @@
+{
+  "path": "specifications/ewd998",
+  "title": "EWD998: Termination Detection in a Ring with Asynchronous Message Delivery",
+  "description": "Variant of EWD 840 given by Shmuel Safra",
+  "sources": [],
+  "authors": [
+    "Markus Kuppe",
+    "Stephan Merz"
+  ],
+  "tags": [
+    "ewd"
+  ],
+  "modules": [
+    {
+      "path": "specifications/ewd998/AsyncTerminationDetection.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd998/AsyncTerminationDetection.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness",
+            "state constraint"
+          ],
+          "result": "success",
+          "distinctStates": 4097,
+          "totalStates": 53271,
+          "stateDepth": 14
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd998/AsyncTerminationDetection_proof.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "proof"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/ewd998/EWD998.tla",
+      "communityDependencies": [
+        "SequencesExt"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd998/EWD998.cfg",
+          "runtime": "00:50:00",
+          "size": "large",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness",
+            "state constraint"
+          ],
+          "result": "success"
+        },
+        {
+          "path": "specifications/ewd998/EWD998Small.cfg",
+          "runtime": "00:05:00",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "state constraint"
+          ],
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd998/EWD998Chan.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd998/EWD998Chan.cfg",
+          "runtime": "00:05:00",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness",
+            "state constraint"
+          ],
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd998/EWD998ChanID.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd998/EWD998ChanID.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness",
+            "state constraint",
+            "view"
+          ],
+          "result": "success",
+          "distinctStates": 14,
+          "totalStates": 15,
+          "stateDepth": 14
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd998/EWD998ChanID_export.tla",
+      "communityDependencies": [
+        "IOUtils"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd998/EWD998ChanID_export.cfg",
+          "runtime": "unknown",
+          "size": "large",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock"
+          ],
+          "result": "unknown"
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd998/EWD998ChanID_shiviz.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd998/EWD998ChanID_shiviz.cfg",
+          "runtime": "unknown",
+          "size": "large",
+          "mode": "exhaustive search",
+          "features": [
+            "alias",
+            "ignore deadlock"
+          ],
+          "result": "unknown"
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd998/EWD998ChanTrace.tla",
+      "communityDependencies": [
+        "IOUtils",
+        "VectorClocks"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd998/EWD998ChanTrace.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "alias",
+            "view"
+          ],
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd998/EWD998Chan_opts.tla",
+      "communityDependencies": [
+        "CSV",
+        "IOUtils"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/ewd998/EWD998PCal.tla",
+      "communityDependencies": [
+        "BagsExt"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal"
+      ],
+      "models": [
+        {
+          "path": "specifications/ewd998/EWD998PCal.cfg",
+          "runtime": "00:00:21",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [
+            "alias",
+            "liveness",
+            "state constraint"
+          ],
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd998/EWD998_anim.tla",
+      "communityDependencies": [
+        "IOUtils",
+        "SVG"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/ewd998/EWD998_opts.tla",
+      "communityDependencies": [
+        "CSV",
+        "IOUtils"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/ewd998/EWD998_optsSC.tla",
+      "communityDependencies": [
+        "CSV",
+        "IOUtils"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/ewd998/EWD998_proof.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "proof"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/ewd998/Folds.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/ewd998/Functions.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/ewd998/SmokeEWD998.tla",
+      "communityDependencies": [
+        "CSV",
+        "IOUtils"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd998/SmokeEWD998.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": {
+            "simulate": {
+              "traceCount": 100
+            }
+          },
+          "features": [
+            "ignore deadlock",
+            "liveness",
+            "state constraint"
+          ],
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd998/SmokeEWD998_SC.tla",
+      "communityDependencies": [
+        "CSV",
+        "IOUtils"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd998/SmokeEWD998_SC.cfg",
+          "runtime": "unknown",
+          "size": "unknown",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "unknown"
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd998/Utils.tla",
+      "communityDependencies": [
+        "SequencesExt"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    }
+  ]
+}

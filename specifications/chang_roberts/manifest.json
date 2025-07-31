@@ -1,0 +1,43 @@
+{
+  "path": "specifications/chang_roberts",
+  "title": "Chang-Roberts Algorithm for Leader Election in a Ring",
+  "description": "Algorithm from paper *An improved algorithm for decentralized extrema-finding in circular configurations of processes* (1979)",
+  "sources": [],
+  "authors": [
+    "Stephan Merz"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/chang_roberts/ChangRoberts.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/chang_roberts/MCChangRoberts.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/chang_roberts/MCChangRoberts.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 137,
+          "totalStates": 227,
+          "stateDepth": 10
+        }
+      ]
+    }
+  ]
+}

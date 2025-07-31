@@ -1,0 +1,123 @@
+{
+  "path": "specifications/ewd840",
+  "title": "EWD840: Termination Detection in a Ring",
+  "description": "EWD840: Termination Detection in a Ring",
+  "sources": [
+    "Dijkstra's termination detection algorithm for ring topologies"
+  ],
+  "authors": [
+    "Stephan Merz"
+  ],
+  "tags": [
+    "ewd"
+  ],
+  "modules": [
+    {
+      "path": "specifications/ewd840/EWD840.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd840/EWD840.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 302,
+          "totalStates": 2001,
+          "stateDepth": 10
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd840/EWD840_anim.tla",
+      "communityDependencies": [
+        "SVG"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd840/EWD840_anim.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": {
+            "simulate": {
+              "traceCount": 100
+            }
+          },
+          "features": [
+            "alias",
+            "ignore deadlock"
+          ],
+          "result": "safety failure"
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd840/EWD840_json.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd840/EWD840_json.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock"
+          ],
+          "result": "success",
+          "distinctStates": 1566,
+          "totalStates": 15986,
+          "stateDepth": 12
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd840/EWD840_proof.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "proof"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/ewd840/SyncTerminationDetection.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd840/SyncTerminationDetection.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 129,
+          "totalStates": 3722,
+          "stateDepth": 1
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd840/SyncTerminationDetection_proof.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "proof"
+      ],
+      "models": []
+    }
+  ]
+}

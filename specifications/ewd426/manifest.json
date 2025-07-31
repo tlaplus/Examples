@@ -1,0 +1,60 @@
+{
+  "path": "specifications/ewd426",
+  "title": "EWD 426: Token Stabilization",
+  "description": "Dijkstra's classical stabilizing token ring algorithm, EWD426",
+  "sources": [],
+  "authors": [
+    "Markus Kuppe",
+    "Murat Demirbas"
+  ],
+  "tags": [
+    "ewd"
+  ],
+  "modules": [
+    {
+      "path": "specifications/ewd426/SimTokenRing.tla",
+      "communityDependencies": [
+        "CSV",
+        "IOUtils"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd426/SimTokenRing.cfg",
+          "runtime": "unknown",
+          "size": "large",
+          "mode": "generate",
+          "features": [
+            "ignore deadlock",
+            "state constraint"
+          ],
+          "result": "unknown"
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd426/TokenRing.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd426/TokenRing.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "alias",
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 46656,
+          "totalStates": 248832,
+          "stateDepth": 1
+        }
+      ]
+    }
+  ]
+}

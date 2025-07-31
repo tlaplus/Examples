@@ -1,0 +1,40 @@
+{
+  "path": "specifications/SingleLaneBridge",
+  "title": "Single-Lane Bridge Problem",
+  "description": "Controlling cars moving over a single-lange bridge in opposite directions",
+  "sources": [],
+  "authors": [
+    "Younes Akhouayri"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/SingleLaneBridge/MC.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SingleLaneBridge/MC.cfg",
+          "runtime": "00:00:10",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 3605,
+          "totalStates": 20181,
+          "stateDepth": 29
+        }
+      ]
+    },
+    {
+      "path": "specifications/SingleLaneBridge/SingleLaneBridge.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    }
+  ]
+}
