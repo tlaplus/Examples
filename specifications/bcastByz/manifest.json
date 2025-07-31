@@ -1,0 +1,50 @@
+{
+  "path": "specifications/bcastByz",
+  "title": "Asynchronous Reliable Broadcast",
+  "description": "Algorithm from paper *Simulating authenticated broadcasts to derive simple fault-tolerant algorithms* (1987)",
+  "sources": [],
+  "authors": [
+    "Igor Konnov",
+    "Josef Widder",
+    "Thanh Hai Tran"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/bcastByz/bcastByz.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "proof"
+      ],
+      "models": [
+        {
+          "path": "specifications/bcastByz/bcastByz.cfg",
+          "runtime": "00:00:10",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 14424,
+          "totalStates": 227344,
+          "stateDepth": 7
+        },
+        {
+          "path": "specifications/bcastByz/bcastByzNoBcast.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 45,
+          "totalStates": 90,
+          "stateDepth": 1
+        }
+      ]
+    }
+  ]
+}

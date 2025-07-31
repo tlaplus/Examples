@@ -1,0 +1,32 @@
+{
+  "path": "specifications/cf1s-folklore",
+  "title": "One-Step Consensus with Zero-Degradation",
+  "description": "Algorithm from paper *One-step Consensus with Zero-Degradation* (2006)",
+  "sources": [],
+  "authors": [
+    "Igor Konnov",
+    "Josef Widder",
+    "Thanh Hai Tran"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/cf1s-folklore/cf1s_folklore.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/cf1s-folklore/cf1s_folklore.cfg",
+          "runtime": "00:01:00",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success"
+        }
+      ]
+    }
+  ]
+}

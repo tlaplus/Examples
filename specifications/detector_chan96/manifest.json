@@ -1,0 +1,46 @@
+{
+  "path": "specifications/detector_chan96",
+  "title": "Failure Detector",
+  "description": "Algorithm from paper *Unreliable failure detectors for reliable distributed systems* (1996)",
+  "sources": [],
+  "authors": [
+    "Igor Konnov",
+    "Josef Widder",
+    "Thanh Hai Tran"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/detector_chan96/Age_Channel.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/detector_chan96/EPFailureDetector.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/detector_chan96/EnvironmentController.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/detector_chan96/EnvironmentController.cfg",
+          "runtime": "02:00:00",
+          "size": "large",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success"
+        }
+      ]
+    }
+  ]
+}

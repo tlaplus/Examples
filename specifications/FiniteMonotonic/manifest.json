@@ -1,0 +1,138 @@
+{
+  "path": "specifications/FiniteMonotonic",
+  "title": "Finitizing Monotonic Systems",
+  "description": "Illustration of technique for making ordinarily-infinite monotonic systems finite for the purposes of model-checking.",
+  "sources": [
+    "https://ahelwer.ca/post/2023-11-01-tla-finite-monotonic/"
+  ],
+  "authors": [
+    "Andrew Helwer",
+    "Stephan Merz",
+    "Markus Kuppe"
+  ],
+  "tags": [
+    "intermediate"
+  ],
+  "modules": [
+    {
+      "path": "specifications/FiniteMonotonic/CRDT.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/FiniteMonotonic/CRDT_proof.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "proof"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/FiniteMonotonic/DistributedReplicatedLog.tla",
+      "communityDependencies": [
+        "FiniteSetsExt",
+        "SequencesExt"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/FiniteMonotonic/Folds.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/FiniteMonotonic/Functions.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/FiniteMonotonic/MCCRDT.tla",
+      "communityDependencies": [
+        "FiniteSetsExt"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "action composition"
+      ],
+      "models": [
+        {
+          "path": "specifications/FiniteMonotonic/MCCRDT.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness",
+            "state constraint"
+          ],
+          "result": "success",
+          "distinctStates": 25000,
+          "totalStates": 1350001,
+          "stateDepth": 16
+        }
+      ]
+    },
+    {
+      "path": "specifications/FiniteMonotonic/MCDistributedReplicatedLog.tla",
+      "communityDependencies": [
+        "FiniteSetsExt"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/FiniteMonotonic/MCDistributedReplicatedLog.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness",
+            "view"
+          ],
+          "result": "liveness failure"
+        }
+      ]
+    },
+    {
+      "path": "specifications/FiniteMonotonic/MCReplicatedLog.tla",
+      "communityDependencies": [
+        "FiniteSetsExt"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "action composition"
+      ],
+      "models": [
+        {
+          "path": "specifications/FiniteMonotonic/MCReplicatedLog.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness",
+            "state constraint"
+          ],
+          "result": "success",
+          "distinctStates": 1363,
+          "totalStates": 17425,
+          "stateDepth": 13
+        }
+      ]
+    },
+    {
+      "path": "specifications/FiniteMonotonic/ReplicatedLog.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    }
+  ]
+}

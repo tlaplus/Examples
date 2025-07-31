@@ -1,0 +1,52 @@
+{
+  "path": "specifications/SlushProtocol",
+  "title": "The Slush Protocol",
+  "description": "An attempt to use TLA⁺ to analyze a probabilistic protocol in the Avalanche family",
+  "sources": [
+    "https://github.com/ahelwer/avalanche-analysis",
+    "https://ahelwer.ca/post/2020-09-11-probabilistic-distsys/"
+  ],
+  "authors": [
+    "Andrew Helwer"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/SlushProtocol/Slush.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal"
+      ],
+      "models": [
+        {
+          "path": "specifications/SlushProtocol/SlushLarge.cfg",
+          "runtime": "00:50:00",
+          "size": "large",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success"
+        },
+        {
+          "path": "specifications/SlushProtocol/SlushMedium.cfg",
+          "runtime": "00:01:00",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success"
+        },
+        {
+          "path": "specifications/SlushProtocol/SlushSmall.cfg",
+          "runtime": "00:00:15",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success",
+          "distinctStates": 274678,
+          "totalStates": 1621541,
+          "stateDepth": 43
+        }
+      ]
+    }
+  ]
+}

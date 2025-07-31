@@ -1,0 +1,49 @@
+{
+  "path": "specifications/lamport_mutex",
+  "title": "Distributed Mutual Exclusion",
+  "description": "Specification of Lamport's distributed mutual exclusion algorithm",
+  "sources": [],
+  "authors": [
+    "Stephan Merz"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/lamport_mutex/LamportMutex.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/lamport_mutex/LamportMutex_proofs.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "proof"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/lamport_mutex/MCLamportMutex.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/lamport_mutex/MCLamportMutex.cfg",
+          "runtime": "00:00:10",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "state constraint"
+          ],
+          "result": "success",
+          "distinctStates": 724274,
+          "totalStates": 2729079,
+          "stateDepth": 61
+        }
+      ]
+    }
+  ]
+}

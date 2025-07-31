@@ -1,0 +1,60 @@
+{
+  "path": "specifications/TeachingConcurrency",
+  "title": "Teaching Concurrency",
+  "description": "Simple problem useful for teaching and learning about concurrency",
+  "sources": [
+    "http://lamport.azurewebsites.net/pubs/teaching-concurrency.pdf"
+  ],
+  "authors": [
+    "Leslie Lamport"
+  ],
+  "tags": [
+    "beginner"
+  ],
+  "modules": [
+    {
+      "path": "specifications/TeachingConcurrency/Simple.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal",
+        "proof"
+      ],
+      "models": [
+        {
+          "path": "specifications/TeachingConcurrency/Simple.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success",
+          "distinctStates": 723,
+          "totalStates": 1842,
+          "stateDepth": 11
+        }
+      ]
+    },
+    {
+      "path": "specifications/TeachingConcurrency/SimpleRegular.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal",
+        "proof"
+      ],
+      "models": [
+        {
+          "path": "specifications/TeachingConcurrency/SimpleRegular.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success",
+          "distinctStates": 277726,
+          "totalStates": 1454776,
+          "stateDepth": 25
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "path": "specifications/DieHard",
+  "title": "The Die Hard Problem",
+  "description": "Obtain 4 gallons of water using only 3 and 5 gallon jugs",
+  "sources": [],
+  "authors": [
+    "Leslie Lamport"
+  ],
+  "tags": [
+    "beginner"
+  ],
+  "modules": [
+    {
+      "path": "specifications/DieHard/DieHard.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/DieHard/DieHard.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "safety failure"
+        }
+      ]
+    },
+    {
+      "path": "specifications/DieHard/DieHarder.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/DieHard/MCDieHarder.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/DieHard/MCDieHarder.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "safety failure"
+        }
+      ]
+    }
+  ]
+}

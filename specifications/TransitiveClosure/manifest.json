@@ -1,0 +1,31 @@
+{
+  "path": "specifications/TransitiveClosure",
+  "title": "Transitive Closure",
+  "description": "Spec defining the transitive closure of a relation",
+  "sources": [],
+  "authors": [
+    "Stephan Merz"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/TransitiveClosure/TransitiveClosure.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/TransitiveClosure/TransitiveClosure.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success",
+          "distinctStates": 0,
+          "totalStates": 0,
+          "stateDepth": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "path": "specifications/byzpaxos",
+  "title": "Byzantizing Paxos by Refinement",
+  "description": "Mechanically-checked safety proof of a Byzantine Paxos algorithm",
+  "sources": [
+    "http://lamport.azurewebsites.net/pubs/pubs.html#web-byzpaxos",
+    "http://lamport.azurewebsites.net/pubs/web-byzpaxos.pdf",
+    "http://lamport.azurewebsites.net/tla/byzpaxos.html"
+  ],
+  "authors": [
+    "Leslie Lamport"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/byzpaxos/BPConProof.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal",
+        "proof"
+      ],
+      "models": [
+        {
+          "path": "specifications/byzpaxos/BPConProof.cfg",
+          "runtime": "unknown",
+          "size": "large",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "unknown"
+        }
+      ]
+    },
+    {
+      "path": "specifications/byzpaxos/Consensus.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal",
+        "proof"
+      ],
+      "models": [
+        {
+          "path": "specifications/byzpaxos/Consensus.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 4,
+          "totalStates": 4,
+          "stateDepth": 2
+        }
+      ]
+    },
+    {
+      "path": "specifications/byzpaxos/PConProof.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal",
+        "proof"
+      ],
+      "models": [
+        {
+          "path": "specifications/byzpaxos/PConProof.cfg",
+          "runtime": "00:06:00",
+          "size": "large",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/byzpaxos/VoteProof.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal",
+        "proof"
+      ],
+      "models": [
+        {
+          "path": "specifications/byzpaxos/VoteProof.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 6962,
+          "totalStates": 318877,
+          "stateDepth": 15
+        }
+      ]
+    }
+  ]
+}

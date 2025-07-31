@@ -1,0 +1,100 @@
+{
+  "path": "specifications/KeyValueStore",
+  "title": "Snapshot Key-Value Store",
+  "description": "A simple KVS implementing snapshot isolation",
+  "sources": [],
+  "authors": [
+    "Andrew Helwer",
+    "Murat Demirbas"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/KeyValueStore/ClientCentric.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/KeyValueStore/KVsnap.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/KeyValueStore/KeyValueStore.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/KeyValueStore/MCKVS.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/KeyValueStore/MCKVSSafetyLarge.cfg",
+          "runtime": "07:16:00",
+          "size": "large",
+          "mode": "exhaustive search",
+          "features": [
+            "symmetry"
+          ],
+          "result": "success"
+        },
+        {
+          "path": "specifications/KeyValueStore/MCKVSSafetyMedium.cfg",
+          "runtime": "00:04:30",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [
+            "symmetry"
+          ],
+          "result": "success"
+        },
+        {
+          "path": "specifications/KeyValueStore/MCKVSSafetySmall.cfg",
+          "runtime": "00:00:40",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/KeyValueStore/MCKVsnap.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/KeyValueStore/MCKVsnap.cfg",
+          "runtime": "00:00:50",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness",
+            "symmetry"
+          ],
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/KeyValueStore/Util.tla",
+      "communityDependencies": [
+        "Functions"
+      ],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    }
+  ]
+}

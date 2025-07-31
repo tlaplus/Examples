@@ -1,0 +1,113 @@
+{
+  "path": "specifications/PaxosHowToWinATuringAward",
+  "title": "Paxos (How to Win a Turing Award)",
+  "description": "Exercises from the lecture The Paxos Algorithm - or How to Win a Turing Award",
+  "sources": [
+    "https://www.youtube.com/watch?v=tw3gsBms-f8"
+  ],
+  "authors": [
+    "Leslie Lamport"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/PaxosHowToWinATuringAward/Consensus.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "proof"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/PaxosHowToWinATuringAward/MCConsensus.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/MCConsensus.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock"
+          ],
+          "result": "success",
+          "distinctStates": 4,
+          "totalStates": 4,
+          "stateDepth": 2
+        }
+      ]
+    },
+    {
+      "path": "specifications/PaxosHowToWinATuringAward/MCPaxos.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/MCPaxosSmall.cfg",
+          "runtime": "00:01:00",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success"
+        },
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/MCPaxosTiny.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 3921,
+          "totalStates": 23563,
+          "stateDepth": 17
+        }
+      ]
+    },
+    {
+      "path": "specifications/PaxosHowToWinATuringAward/MCVoting.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/PaxosHowToWinATuringAward/MCVoting.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 6752,
+          "totalStates": 41017,
+          "stateDepth": 16
+        }
+      ]
+    },
+    {
+      "path": "specifications/PaxosHowToWinATuringAward/Paxos.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/PaxosHowToWinATuringAward/Voting.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "proof"
+      ],
+      "models": []
+    }
+  ]
+}

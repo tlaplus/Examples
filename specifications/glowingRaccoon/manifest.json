@@ -1,0 +1,77 @@
+{
+  "path": "specifications/glowingRaccoon",
+  "title": "PCR Testing for Snippets of DNA",
+  "description": "Specification of a PCR test process",
+  "sources": [],
+  "authors": [
+    "Martin Harrison"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/glowingRaccoon/clean.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/glowingRaccoon/clean.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 63,
+          "totalStates": 99,
+          "stateDepth": 10
+        }
+      ]
+    },
+    {
+      "path": "specifications/glowingRaccoon/product.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/glowingRaccoon/product.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 305,
+          "totalStates": 376,
+          "stateDepth": 23
+        }
+      ]
+    },
+    {
+      "path": "specifications/glowingRaccoon/stages.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/glowingRaccoon/stages.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 83,
+          "totalStates": 93,
+          "stateDepth": 23
+        }
+      ]
+    }
+  ]
+}

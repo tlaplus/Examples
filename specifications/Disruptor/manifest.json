@@ -1,0 +1,81 @@
+{
+  "path": "specifications/Disruptor",
+  "title": "Disruptor",
+  "description": "Models single and multi producer scenarios of the Disruptor library and checks for data races.",
+  "sources": [
+    "https://github.com/nicholassm/disruptor-rs"
+  ],
+  "authors": [
+    "Nicholas Schultz-Møller"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/Disruptor/Disruptor_MPMC.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/Disruptor/Disruptor_MPMC.cfg",
+          "runtime": "00:00:10",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "state constraint"
+          ],
+          "result": "success",
+          "distinctStates": 112929,
+          "totalStates": 422781,
+          "stateDepth": 81
+        },
+        {
+          "path": "specifications/Disruptor/Disruptor_MPMC_liveliness.cfg",
+          "runtime": "00:00:10",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness",
+            "state constraint"
+          ],
+          "result": "success",
+          "distinctStates": 14365,
+          "totalStates": 44581,
+          "stateDepth": 61
+        }
+      ]
+    },
+    {
+      "path": "specifications/Disruptor/Disruptor_SPMC.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/Disruptor/Disruptor_SPMC.cfg",
+          "runtime": "00:00:10",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness",
+            "state constraint"
+          ],
+          "result": "success",
+          "distinctStates": 8496,
+          "totalStates": 28049,
+          "stateDepth": 82
+        }
+      ]
+    },
+    {
+      "path": "specifications/Disruptor/RingBuffer.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    }
+  ]
+}

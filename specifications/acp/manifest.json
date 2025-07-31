@@ -1,0 +1,92 @@
+{
+  "path": "specifications/acp",
+  "title": "Atomic Commitment Protocol",
+  "description": "TLA⁺ specs from CS-986: Advanced Topics in Program Verification",
+  "sources": [
+    "https://members.loria.fr/SMerz/talks/argentina2005/Charpentier/charpov/Teaching/CS-986/TLC/",
+    "https://dl.acm.org/doi/10.5555/302430.302436"
+  ],
+  "authors": [
+    "Stephan Merz"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/acp/ACP_NB.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/acp/ACP_NB_TLC.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/acp/ACP_NB_TLC.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 4284,
+          "totalStates": 23988,
+          "stateDepth": 19
+        }
+      ]
+    },
+    {
+      "path": "specifications/acp/ACP_NB_WRONG_TLC.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/acp/ACP_NB_WRONG_TLC.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "safety failure"
+        }
+      ]
+    },
+    {
+      "path": "specifications/acp/ACP_SB.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/acp/ACP_SB_TLC.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/acp/ACP_SB_TLC.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 54944,
+          "totalStates": 218352,
+          "stateDepth": 21
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "path": "specifications/DiningPhilosophers",
+  "title": "The Dining Philosophers Problem",
+  "description": "The Chandy-Misra solution to the Dining Philosophers concurrency problem",
+  "sources": [],
+  "authors": [
+    "Jeff Hemphill"
+  ],
+  "tags": [
+    "beginner"
+  ],
+  "modules": [
+    {
+      "path": "specifications/DiningPhilosophers/DiningPhilosophers.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal"
+      ],
+      "models": [
+        {
+          "path": "specifications/DiningPhilosophers/DiningPhilosophers.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 67,
+          "totalStates": 336,
+          "stateDepth": 29
+        }
+      ]
+    }
+  ]
+}

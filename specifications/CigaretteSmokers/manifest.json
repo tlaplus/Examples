@@ -1,0 +1,33 @@
+{
+  "path": "specifications/CigaretteSmokers",
+  "title": "The Cigarette Smokers Problem",
+  "description": "A concurrency problem described in 1971 by Suhas Patil",
+  "sources": [
+    "https://github.com/mryndzionek/tlaplus_specs#cigarettesmokerstla"
+  ],
+  "authors": [
+    "Mariusz Ryndzionek"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/CigaretteSmokers/CigaretteSmokers.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/CigaretteSmokers/CigaretteSmokers.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [],
+          "result": "success",
+          "distinctStates": 6,
+          "totalStates": 15,
+          "stateDepth": 2
+        }
+      ]
+    }
+  ]
+}

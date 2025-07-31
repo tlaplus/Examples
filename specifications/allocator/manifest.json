@@ -1,0 +1,96 @@
+{
+  "path": "specifications/allocator",
+  "title": "Resource Allocator",
+  "description": "Specification of a resource allocator",
+  "sources": [],
+  "authors": [
+    "Stephan Merz"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/allocator/AllocatorImplementation.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/allocator/AllocatorImplementation.cfg",
+          "runtime": "00:00:15",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 17701,
+          "totalStates": 64414,
+          "stateDepth": 16
+        }
+      ]
+    },
+    {
+      "path": "specifications/allocator/AllocatorRefinement.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/allocator/AllocatorRefinement.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 1690,
+          "totalStates": 5854,
+          "stateDepth": 7
+        }
+      ]
+    },
+    {
+      "path": "specifications/allocator/SchedulingAllocator.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/allocator/SchedulingAllocator.cfg",
+          "runtime": "00:00:10",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 1690,
+          "totalStates": 5854,
+          "stateDepth": 7
+        }
+      ]
+    },
+    {
+      "path": "specifications/allocator/SimpleAllocator.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/allocator/SimpleAllocator.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 400,
+          "totalStates": 1633,
+          "stateDepth": 6
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "path": "specifications/c1cs",
+  "title": "Consensus in One Communication Step",
+  "description": "Algorithm from paper *Consensus in one communication step* (2001)",
+  "sources": [],
+  "authors": [
+    "Igor Konnov",
+    "Josef Widder",
+    "Thanh Hai Tran"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/c1cs/c1cs.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/c1cs/c1cs.cfg",
+          "runtime": "unknown",
+          "size": "large",
+          "mode": "exhaustive search",
+          "features": [
+            "liveness"
+          ],
+          "result": "unknown"
+        }
+      ]
+    }
+  ]
+}

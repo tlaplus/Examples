@@ -1,0 +1,29 @@
+{
+  "path": "specifications/EinsteinRiddle",
+  "title": "Einstein's Riddle",
+  "description": "Five houses, five people, various facts, who lives in what house?",
+  "sources": [],
+  "authors": [
+    "Isaac DeFrain",
+    "Giuliano Losa"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/EinsteinRiddle/Einstein.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/EinsteinRiddle/Einstein.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "symbolic",
+          "features": [],
+          "result": "safety failure"
+        }
+      ]
+    }
+  ]
+}

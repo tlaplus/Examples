@@ -1,0 +1,35 @@
+{
+  "path": "specifications/Chameneos",
+  "title": "Chameneos, a Concurrency Game",
+  "description": "A concurrency game requiring concurrent & symmetric cooperation",
+  "sources": [
+    "https://github.com/mryndzionek/tlaplus_specs#chameneostla"
+  ],
+  "authors": [
+    "Mariusz Ryndzionek"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/Chameneos/Chameneos.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/Chameneos/Chameneos.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock"
+          ],
+          "result": "success",
+          "distinctStates": 34534,
+          "totalStates": 104697,
+          "stateDepth": 13
+        }
+      ]
+    }
+  ]
+}

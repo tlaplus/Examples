@@ -1,0 +1,86 @@
+{
+  "path": "specifications/SpanningTree",
+  "title": "Span Tree Exercise",
+  "description": "Simplified algorithm from the Lamport paper *An Assertional Correctness Proof of a Distributed Program*",
+  "sources": [],
+  "authors": [
+    "Leslie Lamport"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/SpanningTree/SpanTree.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpanningTree/SpanTree.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 1236,
+          "totalStates": 10278,
+          "stateDepth": 6
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpanningTree/SpanTreeRandom.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpanningTree/SpanTreeRandom.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpanningTree/SpanTreeTest.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpanningTree/SpanTreeTest4Nodes.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "success",
+          "distinctStates": 3984,
+          "totalStates": 21784,
+          "stateDepth": 4
+        },
+        {
+          "path": "specifications/SpanningTree/SpanTreeTest5Nodes.cfg",
+          "runtime": "unknown",
+          "size": "large",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock",
+            "liveness"
+          ],
+          "result": "unknown"
+        }
+      ]
+    }
+  ]
+}

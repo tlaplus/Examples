@@ -1,0 +1,72 @@
+{
+  "path": "specifications/Bakery-Boulangerie",
+  "title": "The Boulangerie Algorithm",
+  "description": "Spec of a variant of the Bakery Algorithm",
+  "sources": [],
+  "authors": [
+    "Leslie Lamport",
+    "Stephan Merz"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/Bakery-Boulangerie/Bakery.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal",
+        "proof"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/Bakery-Boulangerie/Boulanger.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal",
+        "proof"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/Bakery-Boulangerie/MCBakery.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/Bakery-Boulangerie/MCBakery.cfg",
+          "runtime": "00:00:10",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "ignore deadlock"
+          ],
+          "result": "success",
+          "distinctStates": 655200,
+          "totalStates": 3403584,
+          "stateDepth": 1
+        }
+      ]
+    },
+    {
+      "path": "specifications/Bakery-Boulangerie/MCBoulanger.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/Bakery-Boulangerie/MCBoulanger.cfg",
+          "runtime": "00:01:00",
+          "size": "medium",
+          "mode": "exhaustive search",
+          "features": [
+            "state constraint"
+          ],
+          "result": "success"
+        }
+      ]
+    }
+  ]
+}

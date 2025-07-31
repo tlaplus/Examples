@@ -1,0 +1,55 @@
+{
+  "path": "specifications/LearnProofs",
+  "title": "Learn TLA⁺ Proofs",
+  "description": "Some specs of very simple algorithms & formal proofs of their correctness",
+  "sources": [],
+  "authors": [
+    "Andrew Helwer"
+  ],
+  "tags": [
+    "beginner"
+  ],
+  "modules": [
+    {
+      "path": "specifications/LearnProofs/AddTwo.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal",
+        "proof"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/LearnProofs/FindHighest.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal",
+        "proof"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/LearnProofs/MCFindHighest.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/LearnProofs/MCFindHighest.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "features": [
+            "state constraint"
+          ],
+          "result": "success",
+          "distinctStates": 742,
+          "totalStates": 1523,
+          "stateDepth": 5
+        }
+      ]
+    }
+  ]
+}
