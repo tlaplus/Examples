@@ -18,10 +18,15 @@ In this abstract lock, lock acquisition is done atomically.
 
 ## Peterson.tla
 
-The specification of Peterson's algorithm in PlusCal, and the refinement proof
-towards `Lock!Spec`.
+Peterson's algorithm is a solution for mutual exclusion for 2 processes.
+Each process shows its intent to enter the critical section by raising a flag
+`c[self]` and can proceed if the other process does not intend to enter the 
+critical section or it is its turn.
 
-The refinement can be verified with TLC with `MCPeterson.tla/cfg`.
+[Wikipedia](https://en.wikipedia.org/wiki/Peterson%27s_algorithm)
+
+This module contains the specification of Peterson's algorithm in PlusCal, and 
+the refinement proof towards `Lock!Spec`.
 
 ## LockHS.tla
 
@@ -35,8 +40,6 @@ to allow a refinement towards Peterson's algorithm.
    `Peterson`.
 
 A refinement proof towards `Peterson!Spec` is presented within.
-
-The refinement can be verified with TLC with `MCLockHS.tla/cfg`. 
 
 ## Stuttering.tla
 

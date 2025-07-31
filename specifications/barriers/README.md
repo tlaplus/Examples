@@ -1,5 +1,13 @@
 # Barrier synchronization
 
+A barrier is a synchronization facility which ensures that a group of threads
+all reach the barrier before they can advance.
+
+Such a barrier is useful when parallel computations are done in two or more
+steps and results from all threads are needed to continue.
+
+[Wikipedia](https://en.wikipedia.org/wiki/Barrier_(computer_science))
+
 ## Barrier.tla
 
 A specification of an abstract Barrier.
@@ -42,6 +50,3 @@ provided.
 ## Refinement
 
 A refinement towards an abstract Barrier specification is proven with TLAPS.
-
-A model `MCBarriers.cfg` and its companion `MCBarriers.tla` verifies if
-`B!Spec` (the abstract Barrier specification) holds for `Spec` 
