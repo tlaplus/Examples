@@ -1363,7 +1363,7 @@
           "features": [],
           "models": [
             {
-              "path": "specifications/Moving_Cat_Puzzle/OddBoxes.cfg",
+              "path": "specifications/Moving_Cat_Puzzle/CatOddBoxes.cfg",
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
@@ -1376,7 +1376,7 @@
               "stateDepth": 1
             },
             {
-              "path": "specifications/Moving_Cat_Puzzle/EvenBoxes.cfg",
+              "path": "specifications/Moving_Cat_Puzzle/CatEvenBoxes.cfg",
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
@@ -1962,7 +1962,7 @@
               "stateDepth": 11
             },
             {
-              "path": "specifications/Prisoners_Single_Switch/SoloPrisoner.cfg",
+              "path": "specifications/Prisoners_Single_Switch/PrisonerSolo.cfg",
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
@@ -1975,7 +1975,7 @@
               "stateDepth": 2
             },
             {
-              "path": "specifications/Prisoners_Single_Switch/SoloPrisonerLightUnknown.cfg",
+              "path": "specifications/Prisoners_Single_Switch/PrisonerSoloLightUnknown.cfg",
               "runtime": "00:00:01",
               "size": "small",
               "mode": "exhaustive search",
