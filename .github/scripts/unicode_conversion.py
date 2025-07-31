@@ -13,7 +13,7 @@ import tla_utils
 
 parser = ArgumentParser(description='Converts all TLA+ modules from ASCII to Unicode or vice-versa.')
 parser.add_argument('--tlauc_path', help='Path to the TLAUC executable', required=True)
-parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=True)
 parser.add_argument('--to_ascii', help='Convert to ASCII instead of Unicode', action='store_true')
 parser.add_argument('--skip', nargs='+', help='Space-separated list of .tla modules to skip converting', required=False, default=[])
 parser.add_argument('--only', nargs='+', help='If provided, only convert models in this space-separated list', required=False, default=[])
@@ -24,17 +24,16 @@ logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
 
 tlauc_path = normpath(args.tlauc_path)
 to_ascii = args.to_ascii
-manifest_path = normpath(args.manifest_path)
-examples_root = dirname(manifest_path)
+examples_root = args.examples_root
 skip_modules = args.skip
 only_modules = args.only
 
-manifest = tla_utils.load_json(manifest_path)
+manifest = tla_utils.load_all_manifests(examples_root)
 
 # List of all modules to convert
 modules = [
     tla_utils.from_cwd(examples_root, module['path'])
-    for spec in manifest['specifications']
+    for spec in manifest
     for module in spec['modules']
         if module['path'] not in skip_modules
         and (only_modules == [] or module['path'] in only_modules)

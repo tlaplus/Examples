@@ -11,16 +11,15 @@ import tla_utils
 
 parser = ArgumentParser(description='Validate all proofs in all modules with TLAPM.')
 parser.add_argument('--tlapm_path', help='Path to TLAPM install dir; should have bin and lib subdirs', required=True)
-parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=True)
 parser.add_argument('--skip', nargs='+', help='Space-separated list of .tla modules to skip checking', required=False, default=[])
 parser.add_argument('--only', nargs='+', help='If provided, only check proofs in this space-separated list', required=False, default=[])
 parser.add_argument('--verbose', help='Set logging output level to debug', action='store_true')
 args = parser.parse_args()
 
 tlapm_path = normpath(args.tlapm_path)
-manifest_path = normpath(args.manifest_path)
-manifest = tla_utils.load_json(manifest_path)
-examples_root = dirname(manifest_path)
+examples_root = args.examples_root
+manifest = tla_utils.load_all_manifests(examples_root)
 skip_modules = args.skip
 only_modules = args.only
 
@@ -28,7 +27,7 @@ logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
 
 proof_module_paths = [
     module['path']
-    for spec in manifest['specifications']
+    for spec in manifest
     for module in spec['modules']
         if 'proof' in module['features']
         and module['path'] not in skip_modules

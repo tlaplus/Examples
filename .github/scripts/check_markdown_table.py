@@ -4,7 +4,7 @@ Validates the spec table in README.md, ensuring it matches manifest.json.
 
 from argparse import ArgumentParser
 from dataclasses import dataclass
-from os.path import normpath
+from os.path import normpath, dirname
 from typing import Any, Set
 import tla_utils
 import mistletoe
@@ -75,11 +75,10 @@ def from_json(spec):
     )
 
 parser = ArgumentParser(description='Validates the spec table in README.md against the manifest.json.')
-parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
 parser.add_argument('--readme_path', help='Path to the tlaplus/examples README.md file', required=True)
 args = parser.parse_args()
 
-manifest = tla_utils.load_json(normpath(args.manifest_path))
+manifest = tla_utils.load_all_manifests(dirname(args.readme_path))
 
 readme = None
 with open(normpath(args.readme_path), 'r', encoding='utf-8') as readme_file:
@@ -88,7 +87,7 @@ with open(normpath(args.readme_path), 'r', encoding='utf-8') as readme_file:
 spec_table = next((child for child in readme.children if isinstance(child, Table)))
 
 table_specs = dict([(record.path, record) for record in [from_markdown(node) for node in spec_table.children]])
-manifest_specs = dict([(record.path, record) for record in [from_json(spec) for spec in manifest['specifications']]])
+manifest_specs = dict([(record.path, record) for record in [from_json(spec) for spec in manifest]])
 
 # Checks that set of specs in manifest and table are equivalent
 success = True

@@ -110,14 +110,13 @@ def write_module(examples_root, module_path, module_bytes):
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Adds ℕ/ℤ/ℝ Unicode number set shim definitions to modules as needed.')
-    parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+    parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=True)
     parser.add_argument('--skip', nargs='+', help='Space-separated list of .tla modules to skip', required=False, default=[])
     parser.add_argument('--only', nargs='+', help='If provided, only modify models in this space-separated list', required=False, default=[])
     args = parser.parse_args()
 
-    manifest_path = normpath(args.manifest_path)
-    manifest = tla_utils.load_json(manifest_path)
-    examples_root = dirname(manifest_path)
+    examples_root = args.examples_root
+    manifest = tla_utils.load_all_manifests(examples_root)
     skip_modules = args.skip
     only_modules = args.only
 
@@ -127,7 +126,7 @@ if __name__ == '__main__':
 
     modules = [
         module['path']
-        for spec in manifest['specifications']
+        for spec in manifest
         for module in spec['modules']
             if module['path'] not in skip_modules
             and (only_modules == [] or module['path'] in only_modules)

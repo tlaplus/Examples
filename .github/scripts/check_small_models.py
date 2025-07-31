@@ -16,7 +16,7 @@ parser.add_argument('--tools_jar_path', help='Path to the tla2tools.jar file', r
 parser.add_argument('--apalache_path', help='Path to the Apalache directory', required=True)
 parser.add_argument('--tlapm_lib_path', help='Path to the TLA+ proof manager module directory; .tla files should be in this directory', required=True)
 parser.add_argument('--community_modules_jar_path', help='Path to the CommunityModules-deps.jar file', required=True)
-parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=True)
 parser.add_argument('--skip', nargs='+', help='Space-separated list of models to skip checking', required=False, default=[])
 parser.add_argument('--only', nargs='+', help='If provided, only check models in this space-separated list', required=False, default=[])
 parser.add_argument('--verbose', help='Set logging output level to debug', action='store_true')
@@ -29,8 +29,7 @@ tools_jar_path = normpath(args.tools_jar_path)
 apalache_path = normpath(args.apalache_path)
 tlapm_lib_path = normpath(args.tlapm_lib_path)
 community_jar_path = normpath(args.community_modules_jar_path)
-manifest_path = normpath(args.manifest_path)
-examples_root = dirname(manifest_path)
+examples_root = args.examples_root
 skip_models = args.skip
 only_models = args.only
 enable_assertions = args.enable_assertions
@@ -87,11 +86,11 @@ def check_model(module, model, expected_runtime):
             return False
 
 # Ensure longest-running modules go first
-manifest = tla_utils.load_json(manifest_path)
+manifest = tla_utils.load_all_manifests(examples_root)
 small_models = sorted(
     [
         (module, model, tla_utils.parse_timespan(model['runtime']))
-        for spec in manifest['specifications']
+        for spec in manifest
         for module in spec['modules']
         for model in module['models']
             if model['size'] == 'small'
