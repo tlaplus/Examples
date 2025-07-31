@@ -69,50 +69,45 @@ def get_cfg_files(examples_root, tla_path):
         ])
     ]
 
-def generate_new_manifest(examples_root, ignored_dirs, parser, queries):
+def generate_new_manifest(examples_root, spec_path, spec_name, parser, queries):
     """
-    Generate new base manifest.json from files in specifications dir.
+    Generate new manifest.json file for a given specification directory.
     """
     return {
-        'specifications': [
+        'path': to_posix(spec_path),
+        'title': spec_name,
+        'description': '',
+        'sources': [],
+        'authors': [],
+        'tags': [],
+        'modules': [
             {
-                'path': to_posix(spec_path),
-                'title': spec_name,
-                'description': '',
-                'sources': [],
-                'authors': [],
-                'tags': [],
-                'modules': [
+                'path': to_posix(tla_path),
+                'communityDependencies': sorted(list(get_community_module_imports(examples_root, parser, tla_path, queries))),
+                'tlaLanguageVersion': 2,
+                'features': sorted(list(get_module_features(examples_root, tla_path, parser, queries))),
+                'models': [
                     {
-                        'path': to_posix(tla_path),
-                        'communityDependencies': sorted(list(get_community_module_imports(examples_root, parser, tla_path, queries))),
-                        'tlaLanguageVersion': 2,
-                        'features': sorted(list(get_module_features(examples_root, tla_path, parser, queries))),
-                        'models': [
-                            {
-                                'path': to_posix(cfg_path),
-                                'runtime': 'unknown',
-                                'size': 'unknown',
-                                'mode': 'exhaustive search',
-                                'features': sorted(list(get_model_features(examples_root, cfg_path))),
-                                'result': 'unknown'
-                            }
-                            for cfg_path in sorted(get_cfg_files(examples_root, tla_path))
-                        ]
+                        'path': to_posix(cfg_path),
+                        'runtime': 'unknown',
+                        'size': 'unknown',
+                        'mode': 'exhaustive search',
+                        'features': sorted(list(get_model_features(examples_root, cfg_path))),
+                        'result': 'unknown'
                     }
-                    for tla_path in sorted(get_tla_files(examples_root, spec_path))
+                    for cfg_path in sorted(get_cfg_files(examples_root, tla_path))
                 ]
             }
-            for (spec_path, spec_name) in get_spec_dirs(examples_root, ignored_dirs)
+            for tla_path in sorted(get_tla_files(examples_root, spec_path))
         ]
     }
 
 # Integrate human-written info from existing manifest.json
 
-def find_corresponding_spec(old_spec, new_manifest):
+def find_corresponding_spec(old_manifest, new_spec):
     specs = [
-        spec for spec in new_manifest['specifications']
-        if to_posix(spec['path']) == old_spec['path']
+        spec for spec in old_manifest['specifications']
+        if spec['path'] == new_spec['path']
     ]
     return specs[0] if any(specs) else None
 
@@ -146,22 +141,19 @@ def integrate_model_info(old_model, new_model):
         if field in old_model:
             new_model[field] = old_model[field]
 
-def integrate_old_manifest_into_new(old_manifest, new_manifest):
-    for old_spec in old_manifest['specifications']:
-        new_spec = find_corresponding_spec(old_spec, new_manifest)
-        if new_spec is None:
+def integrate_old_manifest_into_new(old_manifest, new_spec):
+    old_spec = find_corresponding_spec(old_manifest, new_spec)
+    integrate_spec_info(old_spec, new_spec)
+    for old_module in old_spec['modules']:
+        new_module = find_corresponding_module(old_module, new_spec)
+        if new_module is None:
             continue
-        integrate_spec_info(old_spec, new_spec)
-        for old_module in old_spec['modules']:
-            new_module = find_corresponding_module(old_module, new_spec)
-            if new_module is None:
+        integrate_module_info(old_module, new_module)
+        for old_model in old_module['models']:
+            new_model = find_corresponding_model(old_model, new_module)
+            if new_model is None:
                 continue
-            integrate_module_info(old_module, new_module)
-            for old_model in old_module['models']:
-                new_model = find_corresponding_model(old_model, new_module)
-                if new_model is None:
-                    continue
-                integrate_model_info(old_model, new_model)
+            integrate_model_info(old_model, new_model)
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Generates a new manifest.json derived from files in the repo.')
@@ -179,8 +171,8 @@ if __name__ == '__main__':
     queries = build_queries(TLAPLUS_LANGUAGE)
 
     old_manifest = tla_utils.load_json(manifest_path)
-    new_manifest = generate_new_manifest(examples_root, ignored_dirs, parser, queries)
-    integrate_old_manifest_into_new(old_manifest, new_manifest)
-
-    tla_utils.write_json(new_manifest, manifest_path)
+    for (spec_path, spec_name) in get_spec_dirs(examples_root, ignored_dirs):
+        new_manifest = generate_new_manifest(examples_root, spec_path, spec_name, parser, queries)
+        integrate_old_manifest_into_new(old_manifest, new_manifest)
+        tla_utils.write_json(new_manifest, join(spec_path, 'manifest.json'))
 
