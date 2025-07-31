@@ -4,6 +4,7 @@ import json
 from os.path import join, normpath, pathsep
 import subprocess
 import re
+import glob
 
 def from_cwd(root, path):
     """
@@ -43,6 +44,15 @@ def load_json(path):
     """
     with open(normpath(path), 'r', encoding='utf-8') as file:
         return json.load(file)
+
+def load_all_manifests(examples_root):
+    """
+    Loads all manifest.json files in the specifications subdirectories.
+    """
+    return [
+        load_json(manifest_path)
+        for manifest_path in glob.glob(f'specifications/*/manifest.json', root_dir=examples_root)
+    ]
 
 def write_json(data, path):
     """
