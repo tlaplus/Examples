@@ -13,7 +13,7 @@ parser = ArgumentParser(description='Updates manifest.json with unique & total m
 parser.add_argument('--tools_jar_path', help='Path to the tla2tools.jar file', required=True)
 parser.add_argument('--tlapm_lib_path', help='Path to the TLA+ proof manager module directory; .tla files should be in this directory', required=True)
 parser.add_argument('--community_modules_jar_path', help='Path to the CommunityModules-deps.jar file', required=True)
-parser.add_argument('--manifest_path', help='Path to the tlaplus/examples manifest.json file', required=True)
+parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=True)
 parser.add_argument('--skip', nargs='+', help='Space-separated list of models to skip checking', required=False, default=[])
 parser.add_argument('--only', nargs='+', help='If provided, only check models in this space-separated list', required=False, default=[])
 parser.add_argument('--enable_assertions', help='Enable Java assertions (pass -enableassertions to JVM)', action='store_true')
@@ -25,8 +25,7 @@ logging.basicConfig(level=logging.INFO)
 tools_jar_path = normpath(args.tools_jar_path)
 tlapm_lib_path = normpath(args.tlapm_lib_path)
 community_jar_path = normpath(args.community_modules_jar_path)
-manifest_path = normpath(args.manifest_path)
-examples_root = dirname(manifest_path)
+examples_root = args.examples_root
 skip_models = args.skip
 only_models = args.only
 run_all = args.all
@@ -77,11 +76,11 @@ def check_model(module, model):
             return False
 
 # Ensure longest-running modules go first
-manifest = tla_utils.load_json(manifest_path)
+manifest = tla_utils.load_all_manifests(examples_root)
 small_models = sorted(
     [
-        (module, model, tla_utils.parse_timespan(model['runtime']))
-        for spec in manifest['specifications']
+        (spec, module, model, tla_utils.parse_timespan(model['runtime']))
+        for spec in manifest
         for module in spec['modules']
         for model in module['models']
             if model['size'] == 'small'
@@ -105,7 +104,8 @@ small_models = sorted(
 for path in skip_models:
     logging.info(f'Skipping {path}')
 
-for module, model, _ in small_models:
+for spec, module, model, _ in small_models:
+    manifest_path = join(spec['path'], 'manifest.json')
     success = check_model(module, model)
     if not success:
         exit(1)
