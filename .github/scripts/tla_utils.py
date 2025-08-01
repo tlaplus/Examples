@@ -51,7 +51,7 @@ def load_all_manifests(examples_root):
     """
     return [
         load_json(manifest_path)
-        for manifest_path in glob.glob(f'specifications/*/manifest.json', root_dir=examples_root)
+        for manifest_path in glob.glob(from_cwd(examples_root, 'specifications/*/manifest.json'))
     ]
 
 def write_json(data, path):
