@@ -45,7 +45,7 @@ for path in skip_modules:
 def convert_module(module_path):
     logging.info(f'Converting {module_path}')
     result = subprocess.run(
-        [tlauc_path, module_path] + (['--ascii'] if to_ascii else []),
+        [tlauc_path, module_path, '--skip', 'numsets'] + (['--ascii'] if to_ascii else []),
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True
