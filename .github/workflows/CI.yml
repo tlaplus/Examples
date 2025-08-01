@@ -67,11 +67,6 @@ jobs:
           python "$SCRIPT_DIR/unicode_conversion.py"  \
             --tlauc_path "$DEPS_DIR/tlauc/tlauc"      \
             --examples_root .
-      - name: Add unicode shims
-        if: matrix.unicode
-        run: |
-          python "$SCRIPT_DIR/unicode_number_set_shim.py" \
-            --examples_root .
       - name: Translate PlusCal
         # PlusCal translations will be reverted at the end of this step,
         # since we want to support people manually editing the generated TLA+
