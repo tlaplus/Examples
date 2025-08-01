@@ -1,5 +1,5 @@
 """
-Parse all modules in the manifest with SANY.
+Parse all modules in the manifests with SANY.
 """
 
 from argparse import ArgumentParser

@@ -2,7 +2,7 @@
 While Unicode support in the Java tools goes through a trial period, the core
 Naturals/Integers/Reals modules will remain Unicode-free. So, the Unicode
 number sets ℕ, ℤ, and ℝ must be defined in any module that wishes to use
-them. This script iterates through all modules in the manifest and replaces
+them. This script iterates through all modules in the manifests and replaces
 their imports of the Naturals/Integers/Reals modules with shims containing
 a definition of the Unicode number sets.
 """

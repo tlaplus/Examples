@@ -1,8 +1,8 @@
 """
 Checks to ensure all files in manifest.json exist, that all .tla and .cfg
 files in repo are recorded in manifest.json (except for those in .ciignore),
-and that no files are present twice in the manifest. Also checks to ensure
-no files in .ciignore are in the manifest.json.
+and that no files are present twice in the manifests. Also checks to ensure
+no files in .ciignore are in the manifest.json files.
 """
 
 from argparse import ArgumentParser

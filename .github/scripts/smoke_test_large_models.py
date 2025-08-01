@@ -1,5 +1,5 @@
 """
-Smoke-test all models not marked as size "small" in the manifest. This
+Smoke-test all models not marked as size "small" in each manifest. This
 entails running them for five seconds to ensure they can actually start
 and work with the spec they're supposed to be modeling.
 """

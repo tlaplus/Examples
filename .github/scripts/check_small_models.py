@@ -1,5 +1,5 @@
 """
-Check all models marked as size "small" in the manifest with TLC. Small
+Check all models marked as size "small" in each manifest with TLC. Small
 models should finish executing in less than ten seconds on the GitHub CI
 machines.
 """

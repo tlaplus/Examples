@@ -14,15 +14,15 @@ To contribute a spec of your own, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
 The table below lists all specs and indicates whether a spec is beginner-friendly, includes an additional PlusCal variant `(✔)`, or uses PlusCal exclusively.
 Additionally, the table specifies which verification tool—[TLC](https://github.com/tlaplus/tlaplus), [Apalache](https://github.com/apalache-mc/apalache), or [TLAPS](https://github.com/tlaplus/tlapm)—can be used to verify each specification.
 
-Space contraints limit the information displayed in the table; detailed spec metadata can be found in the [`manifest.json`](manifest.json) file.
-You can search this file for examples exhibiting a number of features, like:
- - Specs (`.tla` files) including `pluscal`, `proof`, or `action composition` (the `\cdot` operator)
+Space contraints limit the information displayed in the table; detailed spec metadata can be found in the `manifest.json` files in each specification's directory.
+You can search these files for examples exhibiting a number of features, either using the GitHub repository search or locally with the command `ls specifications/*/manifest.json | xargs grep -l $keyword`, where `$keyword` can be a value like:
+ - `pluscal`, `proof`, or `action composition` (the `\cdot` operator)
  - Specs intended for trace generation (`generate`), `simulate`, or checked symbolically with Apalache (`symbolic`)
  - Models (`.cfg` files) using the `symmetry`, `view`, `alias`, `state constraint`, or `ignore deadlock` features
  - Models failing in interesting ways, like `deadlock failure`, `safety failure`, `liveness failure`, or `assumption failure`
 
-## Examples Included Here
-Here is a list of specs included in this repository, with links to the relevant directory and flags for various features:
+## Validated Examples Included Here
+Here is a list of specs included in this repository which are validated by the CI, with links to the relevant directory and flags for various features:
 | Name                                                                                                | Author(s)                                           | Beginner | TLAPS Proof | PlusCal | TLC Model | Apalache |
 | --------------------------------------------------------------------------------------------------- | --------------------------------------------------- | :------: | :---------: | :-----: | :-------: | :------: |
 | [Teaching Concurrency](specifications/TeachingConcurrency)                                          | Leslie Lamport                                      |    ✔     |      ✔      |    ✔    |     ✔     |          |
@@ -102,9 +102,9 @@ Here is a list of specs included in this repository, with links to the relevant 
 | [Disruptor](specifications/Disruptor)                                                               | Nicholas Schultz-Møller                             |          |             |         |     ✔     |          |
 
 
-## Examples Elsewhere
-Here is a list of specs stored in locations outside this repository, including submodules.
-They are not covered by CI testing so it is possible they contain errors, the reported details are incorrect, or they are no longer available.
+## Other Examples
+Here is a list of specs stored in locations outside this repository or not validated by the CI, such as submodules.
+Since these specs are not covered by CI testing it is possible they contain errors, the reported details are incorrect, or they are no longer available.
 Ideally these will be moved into this repo over time.
 | Spec                                                                                                                              | Details                                                                                                                                   | Author(s)                                                                  | Beginner | TLAPS Proof | TLC Model | PlusCal | Apalache |
 | --------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | :------: | :---------: | :-------: | :-----: | :------: |
