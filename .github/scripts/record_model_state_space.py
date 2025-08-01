@@ -1,6 +1,6 @@
 """
 Records the number of unique & total states encountered by TLC for each small
-model where that info is not present, then writes it to the manifest.json.
+model where that info is not present, then writes it to a manifest.json file.
 """
 
 from argparse import ArgumentParser

@@ -1,5 +1,5 @@
 """
-Generates a best-effort manifest.json file. This is done by scanning all
+Generates best-effort manifest.json files. This is done by scanning all
 .tla and .cfg files in the specifications dir then attempting to sort them
 into a spec/module/model hierarchy. Files are parsed to check for features
 and imports. Human-written fields (title/description/source/authors for

@@ -1,6 +1,6 @@
 """
 This script performs whatever validations are possible on the metadata in
-the manifest.json file. Prominent checks include:
+the manifest.json files. Prominent checks include:
  * .tla files containing pluscal or proofs are marked as such
  * .tla files importing community modules have those modules listed
  * .cfg files with certain features are marked as such
@@ -234,7 +234,7 @@ def check_features(parser, queries, manifest, examples_root):
     return success
 
 if __name__ == '__main__':
-    parser = ArgumentParser(description='Checks metadata in tlaplus/examples manifest.json against module and model files in repository.')
+    parser = ArgumentParser(description='Checks metadata in manifest.json files against module and model files in repository.')
     parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=True)
     args = parser.parse_args()
 

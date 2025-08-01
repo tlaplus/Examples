@@ -1,5 +1,5 @@
 """
-Validates the spec table in README.md, ensuring it matches manifest.json.
+Validates the spec table in README.md, ensuring it matches manifest.json files.
 """
 
 from argparse import ArgumentParser
