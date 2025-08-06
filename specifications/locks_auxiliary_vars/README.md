@@ -1,5 +1,8 @@
 # Two-way refinement using auxiliary variables
 
+*This specification comes from a 
+[Master's thesis](http://hdl.handle.net/2268.2/23374)*
+
 Refinement proves that all behaviors implementation are a valid behavior of
 an abstract specification. It is usually not done from the abstract 
 specification to the implementation.
@@ -16,6 +19,9 @@ variables towards Peterson's algorithm is provided in `LockHS.tla`
 The specification of an abstract lock for two processes in PlusCal.
 In this abstract lock, lock acquisition is done atomically.
 
+The usual typing invariant and mutual exclusion are checked within the
+`Lock.cfg` model and proven using TLAPS.
+
 ## Peterson.tla
 
 Peterson's algorithm is a solution for mutual exclusion for 2 processes.
@@ -27,6 +33,9 @@ critical section or it is its turn.
 
 This module contains the specification of Peterson's algorithm in PlusCal, and 
 the refinement proof towards `Lock!Spec`.
+
+A model that checks each invariant presented in the specification and the 
+refinement is given in `Peterson.cfg`.
 
 ## LockHS.tla
 
@@ -40,6 +49,9 @@ to allow a refinement towards Peterson's algorithm.
    `Peterson`.
 
 A refinement proof towards `Peterson!Spec` is presented within.
+
+The refinement as well as the invariants used to prove the refinement are 
+checked within the model `LockHS.cfg`.
 
 ## Stuttering.tla
 
