@@ -56,7 +56,13 @@ The invariants are also proven correct using TLAPS.
 
 ## Refinement
 
-A refinement towards an abstract Barrier specification is 
+A refinement towards an abstract Barrier specification is given by translating
+the program counter. 
+This translation must take into account the simultaneous movement of all
+processes done by action `b1` of `Barrier.tla`.
+In the refinement, processes at `a11-a12` while the second waiting chamber is
+opened are already considered outside the barrier.
+This emulates a simultaneous movement of all process for the refinement.
 
 The correctness of the refinement is checked in `Barriers.cfg` and proven with 
 TLAPS.
