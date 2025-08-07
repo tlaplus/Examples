@@ -27,7 +27,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success",
           "distinctStates": 1245,
           "totalStates": 5841,
@@ -46,7 +45,6 @@
           "runtime": "00:00:30",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success"
         }
       ]
@@ -62,9 +60,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock"
-          ],
           "result": "success",
           "distinctStates": 34,
           "totalStates": 94,
@@ -83,7 +78,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success",
           "distinctStates": 288,
           "totalStates": 1146,

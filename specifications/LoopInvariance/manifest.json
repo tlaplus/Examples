@@ -33,9 +33,6 @@
           "runtime": "00:00:05",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success",
           "distinctStates": 27953,
           "totalStates": 34383,
@@ -54,9 +51,6 @@
           "runtime": "00:00:05",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success",
           "distinctStates": 4548,
           "totalStates": 11223,

@@ -69,10 +69,6 @@
           "runtime": "00:00:05",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "liveness",
-            "state constraint"
-          ],
           "result": "success",
           "distinctStates": 25000,
           "totalStates": 1350001,
@@ -93,10 +89,6 @@
           "runtime": "00:00:05",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "liveness",
-            "view"
-          ],
           "result": "liveness failure"
         }
       ]
@@ -116,10 +108,6 @@
           "runtime": "00:00:05",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "liveness",
-            "state constraint"
-          ],
           "result": "success",
           "distinctStates": 1363,
           "totalStates": 17425,

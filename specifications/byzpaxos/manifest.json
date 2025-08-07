@@ -26,7 +26,6 @@
           "runtime": "unknown",
           "size": "large",
           "mode": "exhaustive search",
-          "features": [],
           "result": "unknown"
         }
       ]
@@ -45,10 +44,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock",
-            "liveness"
-          ],
           "result": "success",
           "distinctStates": 4,
           "totalStates": 4,
@@ -70,7 +65,6 @@
           "runtime": "00:06:00",
           "size": "large",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success"
         }
       ]
@@ -89,10 +83,6 @@
           "runtime": "00:00:05",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock",
-            "liveness"
-          ],
           "result": "success",
           "distinctStates": 6962,
           "totalStates": 318877,

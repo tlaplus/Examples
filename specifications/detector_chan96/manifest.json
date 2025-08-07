@@ -35,9 +35,6 @@
           "runtime": "02:00:00",
           "size": "large",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success"
         }
       ]

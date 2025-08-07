@@ -21,9 +21,6 @@
           "runtime": "unknown",
           "size": "large",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "unknown"
         }
       ]

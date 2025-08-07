@@ -29,10 +29,6 @@
           "runtime": "00:01:00",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "state constraint",
-            "symmetry"
-          ],
           "result": "success"
         },
         {
@@ -40,10 +36,6 @@
           "runtime": "00:00:10",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "state constraint",
-            "symmetry"
-          ],
           "result": "safety failure"
         }
       ]

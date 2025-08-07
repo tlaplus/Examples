@@ -28,9 +28,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock"
-          ],
           "result": "success",
           "distinctStates": 4,
           "totalStates": 7,
@@ -49,10 +46,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "liveness",
-            "symmetry"
-          ],
           "result": "success",
           "distinctStates": 25,
           "totalStates": 82,
@@ -71,11 +64,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock",
-            "liveness",
-            "symmetry"
-          ],
           "result": "success",
           "distinctStates": 77,
           "totalStates": 451,

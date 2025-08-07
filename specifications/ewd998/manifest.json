@@ -22,10 +22,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "liveness",
-            "state constraint"
-          ],
           "result": "success",
           "distinctStates": 4097,
           "totalStates": 53271,
@@ -55,11 +51,6 @@
           "runtime": "00:50:00",
           "size": "large",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock",
-            "liveness",
-            "state constraint"
-          ],
           "result": "success"
         },
         {
@@ -67,10 +58,6 @@
           "runtime": "00:05:00",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock",
-            "state constraint"
-          ],
           "result": "success"
         }
       ]
@@ -86,11 +73,6 @@
           "runtime": "00:05:00",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock",
-            "liveness",
-            "state constraint"
-          ],
           "result": "success"
         }
       ]
@@ -106,12 +88,6 @@
           "runtime": "00:00:05",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock",
-            "liveness",
-            "state constraint",
-            "view"
-          ],
           "result": "success",
           "distinctStates": 14,
           "totalStates": 15,
@@ -132,9 +108,6 @@
           "runtime": "unknown",
           "size": "large",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock"
-          ],
           "result": "unknown"
         }
       ]
@@ -150,10 +123,6 @@
           "runtime": "unknown",
           "size": "large",
           "mode": "exhaustive search",
-          "features": [
-            "alias",
-            "ignore deadlock"
-          ],
           "result": "unknown"
         }
       ]
@@ -172,10 +141,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "alias",
-            "view"
-          ],
           "result": "success"
         }
       ]
@@ -205,11 +170,6 @@
           "runtime": "00:00:21",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "alias",
-            "liveness",
-            "state constraint"
-          ],
           "result": "success"
         }
       ]
@@ -285,11 +245,6 @@
               "traceCount": 100
             }
           },
-          "features": [
-            "ignore deadlock",
-            "liveness",
-            "state constraint"
-          ],
           "result": "success"
         }
       ]
@@ -308,7 +263,6 @@
           "runtime": "unknown",
           "size": "unknown",
           "mode": "exhaustive search",
-          "features": [],
           "result": "unknown"
         }
       ]

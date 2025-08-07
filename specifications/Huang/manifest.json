@@ -23,12 +23,6 @@
           "runtime": "00:00:40",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "alias",
-            "ignore deadlock",
-            "liveness",
-            "state constraint"
-          ],
           "result": "success"
         }
       ]

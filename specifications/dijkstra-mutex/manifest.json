@@ -39,9 +39,6 @@
           "runtime": "00:00:50",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success"
         }
       ]
@@ -66,7 +63,6 @@
           "runtime": "00:02:00",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success"
         }
       ]
