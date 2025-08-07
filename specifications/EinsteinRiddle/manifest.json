@@ -20,7 +20,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "symbolic",
-          "features": [],
           "result": "safety failure"
         }
       ]

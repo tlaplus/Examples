@@ -24,7 +24,6 @@
           "runtime": "00:50:00",
           "size": "large",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success"
         },
         {
@@ -32,7 +31,6 @@
           "runtime": "00:01:00",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success"
         },
         {
@@ -40,7 +38,6 @@
           "runtime": "00:00:15",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success",
           "distinctStates": 274678,
           "totalStates": 1621541,

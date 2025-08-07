@@ -43,10 +43,6 @@
           "runtime": "unknown",
           "size": "unknown",
           "mode": "generate",
-          "features": [
-            "ignore deadlock",
-            "state constraint"
-          ],
           "result": "unknown"
         }
       ]

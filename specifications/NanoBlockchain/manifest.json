@@ -19,9 +19,6 @@
           "runtime": "00:20:00",
           "size": "large",
           "mode": "exhaustive search",
-          "features": [
-            "view"
-          ],
           "result": "success"
         },
         {
@@ -29,9 +26,6 @@
           "runtime": "00:00:30",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "view"
-          ],
           "result": "success"
         },
         {
@@ -39,9 +33,6 @@
           "runtime": "00:00:05",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "view"
-          ],
           "result": "success",
           "distinctStates": 3003,
           "totalStates": 6083,

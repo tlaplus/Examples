@@ -21,9 +21,6 @@
           "runtime": "00:01:00",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success"
         }
       ]

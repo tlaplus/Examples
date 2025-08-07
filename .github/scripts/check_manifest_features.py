@@ -3,7 +3,6 @@ This script performs whatever validations are possible on the metadata in
 the manifest.json files. Prominent checks include:
  * .tla files containing pluscal or proofs are marked as such
  * .tla files importing community modules have those modules listed
- * .cfg files with certain features are marked as such
  * Human-written fields are not empty
 """
 
@@ -75,34 +74,6 @@ def get_module_features(examples_root, path, parser, queries):
     """
     tree, _, _ = tla_utils.parse_module(examples_root, parser, path)
     return get_tree_features(tree, queries)
-
-# Regexes mapping to features for models
-model_features = {
-    re.compile('^PROPERTY', re.MULTILINE) : 'liveness',
-    re.compile('^PROPERTIES', re.MULTILINE): 'liveness',
-    re.compile('^SYMMETRY', re.MULTILINE): 'symmetry',
-    re.compile('^ALIAS', re.MULTILINE): 'alias',
-    re.compile('^VIEW', re.MULTILINE): 'view',
-    re.compile('^CONSTRAINT', re.MULTILINE): 'state constraint',
-    re.compile('^CONSTRAINTS', re.MULTILINE): 'state constraint',
-    re.compile('^CHECK_DEADLOCK\\s+FALSE', re.MULTILINE) : 'ignore deadlock'
-}
-
-def get_model_features(examples_root, path):
-    """
-    Finds features present in the given .cfg model file.
-    This will be a best-effort regex search until a tree-sitter grammar is
-    created for .cfg files.
-    """
-    path = tla_utils.from_cwd(examples_root, path)
-    features = []
-    model_text = None
-    with open(path, 'rt') as model_file:
-        model_text = model_file.read()
-    for regex, feature in model_features.items():
-        if regex.search(model_text):
-            features.append(feature)
-    return set(features)
 
 # All the standard modules available when using TLC
 tlc_modules = {
@@ -216,14 +187,6 @@ def check_features(parser, queries, manifest, examples_root):
                     + f'expected {list(expected_imports)}, actual {list(actual_imports)}'
                 )
             for model in module['models']:
-                expected_features = get_model_features(examples_root, model['path'])
-                actual_features = set(model['features'])
-                if expected_features != actual_features:
-                    success = False
-                    logging.error(
-                        f'Model {model["path"]} has incorrect features in manifest; '
-                        + f'expected {list(expected_features)}, actual {list(actual_features)}'
-                    )
                 if tla_utils.has_state_count(model) and not tla_utils.is_state_count_valid(model):
                     success = False
                     logging.error(

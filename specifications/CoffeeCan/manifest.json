@@ -23,9 +23,6 @@
           "runtime": "00:00:15",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success"
         },
         {
@@ -33,9 +30,6 @@
           "runtime": "00:00:05",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success",
           "distinctStates": 5150,
           "totalStates": 20002,
@@ -46,9 +40,6 @@
           "runtime": "00:02:30",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success"
         }
       ]

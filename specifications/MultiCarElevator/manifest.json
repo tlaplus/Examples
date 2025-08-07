@@ -21,9 +21,6 @@
           "runtime": "00:11:00",
           "size": "large",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success"
         },
         {
@@ -31,9 +28,6 @@
           "runtime": "00:00:30",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success"
         },
         {
@@ -41,7 +35,6 @@
           "runtime": "00:10:00",
           "size": "large",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success"
         },
         {
@@ -49,7 +42,6 @@
           "runtime": "00:03:00",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success"
         },
         {
@@ -57,7 +49,6 @@
           "runtime": "00:00:15",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success",
           "distinctStates": 4122,
           "totalStates": 14296,

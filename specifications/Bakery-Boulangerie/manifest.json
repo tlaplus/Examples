@@ -40,9 +40,6 @@
           "runtime": "00:00:10",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock"
-          ],
           "result": "success",
           "distinctStates": 655200,
           "totalStates": 3403584,
@@ -61,9 +58,6 @@
           "runtime": "00:01:00",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "state constraint"
-          ],
           "result": "success"
         }
       ]

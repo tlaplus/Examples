@@ -21,11 +21,6 @@
           "runtime": "00:00:09",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "alias",
-            "liveness",
-            "symmetry"
-          ],
           "result": "success",
           "distinctStates": 3316,
           "totalStates": 128581,

@@ -49,11 +49,6 @@
               "traceCount": 100
             }
           },
-          "features": [
-            "alias",
-            "ignore deadlock",
-            "liveness"
-          ],
           "result": "safety failure"
         }
       ]
@@ -69,11 +64,6 @@
           "runtime": "00:01:00",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock",
-            "liveness",
-            "state constraint"
-          ],
           "result": "success"
         }
       ]

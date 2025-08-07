@@ -43,9 +43,6 @@
           "runtime": "07:16:00",
           "size": "large",
           "mode": "exhaustive search",
-          "features": [
-            "symmetry"
-          ],
           "result": "success"
         },
         {
@@ -53,9 +50,6 @@
           "runtime": "00:04:30",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "symmetry"
-          ],
           "result": "success"
         },
         {
@@ -63,7 +57,6 @@
           "runtime": "00:00:40",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success"
         }
       ]
@@ -79,10 +72,6 @@
           "runtime": "00:00:50",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "liveness",
-            "symmetry"
-          ],
           "result": "success"
         }
       ]

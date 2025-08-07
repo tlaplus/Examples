@@ -21,9 +21,6 @@
           "runtime": "00:00:05",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success",
           "distinctStates": 24922,
           "totalStates": 159538,

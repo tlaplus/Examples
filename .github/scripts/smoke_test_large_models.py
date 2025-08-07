@@ -46,7 +46,6 @@ def check_model(module, model):
         community_jar_path,
         model['mode'],
         module['features'],
-        model['features'],
         enable_assertions,
         smoke_test_timeout_in_seconds
     )

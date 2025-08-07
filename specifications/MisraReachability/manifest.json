@@ -19,9 +19,6 @@
           "runtime": "00:00:30",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success"
         }
       ]
@@ -37,7 +34,6 @@
           "runtime": "00:00:20",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success"
         },
         {
@@ -45,7 +41,6 @@
           "runtime": "00:00:10",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [],
           "result": "success",
           "distinctStates": 0,
           "totalStates": 0,
@@ -64,9 +59,6 @@
           "runtime": "00:01:30",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success"
         }
       ]

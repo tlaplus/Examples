@@ -32,9 +32,6 @@
           "runtime": "00:07:53",
           "size": "large",
           "mode": "exhaustive search",
-          "features": [
-            "symmetry"
-          ],
           "result": "success"
         },
         {
@@ -42,9 +39,6 @@
           "runtime": "00:00:10",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "symmetry"
-          ],
           "result": "success",
           "distinctStates": 343796,
           "totalStates": 736012,

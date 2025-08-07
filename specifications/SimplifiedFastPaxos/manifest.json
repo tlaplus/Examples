@@ -20,10 +20,6 @@
           "runtime": "00:00:30",
           "size": "medium",
           "mode": "exhaustive search",
-          "features": [
-            "liveness",
-            "symmetry"
-          ],
           "result": "success"
         }
       ]
@@ -39,10 +35,6 @@
           "runtime": "00:00:05",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "liveness",
-            "symmetry"
-          ],
           "result": "success",
           "distinctStates": 1207,
           "totalStates": 13290,

@@ -41,9 +41,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "state constraint"
-          ],
           "result": "success",
           "distinctStates": 742,
           "totalStates": 1523,

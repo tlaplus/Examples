@@ -21,9 +21,6 @@
           "runtime": "00:00:05",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock"
-          ],
           "result": "success",
           "distinctStates": 2733,
           "totalStates": 3459,

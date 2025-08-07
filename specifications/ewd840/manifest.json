@@ -23,10 +23,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock",
-            "liveness"
-          ],
           "result": "success",
           "distinctStates": 302,
           "totalStates": 2001,
@@ -51,10 +47,6 @@
               "traceCount": 100
             }
           },
-          "features": [
-            "alias",
-            "ignore deadlock"
-          ],
           "result": "safety failure"
         }
       ]
@@ -70,9 +62,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "ignore deadlock"
-          ],
           "result": "success",
           "distinctStates": 1566,
           "totalStates": 15986,
@@ -100,9 +89,6 @@
           "runtime": "00:00:01",
           "size": "small",
           "mode": "exhaustive search",
-          "features": [
-            "liveness"
-          ],
           "result": "success",
           "distinctStates": 129,
           "totalStates": 3722,

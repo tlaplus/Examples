@@ -45,7 +45,6 @@ def check_model(module, model):
         community_jar_path,
         model['mode'],
         module['features'],
-        model['features'],
         enable_assertions,
         hard_timeout_in_seconds
     )
