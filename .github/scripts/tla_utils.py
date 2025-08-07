@@ -115,7 +115,7 @@ def get_run_mode(mode):
     else:
         raise NotImplementedError(f'Undefined model-check mode {mode}')
 
-def get_tlc_feature_flags(module_features, model_features):
+def get_tlc_feature_flags(module_features):
     """
     Selectively enables experimental TLC features according to needs.
     """
@@ -133,7 +133,6 @@ def check_model(
         community_jar_path,
         mode,
         module_features,
-        model_features,
         enable_assertions,
         hard_timeout_in_seconds
     ):
@@ -172,7 +171,7 @@ def check_model(
                     community_jar_path,
                     tlapm_lib_path
                 ]),
-            ] + get_tlc_feature_flags(module_features, model_features)
+            ] + get_tlc_feature_flags(module_features)
             tlc_parameters = [
                 module_path,
                 '-config', model_path,

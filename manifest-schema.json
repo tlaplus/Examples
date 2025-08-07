@@ -40,7 +40,7 @@
             "items": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["path", "runtime", "size", "mode", "features", "result"],
+              "required": ["path", "runtime", "size", "mode", "result"],
               "properties": {
                 "path": {"type": "string"},
                 "runtime": {
@@ -72,10 +72,6 @@
                       }
                     }
                   ]
-                },
-                "features": {
-                  "type": "array",
-                  "items": {"enum": ["liveness", "symmetry", "view", "alias", "state constraint", "ignore deadlock"]}
                 },
                 "result": {"enum": ["success", "assumption failure", "deadlock failure", "safety failure", "liveness failure", "unknown"]}
               }

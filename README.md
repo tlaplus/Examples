@@ -18,8 +18,10 @@ Space contraints limit the information displayed in the table; detailed spec met
 You can search these files for examples exhibiting a number of features, either using the GitHub repository search or locally with the command `ls specifications/*/manifest.json | xargs grep -l $keyword`, where `$keyword` can be a value like:
  - `pluscal`, `proof`, or `action composition` (the `\cdot` operator)
  - Specs intended for trace generation (`generate`), `simulate`, or checked symbolically with Apalache (`symbolic`)
- - Models (`.cfg` files) using the `symmetry`, `view`, `alias`, `state constraint`, or `ignore deadlock` features
  - Models failing in interesting ways, like `deadlock failure`, `safety failure`, `liveness failure`, or `assumption failure`
+
+It is also helpful to consult model files using specific TLC features.
+For this, run `ls specifications/*/*.cfg | xargs grep -l $keyword`, where `$keyword` can be a feature like `SYMMETRY`, `VIEW`, `ALIAS`, `CONSTRAINT`, or `DEADLOCK`.
 
 ## Validated Examples Included Here
 Here is a list of specs included in this repository which are validated by the CI, with links to the relevant directory and flags for various features:

@@ -92,7 +92,6 @@ def generate_new_manifest(examples_root, spec_path, spec_name, parser, queries):
                         'runtime': 'unknown',
                         'size': 'unknown',
                         'mode': 'exhaustive search',
-                        'features': sorted(list(get_model_features(examples_root, cfg_path))),
                         'result': 'unknown'
                     }
                     for cfg_path in sorted(get_cfg_files(examples_root, tla_path))
