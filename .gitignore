@@ -21,6 +21,9 @@
 ## Don't ignore all folders
 !*/
 
+## Don't ignore manifests
+!manifest.json
+
 ## Ignore TLAPS cache folder
 ## See https://github.com/tlaplus/tlapm/issues/16
 __tlacache__
