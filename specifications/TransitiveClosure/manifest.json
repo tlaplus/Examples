@@ -1,7 +1,4 @@
 {
-  "path": "specifications/TransitiveClosure",
-  "title": "Transitive Closure",
-  "description": "Spec defining the transitive closure of a relation",
   "sources": [],
   "authors": [
     "Stephan Merz"

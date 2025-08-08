@@ -1,7 +1,4 @@
 {
-  "path": "specifications/glowingRaccoon",
-  "title": "PCR Testing for Snippets of DNA",
-  "description": "Specification of a PCR test process",
   "sources": [],
   "authors": [
     "Martin Harrison"

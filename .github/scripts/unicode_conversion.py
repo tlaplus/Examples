@@ -33,7 +33,7 @@ manifest = tla_utils.load_all_manifests(examples_root)
 # List of all modules to convert
 modules = [
     tla_utils.from_cwd(examples_root, module['path'])
-    for spec in manifest
+    for path, spec in manifest
     for module in spec['modules']
         if module['path'] not in skip_modules
         and (only_modules == [] or module['path'] in only_modules)

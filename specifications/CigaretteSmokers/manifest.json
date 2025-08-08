@@ -1,7 +1,4 @@
 {
-  "path": "specifications/CigaretteSmokers",
-  "title": "The Cigarette Smokers Problem",
-  "description": "A concurrency problem described in 1971 by Suhas Patil",
   "sources": [
     "https://github.com/mryndzionek/tlaplus_specs#cigarettesmokerstla"
   ],

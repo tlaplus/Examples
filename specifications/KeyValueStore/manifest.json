@@ -1,7 +1,4 @@
 {
-  "path": "specifications/KeyValueStore",
-  "title": "Snapshot Key-Value Store",
-  "description": "A simple KVS implementing snapshot isolation",
   "sources": [],
   "authors": [
     "Andrew Helwer",

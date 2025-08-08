@@ -1,7 +1,4 @@
 {
-  "path": "specifications/SingleLaneBridge",
-  "title": "Single-Lane Bridge Problem",
-  "description": "Controlling cars moving over a single-lange bridge in opposite directions",
   "sources": [],
   "authors": [
     "Younes Akhouayri"

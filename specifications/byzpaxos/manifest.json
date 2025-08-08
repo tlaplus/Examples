@@ -1,7 +1,4 @@
 {
-  "path": "specifications/byzpaxos",
-  "title": "Byzantizing Paxos by Refinement",
-  "description": "Mechanically-checked safety proof of a Byzantine Paxos algorithm",
   "sources": [
     "http://lamport.azurewebsites.net/pubs/pubs.html#web-byzpaxos",
     "http://lamport.azurewebsites.net/pubs/web-byzpaxos.pdf",

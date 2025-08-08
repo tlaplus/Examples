@@ -1,7 +1,4 @@
 {
-  "path": "specifications/LeastCircularSubstring",
-  "title": "Minimal Circular Substring",
-  "description": "Booth's 1980 algorithm to find the lexicographically-least circular substring",
   "sources": [
     "https://ahelwer.ca/post/2023-03-30-pseudocode/"
   ],

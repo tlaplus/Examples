@@ -82,7 +82,7 @@ manifest = tla_utils.load_all_manifests(examples_root)
 
 large_models = [
     (module, model)
-    for spec in manifest
+    for path, spec in manifest
     for module in spec['modules']
     for model in module['models']
         if model['size'] != 'small'

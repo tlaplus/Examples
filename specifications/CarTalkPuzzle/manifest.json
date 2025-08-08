@@ -1,7 +1,4 @@
 {
-  "path": "specifications/CarTalkPuzzle",
-  "title": "The Car Talk Puzzle",
-  "description": "Math puzzle involving a farmer, a stone, and a balance scale",
   "sources": [],
   "authors": [
     "Leslie Lamport"

@@ -1,7 +1,4 @@
 {
-  "path": "specifications/SlidingPuzzles",
-  "title": "Sliding Block Puzzle",
-  "description": "A spec of the Klotski sliding block puzzle",
   "sources": [],
   "authors": [
     "Mariusz Ryndzionek"

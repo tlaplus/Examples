@@ -1,7 +1,4 @@
 {
-  "path": "specifications/Paxos",
-  "title": "The Paxos Protocol",
-  "description": "A protocol for error-tolerant consensus",
   "sources": [],
   "authors": [
     "Leslie Lamport"

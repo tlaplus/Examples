@@ -10,18 +10,10 @@ manifest.json file or set as blank/unknown as appropriate.
 from check_manifest_features import *
 import os
 from os.path import basename, dirname, join, normpath, relpath, splitext, isfile
-from pathlib import PureWindowsPath
 import glob
 import tla_utils
 import tree_sitter_tlaplus
 from tree_sitter import Language, Parser
-
-def to_posix(path):
-    """
-    Converts paths to normalized Posix format.
-    https://stackoverflow.com/q/75291812/2852699
-    """
-    return PureWindowsPath(normpath(path)).as_posix()
 
 def get_spec_dirs(examples_root, ignored_dirs):
     """
@@ -74,21 +66,18 @@ def generate_new_manifest(examples_root, spec_path, spec_name, parser, queries):
     Generate new manifest.json file for a given specification directory.
     """
     return {
-        'path': to_posix(spec_path),
-        'title': spec_name,
-        'description': '',
         'sources': [],
         'authors': [],
         'tags': [],
         'modules': [
             {
-                'path': to_posix(tla_path),
+                'path': tla_utils.to_posix(tla_path),
                 'communityDependencies': sorted(list(get_community_module_imports(examples_root, parser, tla_path, queries))),
                 'tlaLanguageVersion': 2,
                 'features': sorted(list(get_module_features(examples_root, tla_path, parser, queries))),
                 'models': [
                     {
-                        'path': to_posix(cfg_path),
+                        'path': tla_utils.to_posix(cfg_path),
                         'runtime': 'unknown',
                         'size': 'unknown',
                         'mode': 'exhaustive search',
@@ -108,14 +97,14 @@ def get_old_manifest(spec_path):
     return tla_utils.load_json(old_manifest_path) if isfile(old_manifest_path) else None
 
 def integrate_spec_info(old_manifest, new_spec):
-    fields = ['title', 'description', 'authors', 'sources', 'tags']
+    fields = ['authors', 'sources', 'tags']
     for field in fields:
         new_spec[field] = old_manifest[field]
 
 def find_corresponding_module(old_module, new_spec):
     modules = [
         module for module in new_spec['modules']
-        if to_posix(module['path']) == to_posix(old_module['path'])
+        if tla_utils.to_posix(module['path']) == tla_utils.to_posix(old_module['path'])
     ]
     return modules[0] if any(modules) else None
 
@@ -127,7 +116,7 @@ def integrate_module_info(old_module, new_module):
 def find_corresponding_model(old_model, new_module):
     models = [
         model for model in new_module['models']
-        if to_posix(model['path']) == to_posix(old_model['path'])
+        if tla_utils.to_posix(model['path']) == tla_utils.to_posix(old_model['path'])
     ]
     return models[0] if any(models) else None
 

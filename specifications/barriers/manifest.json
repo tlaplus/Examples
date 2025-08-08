@@ -1,7 +1,4 @@
 {
-  "path": "specifications/barriers",
-  "title": "Barrier Synchronization",
-  "description": "Barriers ensure a group of threads all reach the barrier before advancing",
   "sources": [
     "http://hdl.handle.net/2268.2/23374"
   ],

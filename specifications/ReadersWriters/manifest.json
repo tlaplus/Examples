@@ -1,7 +1,4 @@
 {
-  "path": "specifications/ReadersWriters",
-  "title": "The Readers-Writers Problem",
-  "description": "Controlling concurrent access to a resource",
   "sources": [],
   "authors": [
     "Isaac DeFrain"

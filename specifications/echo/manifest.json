@@ -1,7 +1,4 @@
 {
-  "path": "specifications/echo",
-  "title": "The Echo Algorithm",
-  "description": "Algorithm for constructing a spanning tree in an undirected graph",
   "sources": [],
   "authors": [
     "Stephan Merz"

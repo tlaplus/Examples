@@ -1,7 +1,4 @@
 {
-  "path": "specifications/PaxosHowToWinATuringAward",
-  "title": "Paxos (How to Win a Turing Award)",
-  "description": "Exercises from the lecture The Paxos Algorithm - or How to Win a Turing Award",
   "sources": [
     "https://www.youtube.com/watch?v=tw3gsBms-f8"
   ],

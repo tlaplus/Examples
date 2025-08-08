@@ -1,7 +1,4 @@
 {
-  "path": "specifications/bcastFolklore",
-  "title": "Folklore Reliable Broadcast",
-  "description": "Algorithm from paper *Unreliable failure detectors for reliable distributed systems* (1996)",
   "sources": [],
   "authors": [
     "Igor Konnov",

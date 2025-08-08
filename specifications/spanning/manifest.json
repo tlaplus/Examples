@@ -1,7 +1,4 @@
 {
-  "path": "specifications/spanning",
-  "title": "Spanning Tree Broadcast Algorithm",
-  "description": "A spanning tree broadcast algorithm",
   "sources": [],
   "authors": [
     "Igor Konnov",

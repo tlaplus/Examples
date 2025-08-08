@@ -1,7 +1,4 @@
 {
-  "path": "specifications/allocator",
-  "title": "Resource Allocator",
-  "description": "Specification of a resource allocator",
   "sources": [],
   "authors": [
     "Stephan Merz"

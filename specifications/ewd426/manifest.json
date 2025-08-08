@@ -1,7 +1,4 @@
 {
-  "path": "specifications/ewd426",
-  "title": "EWD 426: Token Stabilization",
-  "description": "Dijkstra's classical stabilizing token ring algorithm, EWD426",
   "sources": [],
   "authors": [
     "Markus Kuppe",

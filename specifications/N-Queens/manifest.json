@@ -1,7 +1,4 @@
 {
-  "path": "specifications/N-Queens",
-  "title": "The N-Queens Puzzle",
-  "description": "Place N queens on an NxN chess board such that no two queens threaten each other",
   "sources": [],
   "authors": [
     "Stephan Merz"

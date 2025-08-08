@@ -1,7 +1,4 @@
 {
-  "path": "specifications/tower_of_hanoi",
-  "title": "The Tower of Hanoi Puzzle",
-  "description": "Famous puzzle involving stacking disks on towers",
   "sources": [],
   "authors": [
     "Alexander Niederbühl",

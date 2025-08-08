@@ -1,7 +1,4 @@
 {
-  "path": "specifications/SDP_Verification",
-  "title": "Software-Defined Perimeter",
-  "description": "Specifying and verifying SDP-protocol-based zero trust architecture",
   "sources": [
     "https://github.com/10227694/SDP_Verification"
   ],

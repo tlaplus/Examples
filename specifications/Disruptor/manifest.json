@@ -1,7 +1,4 @@
 {
-  "path": "specifications/Disruptor",
-  "title": "Disruptor",
-  "description": "Models single and multi producer scenarios of the Disruptor library and checks for data races.",
   "sources": [
     "https://github.com/nicholassm/disruptor-rs"
   ],

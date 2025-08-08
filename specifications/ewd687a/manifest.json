@@ -1,7 +1,4 @@
 {
-  "path": "specifications/ewd687a",
-  "title": "EWD687a: Detecting Termination in Distributed Computations",
-  "description": "Dijkstra's Termination Detection Algorithm",
   "sources": [],
   "authors": [
     "Leslie Lamport",

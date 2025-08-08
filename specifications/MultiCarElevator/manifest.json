@@ -1,7 +1,4 @@
 {
-  "path": "specifications/MultiCarElevator",
-  "title": "Multi-Car Elevator System",
-  "description": "A simple multi-car elevator system servicing a multi-floor building",
   "sources": [
     "https://groups.google.com/g/tlaplus/c/5Xd8kv288jE/m/IrliJIatBwAJ"
   ],

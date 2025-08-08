@@ -1,7 +1,4 @@
 {
-  "path": "specifications/dijkstra-mutex",
-  "title": "Dijkstra's Mutual Exclusion Algorithm",
-  "description": "Algorithm from paper *Solution of a Problem in Concurrent Programming Control* (1965)",
   "sources": [],
   "authors": [
     "Leslie Lamport"

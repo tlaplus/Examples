@@ -1,7 +1,4 @@
 {
-  "path": "specifications/KnuthYao",
-  "title": "The Knuth-Yao Method",
-  "description": "A method for simulating a fair 6-sided die using only coin flips",
   "sources": [
     "https://old.reddit.com/r/tlaplus/comments/j06ohw/how_do_you_reason_about_a_probabilistic/g6owlxy/"
   ],

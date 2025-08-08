@@ -19,7 +19,7 @@ ci_ignore_path = normpath(args.ci_ignore_path)
 examples_root = dirname(ci_ignore_path)
 manifest = tla_utils.load_all_manifests(examples_root)
 
-module_lists = [spec["modules"] for spec in manifest]
+module_lists = [spec["modules"] for path, spec in manifest]
 modules = [module for module_list in module_lists for module in module_list]
 model_lists = [module["models"] for module in modules]
 

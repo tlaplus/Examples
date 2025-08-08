@@ -79,7 +79,7 @@ manifest = tla_utils.load_all_manifests(examples_root)
 small_models = sorted(
     [
         (spec, module, model, tla_utils.parse_timespan(model['runtime']))
-        for spec in manifest
+        for path, spec in manifest
         for module in spec['modules']
         for model in module['models']
             if model['size'] == 'small'

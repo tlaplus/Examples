@@ -1,7 +1,4 @@
 {
-  "path": "specifications/cf1s-folklore",
-  "title": "One-Step Consensus with Zero-Degradation",
-  "description": "Algorithm from paper *One-step Consensus with Zero-Degradation* (2006)",
   "sources": [],
   "authors": [
     "Igor Konnov",

@@ -1,7 +1,4 @@
 {
-  "path": "specifications/Chameneos",
-  "title": "Chameneos, a Concurrency Game",
-  "description": "A concurrency game requiring concurrent & symmetric cooperation",
   "sources": [
     "https://github.com/mryndzionek/tlaplus_specs#chameneostla"
   ],

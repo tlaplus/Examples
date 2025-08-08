@@ -1,7 +1,4 @@
 {
-  "path": "specifications/lamport_mutex",
-  "title": "Distributed Mutual Exclusion",
-  "description": "Specification of Lamport's distributed mutual exclusion algorithm",
   "sources": [],
   "authors": [
     "Stephan Merz"

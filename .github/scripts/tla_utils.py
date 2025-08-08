@@ -1,7 +1,8 @@
 import locale
 from datetime import datetime
 import json
-from os.path import join, normpath, pathsep
+from os.path import join, normpath, pathsep, dirname
+from pathlib import PureWindowsPath
 import subprocess
 import re
 import glob
@@ -13,6 +14,13 @@ def from_cwd(root, path):
     the path from the cwd to that file.
     """
     return normpath(join(root, normpath(path)))
+
+def to_posix(path):
+    """
+    Converts paths to normalized Posix format.
+    https://stackoverflow.com/q/75291812/2852699
+    """
+    return PureWindowsPath(normpath(path)).as_posix()
 
 def ignore(ignored_dirs, path):
     """
@@ -50,9 +58,10 @@ def load_all_manifests(examples_root):
     Loads all manifest.json files in the specifications subdirectories.
     """
     return [
-        load_json(manifest_path)
-        for manifest_path in glob.glob(from_cwd(examples_root, 'specifications/*/manifest.json'))
+        (to_posix(dirname(manifest_path)), load_json(from_cwd(examples_root, manifest_path)))
+        for manifest_path in glob.glob('specifications/*/manifest.json', root_dir = examples_root)
     ]
+
 
 def write_json(data, path):
     """

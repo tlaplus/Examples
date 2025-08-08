@@ -1,7 +1,4 @@
 {
-  "path": "specifications/locks_auxiliary_vars",
-  "title": "Peterson Lock Refinement With Auxiliary Variables",
-  "description": "Two-way refinement between Peterson's Algorithm and an abstract lock spec, using auxiliary variables as presented in *Prophecy made simple* by Lamport and Merz",
   "sources": [
     "http://hdl.handle.net/2268.2/23374"
   ],

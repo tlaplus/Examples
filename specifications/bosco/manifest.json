@@ -1,7 +1,4 @@
 {
-  "path": "specifications/bosco",
-  "title": "The Bosco Byzantine Consensus Algorithm",
-  "description": "Algorithm from paper *Bosco: One-step byzantine asynchronous consensus* (2008)",
   "sources": [],
   "authors": [
     "Igor Konnov",

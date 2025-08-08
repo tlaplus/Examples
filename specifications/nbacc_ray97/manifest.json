@@ -1,7 +1,4 @@
 {
-  "path": "specifications/nbacc_ray97",
-  "title": "Asynchronous Non-Blocking Atomic Commit",
-  "description": "Algorithm from paper *A case study of agreement problems in distributed systems: non-blocking atomic commitment* (1997)",
   "sources": [],
   "authors": [
     "Igor Konnov",

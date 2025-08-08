@@ -1,7 +1,4 @@
 {
-  "path": "specifications/SpanningTree",
-  "title": "Span Tree Exercise",
-  "description": "Simplified algorithm from the Lamport paper *An Assertional Correctness Proof of a Distributed Program*",
   "sources": [],
   "authors": [
     "Leslie Lamport"

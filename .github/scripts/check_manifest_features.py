@@ -154,16 +154,10 @@ def check_features(parser, queries, manifest, examples_root):
     Validates every field of the manifest that can be validated.
     """
     success = True
-    for spec in manifest:
-        if spec['title'] == '':
-            success = False
-            logging.error(f'Spec {spec["path"]} does not have a title')
-        if spec['description'] == '':
-            success = False
-            logging.error(f'Spec {spec["path"]} does not have a description')
+    for path, spec in manifest:
         if not any(spec['authors']):
             success = False
-            logging.error(f'Spec {spec["path"]} does not have any listed authors')
+            logging.error(f'Spec {path} does not have any listed authors')
         for module in spec['modules']:
             module_path = module['path']
             tree, text, parse_err = tla_utils.parse_module(examples_root, parser, module_path)

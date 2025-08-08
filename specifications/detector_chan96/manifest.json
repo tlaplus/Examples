@@ -1,7 +1,4 @@
 {
-  "path": "specifications/detector_chan96",
-  "title": "Failure Detector",
-  "description": "Algorithm from paper *Unreliable failure detectors for reliable distributed systems* (1996)",
   "sources": [],
   "authors": [
     "Igor Konnov",

@@ -1,7 +1,4 @@
 {
-  "path": "specifications/transaction_commit",
-  "title": "Transaction Commit Models",
-  "description": "Ordinary transaction commit, two-phase commit, and Paxos commit",
   "sources": [
     "http://research.microsoft.com/en-us/um/people/lamport/pubs/pubs.html#paxos-commit",
     "https://www.microsoft.com/en-us/research/uploads/prod/2004/01/consensus-on-transaction-commit.pdf",

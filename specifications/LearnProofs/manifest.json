@@ -1,7 +1,4 @@
 {
-  "path": "specifications/LearnProofs",
-  "title": "Learn TLA⁺ Proofs",
-  "description": "Some specs of very simple algorithms & formal proofs of their correctness",
   "sources": [],
   "authors": [
     "Andrew Helwer"

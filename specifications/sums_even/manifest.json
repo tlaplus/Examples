@@ -1,7 +1,4 @@
 {
-  "path": "specifications/sums_even",
-  "title": "Proof x+x is Even",
-  "description": "Two proofs that x+x is even for every natural number x",
   "sources": [],
   "authors": [
     "Martin Riener"
