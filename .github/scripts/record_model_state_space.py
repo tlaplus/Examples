@@ -5,7 +5,7 @@ model where that info is not present, then writes it to a manifest.json file.
 
 from argparse import ArgumentParser
 import logging
-from os.path import dirname, normpath
+from os.path import dirname, normpath, join
 from subprocess import CompletedProcess, TimeoutExpired
 import tla_utils
 
@@ -96,7 +96,7 @@ small_models = sorted(
                 or 'stateDepth' not in model
             ))
     ],
-    key = lambda m: m[2],
+    key = lambda m: m[3],
     reverse=True
 )
 
@@ -108,7 +108,7 @@ for spec, module, model, _ in small_models:
     success = check_model(module, model)
     if not success:
         exit(1)
-    tla_utils.write_json(manifest, manifest_path)
+    tla_utils.write_json(spec, manifest_path)
 
 exit(0)
 

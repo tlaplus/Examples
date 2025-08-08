@@ -1,0 +1,83 @@
+{
+  "path": "specifications/locks_auxiliary_vars",
+  "title": "Peterson Lock Refinement With Auxiliary Variables",
+  "description": "Two-way refinement between Peterson's Algorithm and an abstract lock spec, using auxiliary variables as presented in *Prophecy made simple* by Lamport and Merz",
+  "sources": [
+    "http://hdl.handle.net/2268.2/23374"
+  ],
+  "authors": [
+    "Jarod Differdange"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/locks_auxiliary_vars/Lock.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal",
+        "proof"
+      ],
+      "models": [
+        {
+          "path": "specifications/locks_auxiliary_vars/Lock.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 12,
+          "totalStates": 21,
+          "stateDepth": 5
+        }
+      ]
+    },
+    {
+      "path": "specifications/locks_auxiliary_vars/LockHS.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "proof"
+      ],
+      "models": [
+        {
+          "path": "specifications/locks_auxiliary_vars/LockHS.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 28,
+          "totalStates": 41,
+          "stateDepth": 10
+        }
+      ]
+    },
+    {
+      "path": "specifications/locks_auxiliary_vars/Peterson.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal",
+        "proof"
+      ],
+      "models": [
+        {
+          "path": "specifications/locks_auxiliary_vars/Peterson.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 42,
+          "totalStates": 77,
+          "stateDepth": 11
+        }
+      ]
+    },
+    {
+      "path": "specifications/locks_auxiliary_vars/Stuttering.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": []
+    }
+  ]
+}

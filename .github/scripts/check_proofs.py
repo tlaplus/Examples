@@ -31,7 +31,7 @@ proof_module_paths = [
     for module in spec['modules']
         if 'proof' in module['features']
         and module['path'] not in skip_modules
-        and (only_modules == [] or model['path'] in only_models)
+        and (only_modules == [] or module['path'] in only_modules)
 ]
 
 for path in skip_modules:

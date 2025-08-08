@@ -1,0 +1,53 @@
+{
+  "path": "specifications/barriers",
+  "title": "Barrier Synchronization",
+  "description": "Barriers ensure a group of threads all reach the barrier before advancing",
+  "sources": [
+    "http://hdl.handle.net/2268.2/23374"
+  ],
+  "authors": [
+    "Jarod Differdange"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/barriers/Barrier.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/barriers/Barrier.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 64,
+          "totalStates": 194,
+          "stateDepth": 7
+        }
+      ]
+    },
+    {
+      "path": "specifications/barriers/Barriers.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [
+        "pluscal",
+        "proof"
+      ],
+      "models": [
+        {
+          "path": "specifications/barriers/Barriers.cfg",
+          "runtime": "00:00:05",
+          "size": "small",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 29279,
+          "totalStates": 104515,
+          "stateDepth": 93
+        }
+      ]
+    }
+  ]
+}

@@ -11,6 +11,3 @@ specifications/CCF
 specifications/azure-cosmos-tla
 specifications/microwave
 
-# Basic contribution only
-specifications/barriers
-specifications/locks_auxiliary_vars
