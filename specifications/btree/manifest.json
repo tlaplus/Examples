@@ -1,0 +1,51 @@
+{
+  "path": "specifications/btree",
+  "title": "B-trees",
+  "description": "Operations on B-trees. Includes a refinement mapping to a key-value store spec.",
+  "sources": [
+    "https://github.com/lorin/btree-tla",
+    "https://surfingcomplexity.blog/2024/07/04/modeling-b-trees-in-tla/"
+  ],
+  "authors": [
+    "Lorin Hochstein"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/btree/btree.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/btree/btree.cfg",
+          "runtime": "00:00:15",
+          "size": "small",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 374727,
+          "totalStates": 2820091,
+          "stateDepth": 40
+        }
+      ]
+    },
+    {
+      "path": "specifications/btree/kvstore.tla",
+      "communityDependencies": [],
+      "tlaLanguageVersion": 2,
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/btree/kvstore.cfg",
+          "runtime": "00:00:01",
+          "size": "small",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 2641,
+          "totalStates": 28585,
+          "stateDepth": 11
+        }
+      ]
+    }
+  ]
+}
