@@ -1,7 +1,4 @@
 {
-  "path": "specifications/Stones",
-  "title": "Stone Scale Puzzle",
-  "description": "Alternative implementation of the Car Talk Puzzle",
   "sources": [],
   "authors": [
     "Leslie Lamport"

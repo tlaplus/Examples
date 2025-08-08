@@ -1,7 +1,4 @@
 {
-  "path": "specifications/chang_roberts",
-  "title": "Chang-Roberts Algorithm for Leader Election in a Ring",
-  "description": "Algorithm from paper *An improved algorithm for decentralized extrema-finding in circular configurations of processes* (1979)",
   "sources": [],
   "authors": [
     "Stephan Merz"

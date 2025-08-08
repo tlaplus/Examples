@@ -1,7 +1,4 @@
 {
-  "path": "specifications/Bakery-Boulangerie",
-  "title": "The Boulangerie Algorithm",
-  "description": "Spec of a variant of the Bakery Algorithm",
   "sources": [],
   "authors": [
     "Leslie Lamport",

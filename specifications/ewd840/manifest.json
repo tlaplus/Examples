@@ -1,7 +1,4 @@
 {
-  "path": "specifications/ewd840",
-  "title": "EWD840: Termination Detection in a Ring",
-  "description": "EWD840: Termination Detection in a Ring",
   "sources": [
     "Dijkstra's termination detection algorithm for ring topologies"
   ],

@@ -1,7 +1,4 @@
 {
-  "path": "specifications/acp",
-  "title": "Atomic Commitment Protocol",
-  "description": "TLA⁺ specs from CS-986: Advanced Topics in Program Verification",
   "sources": [
     "https://members.loria.fr/SMerz/talks/argentina2005/Charpentier/charpov/Teaching/CS-986/TLC/",
     "https://dl.acm.org/doi/10.5555/302430.302436"

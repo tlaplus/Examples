@@ -1,7 +1,4 @@
 {
-  "path": "specifications/CoffeeCan",
-  "title": "The Coffee Can Bean Problem",
-  "description": "Math problem published by Dijkstra attributed to Carel Scholten",
   "sources": [
     "https://stackoverflow.com/a/66304920/2852699"
   ],

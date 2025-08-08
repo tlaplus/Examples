@@ -1,7 +1,4 @@
 {
-  "path": "specifications/cbc_max",
-  "title": "Condition-Based Consensus",
-  "description": "Algorithm from paper *Evaluating the condition-based approach to solve consensus* (2003)",
   "sources": [],
   "authors": [
     "Igor Konnov",

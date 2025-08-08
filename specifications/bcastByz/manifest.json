@@ -1,7 +1,4 @@
 {
-  "path": "specifications/bcastByz",
-  "title": "Asynchronous Reliable Broadcast",
-  "description": "Algorithm from paper *Simulating authenticated broadcasts to derive simple fault-tolerant algorithms* (1987)",
   "sources": [],
   "authors": [
     "Igor Konnov",

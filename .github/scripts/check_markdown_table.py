@@ -58,13 +58,13 @@ def from_markdown(record):
         record
     )
 
-def from_json(spec):
+def from_json(path, spec):
     '''
     Transforms JSON from the manifest into a normalized form.
     '''
     return TableRow(
-        spec['title'],
-        spec['path'],
+        '',
+        path,
         set(spec['authors']),
         'beginner' in spec['tags'],
         any([module for module in spec['modules'] if 'proof' in module['features']]),
@@ -87,7 +87,7 @@ with open(normpath(args.readme_path), 'r', encoding='utf-8') as readme_file:
 spec_table = next((child for child in readme.children if isinstance(child, Table)))
 
 table_specs = dict([(record.path, record) for record in [from_markdown(node) for node in spec_table.children]])
-manifest_specs = dict([(record.path, record) for record in [from_json(spec) for spec in manifest]])
+manifest_specs = dict([(record.path, record) for record in [from_json(path, spec) for path, spec in manifest]])
 
 # Checks that set of specs in manifest and table are equivalent
 success = True
@@ -106,18 +106,6 @@ specs = [
     for (path, manifest_spec) in manifest_specs.items()
     if path in table_specs
 ]
-
-# Ensure spec names are identical
-different_names = [
-    (manifest_spec.path, manifest_spec.name, table_spec.name)
-    for (manifest_spec, table_spec) in specs
-    if manifest_spec.name != table_spec.name
-]
-if any(different_names):
-    success = False
-    print('ERROR: spec names in README.md table differ from manifest.json:')
-    for path, json, md in different_names:
-        print(f'Spec {path} has name {json} in manifest and {md} in README')
 
 # Ensure spec authors are identical
 different_authors = [

@@ -1,7 +1,4 @@
 {
-  "path": "specifications/DiningPhilosophers",
-  "title": "The Dining Philosophers Problem",
-  "description": "The Chandy-Misra solution to the Dining Philosophers concurrency problem",
   "sources": [],
   "authors": [
     "Jeff Hemphill"

@@ -1,7 +1,4 @@
 {
-  "path": "specifications/NanoBlockchain",
-  "title": "Nano Blockchain Protocol",
-  "description": "A specification of the protocol originally used by the Nano blockchain",
   "sources": [],
   "authors": [
     "Andrew Helwer"

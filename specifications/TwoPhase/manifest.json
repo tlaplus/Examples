@@ -1,7 +1,4 @@
 {
-  "path": "specifications/TwoPhase",
-  "title": "Two-Phase Handshaking",
-  "description": "Specification of a very simple hardware protocol called two-phase handshaking",
   "sources": [],
   "authors": [
     "Leslie Lamport",

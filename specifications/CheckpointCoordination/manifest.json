@@ -1,7 +1,4 @@
 {
-  "path": "specifications/CheckpointCoordination",
-  "title": "Checkpoint Coordination",
-  "description": "An algorithm for controlling checkpoint leases in a Paxos ring",
   "sources": [
     "https://github.com/Azure/RingMaster",
     "https://ahelwer.ca/post/2023-04-05-checkpoint-coordination/"

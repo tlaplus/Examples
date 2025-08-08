@@ -1,7 +1,4 @@
 {
-  "path": "specifications/MisraReachability",
-  "title": "Misra Reachability Algorithm",
-  "description": "A sequential algorithm for computing the set of reachable nodes in a directed graph",
   "sources": [],
   "authors": [
     "Leslie Lamport"

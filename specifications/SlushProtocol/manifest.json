@@ -1,7 +1,4 @@
 {
-  "path": "specifications/SlushProtocol",
-  "title": "The Slush Protocol",
-  "description": "An attempt to use TLA⁺ to analyze a probabilistic protocol in the Avalanche family",
   "sources": [
     "https://github.com/ahelwer/avalanche-analysis",
     "https://ahelwer.ca/post/2020-09-11-probabilistic-distsys/"

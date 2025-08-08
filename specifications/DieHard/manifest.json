@@ -1,7 +1,4 @@
 {
-  "path": "specifications/DieHard",
-  "title": "The Die Hard Problem",
-  "description": "Obtain 4 gallons of water using only 3 and 5 gallon jugs",
   "sources": [],
   "authors": [
     "Leslie Lamport"

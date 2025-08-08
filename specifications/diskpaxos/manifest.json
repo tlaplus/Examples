@@ -1,7 +1,4 @@
 {
-  "path": "specifications/diskpaxos",
-  "title": "SWMR Shared Memory Disk Paxos",
-  "description": "A formalization of the SWMR-Shared-Memory Disk Paxos",
   "sources": [
     "https://github.com/nano-o/MultiPaxos/blob/master/DiskPaxos.tla"
   ],

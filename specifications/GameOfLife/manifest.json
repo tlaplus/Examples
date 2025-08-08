@@ -1,7 +1,4 @@
 {
-  "path": "specifications/GameOfLife",
-  "title": "Conway's Game of Life",
-  "description": "The famous cellular automata simulation",
   "sources": [
     "https://github.com/mryndzionek/tlaplus_specs#gameoflifetla"
   ],

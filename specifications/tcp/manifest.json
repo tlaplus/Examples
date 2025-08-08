@@ -1,7 +1,4 @@
 {
-  "path": "specifications/tcp",
-  "title": "TCP as defined in RFC 9293",
-  "description": "Transmission Control Protocol (TCP)",
   "sources": [
     "https://datatracker.ietf.org/doc/html/rfc9293"
   ],

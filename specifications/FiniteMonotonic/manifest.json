@@ -1,7 +1,4 @@
 {
-  "path": "specifications/FiniteMonotonic",
-  "title": "Finitizing Monotonic Systems",
-  "description": "Illustration of technique for making ordinarily-infinite monotonic systems finite for the purposes of model-checking.",
   "sources": [
     "https://ahelwer.ca/post/2023-11-01-tla-finite-monotonic/"
   ],

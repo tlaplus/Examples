@@ -1,7 +1,4 @@
 {
-  "path": "specifications/aba-asyn-byz",
-  "title": "Asynchronous Byzantine Consensus",
-  "description": "Spec of the protocol from paper *Asynchronous Consensus and Broadcast Protocols* (1985)",
   "sources": [],
   "authors": [
     "Igor Konnov",

@@ -21,8 +21,8 @@ args = parser.parse_args()
 examples_root = dirname(args.schema_path)
 schema = tla_utils.load_json(normpath(args.schema_path))
 failures = []
-for manifest in tla_utils.load_all_manifests(examples_root):
-    manifest_path = join(manifest['path'], "manifest.json")
+for path, manifest in tla_utils.load_all_manifests(examples_root):
+    manifest_path = join(path, 'manifest.json')
     try:
         validate(instance=manifest, schema=schema)
     except ValidationError as error:

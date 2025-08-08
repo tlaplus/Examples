@@ -1,7 +1,4 @@
 {
-  "path": "specifications/TLC",
-  "title": "The TLC Safety Checking Algorithm",
-  "description": "Spec of the safety checking algorithm used by the TLC model-checker",
   "sources": [],
   "authors": [
     "Markus Kuppe"

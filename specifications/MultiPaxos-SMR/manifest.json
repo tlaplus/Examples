@@ -1,7 +1,4 @@
 {
-  "path": "specifications/MultiPaxos-SMR",
-  "title": "MultiPaxos in SMR-Style",
-  "description": "MultiPaxos in practical state machine replication system style",
   "sources": [
     "https://www.josehu.com/technical/2024/02/19/practical-MultiPaxos-TLA-spec.html"
   ],

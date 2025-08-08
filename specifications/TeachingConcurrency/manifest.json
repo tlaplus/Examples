@@ -1,7 +1,4 @@
 {
-  "path": "specifications/TeachingConcurrency",
-  "title": "Teaching Concurrency",
-  "description": "Simple problem useful for teaching and learning about concurrency",
   "sources": [
     "http://lamport.azurewebsites.net/pubs/teaching-concurrency.pdf"
   ],

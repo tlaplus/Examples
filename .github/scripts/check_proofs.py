@@ -27,7 +27,7 @@ logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
 
 proof_module_paths = [
     module['path']
-    for spec in manifest
+    for path, spec in manifest
     for module in spec['modules']
         if 'proof' in module['features']
         and module['path'] not in skip_modules

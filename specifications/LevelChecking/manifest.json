@@ -1,7 +1,4 @@
 {
-  "path": "specifications/LevelChecking",
-  "title": "TLA⁺ Level Checking",
-  "description": "Level-checking of TLA⁺ formulas as described in Specifying Systems",
   "sources": [
     "https://github.com/tlaplus/tlaplus/blob/6bc82f7746ccdfbdf49cdef24448666d11e5e218/tlatools/org.lamport.tlatools/src/tla2sany/semantic/LevelNode.java#L354-L2778"
   ],

@@ -1,7 +1,4 @@
 {
-  "path": "specifications/nbacg_guer01",
-  "title": "Asynchronous Non-Blocking Atomic Commitment with Failure Detectors",
-  "description": "Algorithm from paper *On the hardness of failure-sensitive agreement problems* (2001)",
   "sources": [],
   "authors": [
     "Igor Konnov",

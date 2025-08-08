@@ -1,7 +1,4 @@
 {
-  "path": "specifications/SpecifyingSystems",
-  "title": "Specs from Specifying Systems",
-  "description": "All specs seen in the textbook Specifying Systems by Leslie Lamport",
   "sources": [
     "http://lamport.azurewebsites.net/tla/book.html"
   ],

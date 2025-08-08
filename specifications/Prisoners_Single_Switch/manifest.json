@@ -1,7 +1,4 @@
 {
-  "path": "specifications/Prisoners_Single_Switch",
-  "title": "The Prisoners & Switch Puzzle",
-  "description": "Given a room containing a single light switch prisoners enter one by one, they must develop a strategy to free themselves.",
   "sources": [],
   "authors": [
     "Florian Schanda"

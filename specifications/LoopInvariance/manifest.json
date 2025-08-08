@@ -1,7 +1,4 @@
 {
-  "path": "specifications/LoopInvariance",
-  "title": "Loop Invariance",
-  "description": "Examples of finding and proving loop invariants in PlusCal",
   "sources": [
     "http://lamport.azurewebsites.net/tla/proving-safety.pdf"
   ],

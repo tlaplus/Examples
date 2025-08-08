@@ -1,7 +1,4 @@
 {
-  "path": "specifications/YoYo",
-  "title": "Yo-Yo Leader Election",
-  "description": "Algorithm due to Nicola Santoro for leader election in a connected undirected network",
   "sources": [
     "https://research.nicola-santoro.com/DADA.html"
   ],

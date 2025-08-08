@@ -1,7 +1,4 @@
 {
-  "path": "specifications/Majority",
-  "title": "Boyer-Moore Majority Vote",
-  "description": "An efficient algorithm for detecting a majority value in a sequence",
   "sources": [],
   "authors": [
     "Stephan Merz"

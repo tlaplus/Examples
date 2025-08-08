@@ -1,7 +1,4 @@
 {
-  "path": "specifications/ewd998",
-  "title": "EWD998: Termination Detection in a Ring with Asynchronous Message Delivery",
-  "description": "Variant of EWD 840 given by Shmuel Safra",
   "sources": [],
   "authors": [
     "Markus Kuppe",

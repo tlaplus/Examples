@@ -1,11 +1,8 @@
 {
   "type": "object",
-  "required": ["title", "description", "sources", "authors", "path", "tags", "modules"],
+  "required": ["sources", "authors", "tags", "modules"],
   "additionalProperties": false,
   "properties": {
-    "path": {"type": "string"},
-    "title": {"type": "string"},
-    "description": {"type": "string"},
     "sources": {
       "type": "array",
       "items": {"type": "string"}

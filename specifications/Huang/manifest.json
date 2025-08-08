@@ -1,7 +1,4 @@
 {
-  "path": "specifications/Huang",
-  "title": "Huang's Algorithm",
-  "description": "An algorithm for detecting termination in a distributed system",
   "sources": [],
   "authors": [
     "Markus Kuppe"
