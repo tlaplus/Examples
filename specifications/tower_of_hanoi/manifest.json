@@ -11,41 +11,35 @@
     {
       "path": "specifications/tower_of_hanoi/Bits.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/tower_of_hanoi/Hanoi.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/tower_of_hanoi/Hanoi.toolbox/Model_1/Bits.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/tower_of_hanoi/Hanoi.toolbox/Model_1/Hanoi.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/tower_of_hanoi/Hanoi.toolbox/Model_1/MC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/tower_of_hanoi/Hanoi.toolbox/Model_1/MC.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "safety failure"
         }
@@ -54,7 +48,6 @@
     {
       "path": "specifications/tower_of_hanoi/HanoiSeq.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     }

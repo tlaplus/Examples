@@ -8,13 +8,11 @@
     {
       "path": "specifications/allocator/AllocatorImplementation.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/allocator/AllocatorImplementation.cfg",
           "runtime": "00:00:15",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 17701,
@@ -26,13 +24,11 @@
     {
       "path": "specifications/allocator/AllocatorRefinement.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/allocator/AllocatorRefinement.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 1690,
@@ -44,13 +40,11 @@
     {
       "path": "specifications/allocator/SchedulingAllocator.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/allocator/SchedulingAllocator.cfg",
           "runtime": "00:00:10",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 1690,
@@ -62,13 +56,11 @@
     {
       "path": "specifications/allocator/SimpleAllocator.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/allocator/SimpleAllocator.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 400,

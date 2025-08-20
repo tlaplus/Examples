@@ -8,7 +8,6 @@
     {
       "path": "specifications/chang_roberts/ChangRoberts.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal"
       ],
@@ -17,13 +16,11 @@
     {
       "path": "specifications/chang_roberts/MCChangRoberts.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/chang_roberts/MCChangRoberts.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 137,

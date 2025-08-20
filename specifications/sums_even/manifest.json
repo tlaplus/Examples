@@ -10,13 +10,11 @@
     {
       "path": "specifications/sums_even/MC_sums_even.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/sums_even/MC_sums_even.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 0,
@@ -28,7 +26,6 @@
     {
       "path": "specifications/sums_even/sums_even.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "proof"
       ],

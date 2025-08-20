@@ -10,13 +10,11 @@
     {
       "path": "specifications/tcp/MCtcp.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/tcp/MCtcp.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 1182,
@@ -30,7 +28,6 @@
       "communityDependencies": [
         "SequencesExt"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     }

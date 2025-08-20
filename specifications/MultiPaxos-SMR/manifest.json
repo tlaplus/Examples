@@ -12,7 +12,6 @@
     {
       "path": "specifications/MultiPaxos-SMR/MultiPaxos.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal"
       ],
@@ -21,20 +20,17 @@
     {
       "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC.cfg",
           "runtime": "00:07:53",
-          "size": "large",
           "mode": "exhaustive search",
           "result": "success"
         },
         {
           "path": "specifications/MultiPaxos-SMR/MultiPaxos_MC_small.cfg",
           "runtime": "00:00:10",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 343796,

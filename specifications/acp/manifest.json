@@ -11,20 +11,17 @@
     {
       "path": "specifications/acp/ACP_NB.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/acp/ACP_NB_TLC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/acp/ACP_NB_TLC.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 4284,
@@ -36,13 +33,11 @@
     {
       "path": "specifications/acp/ACP_NB_WRONG_TLC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/acp/ACP_NB_WRONG_TLC.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "safety failure"
         }
@@ -51,20 +46,17 @@
     {
       "path": "specifications/acp/ACP_SB.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/acp/ACP_SB_TLC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/acp/ACP_SB_TLC.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 54944,

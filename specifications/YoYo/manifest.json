@@ -11,13 +11,11 @@
     {
       "path": "specifications/YoYo/MCYoYoNoPruning.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/YoYo/MCYoYoNoPruning.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 60,
@@ -29,13 +27,11 @@
     {
       "path": "specifications/YoYo/MCYoYoPruning.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/YoYo/MCYoYoPruning.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 102,
@@ -49,13 +45,11 @@
       "communityDependencies": [
         "UndirectedGraphs"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/YoYo/YoYoAllGraphs.cfg",
           "runtime": "00:00:02",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 26731,
@@ -69,7 +63,6 @@
       "communityDependencies": [
         "UndirectedGraphs"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
@@ -78,7 +71,6 @@
       "communityDependencies": [
         "UndirectedGraphs"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     }

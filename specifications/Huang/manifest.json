@@ -12,13 +12,11 @@
         "Functions",
         "SequencesExt"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/Huang/Huang.cfg",
           "runtime": "00:00:40",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success"
         }

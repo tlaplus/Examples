@@ -14,14 +14,12 @@
     {
       "path": "specifications/FiniteMonotonic/CRDT.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/FiniteMonotonic/CRDT_proof.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "proof"
       ],
@@ -33,21 +31,18 @@
         "FiniteSetsExt",
         "SequencesExt"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/FiniteMonotonic/Folds.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/FiniteMonotonic/Functions.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
@@ -56,7 +51,6 @@
       "communityDependencies": [
         "FiniteSetsExt"
       ],
-      "tlaLanguageVersion": 2,
       "features": [
         "action composition"
       ],
@@ -64,7 +58,6 @@
         {
           "path": "specifications/FiniteMonotonic/MCCRDT.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 25000,
@@ -78,13 +71,11 @@
       "communityDependencies": [
         "FiniteSetsExt"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/FiniteMonotonic/MCDistributedReplicatedLog.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "liveness failure"
         }
@@ -95,7 +86,6 @@
       "communityDependencies": [
         "FiniteSetsExt"
       ],
-      "tlaLanguageVersion": 2,
       "features": [
         "action composition"
       ],
@@ -103,7 +93,6 @@
         {
           "path": "specifications/FiniteMonotonic/MCReplicatedLog.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 1363,
@@ -115,7 +104,6 @@
     {
       "path": "specifications/FiniteMonotonic/ReplicatedLog.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     }

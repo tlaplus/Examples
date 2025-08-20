@@ -12,7 +12,6 @@
     {
       "path": "specifications/LoopInvariance/BinarySearch.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal",
         "proof"
@@ -22,13 +21,11 @@
     {
       "path": "specifications/LoopInvariance/MCBinarySearch.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/LoopInvariance/MCBinarySearch.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 27953,
@@ -40,13 +37,11 @@
     {
       "path": "specifications/LoopInvariance/MCQuicksort.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/LoopInvariance/MCQuicksort.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 4548,
@@ -58,7 +53,6 @@
     {
       "path": "specifications/LoopInvariance/Quicksort.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal",
         "proof"
@@ -68,7 +62,6 @@
     {
       "path": "specifications/LoopInvariance/SumSequence.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal",
         "proof"

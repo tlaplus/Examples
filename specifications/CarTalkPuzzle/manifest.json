@@ -10,27 +10,23 @@
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_1/CarTalkPuzzle.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_1/MC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_1/MC.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 0,
@@ -42,20 +38,17 @@
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_2/CarTalkPuzzle.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_2/MC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_2/MC.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 0,
@@ -67,20 +60,17 @@
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_3/CarTalkPuzzle.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_3/MC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_3/MC.cfg",
           "runtime": "unknown",
-          "size": "large",
           "mode": "exhaustive search",
           "result": "unknown"
         }

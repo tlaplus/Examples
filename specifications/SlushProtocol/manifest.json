@@ -11,7 +11,6 @@
     {
       "path": "specifications/SlushProtocol/Slush.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal"
       ],
@@ -19,21 +18,18 @@
         {
           "path": "specifications/SlushProtocol/SlushLarge.cfg",
           "runtime": "00:50:00",
-          "size": "large",
           "mode": "exhaustive search",
           "result": "success"
         },
         {
           "path": "specifications/SlushProtocol/SlushMedium.cfg",
           "runtime": "00:01:00",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success"
         },
         {
           "path": "specifications/SlushProtocol/SlushSmall.cfg",
           "runtime": "00:00:15",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 274678,

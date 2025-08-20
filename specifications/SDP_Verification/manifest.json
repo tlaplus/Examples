@@ -11,13 +11,11 @@
     {
       "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/MC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/MC.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 2881,
@@ -32,20 +30,17 @@
         "Bitwise",
         "Functions"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SDP_Verification/SDP_Attack_Spec/MC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SDP_Verification/SDP_Attack_Spec/MC.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "safety failure"
         }
@@ -57,7 +52,6 @@
         "Bitwise",
         "Functions"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     }

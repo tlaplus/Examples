@@ -12,48 +12,41 @@
     {
       "path": "specifications/SpecifyingSystems/AdvancedExamples/BNFGrammars.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/AdvancedExamples/DifferentialEquations.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/AdvancedExamples/Graphs.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/AdvancedExamples/InnerSequential.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/AdvancedExamples/InnerSerial.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/AdvancedExamples/MCInnerSequential.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/AdvancedExamples/MCInnerSequential.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 3528,
@@ -65,13 +58,11 @@
     {
       "path": "specifications/SpecifyingSystems/AdvancedExamples/MCInnerSerial.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/AdvancedExamples/MCInnerSerial.cfg",
           "runtime": "00:01:30",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success"
         }
@@ -80,27 +71,23 @@
     {
       "path": "specifications/SpecifyingSystems/AdvancedExamples/RegisterInterface.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/AdvancedExamples/SerialMemory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/AsynchronousInterface/AsynchInterface.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/AsynchronousInterface/AsynchInterface.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 12,
@@ -112,13 +99,11 @@
     {
       "path": "specifications/SpecifyingSystems/AsynchronousInterface/Channel.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/AsynchronousInterface/Channel.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 12,
@@ -130,13 +115,11 @@
     {
       "path": "specifications/SpecifyingSystems/AsynchronousInterface/PrintValues.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/AsynchronousInterface/PrintValues.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 0,
@@ -148,20 +131,17 @@
     {
       "path": "specifications/SpecifyingSystems/CachingMemory/InternalMemory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/CachingMemory/MCInternalMemory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/CachingMemory/MCInternalMemory.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 4408,
@@ -173,13 +153,11 @@
     {
       "path": "specifications/SpecifyingSystems/CachingMemory/MCWriteThroughCache.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/CachingMemory/MCWriteThroughCache.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 5196,
@@ -191,125 +169,107 @@
     {
       "path": "specifications/SpecifyingSystems/CachingMemory/Memory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/CachingMemory/MemoryInterface.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/CachingMemory/WriteThroughCache.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/CachingMemory/WriteThroughCacheInstanced.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Composing/BinaryHourClock.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Composing/Channel.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Composing/ChannelRefinement.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Composing/CompositeFIFO.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Composing/HourClock.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Composing/InternalMemory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Composing/JointActionMemory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Composing/MemoryInterface.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/FIFO/Channel.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/FIFO/FIFO.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/FIFO/InnerFIFO.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/FIFO/InnerFIFOInstanced.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/FIFO/MCInnerFIFO.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/FIFO/MCInnerFIFO.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 3864,
@@ -321,13 +281,11 @@
     {
       "path": "specifications/SpecifyingSystems/HourClock/HourClock.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/HourClock/HourClock.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 12,
@@ -339,13 +297,11 @@
     {
       "path": "specifications/SpecifyingSystems/HourClock/HourClock2.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/HourClock/HourClock2.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 12,
@@ -357,27 +313,23 @@
     {
       "path": "specifications/SpecifyingSystems/Liveness/HourClock.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Liveness/InternalMemory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Liveness/LiveHourClock.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/Liveness/LiveHourClock.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 12,
@@ -389,34 +341,29 @@
     {
       "path": "specifications/SpecifyingSystems/Liveness/LiveInternalMemory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Liveness/LiveWriteThroughCache.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Liveness/MCInternalMemory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Liveness/MCLiveInternalMemory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/Liveness/MCLiveInternalMemory.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 4408,
@@ -428,13 +375,11 @@
     {
       "path": "specifications/SpecifyingSystems/Liveness/MCLiveWriteThroughCache.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/Liveness/MCLiveWriteThroughCache.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 5196,
@@ -446,55 +391,47 @@
     {
       "path": "specifications/SpecifyingSystems/Liveness/Memory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Liveness/MemoryInterface.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Liveness/WriteThroughCacheInstanced.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/RealTime/HourClock.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/RealTime/InternalMemory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/RealTime/MCRealTime.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/RealTime/MCRealTimeHourClock.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/RealTime/MCRealTimeHourClock.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "liveness failure"
         }
@@ -503,62 +440,53 @@
     {
       "path": "specifications/SpecifyingSystems/RealTime/Memory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/RealTime/MemoryInterface.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/RealTime/RTMemory.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/RealTime/RTWriteThroughCache.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/RealTime/RealTimeHourClock.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/RealTime/RealTime_SS.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/RealTime/WriteThroughCache.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/SimpleMath/SimpleMath.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/SimpleMath/SimpleMath.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 0,
@@ -570,83 +498,71 @@
     {
       "path": "specifications/SpecifyingSystems/Standard/Bags.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Standard/FiniteSets.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Standard/Integers.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Standard/Naturals.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Standard/Peano.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Standard/ProtoReals.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Standard/Reals.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Standard/Sequences.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Syntax/BNFGrammars.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/Syntax/TLAPlusGrammar.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/TLC/ABCorrectness.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/TLC/ABCorrectness.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 20,
@@ -658,34 +574,29 @@
     {
       "path": "specifications/SpecifyingSystems/TLC/AlternatingBit.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/TLC/BNFGrammars.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/TLC/ConfigFileGrammar.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SpecifyingSystems/TLC/MCAlternatingBit.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpecifyingSystems/TLC/MCAlternatingBit.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 240,

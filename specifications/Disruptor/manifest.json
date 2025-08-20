@@ -10,13 +10,11 @@
     {
       "path": "specifications/Disruptor/Disruptor_MPMC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/Disruptor/Disruptor_MPMC.cfg",
           "runtime": "00:00:10",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 112929,
@@ -26,7 +24,6 @@
         {
           "path": "specifications/Disruptor/Disruptor_MPMC_liveliness.cfg",
           "runtime": "00:00:10",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 14365,
@@ -38,13 +35,11 @@
     {
       "path": "specifications/Disruptor/Disruptor_SPMC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/Disruptor/Disruptor_SPMC.cfg",
           "runtime": "00:00:10",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 8496,
@@ -56,7 +51,6 @@
     {
       "path": "specifications/Disruptor/RingBuffer.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     }

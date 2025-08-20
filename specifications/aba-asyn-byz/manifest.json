@@ -10,13 +10,11 @@
     {
       "path": "specifications/aba-asyn-byz/aba_asyn_byz.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/aba-asyn-byz/aba_asyn_byz.cfg",
           "runtime": "00:10:00",
-          "size": "large",
           "mode": "exhaustive search",
           "result": "success"
         }

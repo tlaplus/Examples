@@ -1,5 +1,6 @@
 import locale
 from datetime import datetime
+from datetime import timedelta
 import json
 from os.path import join, normpath, pathsep, dirname
 from pathlib import PureWindowsPath
@@ -101,10 +102,11 @@ def node_to_string(module_bytes, node):
 
 def parse_timespan(unparsed):
     """
-    Parses the timespan format used in the manifest.json format.
+    Parses the timespan format used in the manifest.json format. If unknown,
+    return the maximum possible timespan.
     """
     pattern = '%H:%M:%S'
-    return datetime.strptime(unparsed, pattern) - datetime.strptime('00:00:00', pattern)
+    return timedelta.max if unparsed == 'unknown' else datetime.strptime(unparsed, pattern) - datetime.strptime('00:00:00', pattern)
 
 def get_run_mode(mode):
     """

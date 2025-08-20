@@ -8,7 +8,6 @@
     {
       "path": "specifications/TLC/TLCMC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal"
       ],
@@ -17,13 +16,11 @@
     {
       "path": "specifications/TLC/TestGraphs.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/TLC/TestGraphs.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 2790,

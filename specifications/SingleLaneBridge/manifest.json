@@ -8,13 +8,11 @@
     {
       "path": "specifications/SingleLaneBridge/MC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SingleLaneBridge/MC.cfg",
           "runtime": "00:00:10",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 3605,
@@ -26,7 +24,6 @@
     {
       "path": "specifications/SingleLaneBridge/SingleLaneBridge.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     }

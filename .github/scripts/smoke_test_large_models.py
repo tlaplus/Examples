@@ -1,10 +1,11 @@
 """
-Smoke-test all models not marked as size "small" in each manifest. This
+Smoke-test all models with runtime greater than thirty seconds. This
 entails running them for five seconds to ensure they can actually start
 and work with the spec they're supposed to be modeling.
 """
 
 from argparse import ArgumentParser
+from datetime import timedelta
 import logging
 import os
 from os.path import dirname, normpath
@@ -62,7 +63,7 @@ def check_model(module, model):
             return True
         case CompletedProcess():
             output = ' '.join(tlc_result.args) + '\n' + tlc_result.stdout
-            logging.warning(f'Model {model_path} finished quickly, within {smoke_test_timeout_in_seconds} seconds; consider labeling it a small model')
+            logging.warning(f'Model {model_path} finished quickly, within {smoke_test_timeout_in_seconds} seconds; consider updating recorded runtime')
             expected_result = model['result']
             actual_result = tla_utils.resolve_tlc_exit_code(tlc_result.returncode)
             if expected_result == actual_result:
@@ -85,7 +86,7 @@ large_models = [
     for path, spec in manifest
     for module in spec['modules']
     for model in module['models']
-        if model['size'] != 'small'
+        if tla_utils.parse_timespan(model['runtime']) > timedelta(seconds=30)
         and model['path'] not in skip_models
         and (only_models == [] or model['path'] in only_models)
 ]

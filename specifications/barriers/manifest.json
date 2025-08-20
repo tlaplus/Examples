@@ -10,13 +10,11 @@
     {
       "path": "specifications/barriers/Barrier.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/barriers/Barrier.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 64,
@@ -28,7 +26,6 @@
     {
       "path": "specifications/barriers/Barriers.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal",
         "proof"
@@ -37,7 +34,6 @@
         {
           "path": "specifications/barriers/Barriers.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 29279,

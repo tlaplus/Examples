@@ -19,7 +19,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["path", "communityDependencies", "tlaLanguageVersion", "features", "models"],
+        "required": ["path", "communityDependencies", "features", "models"],
         "additionalProperties": false,
         "properties": {
           "path": {"type": "string"},
@@ -27,7 +27,6 @@
             "type": "array",
             "items": {"type": "string"}
           },
-          "tlaLanguageVersion": {"type": "number"},
           "features": {
             "type": "array",
             "items": {"enum": ["pluscal", "proof", "action composition"]}
@@ -37,14 +36,13 @@
             "items": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["path", "runtime", "size", "mode", "result"],
+              "required": ["path", "runtime", "mode", "result"],
               "properties": {
                 "path": {"type": "string"},
                 "runtime": {
                   "type": "string",
                   "pattern": "^(([0-9][0-9]:[0-9][0-9]:[0-9][0-9])|unknown)$"
                 },
-                "size": {"enum": ["small", "medium", "large", "unknown"]},
                 "distinctStates": {"type": "integer"},
                 "totalStates": {"type": "integer"},
                 "stateDepth": {"type": "integer"},

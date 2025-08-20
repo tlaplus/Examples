@@ -15,14 +15,12 @@
       "communityDependencies": [
         "Graphs"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/ewd687a/EWD687aPlusCal.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal"
       ],
@@ -34,13 +32,11 @@
         "IOUtils",
         "SVG"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/ewd687a/EWD687a_anim.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": {
             "simulate": {
               "traceCount": 100
@@ -53,13 +49,11 @@
     {
       "path": "specifications/ewd687a/MCEWD687a.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/ewd687a/MCEWD687a.cfg",
           "runtime": "00:01:00",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success"
         }

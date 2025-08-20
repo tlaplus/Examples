@@ -12,13 +12,11 @@
     {
       "path": "specifications/ewd840/EWD840.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/ewd840/EWD840.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 302,
@@ -32,13 +30,11 @@
       "communityDependencies": [
         "SVG"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/ewd840/EWD840_anim.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": {
             "simulate": {
               "traceCount": 100
@@ -51,13 +47,11 @@
     {
       "path": "specifications/ewd840/EWD840_json.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/ewd840/EWD840_json.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 1566,
@@ -69,7 +63,6 @@
     {
       "path": "specifications/ewd840/EWD840_proof.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "proof"
       ],
@@ -78,13 +71,11 @@
     {
       "path": "specifications/ewd840/SyncTerminationDetection.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/ewd840/SyncTerminationDetection.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 129,
@@ -96,7 +87,6 @@
     {
       "path": "specifications/ewd840/SyncTerminationDetection_proof.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "proof"
       ],

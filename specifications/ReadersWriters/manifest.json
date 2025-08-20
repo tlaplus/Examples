@@ -8,13 +8,11 @@
     {
       "path": "specifications/ReadersWriters/MC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/ReadersWriters/MC.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 21527,
@@ -26,7 +24,6 @@
     {
       "path": "specifications/ReadersWriters/ReadersWriters.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     }

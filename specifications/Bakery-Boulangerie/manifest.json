@@ -9,7 +9,6 @@
     {
       "path": "specifications/Bakery-Boulangerie/Bakery.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal",
         "proof"
@@ -19,7 +18,6 @@
     {
       "path": "specifications/Bakery-Boulangerie/Boulanger.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal",
         "proof"
@@ -29,13 +27,11 @@
     {
       "path": "specifications/Bakery-Boulangerie/MCBakery.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/Bakery-Boulangerie/MCBakery.cfg",
           "runtime": "00:00:10",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 655200,
@@ -47,13 +43,11 @@
     {
       "path": "specifications/Bakery-Boulangerie/MCBoulanger.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/Bakery-Boulangerie/MCBoulanger.cfg",
           "runtime": "00:01:00",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success"
         }

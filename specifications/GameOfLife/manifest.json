@@ -10,13 +10,11 @@
     {
       "path": "specifications/GameOfLife/GameOfLife.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/GameOfLife/GameOfLife.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 65536,

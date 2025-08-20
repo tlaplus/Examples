@@ -10,13 +10,11 @@
     {
       "path": "specifications/nbacg_guer01/nbacg_guer01.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/nbacg_guer01/nbacg_guer01.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 24922,

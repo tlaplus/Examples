@@ -8,27 +8,26 @@
     {
       "path": "specifications/NanoBlockchain/MCNano.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/NanoBlockchain/MCNanoLarge.cfg",
           "runtime": "00:20:00",
-          "size": "large",
           "mode": "exhaustive search",
           "result": "success"
         },
         {
           "path": "specifications/NanoBlockchain/MCNanoMedium.cfg",
-          "runtime": "00:00:30",
-          "size": "medium",
+          "runtime": "00:00:15",
           "mode": "exhaustive search",
-          "result": "success"
+          "result": "success",
+          "distinctStates": 530587,
+          "totalStates": 1120079,
+          "stateDepth": 11
         },
         {
           "path": "specifications/NanoBlockchain/MCNanoSmall.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 3003,
@@ -40,7 +39,6 @@
     {
       "path": "specifications/NanoBlockchain/Nano.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     }
