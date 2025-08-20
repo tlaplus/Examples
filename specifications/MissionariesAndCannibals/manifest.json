@@ -10,13 +10,11 @@
     {
       "path": "specifications/MissionariesAndCannibals/MissionariesAndCannibals.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/MissionariesAndCannibals/MissionariesAndCannibals.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "safety failure"
         }

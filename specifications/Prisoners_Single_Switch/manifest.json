@@ -10,13 +10,11 @@
     {
       "path": "specifications/Prisoners_Single_Switch/Prisoner.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/Prisoners_Single_Switch/Prisoner.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 16,
@@ -26,7 +24,6 @@
         {
           "path": "specifications/Prisoners_Single_Switch/PrisonerLightUnknown.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 62,
@@ -36,7 +33,6 @@
         {
           "path": "specifications/Prisoners_Single_Switch/PrisonerSolo.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 2,
@@ -46,7 +42,6 @@
         {
           "path": "specifications/Prisoners_Single_Switch/PrisonerSoloLightUnknown.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 4,

@@ -10,13 +10,11 @@
     {
       "path": "specifications/Majority/MCMajority.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/Majority/MCMajority.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 2733,
@@ -28,14 +26,12 @@
     {
       "path": "specifications/Majority/Majority.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/Majority/MajorityProof.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "proof"
       ],

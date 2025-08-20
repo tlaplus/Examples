@@ -12,20 +12,20 @@
     {
       "path": "specifications/CoffeeCan/CoffeeCan.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/CoffeeCan/CoffeeCan1000Beans.cfg",
           "runtime": "00:00:15",
-          "size": "medium",
           "mode": "exhaustive search",
-          "result": "success"
+          "result": "success",
+          "distinctStates": 501500,
+          "totalStates": 2000002,
+          "stateDepth": 1
         },
         {
           "path": "specifications/CoffeeCan/CoffeeCan100Beans.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 5150,
@@ -35,7 +35,6 @@
         {
           "path": "specifications/CoffeeCan/CoffeeCan3000Beans.cfg",
           "runtime": "00:02:30",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success"
         }

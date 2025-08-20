@@ -10,13 +10,11 @@
     {
       "path": "specifications/braf/BufferedRandomAccessFile.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/braf/BufferedRandomAccessFile.cfg",
           "runtime": "00:00:09",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 3316,

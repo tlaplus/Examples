@@ -10,41 +10,38 @@
     {
       "path": "specifications/MultiCarElevator/Elevator.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/MultiCarElevator/ElevatorLivenessLarge.cfg",
           "runtime": "00:11:00",
-          "size": "large",
           "mode": "exhaustive search",
           "result": "success"
         },
         {
           "path": "specifications/MultiCarElevator/ElevatorLivenessMedium.cfg",
-          "runtime": "00:00:30",
-          "size": "medium",
+          "runtime": "00:00:10",
           "mode": "exhaustive search",
-          "result": "success"
+          "result": "success",
+          "distinctStates": 4122,
+          "totalStates": 14296,
+          "stateDepth": 36
         },
         {
           "path": "specifications/MultiCarElevator/ElevatorSafetyLarge.cfg",
           "runtime": "00:10:00",
-          "size": "large",
           "mode": "exhaustive search",
           "result": "success"
         },
         {
           "path": "specifications/MultiCarElevator/ElevatorSafetyMedium.cfg",
           "runtime": "00:03:00",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success"
         },
         {
           "path": "specifications/MultiCarElevator/ElevatorSafetySmall.cfg",
           "runtime": "00:00:15",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 4122,

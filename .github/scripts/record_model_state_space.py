@@ -4,6 +4,7 @@ model where that info is not present, then writes it to a manifest.json file.
 """
 
 from argparse import ArgumentParser
+from datetime import timedelta
 import logging
 from os.path import dirname, normpath, join
 from subprocess import CompletedProcess, TimeoutExpired
@@ -78,11 +79,11 @@ def check_model(module, model):
 manifest = tla_utils.load_all_manifests(examples_root)
 small_models = sorted(
     [
-        (spec, module, model, tla_utils.parse_timespan(model['runtime']))
+        (path, spec, module, model, runtime)
         for path, spec in manifest
         for module in spec['modules']
         for model in module['models']
-            if model['size'] == 'small'
+        if (runtime := tla_utils.parse_timespan(model['runtime'])) <= timedelta(seconds=30)
             and tla_utils.is_state_count_valid(model)
             # This model is nondeterministic due to use of the Random module
             and model['path'] != 'specifications/SpanningTree/SpanTreeRandom.cfg'
@@ -96,15 +97,15 @@ small_models = sorted(
                 or 'stateDepth' not in model
             ))
     ],
-    key = lambda m: m[3],
+    key = lambda m: m[4],
     reverse=True
 )
 
 for path in skip_models:
     logging.info(f'Skipping {path}')
 
-for spec, module, model, _ in small_models:
-    manifest_path = join(spec['path'], 'manifest.json')
+for manifest_dir, spec, module, model, _ in small_models:
+    manifest_path = join(manifest_dir, 'manifest.json')
     success = check_model(module, model)
     if not success:
         exit(1)

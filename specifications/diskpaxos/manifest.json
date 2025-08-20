@@ -11,27 +11,23 @@
     {
       "path": "specifications/diskpaxos/DiskSynod.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/diskpaxos/HDiskSynod.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/diskpaxos/MC_HDiskSynod.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/diskpaxos/MC_HDiskSynod.cfg",
           "runtime": "unknown",
-          "size": "large",
           "mode": "exhaustive search",
           "result": "unknown"
         }
@@ -40,7 +36,6 @@
     {
       "path": "specifications/diskpaxos/Synod.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     }

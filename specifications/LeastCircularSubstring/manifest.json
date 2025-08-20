@@ -10,7 +10,6 @@
     {
       "path": "specifications/LeastCircularSubstring/LeastCircularSubstring.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal"
       ],
@@ -19,20 +18,17 @@
     {
       "path": "specifications/LeastCircularSubstring/MCLeastCircularSubstring.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/LeastCircularSubstring/MCLeastCircularSubstringMedium.cfg",
           "runtime": "00:01:00",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success"
         },
         {
           "path": "specifications/LeastCircularSubstring/MCLeastCircularSubstringSmall.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 8554,
@@ -44,7 +40,6 @@
     {
       "path": "specifications/LeastCircularSubstring/ZSequences.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     }

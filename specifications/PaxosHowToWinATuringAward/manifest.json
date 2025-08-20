@@ -10,7 +10,6 @@
     {
       "path": "specifications/PaxosHowToWinATuringAward/Consensus.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "proof"
       ],
@@ -19,13 +18,11 @@
     {
       "path": "specifications/PaxosHowToWinATuringAward/MCConsensus.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/PaxosHowToWinATuringAward/MCConsensus.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 4,
@@ -37,20 +34,17 @@
     {
       "path": "specifications/PaxosHowToWinATuringAward/MCPaxos.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/PaxosHowToWinATuringAward/MCPaxosSmall.cfg",
           "runtime": "00:01:00",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success"
         },
         {
           "path": "specifications/PaxosHowToWinATuringAward/MCPaxosTiny.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 3921,
@@ -62,13 +56,11 @@
     {
       "path": "specifications/PaxosHowToWinATuringAward/MCVoting.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/PaxosHowToWinATuringAward/MCVoting.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 6752,
@@ -80,14 +72,12 @@
     {
       "path": "specifications/PaxosHowToWinATuringAward/Paxos.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/PaxosHowToWinATuringAward/Voting.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "proof"
       ],

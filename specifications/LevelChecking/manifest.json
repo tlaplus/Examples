@@ -10,7 +10,6 @@
     {
       "path": "specifications/LevelChecking/LevelSpec.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     }

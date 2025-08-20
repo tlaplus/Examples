@@ -10,13 +10,11 @@
     {
       "path": "specifications/Stones/Stones.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/Stones/Stones.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 0,

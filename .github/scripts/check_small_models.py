@@ -1,10 +1,11 @@
 """
-Check all models marked as size "small" in each manifest with TLC. Small
+Check all models with less than 30 second recorded runtime with TLC. Small
 models should finish executing in less than ten seconds on the GitHub CI
 machines.
 """
 
 from argparse import ArgumentParser
+from datetime import timedelta
 import logging
 from os.path import dirname, normpath
 from subprocess import CompletedProcess, TimeoutExpired
@@ -53,9 +54,9 @@ def check_model(module, model, expected_runtime):
         hard_timeout_in_seconds
     )
     end_time = timer()
-    output = ' '.join(tlc_result.args) + '\n' + tlc_result.stdout
     match tlc_result:
         case CompletedProcess():
+            output = ' '.join(tlc_result.args) + '\n' + tlc_result.stdout
             logging.info(f'{model_path} in {end_time - start_time:.1f}s vs. {expected_runtime.seconds}s expected')
             expected_result = model['result']
             actual_result = tla_utils.resolve_tlc_exit_code(tlc_result.returncode)
@@ -77,6 +78,8 @@ def check_model(module, model, expected_runtime):
             logging.debug(output)
             return True
         case TimeoutExpired():
+            args, _ = tlc_result.args
+            output = ' '.join(args) + '\n' + tlc_result.stdout
             logging.error(f'{model_path} hit hard timeout of {hard_timeout_in_seconds} seconds')
             logging.error(output)
             return False
@@ -88,11 +91,11 @@ def check_model(module, model, expected_runtime):
 manifest = tla_utils.load_all_manifests(examples_root)
 small_models = sorted(
     [
-        (module, model, tla_utils.parse_timespan(model['runtime']))
+        (module, model, runtime)
         for path, spec in manifest
         for module in spec['modules']
         for model in module['models']
-            if model['size'] == 'small'
+            if (runtime := tla_utils.parse_timespan(model['runtime'])) <= timedelta(seconds=30)
             and model['path'] not in skip_models
             and (only_models == [] or model['path'] in only_models)
     ],

@@ -10,13 +10,11 @@
     {
       "path": "specifications/bosco/bosco.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/bosco/bosco.cfg",
           "runtime": "00:03:00",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success"
         }

@@ -11,13 +11,11 @@
     {
       "path": "specifications/btree/btree.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/btree/btree.cfg",
           "runtime": "00:00:15",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 374727,
@@ -29,13 +27,11 @@
     {
       "path": "specifications/btree/kvstore.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/btree/kvstore.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 2641,

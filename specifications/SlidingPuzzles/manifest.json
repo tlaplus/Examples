@@ -8,13 +8,11 @@
     {
       "path": "specifications/SlidingPuzzles/SlidingPuzzles.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SlidingPuzzles/SlidingPuzzles.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "safety failure"
         }

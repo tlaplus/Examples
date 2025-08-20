@@ -9,28 +9,27 @@
     {
       "path": "specifications/SimplifiedFastPaxos/FastPaxos.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SimplifiedFastPaxos/FastPaxos.cfg",
-          "runtime": "00:00:30",
-          "size": "medium",
+          "runtime": "00:00:20",
           "mode": "exhaustive search",
-          "result": "success"
+          "result": "success",
+          "distinctStates": 25617,
+          "totalStates": 320053,
+          "stateDepth": 22
         }
       ]
     },
     {
       "path": "specifications/SimplifiedFastPaxos/Paxos.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SimplifiedFastPaxos/Paxos.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 1207,

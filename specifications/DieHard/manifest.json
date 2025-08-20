@@ -10,13 +10,11 @@
     {
       "path": "specifications/DieHard/DieHard.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/DieHard/DieHard.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "safety failure"
         }
@@ -25,20 +23,17 @@
     {
       "path": "specifications/DieHard/DieHarder.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/DieHard/MCDieHarder.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/DieHard/MCDieHarder.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "safety failure"
         }

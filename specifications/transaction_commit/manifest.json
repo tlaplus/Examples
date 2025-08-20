@@ -14,7 +14,6 @@
     {
       "path": "specifications/transaction_commit/2PCwithBTM.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal"
       ],
@@ -22,7 +21,6 @@
         {
           "path": "specifications/transaction_commit/2PCwithBTM.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 1245,
@@ -34,28 +32,27 @@
     {
       "path": "specifications/transaction_commit/PaxosCommit.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/transaction_commit/PaxosCommit.cfg",
-          "runtime": "00:00:30",
-          "size": "medium",
+          "runtime": "00:01:00",
           "mode": "exhaustive search",
-          "result": "success"
+          "result": "success",
+          "distinctStates": 1321761,
+          "totalStates": 16959159,
+          "stateDepth": 28
         }
       ]
     },
     {
       "path": "specifications/transaction_commit/TCommit.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/transaction_commit/TCommit.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 34,
@@ -67,13 +64,11 @@
     {
       "path": "specifications/transaction_commit/TwoPhase.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/transaction_commit/TwoPhase.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 288,

@@ -13,14 +13,12 @@
       "communityDependencies": [
         "DyadicRationals"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/KnuthYao/Prob.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
@@ -32,13 +30,11 @@
         "IOUtils",
         "Statistics"
       ],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/KnuthYao/SimKnuthYao.cfg",
           "runtime": "unknown",
-          "size": "unknown",
           "mode": "generate",
           "result": "unknown"
         }

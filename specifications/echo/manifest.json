@@ -8,7 +8,6 @@
     {
       "path": "specifications/echo/Echo.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal"
       ],
@@ -17,13 +16,11 @@
     {
       "path": "specifications/echo/MCEcho.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/echo/MCEcho.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 75,
@@ -35,7 +32,6 @@
     {
       "path": "specifications/echo/Relation.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     }

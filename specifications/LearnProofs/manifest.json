@@ -10,7 +10,6 @@
     {
       "path": "specifications/LearnProofs/AddTwo.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal",
         "proof"
@@ -20,7 +19,6 @@
     {
       "path": "specifications/LearnProofs/FindHighest.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal",
         "proof"
@@ -30,13 +28,11 @@
     {
       "path": "specifications/LearnProofs/MCFindHighest.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/LearnProofs/MCFindHighest.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 742,

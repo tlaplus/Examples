@@ -10,13 +10,11 @@
     {
       "path": "specifications/Moving_Cat_Puzzle/Cat.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/Moving_Cat_Puzzle/CatEvenBoxes.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 48,
@@ -26,7 +24,6 @@
         {
           "path": "specifications/Moving_Cat_Puzzle/CatOddBoxes.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 30,

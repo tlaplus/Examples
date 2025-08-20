@@ -8,13 +8,11 @@
     {
       "path": "specifications/TransitiveClosure/TransitiveClosure.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/TransitiveClosure/TransitiveClosure.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 0,

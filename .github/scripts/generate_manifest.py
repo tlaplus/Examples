@@ -3,7 +3,7 @@ Generates best-effort manifest.json files. This is done by scanning all
 .tla and .cfg files in the specifications dir then attempting to sort them
 into a spec/module/model hierarchy. Files are parsed to check for features
 and imports. Human-written fields (title/description/source/authors for
-specs, runtime/size/result for models) are either taken from any existing
+specs, runtime & result for models) are either taken from any existing
 manifest.json file or set as blank/unknown as appropriate.
 """
 
@@ -73,13 +73,11 @@ def generate_new_manifest(examples_root, spec_path, spec_name, parser, queries):
             {
                 'path': tla_utils.to_posix(tla_path),
                 'communityDependencies': sorted(list(get_community_module_imports(examples_root, parser, tla_path, queries))),
-                'tlaLanguageVersion': 2,
                 'features': sorted(list(get_module_features(examples_root, tla_path, parser, queries))),
                 'models': [
                     {
                         'path': tla_utils.to_posix(cfg_path),
                         'runtime': 'unknown',
-                        'size': 'unknown',
                         'mode': 'exhaustive search',
                         'result': 'unknown'
                     }
@@ -109,7 +107,7 @@ def find_corresponding_module(old_module, new_spec):
     return modules[0] if any(modules) else None
 
 def integrate_module_info(old_module, new_module):
-    fields = ['tlaLanguageVersion']
+    fields = []
     for field in fields:
         new_module[field] = old_module[field]
 
@@ -121,7 +119,7 @@ def find_corresponding_model(old_model, new_module):
     return models[0] if any(models) else None
 
 def integrate_model_info(old_model, new_model):
-    fields = ['runtime', 'size', 'mode', 'result', 'distinctStates', 'totalStates', 'stateDepth']
+    fields = ['runtime', 'mode', 'result', 'distinctStates', 'totalStates', 'stateDepth']
     for field in fields:
         if field in old_model:
             new_model[field] = old_model[field]

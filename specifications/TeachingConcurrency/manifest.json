@@ -12,7 +12,6 @@
     {
       "path": "specifications/TeachingConcurrency/Simple.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal",
         "proof"
@@ -21,7 +20,6 @@
         {
           "path": "specifications/TeachingConcurrency/Simple.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 723,
@@ -33,7 +31,6 @@
     {
       "path": "specifications/TeachingConcurrency/SimpleRegular.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal",
         "proof"
@@ -42,7 +39,6 @@
         {
           "path": "specifications/TeachingConcurrency/SimpleRegular.cfg",
           "runtime": "00:00:05",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 277726,

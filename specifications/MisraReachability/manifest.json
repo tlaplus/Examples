@@ -8,35 +8,36 @@
     {
       "path": "specifications/MisraReachability/MCParReach.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/MisraReachability/MCParReach.cfg",
           "runtime": "00:00:30",
-          "size": "medium",
           "mode": "exhaustive search",
-          "result": "success"
+          "result": "success",
+          "distinctStates": 393,
+          "totalStates": 747,
+          "stateDepth": 18
         }
       ]
     },
     {
       "path": "specifications/MisraReachability/MCReachabilityTest.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/MisraReachability/MCReachabilityTestAllGraphs.cfg",
           "runtime": "00:00:20",
-          "size": "medium",
           "mode": "exhaustive search",
-          "result": "success"
+          "result": "success",
+          "distinctStates": 0,
+          "totalStates": 0,
+          "stateDepth": 0
         },
         {
           "path": "specifications/MisraReachability/MCReachabilityTestRandomGraphs.cfg",
           "runtime": "00:00:10",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 0,
@@ -48,13 +49,11 @@
     {
       "path": "specifications/MisraReachability/MCReachable.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/MisraReachability/MCReachable.cfg",
           "runtime": "00:01:30",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success"
         }
@@ -63,7 +62,6 @@
     {
       "path": "specifications/MisraReachability/ParReach.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal"
       ],
@@ -72,7 +70,6 @@
     {
       "path": "specifications/MisraReachability/ParReachProofs.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "proof"
       ],
@@ -81,14 +78,12 @@
     {
       "path": "specifications/MisraReachability/Reachability.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/MisraReachability/ReachabilityProofs.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "proof"
       ],
@@ -97,14 +92,12 @@
     {
       "path": "specifications/MisraReachability/ReachabilityTest.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": []
     },
     {
       "path": "specifications/MisraReachability/Reachable.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal"
       ],
@@ -113,7 +106,6 @@
     {
       "path": "specifications/MisraReachability/ReachableProofs.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "proof"
       ],

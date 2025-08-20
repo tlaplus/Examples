@@ -10,7 +10,6 @@
     {
       "path": "specifications/dijkstra-mutex/DijkstraMutex.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal"
       ],
@@ -19,7 +18,6 @@
     {
       "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/DijkstraMutex.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal"
       ],
@@ -28,13 +26,11 @@
     {
       "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/MC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/MC.cfg",
           "runtime": "00:00:50",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success"
         }
@@ -43,7 +39,6 @@
     {
       "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/Safety-4-processors/DijkstraMutex.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [
         "pluscal"
       ],
@@ -52,13 +47,11 @@
     {
       "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/Safety-4-processors/MC.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/Safety-4-processors/MC.cfg",
           "runtime": "00:02:00",
-          "size": "medium",
           "mode": "exhaustive search",
           "result": "success"
         }

@@ -10,13 +10,11 @@
     {
       "path": "specifications/bcastFolklore/bcastFolklore.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/bcastFolklore/bcastFolklore.cfg",
           "runtime": "00:30:00",
-          "size": "large",
           "mode": "exhaustive search",
           "result": "success"
         }

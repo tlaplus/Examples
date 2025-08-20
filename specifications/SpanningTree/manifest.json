@@ -8,13 +8,11 @@
     {
       "path": "specifications/SpanningTree/SpanTree.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpanningTree/SpanTree.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 1236,
@@ -26,13 +24,11 @@
     {
       "path": "specifications/SpanningTree/SpanTreeRandom.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpanningTree/SpanTreeRandom.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success"
         }
@@ -41,13 +37,11 @@
     {
       "path": "specifications/SpanningTree/SpanTreeTest.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/SpanningTree/SpanTreeTest4Nodes.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 3984,
@@ -57,7 +51,6 @@
         {
           "path": "specifications/SpanningTree/SpanTreeTest5Nodes.cfg",
           "runtime": "unknown",
-          "size": "large",
           "mode": "exhaustive search",
           "result": "unknown"
         }

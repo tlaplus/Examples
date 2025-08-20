@@ -8,13 +8,11 @@
     {
       "path": "specifications/glowingRaccoon/clean.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/glowingRaccoon/clean.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 63,
@@ -26,13 +24,11 @@
     {
       "path": "specifications/glowingRaccoon/product.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/glowingRaccoon/product.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 305,
@@ -44,13 +40,11 @@
     {
       "path": "specifications/glowingRaccoon/stages.tla",
       "communityDependencies": [],
-      "tlaLanguageVersion": 2,
       "features": [],
       "models": [
         {
           "path": "specifications/glowingRaccoon/stages.cfg",
           "runtime": "00:00:01",
-          "size": "small",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 83,
