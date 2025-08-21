@@ -13,8 +13,7 @@
       "path": "specifications/byzpaxos/BPConProof.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
       "models": [
         {
@@ -23,14 +22,16 @@
           "mode": "exhaustive search",
           "result": "unknown"
         }
-      ]
+      ],
+      "proof": {
+        "runtime": "00:10:00"
+      }
     },
     {
       "path": "specifications/byzpaxos/Consensus.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
       "models": [
         {
@@ -42,14 +43,16 @@
           "totalStates": 4,
           "stateDepth": 2
         }
-      ]
+      ],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     },
     {
       "path": "specifications/byzpaxos/PConProof.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
       "models": [
         {
@@ -58,14 +61,16 @@
           "mode": "exhaustive search",
           "result": "success"
         }
-      ]
+      ],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     },
     {
       "path": "specifications/byzpaxos/VoteProof.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
       "models": [
         {
@@ -77,7 +82,10 @@
           "totalStates": 318877,
           "stateDepth": 15
         }
-      ]
+      ],
+      "proof": {
+        "runtime": "00:00:45"
+      }
     }
   ]
 }

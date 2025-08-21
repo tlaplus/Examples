@@ -27,10 +27,11 @@
     {
       "path": "specifications/ewd998/AsyncTerminationDetection_proof.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
-      "models": []
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     },
     {
       "path": "specifications/ewd998/EWD998.tla",
@@ -185,10 +186,11 @@
     {
       "path": "specifications/ewd998/EWD998_proof.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
-      "models": []
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "00:00:30"
+      }
     },
     {
       "path": "specifications/ewd998/Folds.tla",

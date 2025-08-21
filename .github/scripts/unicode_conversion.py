@@ -12,8 +12,8 @@ from subprocess import CompletedProcess
 import tla_utils
 
 parser = ArgumentParser(description='Converts all TLA+ modules from ASCII to Unicode or vice-versa.')
-parser.add_argument('--tlauc_path', help='Path to the TLAUC executable', required=True)
-parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=True)
+parser.add_argument('--tlauc_path', help='Path to the TLAUC executable', required=False, default='./deps/tlauc/tlauc')
+parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=False, default='.')
 parser.add_argument('--to_ascii', help='Convert to ASCII instead of Unicode', action='store_true')
 parser.add_argument('--skip', nargs='+', help='Space-separated list of .tla modules to skip converting', required=False, default=[])
 parser.add_argument('--only', nargs='+', help='If provided, only convert models in this space-separated list', required=False, default=[])

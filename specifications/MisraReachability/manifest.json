@@ -70,10 +70,11 @@
     {
       "path": "specifications/MisraReachability/ParReachProofs.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
-      "models": []
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     },
     {
       "path": "specifications/MisraReachability/Reachability.tla",
@@ -84,10 +85,11 @@
     {
       "path": "specifications/MisraReachability/ReachabilityProofs.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
-      "models": []
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     },
     {
       "path": "specifications/MisraReachability/ReachabilityTest.tla",
@@ -106,10 +108,11 @@
     {
       "path": "specifications/MisraReachability/ReachableProofs.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
-      "models": []
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     }
   ]
 }

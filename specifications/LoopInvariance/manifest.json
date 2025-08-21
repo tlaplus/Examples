@@ -13,10 +13,12 @@
       "path": "specifications/LoopInvariance/BinarySearch.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
-      "models": []
+      "models": [],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     },
     {
       "path": "specifications/LoopInvariance/MCBinarySearch.tla",
@@ -54,19 +56,23 @@
       "path": "specifications/LoopInvariance/Quicksort.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
-      "models": []
+      "models": [],
+      "proof": {
+        "runtime": "00:00:45"
+      }
     },
     {
       "path": "specifications/LoopInvariance/SumSequence.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
-      "models": []
+      "models": [],
+      "proof": {
+        "runtime": "00:01:30"
+      }
     }
   ]
 }

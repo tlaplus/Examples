@@ -13,8 +13,7 @@
       "path": "specifications/TeachingConcurrency/Simple.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
       "models": [
         {
@@ -26,14 +25,16 @@
           "totalStates": 1842,
           "stateDepth": 11
         }
-      ]
+      ],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     },
     {
       "path": "specifications/TeachingConcurrency/SimpleRegular.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
       "models": [
         {
@@ -45,7 +46,10 @@
           "totalStates": 1454776,
           "stateDepth": 25
         }
-      ]
+      ],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     }
   ]
 }

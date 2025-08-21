@@ -29,14 +29,25 @@
           },
           "features": {
             "type": "array",
-            "items": {"enum": ["pluscal", "proof", "action composition"]}
+            "items": {"enum": ["pluscal", "action composition"]}
+          },
+          "proof": {
+            "type": "object",
+            "required": ["runtime"],
+            "additionalProperties": false,
+            "properties": {
+              "runtime": {
+                "type": "string",
+                "pattern": "^(([0-9][0-9]:[0-9][0-9]:[0-9][0-9])|unknown)$"
+              }
+            }
           },
           "models": {
             "type": "array",
             "items": {
               "type": "object",
-              "additionalProperties": false,
               "required": ["path", "runtime", "mode", "result"],
+              "additionalProperties": false,
               "properties": {
                 "path": {"type": "string"},
                 "runtime": {
@@ -53,13 +64,13 @@
                     },
                     {
                       "type": "object",
-                      "additionalProperties": false,
                       "required": ["simulate"],
+                      "additionalProperties": false,
                       "properties": {
                         "simulate": {
                           "type": "object",
-                          "additionalProperties": false,
                           "required": ["traceCount"],
+                          "additionalProperties": false,
                           "properties": {
                             "traceCount": {"type": "number"}
                           }

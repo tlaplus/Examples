@@ -15,7 +15,7 @@ from sys import stderr
 import tla_utils
 
 parser = ArgumentParser(description='Checks tlaplus/examples manifest.json files against JSON schema file.')
-parser.add_argument('--schema_path', help='Path to the tlaplus/examples manifest-schema.json file', required=True)
+parser.add_argument('--schema_path', help='Path to the tlaplus/examples manifest-schema.json file', required=False, default='manifest-schema.json')
 args = parser.parse_args()
 
 examples_root = dirname(args.schema_path)

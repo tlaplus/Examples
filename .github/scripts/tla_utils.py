@@ -108,6 +108,17 @@ def parse_timespan(unparsed):
     pattern = '%H:%M:%S'
     return timedelta.max if unparsed == 'unknown' else datetime.strptime(unparsed, pattern) - datetime.strptime('00:00:00', pattern)
 
+def format_timespan(t):
+    """
+    Formats the given timedelta into a HH:MM:SS string. If a timespan of
+    nonzero length, rounds up to minimum of one second.
+    """
+    if t < timedelta(seconds = 1):
+        return '00:00:01' if t > timedelta.min else '00:00:00'
+    else:
+        seconds = int(t.total_seconds())
+        return f'{seconds // 3600:02d}:{seconds % 3600 // 60:02d}:{seconds % 3600 % 60:02d}'
+
 def get_run_mode(mode):
     """
     Converts the model run mode found in manifest.json into TLC CLI

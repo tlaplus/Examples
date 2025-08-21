@@ -35,9 +35,20 @@ def get_tla_files(examples_root, dir_path):
     Gets paths of all .tla files in the given directory, except for error
     trace specs.
     """
-    return [
-        path for path in glob.glob(f'{dir_path}/**/*.tla', root_dir=examples_root, recursive=True)
+    return sorted(
+        path
+        for path in glob.glob(f'{dir_path}/**/*.tla', root_dir=examples_root, recursive=True)
         if '_TTrace_' not in path
+    )
+
+def get_tla_file_features(examples_root, dir_path, parser, queries):
+    """
+    Gets paths of all .tla files in a given directory, along with their
+    features.
+    """
+    return [
+        (path, get_module_features(examples_root, path, parser, queries))
+        for path in get_tla_files(examples_root, dir_path)
     ]
 
 def get_cfg_files(examples_root, tla_path):
@@ -73,7 +84,7 @@ def generate_new_manifest(examples_root, spec_path, spec_name, parser, queries):
             {
                 'path': tla_utils.to_posix(tla_path),
                 'communityDependencies': sorted(list(get_community_module_imports(examples_root, parser, tla_path, queries))),
-                'features': sorted(list(get_module_features(examples_root, tla_path, parser, queries))),
+                'features': sorted(list(module_features - {'proof'})),
                 'models': [
                     {
                         'path': tla_utils.to_posix(cfg_path),
@@ -83,8 +94,8 @@ def generate_new_manifest(examples_root, spec_path, spec_name, parser, queries):
                     }
                     for cfg_path in sorted(get_cfg_files(examples_root, tla_path))
                 ]
-            }
-            for tla_path in sorted(get_tla_files(examples_root, spec_path))
+            } | ({'proof' : {'runtime': 'unknown'}} if 'proof' in module_features else {})
+            for tla_path, module_features in get_tla_file_features(examples_root, spec_path, parser, queries)
         ]
     }
 
@@ -107,9 +118,13 @@ def find_corresponding_module(old_module, new_spec):
     return modules[0] if any(modules) else None
 
 def integrate_module_info(old_module, new_module):
-    fields = []
-    for field in fields:
+    required_fields = []
+    for field in required_fields:
         new_module[field] = old_module[field]
+    optional_fields = ['proof']
+    for field in optional_fields:
+        if field in old_module:
+            new_module[field] = old_module[field]
 
 def find_corresponding_model(old_model, new_module):
     models = [

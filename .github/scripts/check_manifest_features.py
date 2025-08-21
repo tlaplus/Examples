@@ -164,7 +164,8 @@ def check_features(parser, queries, manifest, examples_root):
             if parse_err:
                 success = False
                 logging.error(f'Module {module["path"]} contains syntax errors')
-            expected_features = get_tree_features(tree, queries)
+            module_features = get_tree_features(tree, queries)
+            expected_features = module_features - {'proof'}
             actual_features = set(module['features'])
             if expected_features != actual_features:
                 success = False
@@ -172,7 +173,10 @@ def check_features(parser, queries, manifest, examples_root):
                     f'Module {module["path"]} has incorrect features in manifest; '
                     + f'expected {list(expected_features)}, actual {list(actual_features)}'
                 )
-            expected_imports = get_community_imports(examples_root, tree, text, dirname(module_path), 'proof' in expected_features, queries)
+            if 'proof' in module_features and 'proof' not in module:
+                success = False
+                logging.error(f'Module {module["path"]} contains proof but no proof runtime details in manifest')
+            expected_imports = get_community_imports(examples_root, tree, text, dirname(module_path), 'proof' in module_features, queries)
             actual_imports = set(module['communityDependencies'])
             if expected_imports != actual_imports:
                 success = False
@@ -192,7 +196,7 @@ def check_features(parser, queries, manifest, examples_root):
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Checks metadata in manifest.json files against module and model files in repository.')
-    parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=True)
+    parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=False, default='.')
     args = parser.parse_args()
 
     manifest = tla_utils.load_all_manifests(args.examples_root)

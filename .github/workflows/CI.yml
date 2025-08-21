@@ -14,7 +14,6 @@ concurrency:
 
 jobs:
   validate:
-    name: Validate Manifest, Specs, & Models
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -136,23 +135,9 @@ jobs:
       - name: Check proofs
         if: matrix.os != 'windows-latest' && !matrix.unicode
         run: |
-          SKIP=(
-            # Long-running; see https://github.com/tlaplus/tlapm/issues/85
-            specifications/ewd998/EWD998_proof.tla
-            specifications/Bakery-Boulangerie/Bakery.tla
-            specifications/Bakery-Boulangerie/Boulanger.tla
-            specifications/LoopInvariance/Quicksort.tla
-            specifications/LoopInvariance/SumSequence.tla
-            specifications/lamport_mutex/LamportMutex_proofs.tla
-            specifications/bcastByz/bcastByz.tla
-            # specifications/MisraReachability/ReachabilityProofs.tla
-            specifications/byzpaxos/VoteProof.tla
-            specifications/byzpaxos/BPConProof.tla # Takes about 30 minutes
-          )
           python $SCRIPT_DIR/check_proofs.py       \
             --tlapm_path $DEPS_DIR/tlapm           \
-            --examples_root .                      \
-            --skip "${SKIP[@]}"
+            --examples_root .
       - name: Smoke-test manifest generation script
         run: |
           python $SCRIPT_DIR/generate_manifest.py \

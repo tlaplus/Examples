@@ -63,10 +63,11 @@
     {
       "path": "specifications/ewd840/EWD840_proof.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
-      "models": []
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "00:00:10"
+      }
     },
     {
       "path": "specifications/ewd840/SyncTerminationDetection.tla",
@@ -87,10 +88,11 @@
     {
       "path": "specifications/ewd840/SyncTerminationDetection_proof.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
-      "models": []
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     }
   ]
 }

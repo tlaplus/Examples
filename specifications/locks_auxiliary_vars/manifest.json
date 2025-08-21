@@ -11,8 +11,7 @@
       "path": "specifications/locks_auxiliary_vars/Lock.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
       "models": [
         {
@@ -24,14 +23,15 @@
           "totalStates": 21,
           "stateDepth": 5
         }
-      ]
+      ],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     },
     {
       "path": "specifications/locks_auxiliary_vars/LockHS.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
+      "features": [],
       "models": [
         {
           "path": "specifications/locks_auxiliary_vars/LockHS.cfg",
@@ -42,14 +42,16 @@
           "totalStates": 41,
           "stateDepth": 10
         }
-      ]
+      ],
+      "proof": {
+        "runtime": "00:00:30"
+      }
     },
     {
       "path": "specifications/locks_auxiliary_vars/Peterson.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
       "models": [
         {
@@ -61,7 +63,10 @@
           "totalStates": 77,
           "stateDepth": 11
         }
-      ]
+      ],
+      "proof": {
+        "runtime": "00:00:30"
+      }
     },
     {
       "path": "specifications/locks_auxiliary_vars/Stuttering.tla",

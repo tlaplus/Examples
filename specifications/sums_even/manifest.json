@@ -26,10 +26,11 @@
     {
       "path": "specifications/sums_even/sums_even.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
-      "models": []
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     }
   ]
 }
