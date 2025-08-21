@@ -14,10 +14,11 @@
     {
       "path": "specifications/lamport_mutex/LamportMutex_proofs.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
-      "models": []
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "00:00:45"
+      }
     },
     {
       "path": "specifications/lamport_mutex/MCLamportMutex.tla",

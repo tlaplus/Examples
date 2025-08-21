@@ -10,19 +10,23 @@
       "path": "specifications/Bakery-Boulangerie/Bakery.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
-      "models": []
+      "models": [],
+      "proof": {
+        "runtime": "00:00:20"
+      }
     },
     {
       "path": "specifications/Bakery-Boulangerie/Boulanger.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
-      "models": []
+      "models": [],
+      "proof": {
+        "runtime": "00:00:30"
+      }
     },
     {
       "path": "specifications/Bakery-Boulangerie/MCBakery.tla",

@@ -11,19 +11,23 @@
       "path": "specifications/LearnProofs/AddTwo.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
-      "models": []
+      "models": [],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     },
     {
       "path": "specifications/LearnProofs/FindHighest.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
-      "models": []
+      "models": [],
+      "proof": {
+        "runtime": "00:00:10"
+      }
     },
     {
       "path": "specifications/LearnProofs/MCFindHighest.tla",

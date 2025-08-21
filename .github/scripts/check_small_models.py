@@ -13,11 +13,11 @@ from timeit import default_timer as timer
 import tla_utils
 
 parser = ArgumentParser(description='Checks all small TLA+ models in the tlaplus/examples repo using TLC.')
-parser.add_argument('--tools_jar_path', help='Path to the tla2tools.jar file', required=True)
-parser.add_argument('--apalache_path', help='Path to the Apalache directory', required=True)
-parser.add_argument('--tlapm_lib_path', help='Path to the TLA+ proof manager module directory; .tla files should be in this directory', required=True)
-parser.add_argument('--community_modules_jar_path', help='Path to the CommunityModules-deps.jar file', required=True)
-parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=True)
+parser.add_argument('--tools_jar_path', help='Path to the tla2tools.jar file', required=False, default='deps/tools/tla2tools.jar')
+parser.add_argument('--apalache_path', help='Path to the Apalache directory', required=False, default='deps/apalache')
+parser.add_argument('--tlapm_lib_path', help='Path to the TLA+ proof manager module directory; .tla files should be in this directory', required=False, default='deps/tlapm/library')
+parser.add_argument('--community_modules_jar_path', help='Path to the CommunityModules-deps.jar file', required=False, default='deps/community/modules.jar')
+parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=False, default='.')
 parser.add_argument('--skip', nargs='+', help='Space-separated list of models to skip checking', required=False, default=[])
 parser.add_argument('--only', nargs='+', help='If provided, only check models in this space-separated list', required=False, default=[])
 parser.add_argument('--verbose', help='Set logging output level to debug', action='store_true')
@@ -78,9 +78,11 @@ def check_model(module, model, expected_runtime):
             logging.debug(output)
             return True
         case TimeoutExpired():
-            args, _ = tlc_result.args
-            output = ' '.join(args) + '\n' + tlc_result.stdout
-            logging.error(f'{model_path} hit hard timeout of {hard_timeout_in_seconds} seconds')
+            args, timeout = tlc_result.args
+            # stdout is a string on Windows, byte array everywhere else
+            stdout = tlc_result.stdout if type(tlc_result.stdout) == str else tlc_result.stdout.decode('utf-8')
+            output = ' '.join(args) + '\n' + stdout
+            logging.error(f'{model_path} hit hard timeout of {timeout} seconds')
             logging.error(output)
             return False
         case _:

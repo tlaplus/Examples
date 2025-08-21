@@ -13,7 +13,7 @@ from mistletoe.block_token import Table
 from mistletoe.markdown_renderer import MarkdownRenderer
 
 parser = ArgumentParser(description='Formats or modifies the spec table in README.md.')
-parser.add_argument('--readme_path', help='Path to the tlaplus/examples README.md file', required=True)
+parser.add_argument('--readme_path', help='Path to the tlaplus/examples README.md file', required=False, default='README.md')
 args = parser.parse_args()
 
 columns = ['name', 'authors', 'beginner', 'proof', 'tlc', 'pcal', 'apalache']

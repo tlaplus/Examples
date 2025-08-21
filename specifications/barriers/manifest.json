@@ -27,8 +27,7 @@
       "path": "specifications/barriers/Barriers.tla",
       "communityDependencies": [],
       "features": [
-        "pluscal",
-        "proof"
+        "pluscal"
       ],
       "models": [
         {
@@ -40,7 +39,10 @@
           "totalStates": 104515,
           "stateDepth": 93
         }
-      ]
+      ],
+      "proof": {
+        "runtime": "00:02:00"
+      }
     }
   ]
 }

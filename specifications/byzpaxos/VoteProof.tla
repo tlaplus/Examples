@@ -1083,7 +1083,7 @@ THEOREM VT4 == TypeOK /\ VInv2 /\ VInv3  =>
     <3>3. /\ c \in 0 .. (b-1)
           /\ \E a \in Q : ~DidNotVoteIn(a,c)
           /\ \A d \in (c+1)..(b-1), a \in Q : DidNotVoteIn(a, d)
-      BY <3>2
+      BY <3>2, SMTT(30)
     <3>. QED
       BY <3>3
   <2>4. PICK a0 \in Q, v \in Value : VotedFor(a0, c, v)

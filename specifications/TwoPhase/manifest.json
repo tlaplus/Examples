@@ -31,10 +31,11 @@
     {
       "path": "specifications/TwoPhase/TwoPhase.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
-      "models": []
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     }
   ]
 }

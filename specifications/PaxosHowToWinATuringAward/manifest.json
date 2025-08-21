@@ -10,10 +10,11 @@
     {
       "path": "specifications/PaxosHowToWinATuringAward/Consensus.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
-      "models": []
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     },
     {
       "path": "specifications/PaxosHowToWinATuringAward/MCConsensus.tla",
@@ -78,10 +79,11 @@
     {
       "path": "specifications/PaxosHowToWinATuringAward/Voting.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
-      "models": []
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "00:00:01"
+      }
     }
   ]
 }

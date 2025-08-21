@@ -12,7 +12,7 @@ import glob
 import tla_utils
 
 parser = ArgumentParser(description='Checks manifests against module and model files in repository.')
-parser.add_argument('--ci_ignore_path', help='Path to the .ciignore file', required=True)
+parser.add_argument('--ci_ignore_path', help='Path to the .ciignore file', required=False, default='./.ciignore')
 args = parser.parse_args()
 
 ci_ignore_path = normpath(args.ci_ignore_path)

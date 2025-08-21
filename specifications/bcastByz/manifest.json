@@ -10,9 +10,7 @@
     {
       "path": "specifications/bcastByz/bcastByz.tla",
       "communityDependencies": [],
-      "features": [
-        "proof"
-      ],
+      "features": [],
       "models": [
         {
           "path": "specifications/bcastByz/bcastByz.cfg",
@@ -32,7 +30,10 @@
           "totalStates": 90,
           "stateDepth": 1
         }
-      ]
+      ],
+      "proof": {
+        "runtime": "00:01:00"
+      }
     }
   ]
 }

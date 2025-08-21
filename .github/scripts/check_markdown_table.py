@@ -67,7 +67,7 @@ def from_json(path, spec):
         path,
         set(spec['authors']),
         'beginner' in spec['tags'],
-        any([module for module in spec['modules'] if 'proof' in module['features']]),
+        any([module for module in spec['modules'] if 'proof' in module]),
         any([module for module in spec['modules'] if 'pluscal' in module['features']]),
         any([model for module in spec['modules'] for model in module['models'] if model['mode'] != 'symbolic']),
         any([model for module in spec['modules'] for model in module['models'] if model['mode'] == 'symbolic']),
@@ -75,7 +75,7 @@ def from_json(path, spec):
     )
 
 parser = ArgumentParser(description='Validates the spec table in README.md against the manifest.json.')
-parser.add_argument('--readme_path', help='Path to the tlaplus/examples README.md file', required=True)
+parser.add_argument('--readme_path', help='Path to the tlaplus/examples README.md file', required=False, default='./README.md')
 args = parser.parse_args()
 
 manifest = tla_utils.load_all_manifests(dirname(args.readme_path))
