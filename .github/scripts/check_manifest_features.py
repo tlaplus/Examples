@@ -96,9 +96,10 @@ tlc_modules = {
 tlaps_modules = {
     'BagsTheorems',
     'FiniteSetTheorems',
-    'FunctionTheorems',
+    'FunctionForkTheorems',
+    'FunctionsFork',
     'NaturalsInduction',
-    'SequencesExtTheorems',
+    'SequencesExtForkTheorems',
     'SequenceTheorems',
     'TLAPS',
     'WellFoundedInduction'

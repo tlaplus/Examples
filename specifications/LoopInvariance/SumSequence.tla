@@ -9,7 +9,7 @@
 (*                                                                         *)
 (*    http://lamport.azurewebsites.net/tla/proving-safety.pdf              *)
 (***************************************************************************)
-EXTENDS Integers, SequenceTheorems, SequencesExtTheorems, NaturalsInduction, TLAPS
+EXTENDS Integers, SequenceTheorems, SequencesExtForkTheorems, NaturalsInduction, TLAPS
 
 (***************************************************************************)
 (* To facilitate model checking, we assume that the sequence to be summed  *)
@@ -55,9 +55,9 @@ with the variable sum equal to the sum of the elements of seq.
 }
 ***************************************************************************)
 \* BEGIN TRANSLATION
-VARIABLES seq, sum, n, pc
+VARIABLES pc, seq, sum, n
 
-vars == << seq, sum, n, pc >>
+vars == << pc, seq, sum, n >>
 
 Init == (* Global variables *)
         /\ seq \in Seq(Values)

@@ -34,8 +34,8 @@
 
 EXTENDS Naturals, 
         FiniteSets,
-        Functions,
-        FunctionTheorems, 
+        FunctionsFork,
+        FunctionForkTheorems, 
         FiniteSetTheorems,
         NaturalsInduction,
         SequenceTheorems,
