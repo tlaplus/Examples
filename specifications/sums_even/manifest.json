@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/sums_even/MC_sums_even.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -25,7 +24,6 @@
     },
     {
       "path": "specifications/sums_even/sums_even.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {

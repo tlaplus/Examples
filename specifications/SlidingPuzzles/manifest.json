@@ -7,7 +7,6 @@
   "modules": [
     {
       "path": "specifications/SlidingPuzzles/SlidingPuzzles.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

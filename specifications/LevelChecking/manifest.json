@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/LevelChecking/LevelSpec.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     }

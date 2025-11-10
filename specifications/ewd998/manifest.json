@@ -10,7 +10,6 @@
   "modules": [
     {
       "path": "specifications/ewd998/AsyncTerminationDetection.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -26,7 +25,6 @@
     },
     {
       "path": "specifications/ewd998/AsyncTerminationDetection_proof.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {
@@ -35,9 +33,6 @@
     },
     {
       "path": "specifications/ewd998/EWD998.tla",
-      "communityDependencies": [
-        "SequencesExt"
-      ],
       "features": [],
       "models": [
         {
@@ -56,7 +51,6 @@
     },
     {
       "path": "specifications/ewd998/EWD998Chan.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -69,7 +63,6 @@
     },
     {
       "path": "specifications/ewd998/EWD998ChanID.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -85,9 +78,6 @@
     },
     {
       "path": "specifications/ewd998/EWD998ChanID_export.tla",
-      "communityDependencies": [
-        "IOUtils"
-      ],
       "features": [],
       "models": [
         {
@@ -100,7 +90,6 @@
     },
     {
       "path": "specifications/ewd998/EWD998ChanID_shiviz.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -113,10 +102,6 @@
     },
     {
       "path": "specifications/ewd998/EWD998ChanTrace.tla",
-      "communityDependencies": [
-        "IOUtils",
-        "VectorClocks"
-      ],
       "features": [],
       "models": [
         {
@@ -129,18 +114,11 @@
     },
     {
       "path": "specifications/ewd998/EWD998Chan_opts.tla",
-      "communityDependencies": [
-        "CSV",
-        "IOUtils"
-      ],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/ewd998/EWD998PCal.tla",
-      "communityDependencies": [
-        "BagsExt"
-      ],
       "features": [
         "pluscal"
       ],
@@ -158,34 +136,21 @@
     },
     {
       "path": "specifications/ewd998/EWD998_anim.tla",
-      "communityDependencies": [
-        "IOUtils",
-        "SVG"
-      ],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/ewd998/EWD998_opts.tla",
-      "communityDependencies": [
-        "CSV",
-        "IOUtils"
-      ],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/ewd998/EWD998_optsSC.tla",
-      "communityDependencies": [
-        "CSV",
-        "IOUtils"
-      ],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/ewd998/EWD998_proof.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {
@@ -194,22 +159,16 @@
     },
     {
       "path": "specifications/ewd998/Folds.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/ewd998/Functions.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/ewd998/SmokeEWD998.tla",
-      "communityDependencies": [
-        "CSV",
-        "IOUtils"
-      ],
       "features": [],
       "models": [
         {
@@ -226,10 +185,6 @@
     },
     {
       "path": "specifications/ewd998/SmokeEWD998_SC.tla",
-      "communityDependencies": [
-        "CSV",
-        "IOUtils"
-      ],
       "features": [],
       "models": [
         {
@@ -242,9 +197,6 @@
     },
     {
       "path": "specifications/ewd998/Utils.tla",
-      "communityDependencies": [
-        "SequencesExt"
-      ],
       "features": [],
       "models": []
     }

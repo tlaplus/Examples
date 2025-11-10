@@ -7,11 +7,6 @@
   "modules": [
     {
       "path": "specifications/Huang/Huang.tla",
-      "communityDependencies": [
-        "DyadicRationals",
-        "Functions",
-        "SequencesExt"
-      ],
       "features": [],
       "models": [
         {

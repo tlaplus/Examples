@@ -7,13 +7,11 @@
   "modules": [
     {
       "path": "specifications/lamport_mutex/LamportMutex.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/lamport_mutex/LamportMutex_proofs.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {
@@ -22,7 +20,6 @@
     },
     {
       "path": "specifications/lamport_mutex/MCLamportMutex.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

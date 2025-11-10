@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/Stones/Stones.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

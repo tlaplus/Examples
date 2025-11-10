@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/nbacg_guer01/nbacg_guer01.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

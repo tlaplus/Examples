@@ -8,13 +8,11 @@
   "modules": [
     {
       "path": "specifications/TwoPhase/Alternate.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/TwoPhase/MCTwoPhase.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -30,7 +28,6 @@
     },
     {
       "path": "specifications/TwoPhase/TwoPhase.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {

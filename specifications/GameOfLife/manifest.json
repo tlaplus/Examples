@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/GameOfLife/GameOfLife.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

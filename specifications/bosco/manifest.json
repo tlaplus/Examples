@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/bosco/bosco.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

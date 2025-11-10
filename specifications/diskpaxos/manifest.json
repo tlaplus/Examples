@@ -10,19 +10,16 @@
   "modules": [
     {
       "path": "specifications/diskpaxos/DiskSynod.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/diskpaxos/HDiskSynod.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/diskpaxos/MC_HDiskSynod.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -35,7 +32,6 @@
     },
     {
       "path": "specifications/diskpaxos/Synod.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     }

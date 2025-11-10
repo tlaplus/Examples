@@ -7,7 +7,6 @@
   "modules": [
     {
       "path": "specifications/Paxos/Consensus.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {
@@ -16,7 +15,6 @@
     },
     {
       "path": "specifications/Paxos/MCConsensus.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -32,7 +30,6 @@
     },
     {
       "path": "specifications/Paxos/MCPaxos.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -48,7 +45,6 @@
     },
     {
       "path": "specifications/Paxos/MCVoting.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -64,13 +60,11 @@
     },
     {
       "path": "specifications/Paxos/Paxos.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/Paxos/Voting.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {

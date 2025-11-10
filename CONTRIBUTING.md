@@ -45,7 +45,7 @@ Steps:
    - Spec authors: a list of people who authored the spec
    - Spec tags:
      - `"beginner"` if your spec is appropriate for TLA⁺ newcomers
-   - Module proof runtime: if module contains formal proofs, record the approximate time necessary to check the proofs with TLAPM on an ordinary workstation; add `"proof" : { "runtime" : "HH:MM:SS" }` to the module fields at the same level as the `communityDependencies` and `models`
+   - Module proof runtime: if module contains formal proofs, record the approximate time necessary to check the proofs with TLAPM on an ordinary workstation; add `"proof" : { "runtime" : "HH:MM:SS" }` to the module fields at the same level as `models`
      - If less than one minute, proof will be checked in its entirety by the CI
    - Model runtime: approximate model runtime on an ordinary workstation, in `"HH:MM:SS"` format
      - If less than 30 seconds, will be run in its entirety by the CI; otherwise will only be smoke-tested for 5 seconds

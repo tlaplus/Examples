@@ -12,15 +12,11 @@
   "modules": [
     {
       "path": "specifications/ewd687a/EWD687a.tla",
-      "communityDependencies": [
-        "Graphs"
-      ],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/ewd687a/EWD687aPlusCal.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -28,10 +24,6 @@
     },
     {
       "path": "specifications/ewd687a/EWD687a_anim.tla",
-      "communityDependencies": [
-        "IOUtils",
-        "SVG"
-      ],
       "features": [],
       "models": [
         {
@@ -48,7 +40,6 @@
     },
     {
       "path": "specifications/ewd687a/MCEWD687a.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

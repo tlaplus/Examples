@@ -2,8 +2,8 @@
 This script performs whatever validations are possible on the metadata in
 the manifest.json files. Prominent checks include:
  * .tla files containing pluscal or proofs are marked as such
- * .tla files importing community modules have those modules listed
- * Human-written fields are not empty
+ * Model state counts are applicable to the model type
+ * Human-written fields such as authorship are not empty
 """
 
 from argparse import ArgumentParser
@@ -75,81 +75,6 @@ def get_module_features(examples_root, path, parser, queries):
     tree, _, _ = tla_utils.parse_module(examples_root, parser, path)
     return get_tree_features(tree, queries)
 
-# All the standard modules available when using TLC
-tlc_modules = {
-    'Bags',
-    'FiniteSets',
-    'Integers',
-    'Json',
-    'Naturals',
-    'Randomization',
-    'RealTime',
-    'Reals',
-    'Sequences',
-    'TLC',
-    'TLCExt',
-    'Toolbox',
-    'Apalache'
-}
-
-# All the standard modules available when using TLAPS
-tlaps_modules = {
-    'BagsTheorems',
-    'FiniteSetTheorems',
-    'FunctionForkTheorems',
-    'FunctionsFork',
-    'NaturalsInduction',
-    'SequencesExtForkTheorems',
-    'SequenceTheorems',
-    'TLAPS',
-    'WellFoundedInduction'
-}
-
-# Modules overloaded by TLAPS; some of these are ordinarily imported as
-# community modules.
-tlaps_module_overloads = {
-    'Bags',
-    'FiniteSets',
-    'Functions',
-    'RealTime',
-    'SequencesExt'
-}
-
-def get_community_imports(examples_root, tree, text, dir, has_proof, queries):
-    """
-    Gets all modules imported by a given .tla file that are not standard
-    modules or modules in the same file or directory. Community module
-    imports are what's left.
-    """
-    imports = set(
-        [
-            tla_utils.node_to_string(text, node)
-            for node in tla_utils.all_nodes_of(queries.imports.captures(tree.root_node))
-        ]
-    )
-    modules_in_file = set(
-        [
-            tla_utils.node_to_string(text, node)
-            for node in tla_utils.all_nodes_of(queries.module_names.captures(tree.root_node))
-        ]
-    )
-    imports = (
-        imports
-        - modules_in_file
-        - tlc_modules
-        - tlaps_modules
-        - get_module_names_in_dir(examples_root, dir)
-    )
-    return imports - tlaps_module_overloads if has_proof else imports
- 
-def get_community_module_imports(examples_root, parser, path, queries):
-    """
-    Gets all community modules imported by the .tla file at the given path.
-    """
-    tree, text, _ = tla_utils.parse_module(examples_root, parser, path)
-    has_proof = 'proof' in get_tree_features(tree, queries)
-    return get_community_imports(examples_root, tree, text, dirname(path), has_proof, queries)
-
 def check_features(parser, queries, manifest, examples_root):
     """
     Validates every field of the manifest that can be validated.
@@ -177,14 +102,6 @@ def check_features(parser, queries, manifest, examples_root):
             if 'proof' in module_features and 'proof' not in module:
                 success = False
                 logging.error(f'Module {module["path"]} contains proof but no proof runtime details in manifest')
-            expected_imports = get_community_imports(examples_root, tree, text, dirname(module_path), 'proof' in module_features, queries)
-            actual_imports = set(module['communityDependencies'])
-            if expected_imports != actual_imports:
-                success = False
-                logging.error(
-                    f'Module {module["path"]} has incorrect community dependencies in manifest; '
-                    + f'expected {list(expected_imports)}, actual {list(actual_imports)}'
-                )
             for model in module['models']:
                 if tla_utils.has_state_count(model) and not tla_utils.is_state_count_valid(model):
                     success = False

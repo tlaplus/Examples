@@ -7,7 +7,6 @@
   "modules": [
     {
       "path": "specifications/MisraReachability/MCParReach.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -23,7 +22,6 @@
     },
     {
       "path": "specifications/MisraReachability/MCReachabilityTest.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -48,7 +46,6 @@
     },
     {
       "path": "specifications/MisraReachability/MCReachable.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -61,7 +58,6 @@
     },
     {
       "path": "specifications/MisraReachability/ParReach.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -69,7 +65,6 @@
     },
     {
       "path": "specifications/MisraReachability/ParReachProofs.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {
@@ -78,13 +73,11 @@
     },
     {
       "path": "specifications/MisraReachability/Reachability.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/MisraReachability/ReachabilityProofs.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {
@@ -93,13 +86,11 @@
     },
     {
       "path": "specifications/MisraReachability/ReachabilityTest.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/MisraReachability/Reachable.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -107,7 +98,6 @@
     },
     {
       "path": "specifications/MisraReachability/ReachableProofs.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {

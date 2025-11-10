@@ -10,7 +10,6 @@
   "modules": [
     {
       "path": "specifications/YoYo/MCYoYoNoPruning.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -26,7 +25,6 @@
     },
     {
       "path": "specifications/YoYo/MCYoYoPruning.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -42,9 +40,6 @@
     },
     {
       "path": "specifications/YoYo/YoYoAllGraphs.tla",
-      "communityDependencies": [
-        "UndirectedGraphs"
-      ],
       "features": [],
       "models": [
         {
@@ -60,17 +55,11 @@
     },
     {
       "path": "specifications/YoYo/YoYoNoPruning.tla",
-      "communityDependencies": [
-        "UndirectedGraphs"
-      ],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/YoYo/YoYoPruning.tla",
-      "communityDependencies": [
-        "UndirectedGraphs"
-      ],
       "features": [],
       "models": []
     }

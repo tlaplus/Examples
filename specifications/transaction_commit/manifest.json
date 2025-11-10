@@ -13,7 +13,6 @@
   "modules": [
     {
       "path": "specifications/transaction_commit/2PCwithBTM.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -31,7 +30,6 @@
     },
     {
       "path": "specifications/transaction_commit/PaxosCommit.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -47,7 +45,6 @@
     },
     {
       "path": "specifications/transaction_commit/TCommit.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -63,7 +60,6 @@
     },
     {
       "path": "specifications/transaction_commit/TwoPhase.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

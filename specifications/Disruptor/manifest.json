@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/Disruptor/Disruptor_MPMC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -34,7 +33,6 @@
     },
     {
       "path": "specifications/Disruptor/Disruptor_SPMC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -50,7 +48,6 @@
     },
     {
       "path": "specifications/Disruptor/RingBuffer.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     }

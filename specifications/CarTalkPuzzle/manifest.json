@@ -9,19 +9,16 @@
   "modules": [
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_1/CarTalkPuzzle.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_1/MC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -37,13 +34,11 @@
     },
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_2/CarTalkPuzzle.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_2/MC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -59,13 +54,11 @@
     },
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_3/CarTalkPuzzle.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/CarTalkPuzzle/CarTalkPuzzle.toolbox/Model_3/MC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

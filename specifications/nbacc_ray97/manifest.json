@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/nbacc_ray97/nbacc_ray97.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

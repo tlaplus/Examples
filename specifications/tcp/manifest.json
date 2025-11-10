@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/tcp/MCtcp.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -25,9 +24,6 @@
     },
     {
       "path": "specifications/tcp/tcp.tla",
-      "communityDependencies": [
-        "SequencesExt"
-      ],
       "features": [],
       "models": []
     }

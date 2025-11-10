@@ -10,13 +10,11 @@
   "modules": [
     {
       "path": "specifications/acp/ACP_NB.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/acp/ACP_NB_TLC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -32,7 +30,6 @@
     },
     {
       "path": "specifications/acp/ACP_NB_WRONG_TLC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -45,13 +42,11 @@
     },
     {
       "path": "specifications/acp/ACP_SB.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/acp/ACP_SB_TLC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

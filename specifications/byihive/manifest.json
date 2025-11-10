@@ -11,7 +11,6 @@
   "modules": [
     {
       "path": "specifications/byihive/VoucherCancel.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -27,7 +26,6 @@
     },
     {
       "path": "specifications/byihive/VoucherIssue.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -43,7 +41,6 @@
     },
     {
       "path": "specifications/byihive/VoucherLifeCycle.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -59,7 +56,6 @@
     },
     {
       "path": "specifications/byihive/VoucherRedeem.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -75,7 +71,6 @@
     },
     {
       "path": "specifications/byihive/VoucherTransfer.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

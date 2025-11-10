@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/cf1s-folklore/cf1s_folklore.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

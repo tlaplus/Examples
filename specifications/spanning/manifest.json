@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/spanning/MC_spanning.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -22,7 +21,6 @@
     },
     {
       "path": "specifications/spanning/spanning.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     }

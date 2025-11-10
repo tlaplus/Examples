@@ -9,13 +9,11 @@
   "modules": [
     {
       "path": "specifications/N-Queens/Queens.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/N-Queens/Queens.toolbox/FourQueens/MC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -28,13 +26,11 @@
     },
     {
       "path": "specifications/N-Queens/Queens.toolbox/FourQueens/Queens.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/N-Queens/QueensPluscal.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -42,7 +38,6 @@
     },
     {
       "path": "specifications/N-Queens/QueensPluscal.toolbox/FourQueens/MC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -55,7 +50,6 @@
     },
     {
       "path": "specifications/N-Queens/QueensPluscal.toolbox/FourQueens/QueensPluscal.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],

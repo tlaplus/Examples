@@ -10,26 +10,16 @@
   "modules": [
     {
       "path": "specifications/KnuthYao/KnuthYao.tla",
-      "communityDependencies": [
-        "DyadicRationals"
-      ],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/KnuthYao/Prob.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/KnuthYao/SimKnuthYao.tla",
-      "communityDependencies": [
-        "CSV",
-        "Functions",
-        "IOUtils",
-        "Statistics"
-      ],
       "features": [],
       "models": [
         {

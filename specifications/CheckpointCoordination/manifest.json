@@ -10,13 +10,11 @@
   "modules": [
     {
       "path": "specifications/CheckpointCoordination/CheckpointCoordination.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/CheckpointCoordination/MCCheckpointCoordination.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

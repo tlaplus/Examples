@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/MultiCarElevator/Elevator.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

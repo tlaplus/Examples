@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/DiningPhilosophers/DiningPhilosophers.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],

@@ -7,7 +7,6 @@
   "modules": [
     {
       "path": "specifications/TransitiveClosure/TransitiveClosure.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

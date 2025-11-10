@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/LeastCircularSubstring/LeastCircularSubstring.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -17,7 +16,6 @@
     },
     {
       "path": "specifications/LeastCircularSubstring/MCLeastCircularSubstring.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -39,7 +37,6 @@
     },
     {
       "path": "specifications/LeastCircularSubstring/ZSequences.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     }

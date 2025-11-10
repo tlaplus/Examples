@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/DieHard/DieHard.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -22,13 +21,11 @@
     },
     {
       "path": "specifications/DieHard/DieHarder.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/DieHard/MCDieHarder.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

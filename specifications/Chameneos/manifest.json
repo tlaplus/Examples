@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/Chameneos/Chameneos.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

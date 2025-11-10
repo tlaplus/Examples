@@ -9,13 +9,11 @@
   "modules": [
     {
       "path": "specifications/Prisoners/MCPrisoners.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/Prisoners/Prisoners.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
