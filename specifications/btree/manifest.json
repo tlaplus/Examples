@@ -10,7 +10,6 @@
   "modules": [
     {
       "path": "specifications/btree/btree.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -26,7 +25,6 @@
     },
     {
       "path": "specifications/btree/kvstore.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

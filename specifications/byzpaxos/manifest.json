@@ -11,7 +11,6 @@
   "modules": [
     {
       "path": "specifications/byzpaxos/BPConProof.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -29,7 +28,6 @@
     },
     {
       "path": "specifications/byzpaxos/Consensus.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -50,7 +48,6 @@
     },
     {
       "path": "specifications/byzpaxos/PConProof.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -68,7 +65,6 @@
     },
     {
       "path": "specifications/byzpaxos/VoteProof.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -84,7 +80,7 @@
         }
       ],
       "proof": {
-        "runtime": "00:00:45"
+        "runtime": "00:01:15"
       }
     }
   ]

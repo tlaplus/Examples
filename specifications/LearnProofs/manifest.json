@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/LearnProofs/AddTwo.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -20,7 +19,6 @@
     },
     {
       "path": "specifications/LearnProofs/FindHighest.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -31,7 +29,6 @@
     },
     {
       "path": "specifications/LearnProofs/MCFindHighest.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

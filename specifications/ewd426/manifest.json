@@ -10,10 +10,6 @@
   "modules": [
     {
       "path": "specifications/ewd426/SimTokenRing.tla",
-      "communityDependencies": [
-        "CSV",
-        "IOUtils"
-      ],
       "features": [],
       "models": [
         {
@@ -26,7 +22,6 @@
     },
     {
       "path": "specifications/ewd426/TokenRing.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

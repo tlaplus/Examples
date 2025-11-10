@@ -9,19 +9,16 @@
   "modules": [
     {
       "path": "specifications/detector_chan96/Age_Channel.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/detector_chan96/EPFailureDetector.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/detector_chan96/EnvironmentController.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

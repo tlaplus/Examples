@@ -7,7 +7,6 @@
   "modules": [
     {
       "path": "specifications/ReadersWriters/MC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -23,7 +22,6 @@
     },
     {
       "path": "specifications/ReadersWriters/ReadersWriters.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     }

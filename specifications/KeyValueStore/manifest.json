@@ -8,13 +8,11 @@
   "modules": [
     {
       "path": "specifications/KeyValueStore/ClientCentric.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/KeyValueStore/KVsnap.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -22,13 +20,11 @@
     },
     {
       "path": "specifications/KeyValueStore/KeyValueStore.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/KeyValueStore/MCKVS.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -53,7 +49,6 @@
     },
     {
       "path": "specifications/KeyValueStore/MCKVsnap.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -66,9 +61,6 @@
     },
     {
       "path": "specifications/KeyValueStore/Util.tla",
-      "communityDependencies": [
-        "Functions"
-      ],
       "features": [],
       "models": []
     }

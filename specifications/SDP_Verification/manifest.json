@@ -10,7 +10,6 @@
   "modules": [
     {
       "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/MC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -26,16 +25,11 @@
     },
     {
       "path": "specifications/SDP_Verification/SDP_Attack_New_Solution_Spec/SPA_Attack_New.tla",
-      "communityDependencies": [
-        "Bitwise",
-        "Functions"
-      ],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/SDP_Verification/SDP_Attack_Spec/MC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -48,10 +42,6 @@
     },
     {
       "path": "specifications/SDP_Verification/SDP_Attack_Spec/SPA_Attack.tla",
-      "communityDependencies": [
-        "Bitwise",
-        "Functions"
-      ],
       "features": [],
       "models": []
     }

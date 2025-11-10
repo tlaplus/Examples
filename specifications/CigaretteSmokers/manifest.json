@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/CigaretteSmokers/CigaretteSmokers.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

@@ -7,7 +7,6 @@
   "modules": [
     {
       "path": "specifications/glowingRaccoon/clean.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -23,7 +22,6 @@
     },
     {
       "path": "specifications/glowingRaccoon/product.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -39,7 +37,6 @@
     },
     {
       "path": "specifications/glowingRaccoon/stages.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

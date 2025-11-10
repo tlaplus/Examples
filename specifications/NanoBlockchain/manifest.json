@@ -7,7 +7,6 @@
   "modules": [
     {
       "path": "specifications/NanoBlockchain/MCNano.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -38,7 +37,6 @@
     },
     {
       "path": "specifications/NanoBlockchain/Nano.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     }

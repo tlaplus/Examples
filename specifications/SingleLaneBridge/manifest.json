@@ -7,7 +7,6 @@
   "modules": [
     {
       "path": "specifications/SingleLaneBridge/MC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -23,7 +22,6 @@
     },
     {
       "path": "specifications/SingleLaneBridge/SingleLaneBridge.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     }

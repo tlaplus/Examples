@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/aba-asyn-byz/aba_asyn_byz.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

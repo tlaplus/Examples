@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/c1cs/c1cs.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

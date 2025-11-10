@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/barriers/Barrier.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -25,7 +24,6 @@
     },
     {
       "path": "specifications/barriers/Barriers.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],

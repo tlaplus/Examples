@@ -83,7 +83,6 @@ def generate_new_manifest(examples_root, spec_path, spec_name, parser, queries):
         'modules': [
             {
                 'path': tla_utils.to_posix(tla_path),
-                'communityDependencies': sorted(list(get_community_module_imports(examples_root, parser, tla_path, queries))),
                 'features': sorted(list(module_features - {'proof'})),
                 'models': [
                     {

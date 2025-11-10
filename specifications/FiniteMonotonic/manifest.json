@@ -13,13 +13,11 @@
   "modules": [
     {
       "path": "specifications/FiniteMonotonic/CRDT.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/FiniteMonotonic/CRDT_proof.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {
@@ -28,30 +26,21 @@
     },
     {
       "path": "specifications/FiniteMonotonic/DistributedReplicatedLog.tla",
-      "communityDependencies": [
-        "FiniteSetsExt",
-        "SequencesExt"
-      ],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/FiniteMonotonic/Folds.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/FiniteMonotonic/Functions.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/FiniteMonotonic/MCCRDT.tla",
-      "communityDependencies": [
-        "FiniteSetsExt"
-      ],
       "features": [
         "action composition"
       ],
@@ -69,9 +58,6 @@
     },
     {
       "path": "specifications/FiniteMonotonic/MCDistributedReplicatedLog.tla",
-      "communityDependencies": [
-        "FiniteSetsExt"
-      ],
       "features": [],
       "models": [
         {
@@ -84,9 +70,6 @@
     },
     {
       "path": "specifications/FiniteMonotonic/MCReplicatedLog.tla",
-      "communityDependencies": [
-        "FiniteSetsExt"
-      ],
       "features": [
         "action composition"
       ],
@@ -104,7 +87,6 @@
     },
     {
       "path": "specifications/FiniteMonotonic/ReplicatedLog.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     }

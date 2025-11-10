@@ -10,7 +10,6 @@
   "modules": [
     {
       "path": "specifications/SlushProtocol/Slush.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],

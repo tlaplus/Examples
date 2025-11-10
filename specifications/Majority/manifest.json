@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/Majority/MCMajority.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -25,13 +24,11 @@
     },
     {
       "path": "specifications/Majority/Majority.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     },
     {
       "path": "specifications/Majority/MajorityProof.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {

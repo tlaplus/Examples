@@ -11,7 +11,6 @@
   "modules": [
     {
       "path": "specifications/ewd840/EWD840.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -27,9 +26,6 @@
     },
     {
       "path": "specifications/ewd840/EWD840_anim.tla",
-      "communityDependencies": [
-        "SVG"
-      ],
       "features": [],
       "models": [
         {
@@ -46,7 +42,6 @@
     },
     {
       "path": "specifications/ewd840/EWD840_json.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -62,7 +57,6 @@
     },
     {
       "path": "specifications/ewd840/EWD840_proof.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {
@@ -71,7 +65,6 @@
     },
     {
       "path": "specifications/ewd840/SyncTerminationDetection.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -87,7 +80,6 @@
     },
     {
       "path": "specifications/ewd840/SyncTerminationDetection_proof.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [],
       "proof": {

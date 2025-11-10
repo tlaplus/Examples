@@ -19,14 +19,10 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["path", "communityDependencies", "features", "models"],
+        "required": ["path", "features", "models"],
         "additionalProperties": false,
         "properties": {
           "path": {"type": "string"},
-          "communityDependencies": {
-            "type": "array",
-            "items": {"type": "string"}
-          },
           "features": {
             "type": "array",
             "items": {"enum": ["pluscal", "action composition"]}

@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/locks_auxiliary_vars/Lock.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -30,7 +29,6 @@
     },
     {
       "path": "specifications/locks_auxiliary_vars/LockHS.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -49,7 +47,6 @@
     },
     {
       "path": "specifications/locks_auxiliary_vars/Peterson.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -70,7 +67,6 @@
     },
     {
       "path": "specifications/locks_auxiliary_vars/Stuttering.tla",
-      "communityDependencies": [],
       "features": [],
       "models": []
     }

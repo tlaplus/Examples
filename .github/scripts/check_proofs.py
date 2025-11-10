@@ -80,7 +80,7 @@ for manifest_dir, spec, module, expected_runtime in proof_module_paths:
             logging.debug(output)
     except subprocess.TimeoutExpired as tlapm_result:
         # stdout is a string on Windows, byte array everywhere else
-        stdout = tlapm_result.stdout if type(tlapm_result.stdout) == str else tlapm_result.stdout.decode('utf-8')
+        stdout = '' if tlapm_result.stdout is None else tlapm_result.stdout if type(tlapm_result.stdout) == str else tlapm_result.stdout.decode('utf-8')
         args, timeout = tlapm_result.args
         logging.error(f'{module_path} hit hard timeout of {timeout} seconds')
         output = ' '.join(args) + '\n' + stdout

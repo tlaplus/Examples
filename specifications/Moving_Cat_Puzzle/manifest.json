@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/Moving_Cat_Puzzle/Cat.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

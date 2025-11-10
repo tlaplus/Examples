@@ -7,7 +7,6 @@
   "modules": [
     {
       "path": "specifications/SpanningTree/SpanTree.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -23,7 +22,6 @@
     },
     {
       "path": "specifications/SpanningTree/SpanTreeRandom.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -36,7 +34,6 @@
     },
     {
       "path": "specifications/SpanningTree/SpanTreeTest.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

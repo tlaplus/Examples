@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/dijkstra-mutex/DijkstraMutex.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -17,7 +16,6 @@
     },
     {
       "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/DijkstraMutex.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -25,7 +23,6 @@
     },
     {
       "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/LSpec-model/MC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -38,7 +35,6 @@
     },
     {
       "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/Safety-4-processors/DijkstraMutex.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -46,7 +42,6 @@
     },
     {
       "path": "specifications/dijkstra-mutex/DijkstraMutex.toolbox/Safety-4-processors/MC.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

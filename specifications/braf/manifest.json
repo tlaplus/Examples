@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/braf/BufferedRandomAccessFile.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

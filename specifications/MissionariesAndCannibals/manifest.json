@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/MissionariesAndCannibals/MissionariesAndCannibals.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

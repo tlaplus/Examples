@@ -9,7 +9,6 @@
   "modules": [
     {
       "path": "specifications/Prisoners_Single_Switch/Prisoner.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

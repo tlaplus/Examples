@@ -7,7 +7,6 @@
   "modules": [
     {
       "path": "specifications/chang_roberts/ChangRoberts.tla",
-      "communityDependencies": [],
       "features": [
         "pluscal"
       ],
@@ -15,7 +14,6 @@
     },
     {
       "path": "specifications/chang_roberts/MCChangRoberts.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {

@@ -8,7 +8,6 @@
   "modules": [
     {
       "path": "specifications/SimplifiedFastPaxos/FastPaxos.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
@@ -24,7 +23,6 @@
     },
     {
       "path": "specifications/SimplifiedFastPaxos/Paxos.tla",
-      "communityDependencies": [],
       "features": [],
       "models": [
         {
