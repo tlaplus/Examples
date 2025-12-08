@@ -104,14 +104,12 @@ LEMMA NonemptyMin ==
     ASSUME NEW S \in SUBSET Int, IsFiniteSet(S), NEW x \in S
     PROVE  /\ Min(S) \in S 
            /\ Min(S) <= x
-<1>. DEFINE P(T) == T \in SUBSET Int =>
-                      /\ T # {} => Min(T) \in T
-                      /\ \A y \in T : Min(T) <= y
+<1>. DEFINE P(T) == /\ T # {} => Min(T) \in T
+                    /\ \A y \in T : Min(T) <= y
 <1>1. P({})
   OBVIOUS
-<1>2. ASSUME NEW T, NEW y, y \notin T, P(T)
+<1>2. ASSUME NEW T \in SUBSET S, IsFiniteSet(T), P(T), NEW y \in S \ T
       PROVE  P(T \cup {y})
-  <2>. HAVE T \cup {y} \in SUBSET Int
   <2>1. CASE T = {}
     <3>1. y = Min(T \cup {y})
       BY <2>1 DEF Min
@@ -135,7 +133,7 @@ LEMMA NonemptyMin ==
       <4>. QED  BY <4>1, <4>2
     <3>. QED  BY <3>1, <3>2
   <2>. QED  BY <2>1, <2>2
-<1>3. \A T : IsFiniteSet(T) => P(T)
+<1>3. P(S)
   <2>. HIDE DEF P
   <2>. QED  BY <1>1, <1>2, FS_Induction, IsaM("blast")
 <1>. QED BY <1>3
@@ -144,14 +142,12 @@ LEMMA NonemptyMax ==
     ASSUME NEW S \in SUBSET Int, IsFiniteSet(S), NEW x \in S
     PROVE  /\ Max(S) \in S
            /\ x <= Max(S)
-<1>. DEFINE P(T) == T \in SUBSET Int =>
-                      /\ T # {} => Max(T) \in T
-                      /\ \A y \in T : y <= Max(T)
+<1>. DEFINE P(T) == /\ T # {} => Max(T) \in T
+                    /\ \A y \in T : y <= Max(T)
 <1>1. P({})
   OBVIOUS
-<1>2. ASSUME NEW T, NEW y, y \notin T, P(T)
+<1>2. ASSUME NEW T \in SUBSET S, IsFiniteSet(T), P(T), NEW y \in S \ T
       PROVE  P(T \cup {y})
-  <2>. HAVE T \cup {y} \in SUBSET Int
   <2>1. CASE T = {}
     <3>1. y = Max(T \cup {y})
       BY <2>1 DEF Max
@@ -175,7 +171,7 @@ LEMMA NonemptyMax ==
       <4>. QED  BY <4>1, <4>2
     <3>. QED  BY <3>1, <3>2
   <2>. QED  BY <2>1, <2>2
-<1>3. \A T : IsFiniteSet(T) => P(T)
+<1>3. P(S)
   <2>. HIDE DEF P
   <2>. QED  BY <1>1, <1>2, FS_Induction, IsaM("blast")
 <1>. QED BY <1>3
@@ -260,9 +256,9 @@ BY PermsOfLemma DEF Partitions
 (* Below is the TLA+ translation of the PlusCal code.                      *)
 (***************************************************************************)
 \* BEGIN TRANSLATION
-VARIABLES seq, seq0, U, pc
+VARIABLES pc, seq, seq0, U
 
-vars == << seq, seq0, U, pc >>
+vars == << pc, seq, seq0, U >>
 
 Init == (* Global variables *)
         /\ seq \in Seq(Values) \ {<< >>}

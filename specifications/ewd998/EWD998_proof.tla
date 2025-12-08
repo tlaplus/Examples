@@ -159,12 +159,11 @@ LEMMA SumZero ==
   PROVE  Sum(fun, inds) = 0
 <1>1. IsFiniteSet(inds)
   BY NodeIsFinite, FS_Subset
-<1>. DEFINE P(T) == T \subseteq inds => Sum(fun, T) = 0
+<1>. DEFINE P(T) == Sum(fun, T) = 0
 <1>2. P({})
   BY SumEmpty
-<1>3. ASSUME NEW T, NEW x, IsFiniteSet(T), P(T), x \notin T
+<1>3. ASSUME NEW T \in SUBSET inds, IsFiniteSet(T), P(T), NEW x \in inds \ T
       PROVE  P(T \cup {x})
-  <2>. HAVE T \cup {x} \in SUBSET inds 
   <2>1. Sum(fun, T \cup {x}) = fun[x] + Sum(fun, (T \cup {x}) \ {x})
     BY SumIterate
   <2>2. /\ fun[x] = 0
