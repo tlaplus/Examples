@@ -138,7 +138,6 @@ jobs:
           # skip proofs that take too long on certain GitHub runners
           SKIP=(
             "specifications/ewd998/EWD998_proof.tla"
-            "specifications/LoopInvariance/Quicksort.tla"
             "specifications/lamport_mutex/LamportMutex_proofs.tla"
           )
           python $SCRIPT_DIR/check_proofs.py       \
