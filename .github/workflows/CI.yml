@@ -142,7 +142,7 @@ jobs:
           # )
           python $SCRIPT_DIR/check_proofs.py       \
             --tlapm_path $DEPS_DIR/tlapm           \
-            --examples_root ."
+            --examples_root .
       - name: Smoke-test manifest generation script
         run: |
           python $SCRIPT_DIR/generate_manifest.py \
