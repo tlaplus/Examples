@@ -136,14 +136,13 @@ jobs:
         if: matrix.os != 'windows-latest' && !matrix.unicode
         run: |
           # skip proofs that take too long on certain GitHub runners
-          SKIP=(
-            "specifications/ewd998/EWD998_proof.tla"
-            "specifications/lamport_mutex/LamportMutex_proofs.tla"
-          )
+          # SKIP=(
+          #  "specifications/ewd998/EWD998_proof.tla"
+          #  "specifications/lamport_mutex/LamportMutex_proofs.tla"
+          # )
           python $SCRIPT_DIR/check_proofs.py       \
             --tlapm_path $DEPS_DIR/tlapm           \
-            --examples_root .                      \
-            --skip "${SKIP[@]}"
+            --examples_root ."
       - name: Smoke-test manifest generation script
         run: |
           python $SCRIPT_DIR/generate_manifest.py \
