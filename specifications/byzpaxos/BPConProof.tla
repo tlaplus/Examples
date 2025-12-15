@@ -673,16 +673,15 @@ MaxBallot(S) ==
 (* maximum of S when S is nonempty, we need the following fact.            *)
 (***************************************************************************)
 LEMMA FiniteSetHasMax ==
-        \A S \in SUBSET Int :
-          IsFiniteSet(S) /\ (S # {}) => \E max \in S : \A x \in S : max >= x
-<1>. DEFINE P(S) == S \subseteq Int /\ S # {} =>
-                      \E max \in S : \A x \in S : max >= x
+        ASSUME NEW S \in SUBSET Int, IsFiniteSet(S), S # {}
+        PROVE  \E max \in S : \A x \in S : max >= x
+<1>. DEFINE P(T) == T # {} => \E max \in T : \A x \in T : max >= x
 <1>1. P({})
   OBVIOUS
-<1>2. ASSUME NEW T, NEW x, P(T)
+<1>2. ASSUME NEW T \in SUBSET S, IsFiniteSet(T), P(T), NEW x \in S \ T
       PROVE  P(T \cup {x})
   BY <1>2
-<1>3. \A S : IsFiniteSet(S) => P(S)
+<1>3. P(S)
   <2>. HIDE DEF P
   <2>. QED  BY <1>1, <1>2, FS_Induction, IsaM("blast")
 <1>. QED  BY <1>3, Zenon

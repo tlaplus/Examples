@@ -1022,13 +1022,13 @@ ASSUME ValueNonempty == Value # {}
 LEMMA FiniteSetHasMax ==
   ASSUME NEW S \in SUBSET Int, IsFiniteSet(S), S # {}
   PROVE  \E max \in S : \A x \in S : max >= x
-<1>. DEFINE P(T) == T \in SUBSET Int /\ T # {} => \E max \in T : \A x \in T : max >= x
+<1>. DEFINE P(T) == T # {} => \E max \in T : \A x \in T : max >= x
 <1>1. P({})
   OBVIOUS
-<1>2. ASSUME NEW T, NEW x, P(T), x \notin T
+<1>2. ASSUME NEW T \in SUBSET S, P(T), NEW x \in S \ T
       PROVE  P(T \cup {x})
   BY <1>2
-<1>3. \A T : IsFiniteSet(T) => P(T)
+<1>3. P(S)
   <2>. HIDE DEF P
   <2>. QED  BY <1>1, <1>2, FS_Induction, IsaM("blast")
 <1>. QED  BY <1>3, Zenon
@@ -1150,50 +1150,6 @@ LiveSpec == Spec /\ LiveAssumption
 (***************************************************************************)
 -----------------------------------------------------------------------------
 (***************************************************************************)
-(* Here are two temporal-logic proof rules.  Their validity is obvious     *)
-(* when you understand what they mean.                                     *)
-(***************************************************************************)
-THEOREM AlwaysForall ==
-           ASSUME NEW CONSTANT S, NEW TEMPORAL P(_)
-           PROVE  (\A s \in S : []P(s)) <=> [](\A s \in S : P(s))
-OBVIOUS
-
-LEMMA EventuallyAlwaysForall == 
-        ASSUME NEW CONSTANT S, IsFiniteSet(S),
-               NEW TEMPORAL P(_)
-        PROVE  (\A s \in S : <>[]P(s)) => <>[](\A s \in S : P(s))
-<1>. DEFINE A(x) == <>[]P(x)
-            L(T) == \A s \in T : A(s)
-            R(T) == \A s \in T : P(s)
-            Q(T) == L(T) => <>[]R(T)
-<1>1. Q({})
-  <2>1. R({})       OBVIOUS
-  <2>2. <>[]R({})   BY <2>1, PTL
-  <2>. QED          BY <2>2
-<1>2. ASSUME NEW T, NEW x
-      PROVE  Q(T) => Q(T \cup {x})
-  <2>1. L(T \cup {x}) => A(x)
-    <3>. HIDE DEF A
-    <3>. QED  OBVIOUS
-  <2>2. L(T \cup {x}) /\ Q(T) => <>[]R(T)
-    OBVIOUS
-  <2>3. <>[]R(T) /\ A(x) => <>[](R(T) /\ P(x))
-    BY PTL
-  <2>4. R(T) /\ P(x) => R(T \cup {x})
-    OBVIOUS
-  <2>5. <>[](R(T) /\ P(x)) => <>[]R(T \cup {x})
-    BY <2>4, PTL
-  <2>. QED
-    BY <2>1, <2>2, <2>3, <2>5
-<1>. HIDE DEF Q
-<1>3. \A T : IsFiniteSet(T) => Q(T)
-  BY <1>1, <1>2, FS_Induction, IsaM("blast")
-<1>4. Q(S)
-  BY <1>3
-<1>. QED
-  BY <1>4 DEF Q
------------------------------------------------------------------------------
-(***************************************************************************)
 (* Here is our proof that LiveSpec implements the specification LiveSpec   *)
 (* of module Consensus under our refinement mapping.                       *)
 (***************************************************************************)
@@ -1257,7 +1213,6 @@ THEOREM Liveness == LiveSpec => C!LiveSpec
          <>[](\A self \in Q : maxBal[self] = b)
   <2>. DEFINE MB(s) == maxBal[s] = b
   <2>0. (\A self \in Q : <>[]MB(self)) => <>[](\A self \in Q : MB(self))
-    \* BY <1>a, EventuallyAlwaysForall    \* fails, even when hiding the definition of MB
     <3>. HIDE DEF MB
     <3>. DEFINE A(x) == <>[]MB(x)
                 L(T) == \A self \in T : A(self)   \* NB: changing the names of the bound vars makes the QED step fail!
@@ -1281,11 +1236,9 @@ THEOREM Liveness == LiveSpec => C!LiveSpec
         BY <4>4, PTL
       <4>. QED  BY <4>1, <4>2, <4>3, <4>5
     <3>. HIDE DEF I
-    <3>3. \A T : IsFiniteSet(T) => I(T)
-      BY <3>1, <3>2, FS_Induction, IsaM("blast")
-    <3>4. I(Q)
-      BY <1>a, <3>3
-    <3>. QED  BY <3>4 DEF I
+    <3>3. I(Q)
+      BY <1>a, <3>1, <3>2, FS_Induction, IsaM("blast")
+    <3>. QED  BY <3>3 DEF I
   <2>1. SUFFICES ASSUME NEW self \in Q
                  PROVE  Spec /\ LiveAssumption!(Q, b) => <>[]MB(self)
     BY <2>0, Isa
@@ -1481,7 +1434,6 @@ THEOREM Liveness == LiveSpec => C!LiveSpec
     <3>4. QED
       BY <3>2, <3>3, PTL 
   <2>4. (\A self \in Q : <>[]Voted(self)) => <>[](\A self \in Q : Voted(self))
-    \* again, we need to redo the proof instead of using lemma EventuallyAlwaysForall
     <3>. DEFINE A(x) == <>[]Voted(x)
                 L(T) == \A self \in T : A(self)
                 R(T) == \A self \in T : Voted(self)
@@ -1504,11 +1456,9 @@ THEOREM Liveness == LiveSpec => C!LiveSpec
         BY <4>4, PTL
       <4>. QED  BY <4>1, <4>2, <4>3, <4>5
     <3>. HIDE DEF I
-    <3>3. \A T : IsFiniteSet(T) => I(T)
-      BY <3>1, <3>2, FS_Induction, IsaM("blast")
-    <3>4. I(Q)
-      BY <1>a, <3>3
-    <3>. QED  BY <3>4 DEF I
+    <3>3. I(Q)
+      BY <1>a, <3>1, <3>2, FS_Induction, IsaM("blast")
+    <3>. QED  BY <3>3 DEF I
   <2>. QED
     BY <2>1, VT2, <2>2, <2>3, <2>4, PTL
 
