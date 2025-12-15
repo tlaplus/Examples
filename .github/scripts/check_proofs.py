@@ -13,7 +13,6 @@ import tla_utils
 parser = ArgumentParser(description='Validate all proofs in all modules with TLAPM.')
 parser.add_argument('--tlapm_path', help='Path to TLAPM install dir; should have bin and lib subdirs', required=False, default = 'deps/tlapm')
 parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=False, default='.')
-parser.add_argument('--runtime_seconds_limit', help='Only run proofs with expected runtime less than this value', required=False, default=60)
 parser.add_argument('--skip', nargs='+', help='Space-separated list of .tla modules to skip checking', required=False, default=[])
 parser.add_argument('--only', nargs='+', help='If provided, only check proofs in this space-separated list', required=False, default=[])
 parser.add_argument('--verbose', help='Set logging output level to debug', action='store_true')
@@ -24,17 +23,15 @@ examples_root = args.examples_root
 manifest = tla_utils.load_all_manifests(examples_root)
 skip_modules = args.skip
 only_modules = args.only
-hard_timeout_in_seconds = args.runtime_seconds_limit * 2
 
 logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
 
 proof_module_paths = sorted(
     [
-        (manifest_dir, spec, module, runtime)
+        (manifest_dir, spec, module, tla_utils.parse_timespan(module['proof']['runtime']))
         for manifest_dir, spec in manifest
         for module in spec['modules']
         if 'proof' in module
-            and (runtime := tla_utils.parse_timespan(module['proof']['runtime'])) <= timedelta(seconds = args.runtime_seconds_limit)
             and module['path'] not in skip_modules
             and (only_modules == [] or module['path'] in only_modules)
     ],
@@ -61,8 +58,7 @@ for manifest_dir, spec, module, expected_runtime in proof_module_paths:
             ],
             stdout  = subprocess.PIPE,
             stderr  = subprocess.STDOUT,
-            text    = True,
-            timeout = hard_timeout_in_seconds
+            text    = True
         )
         end_time = timer()
         actual_runtime = timedelta(seconds = end_time - start_time)
