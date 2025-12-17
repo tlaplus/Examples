@@ -48,6 +48,7 @@ main() {
   mkdir -p "$DEPS_DIR/community"
   wget -nv https://github.com/tlaplus/CommunityModules/releases/latest/download/CommunityModules-deps.jar \
         -O "$DEPS_DIR/community/modules.jar"
+  unzip "$DEPS_DIR/community/modules.jar" -d "$DEPS_DIR/community/"
   # Get TLAPS modules
   wget -nv https://github.com/tlaplus/tlapm/archive/main.tar.gz -O /tmp/tlapm.tar.gz
   tar -xzf /tmp/tlapm.tar.gz --directory "$DEPS_DIR"
