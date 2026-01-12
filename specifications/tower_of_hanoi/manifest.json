@@ -44,6 +44,18 @@
       "path": "specifications/tower_of_hanoi/HanoiSeq.tla",
       "features": [],
       "models": []
+    },
+    {
+      "path": "specifications/tower_of_hanoi/Hanoi_anim.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/tower_of_hanoi/Hanoi_anim.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "safety failure"
+        }
+      ]
     }
   ]
 }
