@@ -16,6 +16,18 @@
           "result": "safety failure"
         }
       ]
+    },
+    {
+      "path": "specifications/SlidingPuzzles/SlidingPuzzles_anim.tla",
+      "features": [ ],
+      "models": [
+        {
+          "path": "specifications/SlidingPuzzles/SlidingPuzzles_anim.cfg",
+          "runtime": "00:00:10",
+          "mode": "exhaustive search",
+          "result": "safety failure"
+        }
+      ]
     }
   ]
 }
