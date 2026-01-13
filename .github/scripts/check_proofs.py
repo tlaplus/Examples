@@ -26,24 +26,21 @@ only_modules = args.only
 
 logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
 
-proof_module_paths = sorted(
-    [
-        (manifest_dir, spec, module, tla_utils.parse_timespan(module['proof']['runtime']))
-        for manifest_dir, spec in manifest
-        for module in spec['modules']
-        if 'proof' in module
-            and module['path'] not in skip_modules
-            and (only_modules == [] or module['path'] in only_modules)
-    ],
-    key = lambda m : m[3]
-)
+proof_module_paths = [
+    (manifest_dir, spec, module)
+    for manifest_dir, spec in manifest
+    for module in spec['modules']
+    if 'proof' in module
+        and module['path'] not in skip_modules
+        and (only_modules == [] or module['path'] in only_modules)
+]
 
 for path in skip_modules:
     logging.info(f'Skipping {path}')
 
 success = True
 tlapm_path = join(tlapm_path, 'bin', 'tlapm')
-for manifest_dir, spec, module, expected_runtime in proof_module_paths:
+for manifest_dir, spec, module in proof_module_paths:
     module_path = module['path']
     logging.info(module_path)
     start_time = timer()
@@ -63,16 +60,12 @@ for manifest_dir, spec, module, expected_runtime in proof_module_paths:
         end_time = timer()
         actual_runtime = timedelta(seconds = end_time - start_time)
         output = ' '.join(tlapm_result.args) + '\n' + tlapm_result.stdout
-        logging.info(f'Checked proofs in {tla_utils.format_timespan(actual_runtime)} vs. {tla_utils.format_timespan(expected_runtime)} expected')
+        logging.info(f'Checked proofs in {tla_utils.format_timespan(actual_runtime)}')
         if tlapm_result.returncode != 0:
             logging.error(f'Proof checking failed for {module_path}:')
             logging.error(output)
             success = False
         else:
-            if 'proof' not in module or module['proof']['runtime'] == 'unknown':
-                module['proof'] = { 'runtime' : tla_utils.format_timespan(actual_runtime) }
-                manifest_path = join(manifest_dir, 'manifest.json')
-                tla_utils.write_json(spec, manifest_path)
             logging.debug(output)
     except subprocess.TimeoutExpired as tlapm_result:
         # stdout is a string on Windows, byte array everywhere else

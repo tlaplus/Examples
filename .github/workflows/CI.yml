@@ -135,9 +135,40 @@ jobs:
       - name: Check proofs
         if: matrix.os != 'windows-latest' && !matrix.unicode
         run: |
-          python $SCRIPT_DIR/check_proofs.py       \
-            --tlapm_path $DEPS_DIR/tlapm           \
-            --examples_root .
+          # Exempting specs for various reasons:
+          # - Use of RECURSIVE, which TLAPM cannot currently handle (many)
+          # - Pre-module text bug (MCDistributedReplicatedLog.tla)
+          # - Unresolved ToString operator (ewd840)
+          # - Use of nonstandard TLCExt module (SimKnuthYao.tla)
+          # - Use of nonstandard Randomization module (SpanTreeTest.tla)
+          # - Nonstandard multi-module (BufferedRandomAccessFile.tla)
+          # - Nested module identifier bug (diskpaxos, Composing, RealTime)
+          # - TLAPM level-checking failure (YoYoPruning.tla)
+          # - Use of Apalache module (Einstein.tla)
+          # - Very long-running proof (BPConProof.tla)
+          find specifications -type f -iname "*.tla"            \
+            \(                                                  \
+                   -not -name "Chameneos.tla"                   \
+              -and -not -name "ReachabilityTest.tla"            \
+              -and -not -name "MCReachabilityTest.tla"          \
+              -and -not -name "MCDistributedReplicatedLog.tla"  \
+              -and -not -name "SimKnuthYao.tla"                 \
+              -and -not -name "SpanTreeTest.tla"                \
+              -and -not -name "TransitiveClosure.tla"           \
+              -and -not -name "BufferedRandomAccessFile.tla"    \
+              -and -not -name "YoYoPruning.tla"                 \
+              -and -not -name "MCYoYoPruning.tla"               \
+              -and -not -name "Einstein.tla"                    \
+              -and -not -name "BPConProof.tla"                  \
+              -and -not -wholename "*/Composing/*"              \
+              -and -not -wholename "*/RealTime/*"               \
+              -and -not -wholename "*/LeastCircularSubstring/*" \
+              -and -not -wholename "*/diskpaxos/*"              \
+              -and -not -wholename "*/ewd998/*"                 \
+              -and -not -wholename "*/ewd840/*"                 \
+            \)                                                  \
+            -print0 | xargs -0 -n1 -r -t               \
+            time $DEPS_DIR/tlapm/bin/tlapm --cleanfp --stretch 5 -I $DEPS_DIR/community
       - name: Smoke-test manifest generation script
         run: |
           python $SCRIPT_DIR/generate_manifest.py \
