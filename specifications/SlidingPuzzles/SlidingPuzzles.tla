@@ -12,7 +12,13 @@ Klotski == {{<<0, 0>>, <<0, 1>>},
             {<<3, 0>>, <<3, 1>>},{<<0, 2>>, <<0, 3>>},
             {<<1, 2>>, <<2, 2>>},{<<3, 2>>, <<3, 3>>},
             {<<1, 3>>}, {<<2, 3>>}, {<<0, 4>>}, {<<3, 4>>}}
-            
+
+(***************************************************************************)
+(* The optimal solution is 81 moves                                        *)
+(* (https://en.wikipedia.org/wiki/Klotski#Solving), counting each          *)
+(* multi-position slide as one move. TLC's trace will be longer since      *)
+(* each step in this spec moves a piece exactly one position.              *)
+(***************************************************************************)            
 KlotskiGoal == {<<1, 3>>, <<1, 4>>, <<2, 3>>, <<2, 4>>} \notin board
             
 ChooseOne(S, P(_)) == CHOOSE x \in S : P(x) /\ \A y \in S : P(y) => y = x
