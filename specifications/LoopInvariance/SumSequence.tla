@@ -9,7 +9,7 @@
 (*                                                                         *)
 (*    http://lamport.azurewebsites.net/tla/proving-safety.pdf              *)
 (***************************************************************************)
-EXTENDS Integers, SequenceTheorems, SequencesExtForkTheorems, NaturalsInduction, TLAPS
+EXTENDS Integers, SequenceTheorems, SequencesExtTheorems, NaturalsInduction, TLAPS
 
 (***************************************************************************)
 (* To facilitate model checking, we assume that the sequence to be summed  *)
