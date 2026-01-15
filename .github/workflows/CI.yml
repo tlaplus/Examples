@@ -135,8 +135,12 @@ jobs:
       - name: Check proofs
         if: matrix.os != 'windows-latest' && !matrix.unicode
         run: |
-          python $SCRIPT_DIR/check_proofs.py       \
-            --tlapm_path $DEPS_DIR/tlapm           \
+          # Extract community modules for TLAPM
+          mkdir -p $DEPS_DIR/community/modules
+          unzip -q -o $DEPS_DIR/community/modules.jar -d $DEPS_DIR/community/modules
+          python $SCRIPT_DIR/check_proofs.py                       \
+            --tlapm_path $DEPS_DIR/tlapm                           \
+            --community_modules_path $DEPS_DIR/community/modules   \
             --examples_root .
       - name: Smoke-test manifest generation script
         run: |
