@@ -12,6 +12,7 @@ import tla_utils
 
 parser = ArgumentParser(description='Validate all proofs in all modules with TLAPM.')
 parser.add_argument('--tlapm_path', help='Path to TLAPM install dir; should have bin and lib subdirs', required=False, default = 'deps/tlapm')
+parser.add_argument('--community_modules_path', help='Path to extracted community modules directory', required=False, default='')
 parser.add_argument('--examples_root', help='Root directory of the tlaplus/examples repository', required=False, default='.')
 parser.add_argument('--skip', nargs='+', help='Space-separated list of .tla modules to skip checking', required=False, default=[])
 parser.add_argument('--only', nargs='+', help='If provided, only check proofs in this space-separated list', required=False, default=[])
@@ -19,6 +20,7 @@ parser.add_argument('--verbose', help='Set logging output level to debug', actio
 args = parser.parse_args()
 
 tlapm_path = normpath(args.tlapm_path)
+community_modules_path = normpath(args.community_modules_path) if args.community_modules_path else ''
 examples_root = args.examples_root
 manifest = tla_utils.load_all_manifests(examples_root)
 skip_modules = args.skip
@@ -50,12 +52,15 @@ for manifest_dir, spec, module, expected_runtime in proof_module_paths:
     full_module_path = tla_utils.from_cwd(examples_root, module_path)
     module_dir = dirname(full_module_path)
     try:
+        tlapm_args = [
+            tlapm_path, full_module_path,
+            '-I', module_dir,
+            '--stretch', '5'
+        ]
+        if community_modules_path:
+            tlapm_args.extend(['-I', community_modules_path])
         tlapm_result = subprocess.run(
-            [
-                tlapm_path, full_module_path,
-                '-I', module_dir,
-                '--stretch', '5'
-            ],
+            tlapm_args,
             stdout  = subprocess.PIPE,
             stderr  = subprocess.STDOUT,
             text    = True
