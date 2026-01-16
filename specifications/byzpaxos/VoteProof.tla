@@ -1076,10 +1076,10 @@ THEOREM VT4 == TypeOK /\ VInv2 /\ VInv3  =>
     <3>1. S # {}
         BY <1>6
     <3>2. PICK c \in S : \A d \in S : c >= d
-      <4>2. IsFiniteSet(S)
+      <4>1. IsFiniteSet(S)
         BY FS_Interval, FS_Subset, 0 \in Int, b-1 \in Int, Zenon
-      <4>3. QED
-        BY <3>1, <4>2, FiniteSetHasMax
+      <4>. QED
+        BY <3>1, <4>1, S \in SUBSET Int, FiniteSetHasMax
     <3>3. /\ c \in 0 .. (b-1)
           /\ \E a \in Q : ~DidNotVoteIn(a,c)
           /\ \A d \in (c+1)..(b-1), a \in Q : DidNotVoteIn(a, d)
