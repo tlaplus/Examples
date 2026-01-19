@@ -105,6 +105,7 @@ Here is a list of specs included in this repository which are validated by the C
 | [Condition-Based Consensus](specifications/cbc_max)                                                 | Thanh Hai Tran, Igor Konnov, Josef Widder           |          |             |         |           |          |
 | [Buffered Random Access File](specifications/braf)                                                  | Calvin Loncaric                                     |          |             |         |     ✔     |          |
 | [Disruptor](specifications/Disruptor)                                                               | Nicholas Schultz-Møller                             |          |             |         |     ✔     |          |
+| [DAG-based Consensus](specifications/dag-consensus)                                                 | Giuliano Losa                                       |          |             |    ✔    |     ✔     |          |
 
 
 ## Other Examples

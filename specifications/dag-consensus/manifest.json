@@ -1,0 +1,68 @@
+{
+  "sources": ["https://github.com/nano-o/dag-consensus"],
+  "authors": ["Giuliano Losa"],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/dag-consensus/BlockDag.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/dag-consensus/BlockDagTest.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/dag-consensus/BlockDagTest.cfg",
+          "runtime": "00:00:10",
+          "mode": "exhaustive search",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/dag-consensus/Digraph.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/dag-consensus/Sailfish.tla",
+      "features": [
+        "pluscal"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/dag-consensus/TLCSailfish1.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/dag-consensus/TLCSailfish1.cfg",
+          "runtime": "00:00:10",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 109604,
+          "totalStates": 314144,
+          "stateDepth": 16
+        }
+      ]
+    },
+    {
+      "path": "specifications/dag-consensus/TLCSailfish2.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/dag-consensus/TLCSailfish2.cfg",
+          "runtime": "unknown",
+          "mode": "exhaustive search",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/dag-consensus/Utils.tla",
+      "features": [],
+      "models": []
+    }
+  ]
+}
