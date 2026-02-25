@@ -156,7 +156,8 @@ def check_model(
         mode,
         module_features,
         enable_assertions,
-        hard_timeout_in_seconds
+        hard_timeout_in_seconds,
+        workers='auto'
     ):
     """
     Model-checks the given model against the given module.
@@ -197,7 +198,7 @@ def check_model(
             tlc_parameters = [
                 module_path,
                 '-config', model_path,
-                '-workers', 'auto',
+                '-workers', str(workers),
                 '-lncheck', 'final',
                 '-cleanup'
             ] + get_run_mode(mode)

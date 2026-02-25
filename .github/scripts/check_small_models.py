@@ -51,7 +51,8 @@ def check_model(module, model, expected_runtime):
         model['mode'],
         module['features'],
         enable_assertions,
-        hard_timeout_in_seconds
+        hard_timeout_in_seconds,
+        model.get('workers', 'auto')
     )
     end_time = timer()
     match tlc_result:

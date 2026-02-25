@@ -48,7 +48,8 @@ def check_model(module, model):
         model['mode'],
         module['features'],
         enable_assertions,
-        smoke_test_timeout_in_seconds
+        smoke_test_timeout_in_seconds,
+        model.get('workers', 'auto')
     )
     match tlc_result:
         case TimeoutExpired():

@@ -75,7 +75,8 @@
                     }
                   ]
                 },
-                "result": {"enum": ["success", "assumption failure", "deadlock failure", "safety failure", "liveness failure", "unknown"]}
+                "result": {"enum": ["success", "assumption failure", "deadlock failure", "safety failure", "liveness failure", "unknown"]},
+                "workers": {"oneOf": [{"type": "integer", "minimum": 1}, {"enum": ["auto"]}]}
               }
             }
           }

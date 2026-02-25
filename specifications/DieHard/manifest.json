@@ -35,6 +35,24 @@
           "result": "safety failure"
         }
       ]
+    },
+    {
+      "path": "specifications/DieHard/DieHardest.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/DieHard/MCDieHardest.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/DieHard/MCDieHardest.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "safety failure",
+          "workers": 1
+        }
+      ]
     }
   ]
 }
