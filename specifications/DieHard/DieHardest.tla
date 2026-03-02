@@ -160,6 +160,10 @@ NextParallelFreeze ==
 ASSUME TLCSet(2, 999) /\ TLCSet(3, 999)
 
 NextParallelGlobalFreeze ==
+    \* TLCGet is called with both Str and Int arguments (TLCGet("level")
+    \* vs. TLCGet(2)), so Apalache's type checker cannot assign a single
+    \* type to its parameter.  This operator is therefore incompatible
+    \* with Apalache.  See APADieHardest.tla, which checks Section 4 only.
     /\ IF TLCGet("level") >= TLCGet(2) THEN UNCHANGED c1 ELSE D1!Next
     /\ IF TLCGet("level") >= TLCGet(3) THEN UNCHANGED c2 ELSE D2!Next
     /\ Goal \in Range(c1') /\ TLCGet(2) = 999 => TLCSet(2, TLCGet("level") + 1)

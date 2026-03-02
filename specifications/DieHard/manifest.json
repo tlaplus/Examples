@@ -25,6 +25,11 @@
       "models": []
     },
     {
+      "path": "specifications/DieHard/APADieHardest.tla",
+      "features": [],
+      "models": []
+    },
+    {
       "path": "specifications/DieHard/MCDieHarder.tla",
       "features": [],
       "models": [
