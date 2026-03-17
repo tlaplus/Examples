@@ -42,7 +42,9 @@ main() {
   mkdir -p "$DEPS_DIR/tools"
   wget -nv http://nightly.tlapl.us/dist/tla2tools.jar -P "$DEPS_DIR/tools"
   # Get Apalache
-  wget -nv https://github.com/informalsystems/apalache/releases/latest/download/apalache.tgz -O /tmp/apalache.tgz
+  APALACHE_LATEST="https://github.com/apalache-mc/apalache/releases/latest/download/apalache.tgz"
+  APALACHE_FALLBACK="https://github.com/apalache-mc/apalache/releases/download/v0.52.2/apalache.tgz"
+  wget -nv "$APALACHE_LATEST" -O /tmp/apalache.tgz || wget -nv "$APALACHE_FALLBACK" -O /tmp/apalache.tgz
   tar -xzf /tmp/apalache.tgz --directory "$DEPS_DIR"
   # Get TLA⁺ community modules
   mkdir -p "$DEPS_DIR/community"
