@@ -12,7 +12,7 @@
 (*   L1: choosing [i] := 1 ;                                               *)
 (*       number[i] := 1 + maximum (number[1],..., number[N]);              *)
 (*       choosing[i] := 0;                                                 *)
-(*       for j = 1 step l until N do                                       *)
+(*       for j = 1 step 1 until N do                                       *)
 (*          begin                                                          *)
 (*            L2: if choosing[j] /= 0 then goto L2;                        *)
 (*            L3: if number[j] /= 0 and (number [j], j) < (number[i],i)    *)
