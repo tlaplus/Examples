@@ -8,6 +8,15 @@ EXTENDS Integers, Sequences, FiniteSets, TLC
 (***************************************************************************)
 SeqToSet(seq) == {seq[i] : i \in 1..Len(seq)} 
 
+\* Min is also defined in CommunityModules (Functions.tla); inlined here
+\* to avoid that dependency.
+Min(a, b) == IF a < b THEN a ELSE b
+
+\* Remove exactly the element at index idx (1..Len(s)).  Value-based
+\* removal would drop every copy of S[idx] and ignore idx, which breaks
+\* non-strict BFS when the frontier sequence holds duplicate states.
+RemoveAt(s, idx) == SubSeq(s, 1, idx-1) \o SubSeq(s, idx+1, Len(s))
+
 (***************************************************************************)
 (* Returns a Set of those permutations created out of the elements of Set  *)
 (* set which satisfy Filter.                                               *)
@@ -18,7 +27,7 @@ SetToSeqs(set, Filter(_)) == UNION {{perm \in [1..Cardinality(set) -> set]:
                             Filter(perm)}}
 
 (***************************************************************************)
-(* Returns a Set of all possible permutations with distinct elements     *)
+(* Returns a Set of all possible permutations with distinct elements       *)
 (* created out of the elements of Set set. All elements of set occur in    *)
 (* in the sequence.                                                        *)
 (***************************************************************************)
@@ -38,11 +47,6 @@ IsGraph(G) == /\ {"states", "initials", "actions"} = DOMAIN G
               /\ G.initials \subseteq G.states
 
 (***************************************************************************)
-(* A set of all permutations of the initial states of G.                    *)
-(***************************************************************************)
-SetOfAllPermutationsOfInitials(G) == SetToDistSeqs(G.initials)
-
-(***************************************************************************)
 (* A Set of successor states state.                                        *)
 (***************************************************************************)
 SuccessorsOf(state, SG) == {successor \in SG.actions[state]:
@@ -56,24 +60,45 @@ SuccessorsOf(state, SG) == {successor \in SG.actions[state]:
 (***************************************************************************)
 Predecessor(t, v) == SelectSeq(t, LAMBDA pair: pair[2] = v)[1][1]
 
-CONSTANT StateGraph, ViolationStates, null
+CONSTANT StateGraph, ViolationStates, null,
+         K,  \* Number of workers: window size for non-strict BFS dequeue.
+             \* K = 1 is strict BFS; K > 1 models TLC's degraded BFS.
+         Constraint(_, _)  \* State constraint predicate: Constraint(s, l) = TRUE
+                           \* iff state s at BFS level l should be explored.
+                           \* Successors for which Constraint is FALSE are not
+                           \* added to C or S.
 
-ASSUME \* The given StateGraph is actually a graph
-       \/ IsGraph(StateGraph)
-       \* The violating states are vertices in the state graph.
-       \/ ViolationStates \subseteq StateGraph.states
+(***************************************************************************)
+(* Constants are well-formed: StateGraph is a graph; ViolationStates is a  *)
+(* subset of its vertices; K is a positive natural; Constraint(s,l) is a   *)
+(* Boolean for every state s and level l.                                  *)
+(***************************************************************************)
+ASSUME /\ IsGraph(StateGraph)
+       /\ ViolationStates \subseteq StateGraph.states
+       /\ K \in Nat \ {0}
+       /\ \A s \in StateGraph.states : \A l \in Nat : Constraint(s, l) \in BOOLEAN
+
+(***************************************************************************)
+(* A set of all permutations of the initial states of G that satisfy the   *)
+(* state constraint at BFS level 0.                                        *)
+(***************************************************************************)
+SetOfAllPermutationsOfInitials(G) ==
+    SetToDistSeqs({s \in G.initials : Constraint(s, 0)})
 
 (***************************************************************************
 The PlusCal code of the model checker algorithm
 --fair algorithm ModelChecker {
     variables
-              \* A FIFO containing all unexplored states. A simple
-              \* set provides no order, but TLC should explore the
-              \* StateGraph in either BFS (or DFS => LIFO).
-              \* Note that S is initialized with each
-              \* possible permutation of the initial states
-              \* here because there is no defined order
-              \* of initial states.
+              \* A sequence of unexplored states used as a FIFO queue
+              \* for BFS exploration.  With K = 1 (single worker),
+              \* strict BFS always dequeues Head(S).  With K > 1,
+              \* any of the first Min(K, Len(S)) elements may be
+              \* dequeued, modeling TLC's degraded (non-strict) BFS
+              \* with multiple workers.
+              \* S is initialized with each possible permutation
+              \* of the initial states that satisfy the state
+              \* constraint at BFS level 0, because there is no
+              \* defined order of initial states.
               S \in SetOfAllPermutationsOfInitials(StateGraph),
               \* A set of already explored states.      
               C = {},
@@ -88,7 +113,11 @@ The PlusCal code of the model checker algorithm
               counterexample = <<>>,
               \* A sequence of pairs such that a pair is a
               \* sequence <<predecessor, successors>>.
-              T = <<>>;
+              T = <<>>,
+              \* BFS level of each explored state: a function
+              \* from states to their distance from an initial
+              \* state.  Initial states have level 0.
+              L = [s \in {} |-> 0];
     {
        (* Check initial states for violations. We could
           be clever and check the initial states as part
@@ -105,6 +134,7 @@ The PlusCal code of the model checker algorithm
              \* exploration visits it again
              \* due to a cycle. 
              C := C \cup {state};
+             L := (state :> 0) @@ L;
              i := i + 1;
              if (state \in ViolationStates) {
                      counterexample := <<state>>;
@@ -119,12 +149,11 @@ The PlusCal code of the model checker algorithm
           until no new successors are found
           or a violation has been detected. *)
        scsr: while (Len(S) # 0) {
-            \* Assign the first element of
-            \* S to state. state is
-            \* what is currently being checked.
-            state := Head(S);
-            \* Remove state from S.
-            S := Tail(S);
+            \* Non-strict BFS: pick any of the first K elements.
+            with (idx \in 1..Min(K, Len(S))) {
+                state := S[idx];
+                S := RemoveAt(S, idx);
+            };
             
             \* For each unexplored successor 'succ' do:
             successors := SuccessorsOf(state, StateGraph) \ C;
@@ -140,18 +169,27 @@ The PlusCal code of the model checker algorithm
                      \* Exclude succ in this while loop.
                      successors := successors \ {succ};
 
-                     \* Mark successor globally visited.
-                     C := C \cup {succ}; S := S \o <<succ>>;
+                     if (Constraint(succ, L[state] + 1)) {
+                         \* Mark successor globally visited.
+                         C := C \cup {succ}; S := S \o <<succ>>;
+                         \* T and L are inside the Constraint guard to
+                         \* match TLC, which never records constrained-
+                         \* away states.  Moving them outside is legal
+                         \* but keeps those states out of C, so
+                         \* SuccessorsOf(state, StateGraph) \ C stays
+                         \* larger, increasing nondeterminism in each
+                         \* and causing TLC to explore *more* distinct
+                         \* states.
+                         T  := T \o << <<state,succ>> >>;
+                         L  := (succ :> (L[state] + 1)) @@ L;
+                     };
                      
-                     \* Append succ to T and add it
-                     \* to the list of unexplored states.
-                     T  := T \o << <<state,succ>> >>;
                      
                      \* Check state for violation of a
                      \* safety property (simplified 
                      \* to a check of set membership.
                      if (succ \in ViolationStates) {
-                       counterexample := <<succ>>;
+                       counterexample := <<state, succ>>;
                        \* Terminate model checking
                        goto trc;
                      };
@@ -159,9 +197,9 @@ The PlusCal code of the model checker algorithm
             };
        };
        (* Model Checking terminated without finding
-          a violation. *)
-       \* No states left unexplored and no ViolationState given.
-       assert S = <<>> /\ ViolationStates = {};
+          a violation (or all violations were unreachable /
+          pruned by Constraint). *)
+       assert S = <<>>;
        goto Done;
        
        (* Create a counterexample, that is a path
@@ -181,10 +219,10 @@ The PlusCal code of the model checker algorithm
     }        
 }
  ***************************************************************************)
-\* BEGIN TRANSLATION
-VARIABLES S, C, state, successors, i, counterexample, T, pc
+\* BEGIN TRANSLATION (chksum(pcal) = "7c28162a" /\ chksum(tla) = "f48dc6da")
+VARIABLES pc, S, C, state, successors, i, counterexample, T, L
 
-vars == << S, C, state, successors, i, counterexample, T, pc >>
+vars == << pc, S, C, state, successors, i, counterexample, T, L >>
 
 Init == (* Global variables *)
         /\ S \in SetOfAllPermutationsOfInitials(StateGraph)
@@ -194,12 +232,14 @@ Init == (* Global variables *)
         /\ i = 1
         /\ counterexample = <<>>
         /\ T = <<>>
+        /\ L = [s \in {} |-> 0]
         /\ pc = "init"
 
 init == /\ pc = "init"
         /\ IF i \leq Len(S)
               THEN /\ state' = S[i]
                    /\ C' = (C \cup {state'})
+                   /\ L' = (state' :> 0) @@ L
                    /\ i' = i + 1
                    /\ IF state' \in ViolationStates
                          THEN /\ counterexample' = <<state'>>
@@ -207,45 +247,50 @@ init == /\ pc = "init"
                          ELSE /\ pc' = "init"
                               /\ UNCHANGED counterexample
               ELSE /\ pc' = "initPost"
-                   /\ UNCHANGED << C, state, i, counterexample >>
+                   /\ UNCHANGED << C, state, i, counterexample, L >>
         /\ UNCHANGED << S, successors, T >>
 
 initPost == /\ pc = "initPost"
             /\ Assert(C = SeqToSet(S), 
-                      "Failure of assertion at line 116, column 18.")
+                      "Failure of assertion at line 148, column 18.")
             /\ pc' = "scsr"
-            /\ UNCHANGED << S, C, state, successors, i, counterexample, T >>
+            /\ UNCHANGED << S, C, state, successors, i, counterexample, T, L >>
 
 scsr == /\ pc = "scsr"
         /\ IF Len(S) # 0
-              THEN /\ state' = Head(S)
-                   /\ S' = Tail(S)
+              THEN /\ \E idx \in 1..Min(K, Len(S)):
+                        /\ state' = S[idx]
+                        /\ S' = RemoveAt(S, idx)
                    /\ successors' = SuccessorsOf(state', StateGraph) \ C
                    /\ IF SuccessorsOf(state', StateGraph) = {}
                          THEN /\ counterexample' = <<state'>>
                               /\ pc' = "trc"
                          ELSE /\ pc' = "each"
                               /\ UNCHANGED counterexample
-              ELSE /\ Assert(S = <<>> /\ ViolationStates = {}, 
-                             "Failure of assertion at line 164, column 8.")
+              ELSE /\ Assert(S = <<>>, 
+                             "Failure of assertion at line 204, column 8.")
                    /\ pc' = "Done"
                    /\ UNCHANGED << S, state, successors, counterexample >>
-        /\ UNCHANGED << C, i, T >>
+        /\ UNCHANGED << C, i, T, L >>
 
 each == /\ pc = "each"
         /\ IF successors # {}
               THEN /\ \E succ \in successors:
                         /\ successors' = successors \ {succ}
-                        /\ C' = (C \cup {succ})
-                        /\ S' = S \o <<succ>>
-                        /\ T' = T \o << <<state,succ>> >>
+                        /\ IF Constraint(succ, L[state] + 1)
+                              THEN /\ C' = (C \cup {succ})
+                                   /\ S' = S \o <<succ>>
+                                   /\ T' = T \o << <<state,succ>> >>
+                                   /\ L' = (succ :> (L[state] + 1)) @@ L
+                              ELSE /\ TRUE
+                                   /\ UNCHANGED << S, C, T, L >>
                         /\ IF succ \in ViolationStates
-                              THEN /\ counterexample' = <<succ>>
+                              THEN /\ counterexample' = <<state, succ>>
                                    /\ pc' = "trc"
                               ELSE /\ pc' = "each"
                                    /\ UNCHANGED counterexample
               ELSE /\ pc' = "scsr"
-                   /\ UNCHANGED << S, C, successors, counterexample, T >>
+                   /\ UNCHANGED << S, C, successors, counterexample, T, L >>
         /\ UNCHANGED << state, i >>
 
 trc == /\ pc = "trc"
@@ -253,10 +298,10 @@ trc == /\ pc = "trc"
              THEN /\ counterexample' = <<Predecessor(T, Head(counterexample))>> \o counterexample
                   /\ pc' = "trc"
              ELSE /\ Assert(counterexample # <<>>, 
-                            "Failure of assertion at line 177, column 20.")
+                            "Failure of assertion at line 217, column 20.")
                   /\ pc' = "Done"
                   /\ UNCHANGED counterexample
-       /\ UNCHANGED << S, C, state, successors, i, T >>
+       /\ UNCHANGED << S, C, state, successors, i, T, L >>
 
 (* Allow infinite stuttering to prevent deadlock on termination. *)
 Terminating == pc = "Done" /\ UNCHANGED vars
@@ -269,10 +314,35 @@ Spec == /\ Init /\ [][Next]_vars
 
 Termination == <>(pc = "Done")
 
-\* END TRANSLATION
+\* END TRANSLATION 
 
 Live == ViolationStates # {} => <>[](/\ Len(counterexample) > 0
                                      /\ counterexample[Len(counterexample)] \in ViolationStates
                                      /\ counterexample[1] \in StateGraph.initials)
+
+-----------------------------------------------------------------------------
+
+(***************************************************************************)
+(* Refinement: TLCMC (non-strict BFS with S as a FIFO sequence) refines    *)
+(* MCReachability (non-deterministic exploration with S as a set).         *)
+(*                                                                         *)
+(* NOTE: MCReachability does not model state constraints.  The refinement  *)
+(* therefore only holds when Constraint is trivially TRUE (the default).   *)
+(* With a non-trivial Constraint, TLCMC may prune successors that          *)
+(* MCReachability explores, breaking the simulation.                       *)
+(***************************************************************************)
+MCR == INSTANCE MCReachability WITH
+    S    <- SeqToSet(S),
+    done <- counterexample # <<>>,
+    T    <- SeqToSet(T) \cup {<<state, succ>> : succ \in successors},
+    L    <- L,
+    successors <- LET lvl == IF pc \in {"init", "initPost"}
+                       THEN 0
+                       ELSE IF pc = "scsr" /\ successors = {} /\ C = SeqToSet(S)
+                            THEN 0
+                            ELSE L[state] + 1
+                  IN  {<<lvl, s, state>> : s \in successors}
+
+Refinement == MCR!Spec
 
 =============================================================================

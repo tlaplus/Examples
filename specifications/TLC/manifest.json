@@ -13,6 +13,16 @@
       "models": []
     },
     {
+      "path": "specifications/TLC/MCReachability.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/TLC/StateGraphs.tla",
+      "features": [],
+      "models": []
+    },
+    {
       "path": "specifications/TLC/TestGraphs.tla",
       "features": [],
       "models": [
@@ -21,9 +31,21 @@
           "runtime": "00:00:05",
           "mode": "exhaustive search",
           "result": "success",
-          "distinctStates": 2790,
-          "totalStates": 2990,
-          "stateDepth": 52
+          "distinctStates": 2590,
+          "totalStates": 2790,
+          "stateDepth": 51
+        }
+      ]
+    },
+    {
+      "path": "specifications/TLC/TestMCReachability.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/TLC/TestMCReachability.cfg",
+          "runtime": "unknown",
+          "mode": "exhaustive search",
+          "result": "success"
         }
       ]
     }

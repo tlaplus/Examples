@@ -1,106 +1,16 @@
 ----------------------------- MODULE TestGraphs -----------------------------
-EXTENDS Sequences, Integers
+EXTENDS StateGraphs
 (***************************************************************************)
-(* The definitions of some graphs, paths, etc.  used for testing the       *)
-(* definitions and the algorithm with the TLC model checker.               *)
+(* Test harness for TLCMC using graphs defined in StateGraphs.             *)
 (***************************************************************************)
-
-\* Graph 1.
-G1 == [states |-> 1..4,
-       initials |-> {1,2},
-       actions  |-> << {1,2}, {1,3}, {4}, {3} >>
-       ]
-V1 == {4}
-
-\* Graph 1a.
-G1a == [states |-> 1..4,
-       initials |-> {3},
-       actions  |-> << {1, 2}, {1, 3}, {4}, {3} >>]
-\* Graph-wise it's impossible to reach state 1 from state 3
-V1a == {1}
-
-\* Graph 2. This graph is actually a forest of two graphs
-\*    {1,2} /\ {3,4,5}. {1,2} are an SCC.
-G2 == [states |-> 1..5,
-       initials |-> {1,3},
-       actions  |-> << {1, 2}, {1}, {4, 5}, {}, {} >> ]
-V2 == {2,5}      
-
-\* Graph 3.       
-G3 == [states |-> 1..4,
-       initials |-> {2},
-       actions  |-> << {1,2}, {2,3}, {3,4}, {1,4} >> ]
-V3 == {1}
-      
-\* Graph 4.
-G4 == [states |-> 1..9,
-       initials |-> {1,2,3},
-       actions  |-> << {3}, {4}, {5}, {6}, {7}, {7}, {8, 9}, {}, {4} >> ]
-V4 == {8}
-      
-\* Graph 5.
-G5 == [states |-> 1..9,
-       initials |-> {9},
-       actions  |-> << {4,2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {2} >> ]
-V5 == {8}
-
-\* Graph 6.
-G6 == [states |-> 1..5,
-       initials |-> {5},
-       actions  |-> << {2,4,5}, {2}, {1}, {4}, {3} >> ]
-V6 == {2}
-
-\* Graph Medium (node 22 is a sink)
-G7 == [states |-> 1..50,
-       initials |-> {1},
-       actions  |-> << {8,35},{15,46,22,23,50},{20,26,34},{5,18,28,37,43},{18,28},{44},{14,29},{42,45},{20,49},{10,12,31,47},
-       {1,8,29,30,35,42},{22,31},{10,12,22,27},{23,24,48},{9,22,49},{9,35,50},{10},{21,25,39},{7,29,33,43},{16,41},{},
-       {4,36,39,47},{7},{12,22,23},{5,6,39,44},{3,35},{10,13,17},{6,25,33,32,43},{23,30,40,45},{23,50},{24,38},
-       {19,33},{6,7,14,38,48},{3,9,20},{3,20,41},{10,38,47},{21,43},{6,10,36,48},{36,38,39},{19,43},{16},
-       {29,45},{32},{38,39},{40},{9,15,16,50},{17},{24,31},{13,22,34},{35,23,50} >> ]
-V7 == {50}
-
-\* Graph 8.
-G8 == [states |-> 1..4,
-       initials |-> {1},
-       actions |-> <<{1,2},{2,3},{3,4},{4}>>]
-V8 == {}
-
-\* Graph 9.
-G9 == [states |-> {1},
-       initials |-> {1},
-       actions |-> <<{1}>>]
-V9 == {1}
-
-\* Graph 10.
-G10 == [states |-> {},
-       initials |-> {},
-       actions |-> <<{}>>]
-V10 == {}
-
-\* Graph 11.
-G11 == [states |-> 1..10,
-       initials |-> {},
-       actions |-> <<{}>>]
-V11 == {}
-
-\* Graph 12.
-G12 == [states |-> 1..3,
-       initials |-> {1,2,3},
-       actions |-> <<{},{},{}>>]
-V12 == {1}
-
-\* Graph 13 (simple sequence.
-G13 == [states |-> 1..3,
-       initials |-> {1},
-       actions |-> <<{2},{3},{}>>]
-V13 == {}
-
------------------------------------------------------------------------------
 
 CONSTANT null
-VARIABLES S, C, state, successors, i, counterexample, T, pc
+VARIABLES S, C, state, successors, i, counterexample, T, L, pc
 
-INSTANCE TLCMC WITH StateGraph <- G7, ViolationStates <- V7
+Workers == IF "K" \in DOMAIN IOEnv THEN atoi(IOEnv.K) ELSE 1
+
+INSTANCE TLCMC WITH StateGraph <- TestCase.g, ViolationStates <- TestCase.v, K <- Workers, Constraint <- LAMBDA s, l : TRUE
 
 =============================================================================
+
+$ for g in 1 2 3 4 5 6 7 8 9 12 13; do for k in 1 2 3; do echo "=== Graph G$g, K=$k ==="; GRAPH=$g K=$k tlc -config TestGraphs.cfg TestGraphs.tla || break 2; done; done
