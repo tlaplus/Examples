@@ -63,10 +63,12 @@ Predecessor(t, v) == SelectSeq(t, LAMBDA pair: pair[2] = v)[1][1]
 CONSTANT StateGraph, ViolationStates, null,
          K,  \* Number of workers: window size for non-strict BFS dequeue.
              \* K = 1 is strict BFS; K > 1 models TLC's degraded BFS.
-         Constraint(_, _)  \* State constraint predicate: Constraint(s, l) = TRUE
-                           \* iff state s at BFS level l should be explored.
-                           \* Successors for which Constraint is FALSE are not
-                           \* added to C or S.
+         Constraint(_, _),  \* State constraint predicate: Constraint(s, l) = TRUE
+                            \* iff state s at BFS level l should be explored.
+                            \* Successors for which Constraint is FALSE are not
+                            \* added to C or S.
+         Counterexamples    \* Set of known counterexample sequences for the
+                            \* current graph/violation pair.
 
 (***************************************************************************)
 (* Constants are well-formed: StateGraph is a graph; ViolationStates is a  *)
@@ -316,9 +318,18 @@ Termination == <>(pc = "Done")
 
 \* END TRANSLATION 
 
-Live == ViolationStates # {} => <>[](/\ Len(counterexample) > 0
-                                     /\ counterexample[Len(counterexample)] \in ViolationStates
-                                     /\ counterexample[1] \in StateGraph.initials)
+\* NOTE: The minimality conjunct (Len = minLen) for K = 1 assumes the
+\* Constraint does not prune any intermediate state on a shortest
+\* counterexample path.  If Constraint(s, l) = FALSE for some state s
+\* on such a path at its BFS level l, strict BFS can only reach the
+\* violation through a longer route and the conjunct will not hold.
+Live == ViolationStates # {} =>
+            <>[](/\ counterexample \in Counterexamples
+                 /\ IF K = 1
+                    THEN LET lens   == {Len(cx) : cx \in Counterexamples}
+                             minLen == CHOOSE m \in lens : \A n \in lens : m <= n
+                         IN  Len(counterexample) = minLen
+                    ELSE TRUE)
 
 -----------------------------------------------------------------------------
 
