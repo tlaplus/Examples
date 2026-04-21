@@ -1,0 +1,138 @@
+{
+  "sources": [],
+  "authors": [
+    "Will Dale"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/QuantumArithmetic/QuantumArithmetic.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/QuantumArithmetic/QuantumArithmetic.cfg",
+          "runtime": "00:00:03",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 374,
+          "totalStates": 752,
+          "stateDepth": 2
+        }
+      ]
+    },
+    {
+      "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms.cfg",
+          "runtime": "00:00:02",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 470,
+          "totalStates": 944,
+          "stateDepth": 3
+        },
+        {
+          "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms_cap24.cfg",
+          "runtime": "00:00:02",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 686,
+          "totalStates": 1378,
+          "stateDepth": 3
+        }
+      ]
+    },
+    {
+      "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms_negative_A1.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms_negative_A1.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "safety failure",
+          "distinctStates": 2,
+          "totalStates": 2,
+          "stateDepth": 2
+        }
+      ]
+    },
+    {
+      "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms_negative_A2.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms_negative_A2.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "safety failure",
+          "distinctStates": 2,
+          "totalStates": 2,
+          "stateDepth": 2
+        }
+      ]
+    },
+    {
+      "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms_negative_S2.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms_negative_S2.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "safety failure",
+          "distinctStates": 2,
+          "totalStates": 2,
+          "stateDepth": 2
+        }
+      ]
+    },
+    {
+      "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms_negative_T1.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms_negative_T1.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "safety failure",
+          "distinctStates": 2,
+          "totalStates": 2,
+          "stateDepth": 2
+        }
+      ]
+    },
+    {
+      "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms_negative_T2.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms_negative_T2.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "safety failure",
+          "distinctStates": 2,
+          "totalStates": 2,
+          "stateDepth": 2
+        }
+      ]
+    },
+    {
+      "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms_negative_NT.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/QuantumArithmetic/QuantumArithmeticAxioms_negative_NT.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "safety failure",
+          "distinctStates": 2,
+          "totalStates": 2,
+          "stateDepth": 2
+        }
+      ]
+    }
+  ]
+}
