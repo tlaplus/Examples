@@ -106,6 +106,7 @@ Here is a list of specs included in this repository which are validated by the C
 | [Buffered Random Access File](specifications/braf)                                                  | Calvin Loncaric                                     |          |             |         |     ✔     |          |
 | [Disruptor](specifications/Disruptor)                                                               | Nicholas Schultz-Møller                             |          |             |         |     ✔     |          |
 | [DAG-based Consensus](specifications/dag-consensus)                                                 | Giuliano Losa                                       |          |             |    ✔    |     ✔     |          |
+| [Quantum Arithmetic Axiom System](specifications/QuantumArithmetic)                                 | Will Dale                                           |          |             |         |     ✔     |          |
 
 
 ## Other Examples
