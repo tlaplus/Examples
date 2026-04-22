@@ -2,9 +2,11 @@ import locale
 from datetime import datetime
 from datetime import timedelta
 import json
+import os
 from os.path import join, normpath, pathsep, dirname
 from pathlib import PureWindowsPath
 import subprocess
+import sys
 import re
 import glob
 
@@ -163,19 +165,41 @@ def check_model(
     Model-checks the given model against the given module.
     """
     tools_jar_path = normpath(tools_jar_path)
-    apalache_path = normpath(join(apalache_path, 'bin', 'apalache-mc'))
+    # On Windows the launcher is `apalache-mc.bat`; on Linux/macOS it is the
+    # unsuffixed shell script `apalache-mc`. Pick whichever exists so
+    # subprocess.run() can locate it via CreateProcess on Windows.
+    apalache_bin_dir = normpath(join(apalache_path, 'bin'))
     apalache_jar_path = normpath(join(apalache_path, 'lib', 'apalache.jar'))
+    apalache_path = next(
+        (
+            normpath(join(apalache_bin_dir, candidate))
+            for candidate in (
+                ('apalache-mc.bat', 'apalache-mc')
+                if sys.platform == 'win32'
+                else ('apalache-mc',)
+            )
+            if os.path.isfile(join(apalache_bin_dir, candidate))
+        ),
+        normpath(join(apalache_bin_dir, 'apalache-mc')),
+    )
     module_path = normpath(module_path)
     model_path = normpath(model_path)
     tlapm_lib_path = normpath(tlapm_lib_path)
     community_jar_path = normpath(community_jar_path)
     try:
         if mode == 'symbolic':
-            apalache = subprocess.run([
-                    apalache_path, 'check',
-                    f'--config={model_path}',
-                    module_path
-                ],
+            apalache_cmd = [
+                apalache_path, 'check',
+                f'--config={model_path}',
+                module_path
+            ]
+            # On Windows the launcher is a `.bat` script; subprocess.run
+            # cannot exec batch files directly via CreateProcess, so route
+            # through `cmd.exe /c`.
+            if sys.platform == 'win32' and apalache_path.lower().endswith('.bat'):
+                apalache_cmd = ['cmd.exe', '/c'] + apalache_cmd
+            apalache = subprocess.run(
+                apalache_cmd,
                 timeout=hard_timeout_in_seconds,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
