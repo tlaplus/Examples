@@ -8,6 +8,18 @@
   "tags": [],
   "modules": [
     {
+      "path": "specifications/tcp/APtcp.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/tcp/APtcp.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/tcp/MCtcp.tla",
       "features": [],
       "models": [

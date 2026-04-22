@@ -8,6 +8,18 @@
   "tags": [],
   "modules": [
     {
+      "path": "specifications/nbacg_guer01/APnbacg_guer01.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/nbacg_guer01/APnbacg_guer01.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/nbacg_guer01/nbacg_guer01.tla",
       "features": [],
       "models": [

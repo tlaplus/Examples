@@ -8,6 +8,35 @@
   "tags": [],
   "modules": [
     {
+      "path": "specifications/Disruptor/APDisruptor_MPMC.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/Disruptor/APDisruptor_MPMC.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/Disruptor/APRingBuffer.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/Disruptor/APDisruptor_SPMC.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/Disruptor/APDisruptor_SPMC.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/Disruptor/Disruptor_MPMC.tla",
       "features": [],
       "models": [

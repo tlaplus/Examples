@@ -12,6 +12,35 @@
   ],
   "modules": [
     {
+      "path": "specifications/FiniteMonotonic/APCRDT.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/FiniteMonotonic/APCRDT.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/FiniteMonotonic/APDistributedReplicatedLog.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/FiniteMonotonic/APReplicatedLog.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/FiniteMonotonic/APReplicatedLog.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/FiniteMonotonic/CRDT.tla",
       "features": [],
       "models": []

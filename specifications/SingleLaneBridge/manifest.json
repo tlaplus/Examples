@@ -6,6 +6,11 @@
   "tags": [],
   "modules": [
     {
+      "path": "specifications/SingleLaneBridge/APSingleLaneBridge.tla",
+      "features": [],
+      "models": []
+    },
+    {
       "path": "specifications/SingleLaneBridge/MC.tla",
       "features": [],
       "models": [

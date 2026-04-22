@@ -6,6 +6,18 @@
   "tags": [],
   "modules": [
     {
+      "path": "specifications/chang_roberts/APChangRoberts.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/chang_roberts/APChangRoberts.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/chang_roberts/ChangRoberts.tla",
       "features": [
         "pluscal"

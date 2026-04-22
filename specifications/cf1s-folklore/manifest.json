@@ -8,6 +8,11 @@
   "tags": [],
   "modules": [
     {
+      "path": "specifications/cf1s-folklore/APcf1s_folklore.tla",
+      "features": [],
+      "models": []
+    },
+    {
       "path": "specifications/cf1s-folklore/cf1s_folklore.tla",
       "features": [],
       "models": [

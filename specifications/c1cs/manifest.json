@@ -8,6 +8,18 @@
   "tags": [],
   "modules": [
     {
+      "path": "specifications/c1cs/APc1cs.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/c1cs/APc1cs.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/c1cs/c1cs.tla",
       "features": [],
       "models": [

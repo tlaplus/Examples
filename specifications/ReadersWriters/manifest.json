@@ -6,6 +6,18 @@
   "tags": [],
   "modules": [
     {
+      "path": "specifications/ReadersWriters/APReadersWriters.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ReadersWriters/APReadersWriters.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/ReadersWriters/MC.tla",
       "features": [],
       "models": [

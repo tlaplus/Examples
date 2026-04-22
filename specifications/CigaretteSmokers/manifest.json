@@ -8,6 +8,18 @@
   "tags": [],
   "modules": [
     {
+      "path": "specifications/CigaretteSmokers/APCigaretteSmokers.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/CigaretteSmokers/APCigaretteSmokers.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/CigaretteSmokers/CigaretteSmokers.tla",
       "features": [],
       "models": [

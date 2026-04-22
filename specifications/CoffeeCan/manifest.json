@@ -10,6 +10,18 @@
   ],
   "modules": [
     {
+      "path": "specifications/CoffeeCan/APCoffeeCan.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/CoffeeCan/APCoffeeCan.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/CoffeeCan/CoffeeCan.tla",
       "features": [],
       "models": [

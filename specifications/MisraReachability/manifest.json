@@ -6,6 +6,23 @@
   "tags": [],
   "modules": [
     {
+      "path": "specifications/MisraReachability/APParReach.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/MisraReachability/APParReach.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/MisraReachability/APReachable.tla",
+      "features": [],
+      "models": []
+    },
+    {
       "path": "specifications/MisraReachability/MCParReach.tla",
       "features": [],
       "models": [

@@ -8,6 +8,18 @@
   ],
   "modules": [
     {
+      "path": "specifications/DiningPhilosophers/APDiningPhilosophers.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/DiningPhilosophers/APDiningPhilosophers.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/DiningPhilosophers/DiningPhilosophers.tla",
       "features": [
         "pluscal"

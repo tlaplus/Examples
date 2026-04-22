@@ -8,6 +8,18 @@
   ],
   "modules": [
     {
+      "path": "specifications/MissionariesAndCannibals/APMissionariesAndCannibals.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/MissionariesAndCannibals/APMissionariesAndCannibals.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/MissionariesAndCannibals/MissionariesAndCannibals.tla",
       "features": [],
       "models": [

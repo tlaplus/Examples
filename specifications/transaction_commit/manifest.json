@@ -29,6 +29,18 @@
       ]
     },
     {
+      "path": "specifications/transaction_commit/APTCommit.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/transaction_commit/APTCommit.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/transaction_commit/PaxosCommit.tla",
       "features": [],
       "models": [

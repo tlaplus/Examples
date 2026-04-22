@@ -8,6 +8,18 @@
   ],
   "modules": [
     {
+      "path": "specifications/Moving_Cat_Puzzle/APCat.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/Moving_Cat_Puzzle/APCat.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/Moving_Cat_Puzzle/Cat.tla",
       "features": [],
       "models": [

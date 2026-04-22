@@ -8,6 +8,11 @@
   "tags": [],
   "modules": [
     {
+      "path": "specifications/Chameneos/APChameneos.tla",
+      "features": [],
+      "models": []
+    },
+    {
       "path": "specifications/Chameneos/Chameneos.tla",
       "features": [],
       "models": [

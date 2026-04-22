@@ -10,6 +10,30 @@
   ],
   "modules": [
     {
+      "path": "specifications/ewd840/APEWD840.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd840/APEWD840.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/ewd840/APSyncTerminationDetection.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd840/APSyncTerminationDetection.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/ewd840/EWD840.tla",
       "features": [],
       "models": [

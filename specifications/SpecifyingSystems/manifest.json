@@ -72,6 +72,30 @@
       "models": []
     },
     {
+      "path": "specifications/SpecifyingSystems/AsynchronousInterface/APAsynchInterface.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecifyingSystems/AsynchronousInterface/APAsynchInterface.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpecifyingSystems/AsynchronousInterface/APChannel.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecifyingSystems/AsynchronousInterface/APChannel.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/SpecifyingSystems/AsynchronousInterface/AsynchInterface.tla",
       "features": [],
       "models": [
@@ -172,6 +196,30 @@
       "models": []
     },
     {
+      "path": "specifications/SpecifyingSystems/Composing/APChannel.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecifyingSystems/Composing/APChannel.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpecifyingSystems/Composing/APHourClock.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecifyingSystems/Composing/APHourClock.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/SpecifyingSystems/Composing/BinaryHourClock.tla",
       "features": [],
       "models": []
@@ -212,6 +260,54 @@
       "models": []
     },
     {
+      "path": "specifications/SpecifyingSystems/FIFO/APChannel.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecifyingSystems/FIFO/APChannel.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpecifyingSystems/FIFO/APInnerFIFO.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecifyingSystems/FIFO/APInnerFIFO.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpecifyingSystems/FIFO/APInnerFIFOInstanced.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecifyingSystems/FIFO/APInnerFIFOInstanced.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpecifyingSystems/FIFO/APMCInnerFIFO.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecifyingSystems/FIFO/APMCInnerFIFO.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/SpecifyingSystems/FIFO/Channel.tla",
       "features": [],
       "models": []
@@ -247,6 +343,30 @@
       ]
     },
     {
+      "path": "specifications/SpecifyingSystems/HourClock/APHourClock.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecifyingSystems/HourClock/APHourClock.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpecifyingSystems/HourClock/APHourClock2.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecifyingSystems/HourClock/APHourClock2.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/SpecifyingSystems/HourClock/HourClock.tla",
       "features": [],
       "models": [
@@ -273,6 +393,30 @@
           "distinctStates": 12,
           "totalStates": 24,
           "stateDepth": 1
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpecifyingSystems/Liveness/APHourClock.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecifyingSystems/Liveness/APHourClock.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpecifyingSystems/Liveness/APLiveHourClock.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecifyingSystems/Liveness/APLiveHourClock.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
         }
       ]
     },

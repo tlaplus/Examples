@@ -9,6 +9,18 @@
   "tags": [],
   "modules": [
     {
+      "path": "specifications/acp/APACP_SB.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/acp/APACP_SB.cfg",
+          "runtime": "00:00:10",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/acp/ACP_NB.tla",
       "features": [],
       "models": []

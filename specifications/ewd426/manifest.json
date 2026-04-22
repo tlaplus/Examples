@@ -9,6 +9,18 @@
   ],
   "modules": [
     {
+      "path": "specifications/ewd426/APTokenRing.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/ewd426/APTokenRing.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/ewd426/SimTokenRing.tla",
       "features": [],
       "models": [

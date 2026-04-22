@@ -6,6 +6,30 @@
   "tags": [],
   "modules": [
     {
+      "path": "specifications/glowingRaccoon/APclean.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/glowingRaccoon/APclean.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/glowingRaccoon/APstages.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/glowingRaccoon/APstages.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/glowingRaccoon/clean.tla",
       "features": [],
       "models": [

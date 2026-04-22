@@ -8,6 +8,11 @@
   ],
   "modules": [
     {
+      "path": "specifications/Prisoners_Single_Switch/APPrisoner.tla",
+      "features": [],
+      "models": []
+    },
+    {
       "path": "specifications/Prisoners_Single_Switch/Prisoner.tla",
       "features": [],
       "models": [

@@ -8,6 +8,23 @@
   ],
   "modules": [
     {
+      "path": "specifications/DieHard/APADieHardest.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/DieHard/APDieHarder.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/DieHard/APDieHarder.cfg",
+          "runtime": "00:00:01",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/DieHard/DieHard.tla",
       "features": [],
       "models": [
@@ -25,7 +42,7 @@
       "models": []
     },
     {
-      "path": "specifications/DieHard/APADieHardest.tla",
+      "path": "specifications/DieHard/DieHardest.tla",
       "features": [],
       "models": []
     },
@@ -40,11 +57,6 @@
           "result": "safety failure"
         }
       ]
-    },
-    {
-      "path": "specifications/DieHard/DieHardest.tla",
-      "features": [],
-      "models": []
     },
     {
       "path": "specifications/DieHard/MCDieHardest.tla",
