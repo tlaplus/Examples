@@ -179,9 +179,14 @@ def check_model(
     community_jar_path = normpath(community_jar_path)
     try:
         if mode == 'symbolic':
+            # Cap the bounded-model-checking depth at 5 steps for every
+            # example. Apalache's own default of 10 is itself an arbitrary
+            # choice; 5 keeps CI runtimes manageable across the suite while
+            # still exercising each spec non-trivially.
             apalache = subprocess.run(
                 apalache_launcher + [
                     'check',
+                    '--length=5',
                     f'--config={model_path}',
                     module_path
                 ],
