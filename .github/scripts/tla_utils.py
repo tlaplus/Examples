@@ -5,6 +5,7 @@ import json
 from os.path import join, normpath, pathsep, dirname
 from pathlib import PureWindowsPath
 import subprocess
+import sys
 import re
 import glob
 
@@ -163,16 +164,24 @@ def check_model(
     Model-checks the given model against the given module.
     """
     tools_jar_path = normpath(tools_jar_path)
-    apalache_path = normpath(join(apalache_path, 'bin', 'apalache-mc'))
     apalache_jar_path = normpath(join(apalache_path, 'lib', 'apalache.jar'))
+    # On Windows the launcher is `apalache-mc.bat`, and `subprocess.run`
+    # cannot exec batch files via CreateProcess directly, so route them
+    # through `cmd.exe /c`. On Linux/macOS it is the unsuffixed shell script
+    # `apalache-mc` and we invoke it directly.
+    apalache_launcher = (
+        ['cmd.exe', '/c', normpath(join(apalache_path, 'bin', 'apalache-mc.bat'))]
+        if sys.platform == 'win32' else
+        [normpath(join(apalache_path, 'bin', 'apalache-mc'))])
     module_path = normpath(module_path)
     model_path = normpath(model_path)
     tlapm_lib_path = normpath(tlapm_lib_path)
     community_jar_path = normpath(community_jar_path)
     try:
         if mode == 'symbolic':
-            apalache = subprocess.run([
-                    apalache_path, 'check',
+            apalache = subprocess.run(
+                apalache_launcher + [
+                    'check',
                     f'--config={model_path}',
                     module_path
                 ],
