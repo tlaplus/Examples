@@ -22,6 +22,7 @@ parser.add_argument('--skip', nargs='+', help='Space-separated list of models to
 parser.add_argument('--only', nargs='+', help='If provided, only check models in this space-separated list', required=False, default=[])
 parser.add_argument('--verbose', help='Set logging output level to debug', action='store_true')
 parser.add_argument('--enable_assertions', help='Enable Java assertions (pass -enableassertions to JVM)', action='store_true')
+parser.add_argument('--skip_apalache', help='Skip all symbolic (Apalache) models; useful when running against Unicode specs since Apalache does not yet support Unicode (https://github.com/apalache-mc/apalache/issues/2995)', action='store_true')
 args = parser.parse_args()
 
 logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
@@ -34,6 +35,7 @@ examples_root = args.examples_root
 skip_models = args.skip
 only_models = args.only
 enable_assertions = args.enable_assertions
+skip_apalache = args.skip_apalache
 
 def check_model(module, model, expected_runtime):
     module_path = tla_utils.from_cwd(examples_root, module['path'])
@@ -100,6 +102,7 @@ small_models = sorted(
         for model in module['models']
             if (runtime := tla_utils.parse_timespan(model['runtime'])) <= timedelta(seconds=30)
             and model['path'] not in skip_models
+            and not (skip_apalache and model['mode'] == 'symbolic')
             and (only_models == [] or model['path'] in only_models)
     ],
     key = lambda m: m[2],
