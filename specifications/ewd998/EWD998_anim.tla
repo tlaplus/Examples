@@ -37,6 +37,21 @@
  ***************************************************************************)
 EXTENDS EWD998ChanID, SVG, TLC
 
+(***************************************************************************)
+(* SimpleCycle is a recursive variant of the predicate IsSimpleCycle from  *)
+(* Utils.tla.  It does not work with PlusPy or TLAPS but is orders of      *)
+(* magnitude faster when evaluated by TLC, which is why it lives here     *)
+(* inline in the animation module rather than in Utils.tla.              *)
+(***************************************************************************)
+SimpleCycle(S) ==
+    LET sts == LET SE == INSTANCE SequencesExt IN SE!SetToSeq(S)
+        RECURSIVE SimpleCycleRec(_,_,_)
+        SimpleCycleRec(seq, prefix, i) ==
+            IF i = Len(seq)
+            THEN prefix @@ (seq[i] :> seq[1])
+            ELSE SimpleCycleRec(seq, prefix @@ (seq[i] :> seq[i+1]), i+1)
+    IN SimpleCycleRec(sts, sts[1] :> sts[2], 2)
+
 \* Deterministic node ordering: ensures nodes appear in consistent positions
 \* across all animation frames (Best Practice from Animation Guide)
 SomeRingOfNodes == SimpleCycle(Node)

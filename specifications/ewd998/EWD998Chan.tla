@@ -5,7 +5,7 @@
 (* Shmuel Safra's version of termination detection.                        *)
 (* Contrary to EWD998, this variant models message channels as sequences.  *)
 (***************************************************************************)
-EXTENDS Integers, Sequences, FiniteSets, Utils
+EXTENDS Integers, Sequences, SequencesExt, FiniteSets, Utils
 
 CONSTANT N
 ASSUME NAssumption == N \in Nat \ {0} \* At least one node.

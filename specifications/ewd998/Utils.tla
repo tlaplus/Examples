@@ -1,5 +1,5 @@
 ------------------------------- MODULE Utils -------------------------------
-EXTENDS Integers, Sequences, FiniteSets, TLC, Functions, SequencesExt
+EXTENDS Integers, Sequences, FiniteSets, Functions
 
 \* No support for RECURSIVE in PlusPy.
 IsSimpleCycle(S, r) ==
@@ -12,17 +12,5 @@ IsSimpleCycle(S, r) ==
                   head == Head(seq)
               IN << r[head] >> \o F[i-1]
   IN Range(F[Cardinality(S)]) = S
-
-\* SimpleCycle is a recursive variant of the predicate IsSimpleCycle above. It
-\* does not work with PlusPy, but is orders of magnitude faster when evaluated
-\* by TLC.
-SimpleCycle(S) ==
-    LET sts == LET SE == INSTANCE SequencesExt IN SE!SetToSeq(S)
-        RECURSIVE SimpleCycle(_,_,_)
-        SimpleCycle(seq, prefix, i) ==
-            IF i = Len(seq)
-            THEN prefix @@ (seq[i] :> seq[1])
-            ELSE SimpleCycle(seq, prefix @@ (seq[i] :> seq[i+1]), i+1)
-    IN SimpleCycle(sts, sts[1] :> sts[2], 2)
 
 =============================================================================

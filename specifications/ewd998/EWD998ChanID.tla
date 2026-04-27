@@ -17,7 +17,7 @@
 (*  - Pull \E n \in Nodes up to the Spec level in preparation of PlusPy    *)
 (*    implementation.                                                      *)
 (***************************************************************************)
-EXTENDS Integers, Sequences, FiniteSets, Naturals, Utils
+EXTENDS Integers, Sequences, SequencesExt, FiniteSets, Naturals, Utils
 
 Merge(n, r, l) ==
     LET max(a, b) == IF a > b THEN a ELSE b
