@@ -1367,13 +1367,564 @@ LEMMA IndInvUser ==
     <2>. QED
       BY <2>1, <2>2, <2>3, <2>4, <2>5, <2>6, <2>7 DEF IndInv
 
-  <1>r. CASE CLOSE_SYN_RECEIVED(local, remote)
-              \/ CLOSE_ESTABLISHED(local, remote)
-              \/ CLOSE_CLOSE_WAIT(local, remote)
-    \* TODO: discharge the remaining 3 CLOSE_* sub-cases (each appends
-    \* "FIN" to n[remote] and transitions local into a PostEst state).
-    OMITTED
-  <1>. QED  BY <1>1, <1>2, <1>3, <1>4, <1>5, <1>r
+  (*************************************************************************)
+  (* The three remaining CLOSE_* actions all append "FIN" to n[remote]    *)
+  (* and transition local into a PostEst state (FW1 or LA).  Compared to *)
+  (* ACTIVE_OPEN/SEND the Aux_EST_evidence case is easier because        *)
+  (* connstate'[local] is already in PostEst.                             *)
+  (*************************************************************************)
+  <1>6. CASE CLOSE_SYN_RECEIVED(local, remote)
+    <2>. USE <1>6 DEF CLOSE_SYN_RECEIVED
+    <2>. /\ network' = [network EXCEPT ![remote] = Append(@, "FIN")]
+         /\ connstate' = [connstate EXCEPT ![local] = "FIN-WAIT-1"]
+         /\ connstate'[local] = "FIN-WAIT-1"
+         /\ network'[remote] = Append(network[remote], "FIN")
+         /\ \A r \in Peers : r # local => connstate'[r] = connstate[r]
+         /\ \A r \in Peers : r # remote => network'[r] = network[r]
+         /\ connstate[local] = "SYN-RECEIVED"
+         /\ local # remote
+      BY DEF TypeOK
+    <2>. \A p \in Peers : network[p] \in Seq(Msgs)
+      BY DEF TypeOK, Msgs
+    <2>1. Inv'
+      <3>. SUFFICES ASSUME NEW l \in {p \in Peers : network'[p] = <<>>},
+                            NEW r \in {p \in Peers : network'[p] = <<>>}
+                     PROVE  connstate'[l] = "ESTABLISHED" <=> connstate'[r] = "ESTABLISHED"
+        BY DEF Inv
+      <3>. /\ l # remote /\ r # remote
+           /\ network[l] = <<>> /\ network[r] = <<>>
+        BY DEF TypeOK, Msgs
+      <3>. l \in {p \in Peers : network[p] = <<>>}
+           /\ r \in {p \in Peers : network[p] = <<>>}
+        OBVIOUS
+      <3>. connstate[l] = "ESTABLISHED" <=> connstate[r] = "ESTABLISHED"
+        BY DEF Inv
+      <3>. /\ (l = local => connstate'[l] = "FIN-WAIT-1")
+           /\ (r = local => connstate'[r] = "FIN-WAIT-1")
+        OBVIOUS
+      <3>. QED  OBVIOUS
+    <2>2. Aux_singleton_RST'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] = <<"RST">>, network'[q] = <<>>
+                     PROVE  connstate'[q] # "ESTABLISHED"
+        BY DEF Aux_singleton_RST
+      <3>1. p # remote
+        <4>. SUFFICES ASSUME p = remote PROVE FALSE
+          OBVIOUS
+        <4>. Append(network[p], "FIN") = <<"RST">> /\ network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. QED  OBVIOUS
+      <3>2. q # remote /\ network[q] = <<>>
+        OBVIOUS
+      <3>. p = local /\ q = local
+        BY <3>1, <3>2, PeersAB
+      <3>. QED  OBVIOUS
+    <2>3. Aux_singleton_ACK'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] = <<"ACK">>, network'[q] = <<>>,
+                            connstate'[p] = "SYN-RECEIVED"
+                     PROVE  connstate'[q] = "ESTABLISHED"
+        BY DEF Aux_singleton_ACK
+      <3>1. p # remote
+        <4>. SUFFICES ASSUME p = remote PROVE FALSE
+          OBVIOUS
+        <4>. Append(network[p], "FIN") = <<"ACK">> /\ network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. QED  OBVIOUS
+      <3>2. q # remote /\ network[q] = <<>>
+        OBVIOUS
+      <3>. p = local /\ q = local
+        BY <3>1, <3>2, PeersAB
+      <3>. QED  OBVIOUS
+    <2>4. Aux_singleton_ACKofFIN'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] = <<"ACKofFIN">>, network'[q] = <<>>,
+                            connstate'[p] \in {"FIN-WAIT-1", "CLOSING", "LAST-ACK"}
+                     PROVE  connstate'[q] # "ESTABLISHED"
+        BY DEF Aux_singleton_ACKofFIN
+      <3>1. p # remote
+        <4>. SUFFICES ASSUME p = remote PROVE FALSE
+          OBVIOUS
+        <4>. Append(network[p], "FIN") = <<"ACKofFIN">> /\ network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. QED  OBVIOUS
+      <3>2. q # remote /\ network[q] = <<>>
+        OBVIOUS
+      <3>. p = local /\ q = local
+        BY <3>1, <3>2, PeersAB
+      <3>. QED  OBVIOUS
+    <2>5. Aux_EST_evidence'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, connstate'[p] = "ESTABLISHED"
+                     PROVE  \/ connstate'[q] \in PostEst
+                            \/ HasMsg("SYN", p)' \/ HasMsg("SYN", q)'
+                            \/ HasMsg("ACK", q)' \/ HasMsg("ACK", p)'
+                            \/ HasMsg("SYN,ACK", q)' \/ HasMsg("SYN,ACK", p)'
+                            \/ HasMsg("FIN", p)' \/ HasMsg("FIN", q)'
+                            \/ HasMsg("ACKofFIN", p)' \/ HasMsg("ACKofFIN", q)'
+                            \/ HasMsg("RST", p)' \/ HasMsg("RST", q)'
+        BY DEF Aux_EST_evidence
+      <3>1. p # local /\ connstate[p] = "ESTABLISHED"
+        BY DEF TypeOK
+      <3>2. CASE q = local
+        \* connstate'[q] = "FIN-WAIT-1" \in PostEstStrict \subseteq PostEst.
+        BY <3>2 DEF PostEst, PostEstStrict
+      <3>3. CASE q # local
+        <4>1. connstate'[q] = connstate[q]
+          BY <3>3 DEF TypeOK
+        <4>2. \/ connstate[q] \in PostEst
+              \/ HasMsg("SYN", p) \/ HasMsg("SYN", q)
+              \/ HasMsg("ACK", q) \/ HasMsg("ACK", p)
+              \/ HasMsg("SYN,ACK", q) \/ HasMsg("SYN,ACK", p)
+              \/ HasMsg("FIN", p) \/ HasMsg("FIN", q)
+              \/ HasMsg("ACKofFIN", p) \/ HasMsg("ACKofFIN", q)
+              \/ HasMsg("RST", p) \/ HasMsg("RST", q)
+          BY <3>1 DEF Aux_EST_evidence
+        <4>3. \A m \in Msgs, r \in Peers : HasMsg(m, r) => HasMsg(m, r)'
+          <5>. SUFFICES ASSUME NEW m \in Msgs, NEW r \in Peers, HasMsg(m, r)
+                       PROVE  HasMsg(m, r)'
+            OBVIOUS
+          <5>1. \E i \in 1..Len(network[r]) : network[r][i] = m
+            BY DEF HasMsg
+          <5>2. CASE r = remote
+            <6>1. network[r] \in Seq(Msgs)
+              BY <5>2 DEF TypeOK, Msgs
+            <6>2. network'[r] = Append(network[r], "FIN")
+              BY <5>2
+            <6>3. Len(network'[r]) = Len(network[r]) + 1
+              BY <6>1, <6>2
+            <6>4. \A i \in 1..Len(network[r]) : network'[r][i] = network[r][i]
+              BY <6>1, <6>2
+            <6>. QED
+              BY <5>1, <6>3, <6>4 DEF HasMsg
+          <5>3. CASE r # remote
+            BY <5>1, <5>3 DEF HasMsg
+          <5>. QED  BY <5>2, <5>3
+        <4>. QED
+          BY <4>1, <4>2, <4>3 DEF Msgs, PostEst, PostEstStrict
+      <3>. QED  BY <3>2, <3>3
+    <2>6. Aux_LastMsg'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] # <<>>
+                     PROVE  /\ connstate'[q] = "SYN-RECEIVED"  => LastMsg(p)' = "SYN,ACK"
+                            /\ connstate'[q] = "FIN-WAIT-1"    => LastMsg(p)' \in {"FIN", "RST"}
+                            /\ connstate'[q] = "CLOSE-WAIT"    => LastMsg(p)' = "ACKofFIN"
+                            /\ connstate'[q] = "LAST-ACK"      => LastMsg(p)' = "FIN"
+                            /\ connstate'[q] = "CLOSING"       => LastMsg(p)' = "ACKofFIN"
+                            /\ connstate'[q] = "SYN-SENT"      => LastMsg(p)' = "SYN"
+        BY DEF Aux_LastMsg
+      <3>1. CASE p = remote
+        <4>. q # remote /\ q = local
+          BY <3>1, PeersAB
+        <4>. connstate'[q] = "FIN-WAIT-1"
+          OBVIOUS
+        <4>. network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. network'[p] = Append(network[p], "FIN") /\ LastMsg(p)' = "FIN"
+          BY <3>1 DEF LastMsg
+        <4>. QED  OBVIOUS
+      <3>2. CASE p # remote
+        <4>1. network'[p] = network[p] /\ LastMsg(p)' = LastMsg(p) /\ network[p] # <<>>
+          BY <3>2 DEF LastMsg
+        <4>2. q # local
+          BY <3>2, PeersAB
+        <4>3. connstate'[q] = connstate[q]
+          BY <4>2 DEF TypeOK
+        <4>. QED
+          BY <4>1, <4>3 DEF Aux_LastMsg
+      <3>. QED  BY <3>1, <3>2
+    <2>7. Aux_RST_at_end'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] # <<>>, LastMsg(p)' = "RST"
+                     PROVE  connstate'[q] \in {"TIME-WAIT", "CLOSED", "LISTEN"}
+        BY DEF Aux_RST_at_end
+      <3>1. CASE p = remote
+        <4>. network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. LastMsg(p)' = "FIN"
+          BY <3>1 DEF LastMsg
+        <4>. QED  OBVIOUS
+      <3>2. CASE p # remote
+        <4>1. network'[p] = network[p] /\ LastMsg(p)' = LastMsg(p) /\ network[p] # <<>>
+          BY <3>2 DEF LastMsg
+        <4>2. connstate[q] \in {"TIME-WAIT", "CLOSED", "LISTEN"}
+          BY <4>1 DEF Aux_RST_at_end
+        <4>3. q # local
+          BY <3>2, PeersAB
+        <4>4. connstate'[q] = connstate[q]
+          BY <4>3 DEF TypeOK
+        <4>. QED  BY <4>2, <4>4
+      <3>. QED  BY <3>1, <3>2
+    <2>. QED
+      BY <2>1, <2>2, <2>3, <2>4, <2>5, <2>6, <2>7 DEF IndInv
+
+  <1>7. CASE CLOSE_ESTABLISHED(local, remote)
+    <2>. USE <1>7 DEF CLOSE_ESTABLISHED
+    <2>. /\ network' = [network EXCEPT ![remote] = Append(@, "FIN")]
+         /\ connstate' = [connstate EXCEPT ![local] = "FIN-WAIT-1"]
+         /\ connstate'[local] = "FIN-WAIT-1"
+         /\ network'[remote] = Append(network[remote], "FIN")
+         /\ \A r \in Peers : r # local => connstate'[r] = connstate[r]
+         /\ \A r \in Peers : r # remote => network'[r] = network[r]
+         /\ connstate[local] = "ESTABLISHED"
+         /\ local # remote
+      BY DEF TypeOK
+    <2>. \A p \in Peers : network[p] \in Seq(Msgs)
+      BY DEF TypeOK, Msgs
+    <2>1. Inv'
+      <3>. SUFFICES ASSUME NEW l \in {p \in Peers : network'[p] = <<>>},
+                            NEW r \in {p \in Peers : network'[p] = <<>>}
+                     PROVE  connstate'[l] = "ESTABLISHED" <=> connstate'[r] = "ESTABLISHED"
+        BY DEF Inv
+      <3>. /\ l # remote /\ r # remote /\ network[l] = <<>> /\ network[r] = <<>>
+        BY DEF TypeOK, Msgs
+      <3>. l \in {p \in Peers : network[p] = <<>>}
+           /\ r \in {p \in Peers : network[p] = <<>>}
+        OBVIOUS
+      <3>. connstate[l] = "ESTABLISHED" <=> connstate[r] = "ESTABLISHED"
+        BY DEF Inv
+      <3>. /\ (l = local => connstate'[l] = "FIN-WAIT-1")
+           /\ (r = local => connstate'[r] = "FIN-WAIT-1")
+        OBVIOUS
+      <3>. QED  OBVIOUS
+    <2>2. Aux_singleton_RST'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] = <<"RST">>, network'[q] = <<>>
+                     PROVE  connstate'[q] # "ESTABLISHED"
+        BY DEF Aux_singleton_RST
+      <3>1. p # remote
+        <4>. SUFFICES ASSUME p = remote PROVE FALSE
+          OBVIOUS
+        <4>. Append(network[p], "FIN") = <<"RST">> /\ network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. QED  OBVIOUS
+      <3>2. q # remote /\ network[q] = <<>>
+        OBVIOUS
+      <3>. p = local /\ q = local
+        BY <3>1, <3>2, PeersAB
+      <3>. QED  OBVIOUS
+    <2>3. Aux_singleton_ACK'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] = <<"ACK">>, network'[q] = <<>>,
+                            connstate'[p] = "SYN-RECEIVED"
+                     PROVE  connstate'[q] = "ESTABLISHED"
+        BY DEF Aux_singleton_ACK
+      <3>1. p # remote
+        <4>. SUFFICES ASSUME p = remote PROVE FALSE
+          OBVIOUS
+        <4>. Append(network[p], "FIN") = <<"ACK">> /\ network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. QED  OBVIOUS
+      <3>2. q # remote /\ network[q] = <<>>
+        OBVIOUS
+      <3>. p = local /\ q = local
+        BY <3>1, <3>2, PeersAB
+      <3>. QED  OBVIOUS
+    <2>4. Aux_singleton_ACKofFIN'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] = <<"ACKofFIN">>, network'[q] = <<>>,
+                            connstate'[p] \in {"FIN-WAIT-1", "CLOSING", "LAST-ACK"}
+                     PROVE  connstate'[q] # "ESTABLISHED"
+        BY DEF Aux_singleton_ACKofFIN
+      <3>1. p # remote
+        <4>. SUFFICES ASSUME p = remote PROVE FALSE
+          OBVIOUS
+        <4>. Append(network[p], "FIN") = <<"ACKofFIN">> /\ network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. QED  OBVIOUS
+      <3>2. q # remote /\ network[q] = <<>>
+        OBVIOUS
+      <3>. p = local /\ q = local
+        BY <3>1, <3>2, PeersAB
+      <3>. QED  OBVIOUS
+    <2>5. Aux_EST_evidence'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, connstate'[p] = "ESTABLISHED"
+                     PROVE  \/ connstate'[q] \in PostEst
+                            \/ HasMsg("SYN", p)' \/ HasMsg("SYN", q)'
+                            \/ HasMsg("ACK", q)' \/ HasMsg("ACK", p)'
+                            \/ HasMsg("SYN,ACK", q)' \/ HasMsg("SYN,ACK", p)'
+                            \/ HasMsg("FIN", p)' \/ HasMsg("FIN", q)'
+                            \/ HasMsg("ACKofFIN", p)' \/ HasMsg("ACKofFIN", q)'
+                            \/ HasMsg("RST", p)' \/ HasMsg("RST", q)'
+        BY DEF Aux_EST_evidence
+      <3>1. p # local /\ connstate[p] = "ESTABLISHED"
+        BY DEF TypeOK
+      <3>2. CASE q = local
+        BY <3>2 DEF PostEst, PostEstStrict
+      <3>3. CASE q # local
+        <4>1. connstate'[q] = connstate[q]
+          BY <3>3 DEF TypeOK
+        <4>2. \/ connstate[q] \in PostEst
+              \/ HasMsg("SYN", p) \/ HasMsg("SYN", q)
+              \/ HasMsg("ACK", q) \/ HasMsg("ACK", p)
+              \/ HasMsg("SYN,ACK", q) \/ HasMsg("SYN,ACK", p)
+              \/ HasMsg("FIN", p) \/ HasMsg("FIN", q)
+              \/ HasMsg("ACKofFIN", p) \/ HasMsg("ACKofFIN", q)
+              \/ HasMsg("RST", p) \/ HasMsg("RST", q)
+          BY <3>1 DEF Aux_EST_evidence
+        <4>3. \A m \in Msgs, r \in Peers : HasMsg(m, r) => HasMsg(m, r)'
+          <5>. SUFFICES ASSUME NEW m \in Msgs, NEW r \in Peers, HasMsg(m, r)
+                       PROVE  HasMsg(m, r)'
+            OBVIOUS
+          <5>1. \E i \in 1..Len(network[r]) : network[r][i] = m
+            BY DEF HasMsg
+          <5>2. CASE r = remote
+            <6>1. network[r] \in Seq(Msgs)
+              BY <5>2 DEF TypeOK, Msgs
+            <6>2. network'[r] = Append(network[r], "FIN")
+              BY <5>2
+            <6>3. Len(network'[r]) = Len(network[r]) + 1
+              BY <6>1, <6>2
+            <6>4. \A i \in 1..Len(network[r]) : network'[r][i] = network[r][i]
+              BY <6>1, <6>2
+            <6>. QED
+              BY <5>1, <6>3, <6>4 DEF HasMsg
+          <5>3. CASE r # remote
+            BY <5>1, <5>3 DEF HasMsg
+          <5>. QED  BY <5>2, <5>3
+        <4>. QED
+          BY <4>1, <4>2, <4>3 DEF Msgs, PostEst, PostEstStrict
+      <3>. QED  BY <3>2, <3>3
+    <2>6. Aux_LastMsg'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] # <<>>
+                     PROVE  /\ connstate'[q] = "SYN-RECEIVED"  => LastMsg(p)' = "SYN,ACK"
+                            /\ connstate'[q] = "FIN-WAIT-1"    => LastMsg(p)' \in {"FIN", "RST"}
+                            /\ connstate'[q] = "CLOSE-WAIT"    => LastMsg(p)' = "ACKofFIN"
+                            /\ connstate'[q] = "LAST-ACK"      => LastMsg(p)' = "FIN"
+                            /\ connstate'[q] = "CLOSING"       => LastMsg(p)' = "ACKofFIN"
+                            /\ connstate'[q] = "SYN-SENT"      => LastMsg(p)' = "SYN"
+        BY DEF Aux_LastMsg
+      <3>1. CASE p = remote
+        <4>. q # remote /\ q = local
+          BY <3>1, PeersAB
+        <4>. connstate'[q] = "FIN-WAIT-1"
+          OBVIOUS
+        <4>. network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. network'[p] = Append(network[p], "FIN") /\ LastMsg(p)' = "FIN"
+          BY <3>1 DEF LastMsg
+        <4>. QED  OBVIOUS
+      <3>2. CASE p # remote
+        <4>1. network'[p] = network[p] /\ LastMsg(p)' = LastMsg(p) /\ network[p] # <<>>
+          BY <3>2 DEF LastMsg
+        <4>2. q # local
+          BY <3>2, PeersAB
+        <4>3. connstate'[q] = connstate[q]
+          BY <4>2 DEF TypeOK
+        <4>. QED
+          BY <4>1, <4>3 DEF Aux_LastMsg
+      <3>. QED  BY <3>1, <3>2
+    <2>7. Aux_RST_at_end'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] # <<>>, LastMsg(p)' = "RST"
+                     PROVE  connstate'[q] \in {"TIME-WAIT", "CLOSED", "LISTEN"}
+        BY DEF Aux_RST_at_end
+      <3>1. CASE p = remote
+        <4>. network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. LastMsg(p)' = "FIN"
+          BY <3>1 DEF LastMsg
+        <4>. QED  OBVIOUS
+      <3>2. CASE p # remote
+        <4>1. network'[p] = network[p] /\ LastMsg(p)' = LastMsg(p) /\ network[p] # <<>>
+          BY <3>2 DEF LastMsg
+        <4>2. connstate[q] \in {"TIME-WAIT", "CLOSED", "LISTEN"}
+          BY <4>1 DEF Aux_RST_at_end
+        <4>3. q # local
+          BY <3>2, PeersAB
+        <4>4. connstate'[q] = connstate[q]
+          BY <4>3 DEF TypeOK
+        <4>. QED  BY <4>2, <4>4
+      <3>. QED  BY <3>1, <3>2
+    <2>. QED
+      BY <2>1, <2>2, <2>3, <2>4, <2>5, <2>6, <2>7 DEF IndInv
+
+  <1>8. CASE CLOSE_CLOSE_WAIT(local, remote)
+    <2>. USE <1>8 DEF CLOSE_CLOSE_WAIT
+    <2>. /\ network' = [network EXCEPT ![remote] = Append(@, "FIN")]
+         /\ connstate' = [connstate EXCEPT ![local] = "LAST-ACK"]
+         /\ connstate'[local] = "LAST-ACK"
+         /\ network'[remote] = Append(network[remote], "FIN")
+         /\ \A r \in Peers : r # local => connstate'[r] = connstate[r]
+         /\ \A r \in Peers : r # remote => network'[r] = network[r]
+         /\ connstate[local] = "CLOSE-WAIT"
+         /\ local # remote
+      BY DEF TypeOK
+    <2>. \A p \in Peers : network[p] \in Seq(Msgs)
+      BY DEF TypeOK, Msgs
+    <2>1. Inv'
+      <3>. SUFFICES ASSUME NEW l \in {p \in Peers : network'[p] = <<>>},
+                            NEW r \in {p \in Peers : network'[p] = <<>>}
+                     PROVE  connstate'[l] = "ESTABLISHED" <=> connstate'[r] = "ESTABLISHED"
+        BY DEF Inv
+      <3>. /\ l # remote /\ r # remote /\ network[l] = <<>> /\ network[r] = <<>>
+        BY DEF TypeOK, Msgs
+      <3>. l \in {p \in Peers : network[p] = <<>>}
+           /\ r \in {p \in Peers : network[p] = <<>>}
+        OBVIOUS
+      <3>. connstate[l] = "ESTABLISHED" <=> connstate[r] = "ESTABLISHED"
+        BY DEF Inv
+      <3>. /\ (l = local => connstate'[l] = "LAST-ACK")
+           /\ (r = local => connstate'[r] = "LAST-ACK")
+        OBVIOUS
+      <3>. QED  OBVIOUS
+    <2>2. Aux_singleton_RST'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] = <<"RST">>, network'[q] = <<>>
+                     PROVE  connstate'[q] # "ESTABLISHED"
+        BY DEF Aux_singleton_RST
+      <3>1. p # remote
+        <4>. SUFFICES ASSUME p = remote PROVE FALSE
+          OBVIOUS
+        <4>. Append(network[p], "FIN") = <<"RST">> /\ network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. QED  OBVIOUS
+      <3>2. q # remote /\ network[q] = <<>>
+        OBVIOUS
+      <3>. p = local /\ q = local
+        BY <3>1, <3>2, PeersAB
+      <3>. QED  OBVIOUS
+    <2>3. Aux_singleton_ACK'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] = <<"ACK">>, network'[q] = <<>>,
+                            connstate'[p] = "SYN-RECEIVED"
+                     PROVE  connstate'[q] = "ESTABLISHED"
+        BY DEF Aux_singleton_ACK
+      <3>1. p # remote
+        <4>. SUFFICES ASSUME p = remote PROVE FALSE
+          OBVIOUS
+        <4>. Append(network[p], "FIN") = <<"ACK">> /\ network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. QED  OBVIOUS
+      <3>2. q # remote /\ network[q] = <<>>
+        OBVIOUS
+      <3>. p = local /\ q = local
+        BY <3>1, <3>2, PeersAB
+      <3>. QED  OBVIOUS
+    <2>4. Aux_singleton_ACKofFIN'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] = <<"ACKofFIN">>, network'[q] = <<>>,
+                            connstate'[p] \in {"FIN-WAIT-1", "CLOSING", "LAST-ACK"}
+                     PROVE  connstate'[q] # "ESTABLISHED"
+        BY DEF Aux_singleton_ACKofFIN
+      <3>1. p # remote
+        <4>. SUFFICES ASSUME p = remote PROVE FALSE
+          OBVIOUS
+        <4>. Append(network[p], "FIN") = <<"ACKofFIN">> /\ network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. QED  OBVIOUS
+      <3>2. q # remote /\ network[q] = <<>>
+        OBVIOUS
+      <3>. p = local /\ q = local
+        BY <3>1, <3>2, PeersAB
+      <3>. QED  OBVIOUS
+    <2>5. Aux_EST_evidence'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, connstate'[p] = "ESTABLISHED"
+                     PROVE  \/ connstate'[q] \in PostEst
+                            \/ HasMsg("SYN", p)' \/ HasMsg("SYN", q)'
+                            \/ HasMsg("ACK", q)' \/ HasMsg("ACK", p)'
+                            \/ HasMsg("SYN,ACK", q)' \/ HasMsg("SYN,ACK", p)'
+                            \/ HasMsg("FIN", p)' \/ HasMsg("FIN", q)'
+                            \/ HasMsg("ACKofFIN", p)' \/ HasMsg("ACKofFIN", q)'
+                            \/ HasMsg("RST", p)' \/ HasMsg("RST", q)'
+        BY DEF Aux_EST_evidence
+      <3>1. p # local /\ connstate[p] = "ESTABLISHED"
+        BY DEF TypeOK
+      <3>2. CASE q = local
+        BY <3>2 DEF PostEst, PostEstStrict
+      <3>3. CASE q # local
+        <4>1. connstate'[q] = connstate[q]
+          BY <3>3 DEF TypeOK
+        <4>2. \/ connstate[q] \in PostEst
+              \/ HasMsg("SYN", p) \/ HasMsg("SYN", q)
+              \/ HasMsg("ACK", q) \/ HasMsg("ACK", p)
+              \/ HasMsg("SYN,ACK", q) \/ HasMsg("SYN,ACK", p)
+              \/ HasMsg("FIN", p) \/ HasMsg("FIN", q)
+              \/ HasMsg("ACKofFIN", p) \/ HasMsg("ACKofFIN", q)
+              \/ HasMsg("RST", p) \/ HasMsg("RST", q)
+          BY <3>1 DEF Aux_EST_evidence
+        <4>3. \A m \in Msgs, r \in Peers : HasMsg(m, r) => HasMsg(m, r)'
+          <5>. SUFFICES ASSUME NEW m \in Msgs, NEW r \in Peers, HasMsg(m, r)
+                       PROVE  HasMsg(m, r)'
+            OBVIOUS
+          <5>1. \E i \in 1..Len(network[r]) : network[r][i] = m
+            BY DEF HasMsg
+          <5>2. CASE r = remote
+            <6>1. network[r] \in Seq(Msgs)
+              BY <5>2 DEF TypeOK, Msgs
+            <6>2. network'[r] = Append(network[r], "FIN")
+              BY <5>2
+            <6>3. Len(network'[r]) = Len(network[r]) + 1
+              BY <6>1, <6>2
+            <6>4. \A i \in 1..Len(network[r]) : network'[r][i] = network[r][i]
+              BY <6>1, <6>2
+            <6>. QED
+              BY <5>1, <6>3, <6>4 DEF HasMsg
+          <5>3. CASE r # remote
+            BY <5>1, <5>3 DEF HasMsg
+          <5>. QED  BY <5>2, <5>3
+        <4>. QED
+          BY <4>1, <4>2, <4>3 DEF Msgs, PostEst, PostEstStrict
+      <3>. QED  BY <3>2, <3>3
+    <2>6. Aux_LastMsg'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] # <<>>
+                     PROVE  /\ connstate'[q] = "SYN-RECEIVED"  => LastMsg(p)' = "SYN,ACK"
+                            /\ connstate'[q] = "FIN-WAIT-1"    => LastMsg(p)' \in {"FIN", "RST"}
+                            /\ connstate'[q] = "CLOSE-WAIT"    => LastMsg(p)' = "ACKofFIN"
+                            /\ connstate'[q] = "LAST-ACK"      => LastMsg(p)' = "FIN"
+                            /\ connstate'[q] = "CLOSING"       => LastMsg(p)' = "ACKofFIN"
+                            /\ connstate'[q] = "SYN-SENT"      => LastMsg(p)' = "SYN"
+        BY DEF Aux_LastMsg
+      <3>1. CASE p = remote
+        <4>. q # remote /\ q = local
+          BY <3>1, PeersAB
+        <4>. connstate'[q] = "LAST-ACK"
+          OBVIOUS
+        <4>. network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. network'[p] = Append(network[p], "FIN") /\ LastMsg(p)' = "FIN"
+          BY <3>1 DEF LastMsg
+        <4>. QED  OBVIOUS
+      <3>2. CASE p # remote
+        <4>1. network'[p] = network[p] /\ LastMsg(p)' = LastMsg(p) /\ network[p] # <<>>
+          BY <3>2 DEF LastMsg
+        <4>2. q # local
+          BY <3>2, PeersAB
+        <4>3. connstate'[q] = connstate[q]
+          BY <4>2 DEF TypeOK
+        <4>. QED
+          BY <4>1, <4>3 DEF Aux_LastMsg
+      <3>. QED  BY <3>1, <3>2
+    <2>7. Aux_RST_at_end'
+      <3>. SUFFICES ASSUME NEW p \in Peers, NEW q \in Peers,
+                            p # q, network'[p] # <<>>, LastMsg(p)' = "RST"
+                     PROVE  connstate'[q] \in {"TIME-WAIT", "CLOSED", "LISTEN"}
+        BY DEF Aux_RST_at_end
+      <3>1. CASE p = remote
+        <4>. network[p] \in Seq(Msgs)
+          BY DEF TypeOK, Msgs
+        <4>. LastMsg(p)' = "FIN"
+          BY <3>1 DEF LastMsg
+        <4>. QED  OBVIOUS
+      <3>2. CASE p # remote
+        <4>1. network'[p] = network[p] /\ LastMsg(p)' = LastMsg(p) /\ network[p] # <<>>
+          BY <3>2 DEF LastMsg
+        <4>2. connstate[q] \in {"TIME-WAIT", "CLOSED", "LISTEN"}
+          BY <4>1 DEF Aux_RST_at_end
+        <4>3. q # local
+          BY <3>2, PeersAB
+        <4>4. connstate'[q] = connstate[q]
+          BY <4>3 DEF TypeOK
+        <4>. QED  BY <4>2, <4>4
+      <3>. QED  BY <3>1, <3>2
+    <2>. QED
+      BY <2>1, <2>2, <2>3, <2>4, <2>5, <2>6, <2>7 DEF IndInv
+
+  <1>. QED  BY <1>1, <1>2, <1>3, <1>4, <1>5, <1>6, <1>7, <1>8
 
 THEOREM IndInvIsInductive == IndInv /\ [Next]_vars => IndInv'
   <1>. SUFFICES ASSUME IndInv, [Next]_vars PROVE IndInv'
@@ -1383,10 +1934,26 @@ THEOREM IndInvIsInductive == IndInv /\ [Next]_vars => IndInv'
     BY TypeOKInductive
   <1>stutter. CASE UNCHANGED vars
     BY <1>stutter, IndInvStutter
-  <1>next. CASE Next
-    \* Per-action analysis -- to be filled in below.
+  <1>user. CASE User
+    <2>. PICK local \in Peers, remote \in Peers :
+            \/ ACTIVE_OPEN(local, remote)
+            \/ PASSIVE_OPEN(local, remote)
+            \/ CLOSE_SYN_SENT(local, remote)
+            \/ CLOSE_SYN_RECEIVED(local, remote)
+            \/ CLOSE_LISTEN(local, remote)
+            \/ CLOSE_ESTABLISHED(local, remote)
+            \/ CLOSE_CLOSE_WAIT(local, remote)
+            \/ SEND(local, remote)
+      BY <1>user DEF User
+    <2>. QED  BY <1>0, IndInvUser
+  <1>system. CASE System
+    \* TODO: per-action analysis for SynSent, SynReceived, Listen,
+    \* Established, FinWait1, FinWait2, Closing, LastAck, TimeWait, Note2.
     OMITTED
-  <1>. QED  BY <1>stutter, <1>next
+  <1>reset. CASE Reset
+    \* TODO: Note3 send and Note3 RST receive.
+    OMITTED
+  <1>. QED  BY <1>stutter, <1>user, <1>system, <1>reset DEF Next
 
 (***************************************************************************)
 (* Once IndInvIsInductive is fully discharged, the main theorem follows: *)
