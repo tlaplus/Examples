@@ -5642,9 +5642,20 @@ THEOREM IndInvIsInductive == IndInv /\ [Next]_vars => IndInv'
   <1>. QED  BY <1>stutter, <1>user, <1>system, <1>reset DEF Next
 
 (***************************************************************************)
-(* Once IndInvIsInductive is fully discharged, the main theorem follows: *)
-(*                                                                         *)
-(*   THEOREM SpecImpliesInv == Spec => []Inv                              *)
-(*     <1>. QED BY IndInvInit, IndInvIsInductive, PTL DEF Spec, IndInv   *)
+(* The main safety result.  IndInv strengthens Inv with auxiliary clauses *)
+(* required for inductiveness; it implies Inv directly by definition.     *)
 (***************************************************************************)
+THEOREM SpecImpliesIndInv == Spec => []IndInv
+  <1>1. Init => IndInv
+    BY IndInvInit
+  <1>2. IndInv /\ [Next]_vars => IndInv'
+    BY IndInvIsInductive
+  <1>. QED  BY <1>1, <1>2, PTL DEF Spec
+
+THEOREM SpecImpliesInv == Spec => []Inv
+  <1>1. IndInv => Inv
+    BY DEF IndInv
+  <1>2. Spec => []IndInv
+    BY SpecImpliesIndInv
+  <1>. QED  BY <1>1, <1>2, PTL
 ============================================================================
