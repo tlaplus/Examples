@@ -5,7 +5,7 @@
 (*   Spec => []TypeOK                                                      *)
 (*   Spec => []Inv  (ESTABLISHED agreement when both networks are empty)   *)
 (***************************************************************************)
-EXTENDS tcp, SequenceTheorems, SequencesExtTheorems, TLAPS
+EXTENDS tcp, SequenceTheorems, SequencesExtTheorems, FiniteSetTheorems, TLAPS
 
 \* The spec's `ASSUME PeersAssumption == Cardinality(Peers) = 2` is intended
 \* to assert that Peers is a finite set with exactly two elements.  In TLA+,
