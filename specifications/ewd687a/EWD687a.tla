@@ -123,7 +123,8 @@ OutEdges(p) == {e \in Edges : e[1] = p}
 (* something that was not stated explicitly: that a process can't send     *)
 (* messages to itself, so an edge joins two different processes.           *)
 (***************************************************************************)
-ASSUME  /\ \* Every edge is a pair of distinct processes
+ASSUME EdgeFacts ==
+        /\ \* Every edge is a pair of distinct processes
            \A e \in Edges :
              /\ (e \in Procs \X Procs)
              /\ (e[1] # e[2])

@@ -39,7 +39,7 @@ EXTENDS Naturals
 
 CONSTANT MaxBeanCount
 
-ASSUME MaxBeanCount \in Nat /\ MaxBeanCount >= 1
+ASSUME MaxBeanFact == MaxBeanCount \in Nat /\ MaxBeanCount >= 1
 
 VARIABLES can
 

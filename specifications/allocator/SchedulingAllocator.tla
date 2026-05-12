@@ -18,7 +18,7 @@ CONSTANTS
   Clients,     \* set of all clients
   Resources    \* set of all resources
 
-ASSUME
+ASSUME SchedulingAllocatorAssumptions ==
   IsFiniteSet(Resources)
 
 VARIABLES
