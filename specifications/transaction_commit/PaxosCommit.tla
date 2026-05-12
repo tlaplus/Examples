@@ -44,7 +44,7 @@ CONSTANT RM,             \* The set of resource managers.
          Majority,       \* The set of majorities of acceptors
          Ballot          \* The set of ballot numbers
 
-ASSUME  \* We assume these properties of the declared constants.
+ASSUME PaxosCommitAssumptions ==  \* We assume these properties of the declared constants.
   /\ Ballot \subseteq Nat
   /\ 0 \in Ballot
   /\ Majority \subseteq SUBSET Acceptor

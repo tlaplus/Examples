@@ -25,7 +25,8 @@ CONSTANTS Value, Acceptor, Quorum
 (* element (an acceptor) in common.  Think of a quorum as a set consisting *)
 (* of a majority (more than half) of the acceptors.                        *)
 (***************************************************************************)
-ASSUME /\ \A Q \in Quorum : Q \subseteq Acceptor
+ASSUME QuorumAssumption ==
+       /\ \A Q \in Quorum : Q \subseteq Acceptor
        /\ \A Q1, Q2 \in Quorum : Q1 \cap Q2 /= {} 
 
 (***************************************************************************)
