@@ -1,5 +1,5 @@
 ------------------------------- MODULE CRDT_proof ---------------------------------
-EXTENDS CRDT, Functions, NaturalsInduction, TLAPS
+EXTENDS CRDT, Functions, NaturalsInduction, FunctionTheorems, TLAPS
 
 (***************************************************************************)
 (* Proofs of safety properties.                                            *)
@@ -26,33 +26,81 @@ THEOREM Spec => Monotonicity
 <1>. QED  BY <1>1, TypeCorrect, PTL DEF Spec, Monotonicity, vars
 -----------------------------------------------------------------------------
 (***************************************************************************)
-(* Sum the values of a vector of natural numbers. We state a few facts     *)
-(* about Sum, without proof.                                               *)
+(* Sum the values of a vector of natural numbers. We discharge the four    *)
+(* Sum lemmas by reducing them to the corresponding `SumFunction` theorems *)
+(* in the community-modules `FunctionTheorems`, via the trivial unfolding  *)
+(*   Sum(f) = FoldFunction(+, 0, f)                                        *)
+(*          = FoldFunctionOnSet(+, 0, f, DOMAIN f)                         *)
+(*          = SumFunctionOnSet(f, DOMAIN f)                                *)
+(*          = SumFunction(f).                                              *)
 (***************************************************************************)
 Sum(f) == FoldFunction(+, 0, f)
+
+LEMMA SumIsSumFunction ==
+  ASSUME NEW f
+  PROVE  Sum(f) = SumFunction(f)
+  BY DEF Sum, FoldFunction, SumFunction, SumFunctionOnSet
 
 LEMMA SumType ==
   ASSUME NEW f \in [Node -> Nat]
   PROVE  Sum(f) \in Nat
-PROOF OMITTED
+  <1>1. IsFiniteSet(DOMAIN f)
+    BY NodeAssumption
+  <1>2. \A x \in DOMAIN f : f[x] \in Nat
+    OBVIOUS
+  <1>. QED  BY <1>1, <1>2, SumFunctionNat, SumIsSumFunction
 
 LEMMA SumIsZero ==
   ASSUME NEW f \in [Node -> Nat]
   PROVE  Sum(f) = 0 <=> \A x \in Node : f[x] = 0
-PROOF OMITTED
+  <1>1. IsFiniteSet(DOMAIN f)
+    BY NodeAssumption
+  <1>2. \A x \in DOMAIN f : f[x] \in Nat
+    OBVIOUS
+  <1>3. DOMAIN f = Node
+    OBVIOUS
+  <1>. QED  BY <1>1, <1>2, <1>3, SumFunctionZero, SumIsSumFunction
 
 LEMMA SumWeaklyMonotonic ==
   ASSUME NEW f \in [Node -> Nat], NEW g \in [Node -> Nat],
          \A x \in Node : f[x] <= g[x]
   PROVE  Sum(f) <= Sum(g)
-PROOF OMITTED
+  <1>1. IsFiniteSet(DOMAIN f)
+    BY NodeAssumption
+  <1>2. DOMAIN f = Node /\ DOMAIN g = Node
+    OBVIOUS
+  <1>3. \A x \in DOMAIN f : f[x] \in Int
+    BY <1>2
+  <1>4. \A x \in DOMAIN f : g[x] \in Int
+    BY <1>2
+  <1>5. \A x \in DOMAIN f : f[x] <= g[x]
+    BY <1>2
+  <1>6. DOMAIN g = DOMAIN f
+    BY <1>2
+  <1>. QED  BY <1>1, <1>3, <1>4, <1>5, <1>6,
+              SumFunctionMonotonic, SumIsSumFunction
 
 LEMMA SumStronglyMonotonic ==
   ASSUME NEW f \in [Node -> Nat], NEW g \in [Node -> Nat],
          \A x \in Node : f[x] <= g[x],
          \E x \in Node : f[x] < g[x]
   PROVE  Sum(f) < Sum(g)
-PROOF OMITTED
+  <1>1. IsFiniteSet(DOMAIN f)
+    BY NodeAssumption
+  <1>2. DOMAIN f = Node /\ DOMAIN g = Node
+    OBVIOUS
+  <1>3. \A x \in DOMAIN f : f[x] \in Int
+    BY <1>2
+  <1>4. \A x \in DOMAIN f : g[x] \in Int
+    BY <1>2
+  <1>5. \A x \in DOMAIN f : f[x] <= g[x]
+    BY <1>2
+  <1>6. DOMAIN g = DOMAIN f
+    BY <1>2
+  <1>7. PICK s \in DOMAIN f : f[s] < g[s]
+    BY <1>2
+  <1>. QED  BY <1>1, <1>3, <1>4, <1>5, <1>6, <1>7,
+              SumFunctionStrictlyMonotonic, SumIsSumFunction
 
 (***************************************************************************)
 (* Definition of the termination measure.                                  *)

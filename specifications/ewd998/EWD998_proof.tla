@@ -884,6 +884,20 @@ THEOREM Refinement == Spec => TD!Spec
   <2>. QED  BY <2>2, Live, TypeCorrect, Invariance, PTL DEF Liveness
 <1>. QED  BY <1>1, <1>2, <1>4, TypeCorrect, Invariance, PTL DEF Spec, TD!Spec
 
+(***************************************************************************)
+(* The (state-level) safety invariant `TerminationDetection`:              *)
+(* `terminationDetected => Termination`.  Direct corollary of Safety       *)
+(* together with the type and Inv invariance theorems.                     *)
+(***************************************************************************)
+THEOREM TerminationDetectionInv == Spec => []TerminationDetection
+<1>1. TypeOK /\ Inv => TerminationDetection
+  BY Safety DEF TerminationDetection
+<1>2. Spec => []TypeOK
+  BY TypeCorrect, PTL DEF Spec
+<1>3. Spec => []Inv
+  BY Invariance, PTL DEF Spec
+<1>. QED  BY <1>1, <1>2, <1>3, PTL
+
 
 =============================================================================
 \* Modification History
