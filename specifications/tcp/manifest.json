@@ -35,6 +35,11 @@
       ]
     },
     {
+      "path": "specifications/tcp/IndInv_apa.tla",
+      "features": [],
+      "models": []
+    },
+    {
       "path": "specifications/tcp/tcp.tla",
       "features": [],
       "models": []

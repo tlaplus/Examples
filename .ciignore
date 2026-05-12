@@ -11,3 +11,11 @@ specifications/CCF
 specifications/azure-cosmos-tla
 specifications/microwave
 
+# Apalache inductive-invariant search for tcp.tla; the inductive invariant
+# itself is discharged by the TLAPS proof in tcp_proof.tla, so there is no
+# value in re-running these Apalache configurations on every CI build.
+# IndInv_apa.tla is still listed in specifications/tcp/manifest.json so that
+# SANY parses it on every CI run.
+specifications/tcp/IndInv_apa.cfg
+specifications/tcp/IndInv_apa_init.cfg
+
