@@ -68,7 +68,12 @@ LEMMA TypeCorrect == Spec => []TypeOK
                NEW q \in Proc \ {p},
                ReceiveAck(p,q)
         PROVE  TypeOK'
-    BY <2>5 DEF ReceiveAck
+    <3>1. /\ network[q][p] # << >>
+          /\ ack' = [ack EXCEPT ![p] = @ \union {q}]
+          /\ network' = [network EXCEPT ![q][p] = Tail(@)]
+          /\ UNCHANGED <<clock, req, crit>>
+      BY <2>5 DEF ReceiveAck
+    <3>. QED  BY <3>1
   <2>6. ASSUME NEW p \in Proc,
                NEW q \in Proc \ {p},
                ReceiveRelease(p,q)
@@ -871,5 +876,68 @@ THEOREM Safety == Spec => []Mutex
     BY DEF ClockInv, ClockInvInner
   <2>. QED  BY NType DEF Proc, beats
 <1>. QED  BY TypeCorrect, BasicInvariant, ClockInvariant, <1>1, PTL
+
+-----------------------------------------------------------------------------
+(***************************************************************************)
+(* Bounded channels: no channel ever holds more than 3 messages.  This is *)
+(* a corollary of the AtMostOne fact for each of the three message types  *)
+(* in NetworkInv: with three possible types and at most one of each, a    *)
+(* well-typed channel has at most three messages.                         *)
+(***************************************************************************)
+
+LEMMA MessageTypeInThree ==
+  ASSUME NEW m \in Message
+  PROVE  m.type \in {"req", "ack", "rel"}
+  BY DEF Message, ReqMessage, AckMessage, RelMessage
+
+LEMMA BoundedFromAtMostOne ==
+  ASSUME NEW s \in Seq(Message),
+         AtMostOne(s, "req"),
+         AtMostOne(s, "ack"),
+         AtMostOne(s, "rel")
+  PROVE  Len(s) <= 3
+  <1>. DEFINE typ(i) == s[i].type
+  <1>1. \A i \in 1 .. Len(s) : typ(i) \in {"req", "ack", "rel"}
+    BY MessageTypeInThree
+  <1>2. SUFFICES ASSUME Len(s) > 3  PROVE FALSE
+    OBVIOUS
+  <1>. /\ {1,2,3,4} \subseteq 1 .. Len(s)
+       /\ Len(s) \in Nat
+    BY <1>2
+  <1>. /\ typ(1) \in {"req","ack","rel"}
+       /\ typ(2) \in {"req","ack","rel"}
+       /\ typ(3) \in {"req","ack","rel"}
+       /\ typ(4) \in {"req","ack","rel"}
+    BY <1>1
+  \* Pigeonhole: 4 indices into a 3-element type space => two match.
+  <1>3. \E i, j \in {1,2,3,4} : i # j /\ typ(i) = typ(j)
+    OBVIOUS
+  <1>. PICK i, j \in {1,2,3,4} : i # j /\ typ(i) = typ(j)
+    BY <1>3
+  <1>. /\ i \in 1 .. Len(s) /\ j \in 1 .. Len(s)
+       /\ typ(i) \in {"req","ack","rel"}
+    BY <1>2, <1>1
+  <1>. CASE typ(i) = "req"
+    BY DEF AtMostOne
+  <1>. CASE typ(i) = "ack"
+    BY DEF AtMostOne
+  <1>. CASE typ(i) = "rel"
+    BY DEF AtMostOne
+  <1>. QED  OBVIOUS
+
+THEOREM BoundedNetworkInv == Spec => []BoundedNetwork
+<1>1. TypeOK /\ BasicInv => BoundedNetwork
+  <2>. SUFFICES ASSUME TypeOK, BasicInv,
+                       NEW p \in Proc, NEW q \in Proc
+                PROVE  Len(network[p][q]) <= 3
+    BY DEF BoundedNetwork
+  <2>1. network[p][q] \in Seq(Message)
+    BY DEF TypeOK
+  <2>2. /\ AtMostOne(network[p][q], "req")
+        /\ AtMostOne(network[p][q], "ack")
+        /\ AtMostOne(network[p][q], "rel")
+    BY DEF BasicInv, NetworkInv
+  <2>. QED  BY <2>1, <2>2, BoundedFromAtMostOne
+<1>. QED  BY TypeCorrect, BasicInvariant, <1>1, PTL
 
 ==============================================================================
