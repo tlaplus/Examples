@@ -59,16 +59,6 @@
       "models": []
     },
     {
-      "path": "specifications/FiniteMonotonic/Folds.tla",
-      "features": [],
-      "models": []
-    },
-    {
-      "path": "specifications/FiniteMonotonic/Functions.tla",
-      "features": [],
-      "models": []
-    },
-    {
       "path": "specifications/FiniteMonotonic/MCCRDT.tla",
       "features": [
         "action composition"
