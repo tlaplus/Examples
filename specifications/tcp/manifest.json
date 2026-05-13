@@ -35,9 +35,22 @@
       ]
     },
     {
+      "path": "specifications/tcp/IndInv_apa.tla",
+      "features": [],
+      "models": []
+    },
+    {
       "path": "specifications/tcp/tcp.tla",
       "features": [],
       "models": []
+    },
+    {
+      "path": "specifications/tcp/tcp_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "00:51:00"
+      }
     }
   ]
 }

@@ -11,7 +11,7 @@ EXTENDS Integers, Sequences, SequencesExt, FiniteSets
 CONSTANT 
     Peers
 
-ASSUME Cardinality(Peers) = 2
+ASSUME PeersAssumption == Cardinality(Peers) = 2
 
 States == {"LISTEN", "CLOSED", "SYN-SENT", "SYN-RECEIVED", "ESTABLISHED", 
           "FIN-WAIT-1", "FIN-WAIT-2", "CLOSING", "CLOSE-WAIT", "LAST-ACK",
