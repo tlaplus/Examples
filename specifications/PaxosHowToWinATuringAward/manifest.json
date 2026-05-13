@@ -78,6 +78,14 @@
       "proof": {
         "runtime": "00:00:01"
       }
+    },
+    {
+      "path": "specifications/PaxosHowToWinATuringAward/Voting_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }

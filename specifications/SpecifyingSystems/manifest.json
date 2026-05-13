@@ -676,6 +676,118 @@
           "stateDepth": 10
         }
       ]
+    },
+    {
+      "path": "specifications/SpecifyingSystems/AsynchronousInterface/AsynchInterface_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/SpecifyingSystems/AsynchronousInterface/Channel_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/SpecifyingSystems/CachingMemory/InternalMemory_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/SpecifyingSystems/Composing/Channel_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/SpecifyingSystems/Composing/HourClock_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/SpecifyingSystems/Composing/InternalMemory_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/SpecifyingSystems/FIFO/Channel_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/SpecifyingSystems/FIFO/InnerFIFO_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/SpecifyingSystems/HourClock/HourClock_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/SpecifyingSystems/Liveness/HourClock_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/SpecifyingSystems/Liveness/InternalMemory_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/SpecifyingSystems/RealTime/HourClock_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/SpecifyingSystems/RealTime/InternalMemory_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/SpecifyingSystems/TLC/AlternatingBit_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }

@@ -68,6 +68,14 @@
       "path": "specifications/KeyValueStore/Util.tla",
       "features": [],
       "models": []
+    },
+    {
+      "path": "specifications/KeyValueStore/KeyValueStore_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }

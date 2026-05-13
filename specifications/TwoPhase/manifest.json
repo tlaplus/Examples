@@ -33,6 +33,14 @@
       "proof": {
         "runtime": "00:00:01"
       }
+    },
+    {
+      "path": "specifications/TwoPhase/TwoPhase_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }

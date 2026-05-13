@@ -36,6 +36,14 @@
       "path": "specifications/ReadersWriters/ReadersWriters.tla",
       "features": [],
       "models": []
+    },
+    {
+      "path": "specifications/ReadersWriters/ReadersWriters_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }

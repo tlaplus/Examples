@@ -199,6 +199,14 @@
       "path": "specifications/ewd998/Utils.tla",
       "features": [],
       "models": []
+    },
+    {
+      "path": "specifications/ewd998/EWD998PCal_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }

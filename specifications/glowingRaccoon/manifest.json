@@ -73,6 +73,22 @@
           "stateDepth": 23
         }
       ]
+    },
+    {
+      "path": "specifications/glowingRaccoon/clean_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/glowingRaccoon/stages_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }
