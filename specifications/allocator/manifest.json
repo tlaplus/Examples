@@ -64,6 +64,30 @@
           "stateDepth": 6
         }
       ]
+    },
+    {
+      "path": "specifications/allocator/AllocatorImplementation_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/allocator/SchedulingAllocator_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
+    },
+    {
+      "path": "specifications/allocator/SimpleAllocator_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }

@@ -83,6 +83,14 @@
           "stateDepth": 11
         }
       ]
+    },
+    {
+      "path": "specifications/byihive/VoucherLifeCycle_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }

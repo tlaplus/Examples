@@ -70,6 +70,14 @@
           "workers": 1
         }
       ]
+    },
+    {
+      "path": "specifications/DieHard/DieHard_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }

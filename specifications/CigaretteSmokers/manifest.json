@@ -33,6 +33,14 @@
           "stateDepth": 2
         }
       ]
+    },
+    {
+      "path": "specifications/CigaretteSmokers/CigaretteSmokers_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }

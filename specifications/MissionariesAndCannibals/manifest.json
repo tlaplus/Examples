@@ -30,6 +30,14 @@
           "result": "safety failure"
         }
       ]
+    },
+    {
+      "path": "specifications/MissionariesAndCannibals/MissionariesAndCannibals_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }

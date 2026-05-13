@@ -35,6 +35,14 @@
       "path": "specifications/spanning/spanning.tla",
       "features": [],
       "models": []
+    },
+    {
+      "path": "specifications/spanning/spanning_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }

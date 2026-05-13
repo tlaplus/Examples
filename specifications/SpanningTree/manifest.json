@@ -64,6 +64,14 @@
           "result": "unknown"
         }
       ]
+    },
+    {
+      "path": "specifications/SpanningTree/SpanTree_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "runtime": "unknown"
+      }
     }
   ]
 }
