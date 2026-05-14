@@ -621,9 +621,9 @@ LEMMA TypeOK_Step ==
                 BY <7>2, <4>2, BagAddPreservesToks
               <7>. QED  BY <6>1, <7>3
             <6>2. CASE n2 # to
-              <7>. network'[n2] = network[n2]
+              <7>1. network'[n2] = network[n2]
                 BY <4>1, <6>2
-              <7>. QED
+              <7>. QED  BY <7>1
             <6>. QED  BY <6>1, <6>2
           <5>. QED  BY <5>1, <4>0a
         <4>5. \E n \in Node : \E t \in DOMAIN network'[n] :
@@ -709,9 +709,9 @@ LEMMA TypeOK_Step ==
                 BY <7>2, <4>2, BagRemovePreservesToks
               <7>. QED  BY <6>1, <7>3
             <6>2. CASE n2 # self
-              <7>. network'[n2] = network[n2]
+              <7>1. network'[n2] = network[n2]
                 BY <4>1, <6>2
-              <7>. QED
+              <7>. QED  BY <7>1
             <6>. QED  BY <6>1, <6>2
           <5>. QED  BY <5>1, <4>0a
         <4>5. \E n \in Node : \E t \in DOMAIN network'[n] :
