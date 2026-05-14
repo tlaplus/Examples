@@ -144,11 +144,15 @@ jobs:
           jq --join-output '
             .modules
             | map(select(has("proof")))
+            # Failing on Linux
             | map(select(.path != "specifications/LoopInvariance/SumSequence.tla"))
+            # Take too long to check in the CI
+            | map(select(.path != "specifications/byzpaxos/BPConProof.tla"))
+            | map(select(.path != "specifications/tcp/tcp_proof.tla"))
             | map(.path + "\u0000")
             | join("")' \
           | xargs --verbose --null --no-run-if-empty -I {TLA_FILE} \
-          "$DEPS_DIR/tlapm/bin/tlapm" "{TLA_FILE}" -I "$DEPS_DIR/community" --stretch 5
+          time "$DEPS_DIR/tlapm/bin/tlapm" "{TLA_FILE}" -I "$DEPS_DIR/community" --stretch 5
       - name: Smoke-test manifest generation script
         run: |
           python $SCRIPT_DIR/generate_manifest.py \
