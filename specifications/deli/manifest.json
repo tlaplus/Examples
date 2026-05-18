@@ -1,0 +1,24 @@
+{
+  "sources": [],
+  "authors": [
+    "Eric Spencer"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/deli/deli.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/deli/deli.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 82,
+          "totalStates": 215,
+          "stateDepth": 13
+        }
+      ]
+    }
+  ]
+}
