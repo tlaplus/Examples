@@ -20,11 +20,6 @@
       ]
     },
     {
-      "path": "specifications/Disruptor/APRingBuffer.tla",
-      "features": [],
-      "models": []
-    },
-    {
       "path": "specifications/Disruptor/APDisruptor_SPMC.tla",
       "features": [],
       "models": [
@@ -35,6 +30,11 @@
           "result": "success"
         }
       ]
+    },
+    {
+      "path": "specifications/Disruptor/APRingBuffer.tla",
+      "features": [],
+      "models": []
     },
     {
       "path": "specifications/Disruptor/Disruptor_MPMC.tla",

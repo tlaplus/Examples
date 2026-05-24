@@ -56,6 +56,14 @@
       ]
     },
     {
+      "path": "specifications/transaction_commit/PaxosCommit_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 5
+      }
+    },
+    {
       "path": "specifications/transaction_commit/TCommit.tla",
       "features": [],
       "models": [
@@ -69,6 +77,14 @@
           "stateDepth": 7
         }
       ]
+    },
+    {
+      "path": "specifications/transaction_commit/TCommit_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 1
+      }
     },
     {
       "path": "specifications/transaction_commit/TwoPhase.tla",
@@ -86,27 +102,11 @@
       ]
     },
     {
-      "path": "specifications/transaction_commit/PaxosCommit_proof.tla",
-      "features": [],
-      "models": [],
-      "proof": {
-        "runtime": "unknown"
-      }
-    },
-    {
-      "path": "specifications/transaction_commit/TCommit_proof.tla",
-      "features": [],
-      "models": [],
-      "proof": {
-        "runtime": "unknown"
-      }
-    },
-    {
       "path": "specifications/transaction_commit/TwoPhase_proof.tla",
       "features": [],
       "models": [],
       "proof": {
-        "runtime": "unknown"
+        "maxRuntimeMinutes": 1
       }
     }
   ]

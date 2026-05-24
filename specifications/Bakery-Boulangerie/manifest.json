@@ -13,7 +13,7 @@
       ],
       "models": [],
       "proof": {
-        "runtime": "00:00:20"
+        "maxRuntimeMinutes": 2
       }
     },
     {
@@ -23,7 +23,7 @@
       ],
       "models": [],
       "proof": {
-        "runtime": "00:00:30"
+        "maxRuntimeMinutes": 3
       }
     },
     {

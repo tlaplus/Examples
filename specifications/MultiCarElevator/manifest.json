@@ -54,7 +54,7 @@
       "features": [],
       "models": [],
       "proof": {
-        "runtime": "unknown"
+        "maxRuntimeMinutes": 1
       }
     }
   ]

@@ -27,7 +27,7 @@
       "features": [],
       "models": [],
       "proof": {
-        "runtime": "00:05:00"
+        "maxRuntimeMinutes": 5
       }
     },
     {

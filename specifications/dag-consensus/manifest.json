@@ -1,6 +1,10 @@
 {
-  "sources": ["https://github.com/nano-o/dag-consensus"],
-  "authors": ["Giuliano Losa"],
+  "sources": [
+    "https://github.com/nano-o/dag-consensus"
+  ],
+  "authors": [
+    "Giuliano Losa"
+  ],
   "tags": [],
   "modules": [
     {

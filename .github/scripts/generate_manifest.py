@@ -93,7 +93,7 @@ def generate_new_manifest(examples_root, spec_path, spec_name, parser, queries):
                     }
                     for cfg_path in sorted(get_cfg_files(examples_root, tla_path))
                 ]
-            } | ({'proof' : {'runtime': 'unknown'}} if 'proof' in module_features else {})
+            } | ({'proof' : {'maxRuntimeMinutes': 1}} if 'proof' in module_features else {})
             for tla_path, module_features in get_tla_file_features(examples_root, spec_path, parser, queries)
         ]
     }
@@ -133,7 +133,7 @@ def find_corresponding_model(old_model, new_module):
     return models[0] if any(models) else None
 
 def integrate_model_info(old_model, new_model):
-    fields = ['runtime', 'mode', 'result', 'distinctStates', 'totalStates', 'stateDepth']
+    fields = ['runtime', 'mode', 'result', 'distinctStates', 'totalStates', 'stateDepth', 'workers']
     for field in fields:
         if field in old_model:
             new_model[field] = old_model[field]
