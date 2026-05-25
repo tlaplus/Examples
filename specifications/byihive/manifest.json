@@ -55,6 +55,14 @@
       ]
     },
     {
+      "path": "specifications/byihive/VoucherLifeCycle_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 1
+      }
+    },
+    {
       "path": "specifications/byihive/VoucherRedeem.tla",
       "features": [],
       "models": [
@@ -83,14 +91,6 @@
           "stateDepth": 11
         }
       ]
-    },
-    {
-      "path": "specifications/byihive/VoucherLifeCycle_proof.tla",
-      "features": [],
-      "models": [],
-      "proof": {
-        "runtime": "unknown"
-      }
     }
   ]
 }

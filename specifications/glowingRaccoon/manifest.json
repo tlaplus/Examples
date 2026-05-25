@@ -45,6 +45,14 @@
       ]
     },
     {
+      "path": "specifications/glowingRaccoon/clean_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 1
+      }
+    },
+    {
       "path": "specifications/glowingRaccoon/product.tla",
       "features": [],
       "models": [
@@ -75,19 +83,11 @@
       ]
     },
     {
-      "path": "specifications/glowingRaccoon/clean_proof.tla",
-      "features": [],
-      "models": [],
-      "proof": {
-        "runtime": "unknown"
-      }
-    },
-    {
       "path": "specifications/glowingRaccoon/stages_proof.tla",
       "features": [],
       "models": [],
       "proof": {
-        "runtime": "unknown"
+        "maxRuntimeMinutes": 1
       }
     }
   ]

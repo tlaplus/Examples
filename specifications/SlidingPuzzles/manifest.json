@@ -19,7 +19,7 @@
     },
     {
       "path": "specifications/SlidingPuzzles/SlidingPuzzles_anim.tla",
-      "features": [ ],
+      "features": [],
       "models": [
         {
           "path": "specifications/SlidingPuzzles/SlidingPuzzles_anim.cfg",

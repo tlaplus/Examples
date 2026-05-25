@@ -39,6 +39,14 @@
       ]
     },
     {
+      "path": "specifications/ewd687a/EWD687a_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 3
+      }
+    },
+    {
       "path": "specifications/ewd687a/MCEWD687a.tla",
       "features": [],
       "models": [
@@ -49,14 +57,6 @@
           "result": "success"
         }
       ]
-    },
-    {
-      "path": "specifications/ewd687a/EWD687a_proof.tla",
-      "features": [],
-      "models": [],
-      "proof": {
-        "runtime": "unknown"
-      }
     }
   ]
 }

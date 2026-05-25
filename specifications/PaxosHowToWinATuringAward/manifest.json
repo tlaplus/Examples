@@ -12,7 +12,7 @@
       "features": [],
       "models": [],
       "proof": {
-        "runtime": "00:00:01"
+        "maxRuntimeMinutes": 1
       }
     },
     {
@@ -76,7 +76,7 @@
       "features": [],
       "models": [],
       "proof": {
-        "runtime": "00:00:01"
+        "maxRuntimeMinutes": 1
       }
     },
     {
@@ -84,7 +84,7 @@
       "features": [],
       "models": [],
       "proof": {
-        "runtime": "unknown"
+        "maxRuntimeMinutes": 1
       }
     }
   ]

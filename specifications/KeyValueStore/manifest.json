@@ -29,6 +29,14 @@
       "models": []
     },
     {
+      "path": "specifications/KeyValueStore/KeyValueStore_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 1
+      }
+    },
+    {
       "path": "specifications/KeyValueStore/MCKVS.tla",
       "features": [],
       "models": [
@@ -68,14 +76,6 @@
       "path": "specifications/KeyValueStore/Util.tla",
       "features": [],
       "models": []
-    },
-    {
-      "path": "specifications/KeyValueStore/KeyValueStore_proof.tla",
-      "features": [],
-      "models": [],
-      "proof": {
-        "runtime": "unknown"
-      }
     }
   ]
 }

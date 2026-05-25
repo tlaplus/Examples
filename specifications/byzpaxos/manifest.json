@@ -23,7 +23,7 @@
         }
       ],
       "proof": {
-        "runtime": "00:10:00"
+        "maxRuntimeMinutes": 45
       }
     },
     {
@@ -43,7 +43,7 @@
         }
       ],
       "proof": {
-        "runtime": "00:00:01"
+        "maxRuntimeMinutes": 1
       }
     },
     {
@@ -60,7 +60,7 @@
         }
       ],
       "proof": {
-        "runtime": "00:00:01"
+        "maxRuntimeMinutes": 1
       }
     },
     {
@@ -80,7 +80,7 @@
         }
       ],
       "proof": {
-        "runtime": "00:01:15"
+        "maxRuntimeMinutes": 3
       }
     }
   ]

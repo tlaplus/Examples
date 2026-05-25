@@ -38,6 +38,9 @@ jobs:
         with:
           distribution: adopt
           java-version: 17
+      - name: Install timeout command
+        if: matrix.os == 'macos-latest'
+        run: brew install coreutils
       - name: Download TLA⁺ dependencies (Windows)
         if: matrix.os == 'windows-latest'
         run: $SCRIPT_DIR/windows-setup.sh $SCRIPT_DIR $DEPS_DIR false
@@ -146,13 +149,12 @@ jobs:
             | map(select(has("proof")))
             # Failing on Linux
             | map(select(.path != "specifications/LoopInvariance/SumSequence.tla"))
-            # Take too long to check in the CI
-            | map(select(.path != "specifications/byzpaxos/BPConProof.tla"))
-            | map(select(.path != "specifications/tcp/tcp_proof.tla"))
-            | map(.path + "\u0000")
+            # Skip long-running proofs in CI
+            | map(select(.proof.maxRuntimeMinutes <= 5))
+            | map((.proof.maxRuntimeMinutes | tostring) + "\u0000" + .path + "\u0000")
             | join("")' \
-          | xargs --verbose --null --no-run-if-empty -I {TLA_FILE} \
-          time "$DEPS_DIR/tlapm/bin/tlapm" "{TLA_FILE}" -I "$DEPS_DIR/community" --stretch 5
+          | xargs --verbose --null --no-run-if-empty -n 2 \
+          sh -c 'time timeout --signal=KILL "${1}m" "$DEPS_DIR/tlapm/bin/tlapm" "$2" -I "$DEPS_DIR/community" --stretch 5' --
       - name: Smoke-test manifest generation script
         run: |
           python $SCRIPT_DIR/generate_manifest.py \

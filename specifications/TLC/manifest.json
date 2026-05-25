@@ -6,13 +6,6 @@
   "tags": [],
   "modules": [
     {
-      "path": "specifications/TLC/TLCMC.tla",
-      "features": [
-        "pluscal"
-      ],
-      "models": []
-    },
-    {
       "path": "specifications/TLC/MCReachability.tla",
       "features": [],
       "models": []
@@ -20,6 +13,13 @@
     {
       "path": "specifications/TLC/StateGraphs.tla",
       "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/TLC/TLCMC.tla",
+      "features": [
+        "pluscal"
+      ],
       "models": []
     },
     {

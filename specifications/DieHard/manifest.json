@@ -37,6 +37,14 @@
       ]
     },
     {
+      "path": "specifications/DieHard/DieHard_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 1
+      }
+    },
+    {
       "path": "specifications/DieHard/DieHarder.tla",
       "features": [],
       "models": []
@@ -70,14 +78,6 @@
           "workers": 1
         }
       ]
-    },
-    {
-      "path": "specifications/DieHard/DieHard_proof.tla",
-      "features": [],
-      "models": [],
-      "proof": {
-        "runtime": "unknown"
-      }
     }
   ]
 }
