@@ -1,0 +1,110 @@
+{
+  "sources": [
+    "https://github.com/dsethi/ProtocolDeadlockFiles/",
+    "Divjyot Sethi, Muralidhar Talupur, and Sharad Malik, \"Using Flow Specifications of Parameterized Cache Coherence Protocols for Verifying Deadlock Freedom,\" ATVA 2014, LNCS 8837, pp. 330-347.",
+    "Ching-Tsun Chou, Phanindra K. Mannava, and Seungjoon Park, \"A Simple Method for Parameterized Verification of Cache Coherence Protocols,\" FMCAD 2004, LNCS 3312, pp. 382-398.",
+    "Steven German, \"Tutorial on the German Cache Coherence Protocol,\" https://users.cs.utah.edu/~ganesh/presentations/fmcad04_tutorial2/german/steven-tutorial.pdf"
+  ],
+  "authors": [
+    "Markus Kuppe"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/GermanProtocol/APGerman.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/GermanProtocol/APGerman.cfg",
+          "runtime": "00:00:20",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/GermanProtocol/APGermanCoherence.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/GermanProtocol/APGermanCoherence.cfg",
+          "runtime": "00:00:08",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/GermanProtocol/APGermanWithMutex.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/GermanProtocol/APGermanWithMutex.cfg",
+          "runtime": "00:00:39",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/GermanProtocol/German.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/GermanProtocol/GermanCoherence.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/GermanProtocol/GermanWithMutex.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/GermanProtocol/MCGerman.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/GermanProtocol/MCGerman.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 1107,
+          "totalStates": 3281,
+          "stateDepth": 19
+        }
+      ]
+    },
+    {
+      "path": "specifications/GermanProtocol/MCGermanCoherence.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/GermanProtocol/MCGermanCoherence.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 735,
+          "totalStates": 1946,
+          "stateDepth": 19
+        }
+      ]
+    },
+    {
+      "path": "specifications/GermanProtocol/MCGermanWithMutex.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/GermanProtocol/MCGermanWithMutex.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 3390,
+          "totalStates": 9914,
+          "stateDepth": 19
+        }
+      ]
+    }
+  ]
+}
