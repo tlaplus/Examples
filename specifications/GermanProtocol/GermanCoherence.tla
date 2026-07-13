@@ -47,31 +47,17 @@ Init ==
 
 -------------------------------------------------------------------------------
 
-SendReqS(i) ==
+SendReq(i) ==
     /\ chan1[i] = "Empty"
-    /\ cache[i] = "I"
-    /\ chan1' = [chan1 EXCEPT ![i] = "ReqS"]
+    /\ \E c \in {"ReqS", "ReqE"} :
+         /\ cache[i] \in (IF c = "ReqS" THEN {"I"} ELSE {"I", "S"})
+         /\ chan1' = [chan1 EXCEPT ![i] = c]
     /\ UNCHANGED <<cache, chan2, chan3, invSet, shrSet, exGntd, curCmd, curPtr>>
 
-SendReqE(i) ==
-    /\ chan1[i] = "Empty"
-    /\ cache[i] \in {"I", "S"}
-    /\ chan1' = [chan1 EXCEPT ![i] = "ReqE"]
-    /\ UNCHANGED <<cache, chan2, chan3, invSet, shrSet, exGntd, curCmd, curPtr>>
-
-RecvReqS(i) ==
+RecvReq(i) ==
     /\ curCmd = "Empty"
-    /\ chan1[i] = "ReqS"
-    /\ curCmd' = "ReqS"
-    /\ curPtr' = i
-    /\ chan1' = [chan1 EXCEPT ![i] = "Empty"]
-    /\ invSet' = shrSet
-    /\ UNCHANGED <<cache, chan2, chan3, shrSet, exGntd>>
-
-RecvReqE(i) ==
-    /\ curCmd = "Empty"
-    /\ chan1[i] = "ReqE"
-    /\ curCmd' = "ReqE"
+    /\ chan1[i] \in {"ReqS", "ReqE"}
+    /\ curCmd' = chan1[i]
     /\ curPtr' = i
     /\ chan1' = [chan1 EXCEPT ![i] = "Empty"]
     /\ invSet' = shrSet
@@ -101,39 +87,22 @@ RecvInvAck(i) ==
     /\ exGntd' = IF exGntd = TRUE THEN FALSE ELSE exGntd
     /\ UNCHANGED <<cache, chan1, chan2, invSet, curCmd, curPtr>>
 
-SendGntS(i) ==
-    /\ curCmd = "ReqS"
+SendGnt(i) ==
+    /\ curCmd \in {"ReqS", "ReqE"}
     /\ curPtr = i
     /\ chan2[i] = "Empty"
     /\ exGntd = FALSE
-    /\ chan2' = [chan2 EXCEPT ![i] = "GntS"]
+    /\ curCmd = "ReqE" => \A j \in NODE : shrSet[j] = FALSE
+    /\ chan2' = [chan2 EXCEPT ![i] = IF curCmd = "ReqS" THEN "GntS" ELSE "GntE"]
     /\ shrSet' = [shrSet EXCEPT ![i] = TRUE]
-    /\ curCmd' = "Empty"
-    /\ curPtr' = NoNode
-    /\ UNCHANGED <<cache, chan1, chan3, invSet, exGntd>>
-
-SendGntE(i) ==
-    /\ curCmd = "ReqE"
-    /\ curPtr = i
-    /\ chan2[i] = "Empty"
-    /\ exGntd = FALSE
-    /\ \A j \in NODE : shrSet[j] = FALSE
-    /\ chan2' = [chan2 EXCEPT ![i] = "GntE"]
-    /\ shrSet' = [shrSet EXCEPT ![i] = TRUE]
-    /\ exGntd' = TRUE
+    /\ exGntd' = (curCmd = "ReqE")
     /\ curCmd' = "Empty"
     /\ curPtr' = NoNode
     /\ UNCHANGED <<cache, chan1, chan3, invSet>>
 
-RecvGntS(i) ==
-    /\ chan2[i] = "GntS"
-    /\ cache' = [cache EXCEPT ![i] = "S"]
-    /\ chan2' = [chan2 EXCEPT ![i] = "Empty"]
-    /\ UNCHANGED <<chan1, chan3, invSet, shrSet, exGntd, curCmd, curPtr>>
-
-RecvGntE(i) ==
-    /\ chan2[i] = "GntE"
-    /\ cache' = [cache EXCEPT ![i] = "E"]
+RecvGnt(i) ==
+    /\ chan2[i] \in {"GntS", "GntE"}
+    /\ cache' = [cache EXCEPT ![i] = IF chan2[i] = "GntS" THEN "S" ELSE "E"]
     /\ chan2' = [chan2 EXCEPT ![i] = "Empty"]
     /\ UNCHANGED <<chan1, chan3, invSet, shrSet, exGntd, curCmd, curPtr>>
 
@@ -141,11 +110,11 @@ RecvGntE(i) ==
 
 Next ==
     \E i \in NODE :
-        \/ SendReqS(i)    \/ SendReqE(i)
-        \/ RecvReqS(i)    \/ RecvReqE(i)
+        \/ SendReq(i)
+        \/ RecvReq(i)
         \/ SendInv(i)     \/ SendInvAck(i)   \/ RecvInvAck(i)
-        \/ SendGntS(i)    \/ SendGntE(i)
-        \/ RecvGntS(i)    \/ RecvGntE(i)
+        \/ SendGnt(i)
+        \/ RecvGnt(i)
 
 Spec == Init /\ [][Next]_vars
 
