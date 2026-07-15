@@ -171,6 +171,14 @@ ABS_SendGntE ==
 ABS_RecvInvAck ==
     /\ curCmd # "Empty"
     /\ exGntd = TRUE
+    \* Operational form of the mutual-exclusion noninterference lemma ("Lemma_1"
+    \* of Chou, Mannava & Park, FMCAD 2004 = ref [11] of Sethi, Talupur & Malik,
+    \* arXiv:1407.7468, whose online models these are).  germanWithMutex.m is the
+    \* CMP-strengthened abstraction that conjoins this guard onto absRecvInvAck;
+    \* germanNoMutex.m omits it on purpose -- the deadlock-study model that needs
+    \* no noninterference lemma -- so it admits the spurious "bogus InvAck from
+    \* Other" counterexample to mutual exclusion.  Dropping this one conjunct makes
+    \* German.tla bisimilar to germanNoMutex.m.
     /\ \A j \in NODE :
          /\ cache[j] # "E"
          /\ chan2[j] # "GntE"
