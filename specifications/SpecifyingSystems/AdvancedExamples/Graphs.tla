@@ -1,4 +1,10 @@
 ------------------------------- MODULE Graphs ------------------------------- 
+(***************************************************************************)
+(* Representation of (directed) graphs in TLA+.                            *)
+(* This is the ancestor of the Graphs community module, available at       *)
+(* https://github.com/tlaplus/CommunityModules/blob/master/modules/Graphs.tla *)
+(* which contains more operators and also slightly changed definitions.    *)
+(***************************************************************************)
 LOCAL INSTANCE Naturals
 LOCAL INSTANCE Sequences
 
