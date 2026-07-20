@@ -78,7 +78,7 @@ RecvInvAck(i) ==
     /\ curCmd # "Empty"
     /\ chan3' = [chan3 EXCEPT ![i] = "Empty"]
     /\ shrSet' = [shrSet EXCEPT ![i] = FALSE]
-    /\ exGntd' = IF exGntd = TRUE THEN FALSE ELSE exGntd
+    /\ exGntd' = FALSE
     /\ UNCHANGED <<cache, chan1, chan2, invSet, curCmd, curPtr>>
 
 SendGnt(i) ==
