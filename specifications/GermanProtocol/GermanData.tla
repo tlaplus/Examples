@@ -1,4 +1,4 @@
------------------------------ MODULE GermanWithMutex -----------------------------
+------------------------------ MODULE GermanData ------------------------------
 EXTENDS Naturals, FiniteSets
 
 CONSTANTS
@@ -158,7 +158,7 @@ Spec == Init /\ [][Next]_vars
 
 -------------------------------------------------------------------------------
 
-Abstract == INSTANCE GermanCoherence WITH
+Abstract == INSTANCE GermanControl WITH
     cache <- [i \in NODE |-> cache[i].state],
     chan1 <- [i \in NODE |-> chan1[i].cmd],
     chan2 <- [i \in NODE |-> chan2[i].cmd],

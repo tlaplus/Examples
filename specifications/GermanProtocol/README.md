@@ -7,6 +7,25 @@ describe the *same* system as its Murphi counterpart — not just that they sati
 the same properties, but that they exhibit exactly the same behavior, step for
 step.
 
+## Specifications
+
+- `GermanData.tla` models the concrete protocol with cache and message data.
+- `GermanControl.tla` is its data-forgetting control-state abstraction.
+- `GermanCMPWithMutex.tla` applies the CMP abstraction: `Other` summarizes
+  omitted nodes, and the mutex-derived noninterference guard keeps that
+  abstraction sound.
+
+Their checked refinement order is:
+
+```text
+GermanData => GermanControl => GermanCMPWithMutex
+```
+
+The `MC*` modules and configurations run TLC, including the two refinement
+checks. The `AP*` modules and configurations provide Apalache type annotations
+and bounded safety checks. The names describe each TLA+ model's role; the
+original Murphi filenames are retained in the provenance below.
+
 ## What "equivalent" means here
 
 Murphi and TLA+ share essentially the same underlying semantics: each defines a

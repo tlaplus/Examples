@@ -1,5 +1,5 @@
------------------------------ MODULE APGerman -----------------------------
-(* Apalache type annotations for German.tla, applied via INSTANCE so the
+------------------------ MODULE APGermanCMPWithMutex ------------------------
+(* Apalache type annotations for GermanCMPWithMutex.tla, applied via INSTANCE so the
    original spec remains free of tool-specific idiosyncrasies.
 
    Nodes are modelled as an uninterpreted Apalache type (NODE); the abstract
@@ -7,8 +7,8 @@
    `curPtr \in NODE \cup {Other, NoNode}` is well typed.
 
    Run bounded model checking for executions of at most 20 Next steps with:
-     apalache-mc check --config=APGerman.cfg --length=20 APGerman.tla
-   This completes in under 10 minutes on a 2021 M1 MacBook.
+     apalache-mc check --config=APGermanCMPWithMutex.cfg --length=20 APGermanCMPWithMutex.tla
+   This completes in about 20 minutes on a 2021 M1 MacBook.
 *)
 
 CONSTANTS
@@ -39,9 +39,9 @@ VARIABLES
   \* @type: NODE;
   curPtr
 
-INSTANCE German
+INSTANCE GermanCMPWithMutex
 
-\* Concrete values for the constants used by APGerman.cfg.
+\* Concrete values for the constants used by APGermanCMPWithMutex.cfg.
 NodeVal   == { "n1_OF_NODE", "n2_OF_NODE" }
 OtherVal  == "other_OF_NODE"
 NoNodeVal == "noNode_OF_NODE"

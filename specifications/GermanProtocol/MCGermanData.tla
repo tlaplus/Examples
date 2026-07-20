@@ -1,5 +1,5 @@
-------------------------- MODULE MCGermanWithMutex -------------------------
-EXTENDS GermanWithMutex, TLC
+----------------------------- MODULE MCGermanData -----------------------------
+EXTENDS GermanData, TLC
 
 \* Nodes and data values are independently interchangeable.  The NoNode and
 \* NoData sentinels are fixed because they are outside these sets.
