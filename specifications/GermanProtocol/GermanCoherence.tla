@@ -27,8 +27,8 @@ TypeOK ==
     /\ chan1  \in [NODE -> {"Empty", "ReqS", "ReqE"}]
     /\ chan2  \in [NODE -> {"Empty", "Inv", "GntS", "GntE"}]
     /\ chan3  \in [NODE -> {"Empty", "InvAck"}]
-    /\ invSet \in [NODE -> BOOLEAN]
-    /\ shrSet \in [NODE -> BOOLEAN]
+    /\ invSet \subseteq NODE
+    /\ shrSet \subseteq NODE
     /\ exGntd \in BOOLEAN
     /\ curCmd \in {"Empty", "ReqS", "ReqE"}
     /\ curPtr \in NODE \cup {NoNode}
@@ -38,8 +38,8 @@ Init ==
     /\ chan1  = [i \in NODE |-> "Empty"]
     /\ chan2  = [i \in NODE |-> "Empty"]
     /\ chan3  = [i \in NODE |-> "Empty"]
-    /\ invSet = [i \in NODE |-> FALSE]
-    /\ shrSet = [i \in NODE |-> FALSE]
+    /\ invSet = {}
+    /\ shrSet = {}
     /\ exGntd = FALSE
     /\ curCmd = "Empty"
     /\ curPtr = NoNode
@@ -64,10 +64,10 @@ RecvReq(i) ==
 
 SendInv(i) ==
     /\ chan2[i] = "Empty"
-    /\ invSet[i] = TRUE
+    /\ i \in invSet
     /\ (curCmd = "ReqE" \/ (curCmd = "ReqS" /\ exGntd = TRUE))
     /\ chan2' = [chan2 EXCEPT ![i] = "Inv"]
-    /\ invSet' = [invSet EXCEPT ![i] = FALSE]
+    /\ invSet' = invSet \ {i}
     /\ UNCHANGED <<cache, chan1, chan3, shrSet, exGntd, curCmd, curPtr>>
 
 SendInvAck(i) ==
@@ -82,7 +82,7 @@ RecvInvAck(i) ==
     /\ chan3[i] = "InvAck"
     /\ curCmd # "Empty"
     /\ chan3' = [chan3 EXCEPT ![i] = "Empty"]
-    /\ shrSet' = [shrSet EXCEPT ![i] = FALSE]
+    /\ shrSet' = shrSet \ {i}
     /\ exGntd' = IF exGntd = TRUE THEN FALSE ELSE exGntd
     /\ UNCHANGED <<cache, chan1, chan2, invSet, curCmd, curPtr>>
 
@@ -91,9 +91,9 @@ SendGnt(i) ==
     /\ curPtr = i
     /\ chan2[i] = "Empty"
     /\ exGntd = FALSE
-    /\ curCmd = "ReqE" => \A j \in NODE : shrSet[j] = FALSE
+    /\ curCmd = "ReqE" => shrSet = {}
     /\ chan2' = [chan2 EXCEPT ![i] = IF curCmd = "ReqS" THEN "GntS" ELSE "GntE"]
-    /\ shrSet' = [shrSet EXCEPT ![i] = TRUE]
+    /\ shrSet' = shrSet \cup {i}
     /\ exGntd' = (curCmd = "ReqE")
     /\ curCmd' = "Empty"
     /\ curPtr' = NoNode

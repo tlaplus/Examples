@@ -37,8 +37,8 @@ TypeOK ==
     /\ chan1  \in [NODE -> [cmd : {"Empty", "ReqS", "ReqE"}, data : Payload]]
     /\ chan2  \in [NODE -> [cmd : {"Empty", "Inv", "GntS", "GntE"}, data : Payload]]
     /\ chan3  \in [NODE -> [cmd : {"Empty", "InvAck"}, data : Payload]]
-    /\ invSet \in [NODE -> BOOLEAN]
-    /\ shrSet \in [NODE -> BOOLEAN]
+    /\ invSet \subseteq NODE
+    /\ shrSet \subseteq NODE
     /\ exGntd \in BOOLEAN
     /\ curCmd \in {"Empty", "ReqS", "ReqE"}
     /\ curPtr \in NODE \cup {NoNode}
@@ -51,8 +51,8 @@ Init ==
         /\ chan1  = [i \in NODE |-> [cmd |-> "Empty", data |-> NoData]]
         /\ chan2  = [i \in NODE |-> [cmd |-> "Empty", data |-> NoData]]
         /\ chan3  = [i \in NODE |-> [cmd |-> "Empty", data |-> NoData]]
-        /\ invSet = [i \in NODE |-> FALSE]
-        /\ shrSet = [i \in NODE |-> FALSE]
+        /\ invSet = {}
+        /\ shrSet = {}
         /\ exGntd = FALSE
         /\ curCmd = "Empty"
         /\ curPtr = NoNode
@@ -110,17 +110,17 @@ RecvReq(i) ==
 
 SendInv(i) ==
     /\ chan2[i].cmd = "Empty"
-    /\ invSet[i] = TRUE
+    /\ i \in invSet
     /\ (curCmd = "ReqE" \/ (curCmd = "ReqS" /\ exGntd = TRUE))
     /\ chan2' = [chan2 EXCEPT ![i].cmd = "Inv"]
-    /\ invSet' = [invSet EXCEPT ![i] = FALSE]
+    /\ invSet' = invSet \ {i}
     /\ UNCHANGED <<cache, chan1, chan3, shrSet,
                    exGntd, curCmd, curPtr, memData, auxData>>
 
 RecvInvAck(i) ==
     /\ chan3[i].cmd = "InvAck"
     /\ curCmd # "Empty"
-    /\ shrSet' = [shrSet EXCEPT ![i] = FALSE]
+    /\ shrSet' = shrSet \ {i}
     /\ IF exGntd = TRUE
          THEN /\ exGntd'  = FALSE
               /\ memData' = chan3[i].data
@@ -134,10 +134,10 @@ SendGnt(i) ==
     /\ curPtr = i
     /\ chan2[i].cmd = "Empty"
     /\ exGntd = FALSE
-    /\ curCmd = "ReqE" => \A j \in NODE : shrSet[j] = FALSE
+    /\ curCmd = "ReqE" => shrSet = {}
     /\ chan2' = [chan2 EXCEPT ![i].cmd  = IF curCmd = "ReqS" THEN "GntS" ELSE "GntE",
                               ![i].data = memData]
-    /\ shrSet' = [shrSet EXCEPT ![i] = TRUE]
+    /\ shrSet' = shrSet \cup {i}
     /\ exGntd' = (curCmd = "ReqE")
     /\ curCmd' = "Empty"
     /\ curPtr' = NoNode
@@ -182,7 +182,7 @@ TransactionConsistency ==
     (curCmd = "Empty") <=> (curPtr = NoNode)
 
 DirectoryAccurate ==
-    \A i \in NODE : cache[i].state \in {"S", "E"} => shrSet[i] = TRUE
+    \A i \in NODE : cache[i].state \in {"S", "E"} => i \in shrSet
 
 ExclusiveIsolation ==
     \A i \in NODE :

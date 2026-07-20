@@ -31,9 +31,9 @@ VARIABLES
   chan2,
   \* @type: NODE -> { cmd: Str, data: DATA };
   chan3,
-  \* @type: NODE -> Bool;
+  \* @type: Set(NODE);
   invSet,
-  \* @type: NODE -> Bool;
+  \* @type: Set(NODE);
   shrSet,
   \* @type: Bool;
   exGntd,
