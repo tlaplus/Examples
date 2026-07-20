@@ -11,7 +11,6 @@ ASSUME NoDataNotInDATA == NoData \notin DATA
 ASSUME NoNodeNotInNODE == NoNode \notin NODE
 
 CacheState == {"I", "S", "E"}
-MsgCmd     == {"Empty", "ReqS", "ReqE", "Inv", "InvAck", "GntS", "GntE"}
 
 Payload == DATA \cup {NoData}
 
@@ -35,13 +34,13 @@ vars == <<cache, chan1, chan2, chan3, invSet, shrSet,
 
 TypeOK ==
     /\ cache  \in [NODE -> [state : CacheState, data : Payload]]
-    /\ chan1  \in [NODE -> [cmd : MsgCmd, data : Payload]]
-    /\ chan2  \in [NODE -> [cmd : MsgCmd, data : Payload]]
-    /\ chan3  \in [NODE -> [cmd : MsgCmd, data : Payload]]
+    /\ chan1  \in [NODE -> [cmd : {"Empty", "ReqS", "ReqE"}, data : Payload]]
+    /\ chan2  \in [NODE -> [cmd : {"Empty", "Inv", "GntS", "GntE"}, data : Payload]]
+    /\ chan3  \in [NODE -> [cmd : {"Empty", "InvAck"}, data : Payload]]
     /\ invSet \in [NODE -> BOOLEAN]
     /\ shrSet \in [NODE -> BOOLEAN]
     /\ exGntd \in BOOLEAN
-    /\ curCmd \in MsgCmd
+    /\ curCmd \in {"Empty", "ReqS", "ReqE"}
     /\ curPtr \in NODE \cup {NoNode}
     /\ memData \in DATA
     /\ auxData \in DATA
@@ -179,14 +178,6 @@ DataProp ==
     /\ (exGntd = FALSE => memData = auxData)
     /\ \A i \in NODE : cache[i].state # "I" => cache[i].data = auxData
 
--------------------------------------------------------------------------------
-
-ChannelWellFormed ==
-    \A i \in NODE :
-        /\ chan1[i].cmd \in {"Empty", "ReqS", "ReqE"}
-        /\ chan2[i].cmd \in {"Empty", "Inv", "GntS", "GntE"}
-        /\ chan3[i].cmd \in {"Empty", "InvAck"}
-
 TransactionConsistency ==
     (curCmd = "Empty") <=> (curPtr = NoNode)
 
@@ -198,18 +189,18 @@ ExclusiveIsolation ==
         cache[i].state = "E" =>
             /\ exGntd = TRUE
             /\ \A j \in NODE \ {i} :
-                     /\ cache[j].state = "I"
-                     /\ chan2[j].cmd \notin {"GntS", "GntE"}
-                     /\ chan3[j].cmd # "InvAck"
+                /\ cache[j].state = "I"
+                /\ chan2[j].cmd \notin {"GntS", "GntE"}
+                /\ chan3[j].cmd # "InvAck"
 
 WritebackCarriesLatest ==
     \A i \in NODE :
         (chan3[i].cmd = "InvAck" /\ curCmd # "Empty" /\ exGntd = TRUE) =>
             /\ chan3[i].data = auxData
             /\ \A j \in NODE \ {i} :
-                     /\ cache[j].state # "E"
-                     /\ chan2[j].cmd # "GntE"
-                     /\ chan3[j].cmd # "InvAck"
+                /\ cache[j].state # "E"
+                /\ chan2[j].cmd # "GntE"
+                /\ chan3[j].cmd # "InvAck"
 
 -------------------------------------------------------------------------------
 
