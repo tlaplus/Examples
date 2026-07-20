@@ -1,5 +1,5 @@
-------------------------- MODULE APGermanCoherence -------------------------
-(* Apalache type annotations for GermanCoherence.tla, applied via INSTANCE so
+--------------------------- MODULE APGermanControl ---------------------------
+(* Apalache type annotations for GermanControl.tla, applied via INSTANCE so
    the original spec remains free of tool-specific idiosyncrasies.
 
    Nodes are modelled as an uninterpreted Apalache type (NODE); the NoNode
@@ -7,8 +7,8 @@
    typed.
 
    Run bounded model checking for executions of at most 20 Next steps with:
-     apalache-mc check --config=APGermanCoherence.cfg --length=20 APGermanCoherence.tla
-   This completes in under 10 minutes on a 2021 M1 MacBook.
+     apalache-mc check --config=APGermanControl.cfg --length=20 APGermanControl.tla
+   This completes in about 4 minutes on a 2021 M1 MacBook.
 *)
 
 CONSTANTS
@@ -37,9 +37,9 @@ VARIABLES
   \* @type: NODE;
   curPtr
 
-INSTANCE GermanCoherence
+INSTANCE GermanControl
 
-\* Concrete values for the constants used by APGermanCoherence.cfg.
+\* Concrete values for the constants used by APGermanControl.cfg.
 NodeVal   == { "n1_OF_NODE", "n2_OF_NODE" }
 NoNodeVal == "noNode_OF_NODE"
 

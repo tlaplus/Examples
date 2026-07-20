@@ -1,22 +1,16 @@
----------------------------- MODULE GermanCoherence ----------------------------
+-------------------------- MODULE GermanCMPWithMutex --------------------------
 CONSTANTS
     NODE,
+    Other,
     NoNode
 
-ASSUME NoNodeNotInNODE == NoNode \notin NODE
+ASSUME Other \notin NODE
+ASSUME NoNode \notin NODE /\ NoNode # Other
 
 CacheState == {"I", "S", "E"}
 
 VARIABLES
-    cache,
-    chan1,
-    chan2,
-    chan3,
-    invSet,
-    shrSet,
-    exGntd,
-    curCmd,
-    curPtr
+    cache, chan1, chan2, chan3, invSet, shrSet, exGntd, curCmd, curPtr
 
 vars == <<cache, chan1, chan2, chan3, invSet, shrSet, exGntd, curCmd, curPtr>>
 
@@ -31,7 +25,7 @@ TypeOK ==
     /\ shrSet \subseteq NODE
     /\ exGntd \in BOOLEAN
     /\ curCmd \in {"Empty", "ReqS", "ReqE"}
-    /\ curPtr \in NODE \cup {NoNode}
+    /\ curPtr \in NODE \cup {Other, NoNode}
 
 Init ==
     /\ cache  = [i \in NODE |-> "I"]
@@ -83,7 +77,7 @@ RecvInvAck(i) ==
     /\ curCmd # "Empty"
     /\ chan3' = [chan3 EXCEPT ![i] = "Empty"]
     /\ shrSet' = shrSet \ {i}
-    /\ exGntd' = IF exGntd = TRUE THEN FALSE ELSE exGntd
+    /\ exGntd' = FALSE
     /\ UNCHANGED <<cache, chan1, chan2, invSet, curCmd, curPtr>>
 
 SendGnt(i) ==
@@ -107,13 +101,58 @@ RecvGnt(i) ==
 
 -------------------------------------------------------------------------------
 
+\* CMP abstraction actions: Other summarizes nodes omitted from NODE, projecting
+\* their hidden cache and channel behavior onto visible shared state.
+ABS_RecvReq ==
+    /\ curCmd = "Empty"
+    /\ \E c \in {"ReqS", "ReqE"} : curCmd' = c
+    /\ curPtr' = Other
+    /\ invSet' = shrSet
+    /\ UNCHANGED <<cache, chan1, chan2, chan3, shrSet, exGntd>>
+
+ABS_SendGnt ==
+    /\ curCmd \in {"ReqS", "ReqE"}
+    /\ curPtr = Other
+    /\ exGntd = FALSE
+    /\ curCmd = "ReqE" => shrSet = {}
+    /\ exGntd' = (curCmd = "ReqE")
+    /\ curCmd' = "Empty"
+    /\ curPtr' = NoNode
+    /\ UNCHANGED <<cache, chan1, chan2, chan3, invSet, shrSet>>
+
+\* Other acknowledges relinquishing its exclusive copy.  Guarded (as in
+\* german.m) so it only fires when no concrete node is exclusive / mid-grant /
+\* mid-ack -- the noninterference condition that keeps the abstraction sound.
+ABS_RecvInvAck ==
+    /\ curCmd # "Empty"
+    /\ exGntd = TRUE
+    \* Operational form of the mutual-exclusion noninterference lemma ("Lemma_1"
+    \* of Chou, Mannava & Park, FMCAD 2004 = ref [11] of Sethi, Talupur & Malik,
+    \* arXiv:1407.7468, whose online models these are).  germanWithMutex.m is the
+    \* CMP-strengthened abstraction that conjoins this guard onto absRecvInvAck;
+    \* germanNoMutex.m omits it on purpose -- the deadlock-study model that needs
+    \* no noninterference lemma -- so it admits the spurious "bogus InvAck from
+    \* Other" counterexample to mutual exclusion.  Dropping this one conjunct makes
+    \* GermanCMPWithMutex.tla bisimilar to germanNoMutex.m.
+    /\ \A j \in NODE :
+         /\ cache[j] # "E"
+         /\ chan2[j] # "GntE"
+         /\ chan3[j] # "InvAck"
+    /\ exGntd' = FALSE
+    /\ UNCHANGED <<cache, chan1, chan2, chan3, invSet, shrSet, curCmd, curPtr>>
+
+-------------------------------------------------------------------------------
+
 Next ==
-    \E i \in NODE :
-        \/ SendReq(i)
-        \/ RecvReq(i)
-        \/ SendInv(i)     \/ SendInvAck(i)   \/ RecvInvAck(i)
-        \/ SendGnt(i)
-        \/ RecvGnt(i)
+    \/ \E i \in NODE :
+         \/ SendReq(i)
+         \/ RecvReq(i)
+         \/ SendInv(i)     \/ SendInvAck(i)   \/ RecvInvAck(i)
+         \/ SendGnt(i)
+         \/ RecvGnt(i)
+    \/ ABS_RecvReq
+    \/ ABS_SendGnt
+    \/ ABS_RecvInvAck
 
 Spec == Init /\ [][Next]_vars
 
@@ -124,5 +163,13 @@ Coherence ==
         i # j =>
             /\ (cache[i] = "E" => cache[j] = "I")
             /\ (cache[i] = "S" => cache[j] \in {"I", "S"})
+
+Lemma_1 ==
+    \A i \in NODE :
+        (chan3[i] = "InvAck" /\ curCmd # "Empty" /\ exGntd = TRUE) =>
+            \A j \in NODE \ {i} :
+                /\ cache[j] # "E"
+                /\ chan2[j] # "GntE"
+                /\ chan3[j] # "InvAck"
 
 =============================================================================

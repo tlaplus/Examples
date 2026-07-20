@@ -11,11 +11,11 @@
   "tags": [],
   "modules": [
     {
-      "path": "specifications/GermanProtocol/APGerman.tla",
+      "path": "specifications/GermanProtocol/APGermanCMPWithMutex.tla",
       "features": [],
       "models": [
         {
-          "path": "specifications/GermanProtocol/APGerman.cfg",
+          "path": "specifications/GermanProtocol/APGermanCMPWithMutex.cfg",
           "runtime": "00:00:20",
           "mode": "symbolic",
           "result": "success"
@@ -23,11 +23,11 @@
       ]
     },
     {
-      "path": "specifications/GermanProtocol/APGermanCoherence.tla",
+      "path": "specifications/GermanProtocol/APGermanControl.tla",
       "features": [],
       "models": [
         {
-          "path": "specifications/GermanProtocol/APGermanCoherence.cfg",
+          "path": "specifications/GermanProtocol/APGermanControl.cfg",
           "runtime": "00:00:08",
           "mode": "symbolic",
           "result": "success"
@@ -35,11 +35,11 @@
       ]
     },
     {
-      "path": "specifications/GermanProtocol/APGermanWithMutex.tla",
+      "path": "specifications/GermanProtocol/APGermanData.tla",
       "features": [],
       "models": [
         {
-          "path": "specifications/GermanProtocol/APGermanWithMutex.cfg",
+          "path": "specifications/GermanProtocol/APGermanData.cfg",
           "runtime": "00:00:39",
           "mode": "symbolic",
           "result": "success"
@@ -47,26 +47,26 @@
       ]
     },
     {
-      "path": "specifications/GermanProtocol/German.tla",
+      "path": "specifications/GermanProtocol/GermanCMPWithMutex.tla",
       "features": [],
       "models": []
     },
     {
-      "path": "specifications/GermanProtocol/GermanCoherence.tla",
+      "path": "specifications/GermanProtocol/GermanControl.tla",
       "features": [],
       "models": []
     },
     {
-      "path": "specifications/GermanProtocol/GermanWithMutex.tla",
+      "path": "specifications/GermanProtocol/GermanData.tla",
       "features": [],
       "models": []
     },
     {
-      "path": "specifications/GermanProtocol/MCGerman.tla",
+      "path": "specifications/GermanProtocol/MCGermanCMPWithMutex.tla",
       "features": [],
       "models": [
         {
-          "path": "specifications/GermanProtocol/MCGerman.cfg",
+          "path": "specifications/GermanProtocol/MCGermanCMPWithMutex.cfg",
           "runtime": "00:00:01",
           "mode": "exhaustive search",
           "result": "success",
@@ -77,11 +77,11 @@
       ]
     },
     {
-      "path": "specifications/GermanProtocol/MCGermanCoherence.tla",
+      "path": "specifications/GermanProtocol/MCGermanControl.tla",
       "features": [],
       "models": [
         {
-          "path": "specifications/GermanProtocol/MCGermanCoherence.cfg",
+          "path": "specifications/GermanProtocol/MCGermanControl.cfg",
           "runtime": "00:00:01",
           "mode": "exhaustive search",
           "result": "success",
@@ -92,11 +92,11 @@
       ]
     },
     {
-      "path": "specifications/GermanProtocol/MCGermanWithMutex.tla",
+      "path": "specifications/GermanProtocol/MCGermanData.tla",
       "features": [],
       "models": [
         {
-          "path": "specifications/GermanProtocol/MCGermanWithMutex.cfg",
+          "path": "specifications/GermanProtocol/MCGermanData.cfg",
           "runtime": "00:00:01",
           "mode": "exhaustive search",
           "result": "success",
