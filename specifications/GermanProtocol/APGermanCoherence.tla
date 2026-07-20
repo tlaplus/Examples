@@ -4,7 +4,12 @@
 
    Nodes are modelled as an uninterpreted Apalache type (NODE); the NoNode
    sentinel shares that type so that `curPtr \in NODE \cup {NoNode}` is well
-   typed. *)
+   typed.
+
+   Run bounded model checking for executions of at most 20 Next steps with:
+     apalache-mc check --config=APGermanCoherence.cfg --length=20 APGermanCoherence.tla
+   This completes in under 10 minutes on a 2021 M1 MacBook.
+*)
 
 CONSTANTS
   \* @type: Set(NODE);
