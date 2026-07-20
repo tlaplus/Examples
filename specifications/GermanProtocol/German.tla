@@ -101,6 +101,8 @@ RecvGnt(i) ==
 
 -------------------------------------------------------------------------------
 
+\* CMP abstraction actions: Other summarizes nodes omitted from NODE, projecting
+\* their hidden cache and channel behavior onto visible shared state.
 ABS_RecvReq ==
     /\ curCmd = "Empty"
     /\ \E c \in {"ReqS", "ReqE"} : curCmd' = c
