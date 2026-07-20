@@ -8,7 +8,6 @@ ASSUME Other \notin NODE
 ASSUME NoNode \notin NODE /\ NoNode # Other
 
 CacheState == {"I", "S", "E"}
-MsgCmd     == {"Empty", "ReqS", "ReqE", "Inv", "InvAck", "GntS", "GntE"}
 
 VARIABLES
     cache, chan1, chan2, chan3, invSet, shrSet, exGntd, curCmd, curPtr
@@ -19,13 +18,13 @@ vars == <<cache, chan1, chan2, chan3, invSet, shrSet, exGntd, curCmd, curPtr>>
 
 TypeOK ==
     /\ cache  \in [NODE -> CacheState]
-    /\ chan1  \in [NODE -> MsgCmd]
-    /\ chan2  \in [NODE -> MsgCmd]
-    /\ chan3  \in [NODE -> MsgCmd]
+    /\ chan1  \in [NODE -> {"Empty", "ReqS", "ReqE"}]
+    /\ chan2  \in [NODE -> {"Empty", "Inv", "GntS", "GntE"}]
+    /\ chan3  \in [NODE -> {"Empty", "InvAck"}]
     /\ invSet \in [NODE -> BOOLEAN]
     /\ shrSet \in [NODE -> BOOLEAN]
     /\ exGntd \in BOOLEAN
-    /\ curCmd \in MsgCmd
+    /\ curCmd \in {"Empty", "ReqS", "ReqE"}
     /\ curPtr \in NODE \cup {Other, NoNode}
 
 Init ==
@@ -167,8 +166,8 @@ Lemma_1 ==
     \A i \in NODE :
         (chan3[i] = "InvAck" /\ curCmd # "Empty" /\ exGntd = TRUE) =>
             \A j \in NODE \ {i} :
-                    /\ cache[j] # "E"
-                    /\ chan2[j] # "GntE"
-                    /\ chan3[j] # "InvAck"
+                /\ cache[j] # "E"
+                /\ chan2[j] # "GntE"
+                /\ chan3[j] # "InvAck"
 
 =============================================================================
