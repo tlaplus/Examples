@@ -1,0 +1,33 @@
+{
+  "sources": [
+    "https://github.com/dsethi/ProtocolDeadlockFiles/",
+    "Divjyot Sethi, Muralidhar Talupur, and Sharad Malik, \"Using Flow Specifications of Parameterized Cache Coherence Protocols for Verifying Deadlock Freedom,\" ATVA 2014, LNCS 8837, pp. 330-347.",
+    "Ching-Tsun Chou, Phanindra K. Mannava, and Seungjoon Park, \"A Simple Method for Parameterized Verification of Cache Coherence Protocols,\" FMCAD 2004, LNCS 3312, pp. 382-398."
+  ],
+  "authors": [
+    "Markus Kuppe"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/FlashProtocol/FlashWithMutex.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/FlashProtocol/MCFlashWithMutex.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/FlashProtocol/MCFlashWithMutex.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 414,
+          "totalStates": 1231,
+          "stateDepth": 13
+        }
+      ]
+    }
+  ]
+}
