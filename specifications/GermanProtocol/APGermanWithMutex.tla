@@ -5,7 +5,12 @@
    Nodes and data values are modelled as uninterpreted Apalache types (NODE,
    DATA).  The NoNode / NoData sentinels share those types so that the union
    sets in TypeOK are well typed.  Only the safety invariants are checked;
-   Apalache does not verify the liveness properties (FairSpec) of the spec. *)
+   Apalache does not verify the liveness properties (FairSpec) of the spec.
+
+   Run bounded model checking for executions of at most 10 Next steps with:
+     apalache-mc check --config=APGermanWithMutex.cfg --length=10 APGermanWithMutex.tla
+   This completes quickly on a 2021 M1 MacBook; length 20 takes over 1.5 hours.
+*)
 
 CONSTANTS
   \* @type: Set(NODE);
