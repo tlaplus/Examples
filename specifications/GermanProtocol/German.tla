@@ -166,8 +166,7 @@ Coherence ==
 Lemma_1 ==
     \A i \in NODE :
         (chan3[i] = "InvAck" /\ curCmd # "Empty" /\ exGntd = TRUE) =>
-            \A j \in NODE :
-                j # i =>
+            \A j \in NODE \ {i} :
                     /\ cache[j] # "E"
                     /\ chan2[j] # "GntE"
                     /\ chan3[j] # "InvAck"

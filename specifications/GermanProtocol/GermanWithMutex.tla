@@ -197,8 +197,7 @@ ExclusiveIsolation ==
     \A i \in NODE :
         cache[i].state = "E" =>
             /\ exGntd = TRUE
-            /\ \A j \in NODE :
-                 j # i =>
+            /\ \A j \in NODE \ {i} :
                      /\ cache[j].state = "I"
                      /\ chan2[j].cmd \notin {"GntS", "GntE"}
                      /\ chan3[j].cmd # "InvAck"
@@ -207,8 +206,7 @@ WritebackCarriesLatest ==
     \A i \in NODE :
         (chan3[i].cmd = "InvAck" /\ curCmd # "Empty" /\ exGntd = TRUE) =>
             /\ chan3[i].data = auxData
-            /\ \A j \in NODE :
-                 j # i =>
+            /\ \A j \in NODE \ {i} :
                      /\ cache[j].state # "E"
                      /\ chan2[j].cmd # "GntE"
                      /\ chan3[j].cmd # "InvAck"
