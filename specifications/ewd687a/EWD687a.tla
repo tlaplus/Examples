@@ -377,13 +377,13 @@ RcvMsg(p) == \E e \in InEdges(p) :
                   /\ UNCHANGED <<acks, sentUnacked>>
  
 (***************************************************************************)
-(* A process p may finish its computation and become idle at any time.     *)
+(* An active process p may become idle at any time.                        *)
 (*                                                                         *)
-(* If a non-leader process p is neutral after an idle step, it implies     *)
-(* that p was not a node of the overlay tree when it became idle.  Thus,   *)
-(* there is no need to change upEdge[p] in the  Idle  subaction.           *)
+(* Since p is active before the step, it must be a node of the overlay     *)
+(* tree. If it is a leaf, it can be removed from the tree in a subsequent  *)
+(* SendAck transition.                                                     *)
 (***************************************************************************)
-Idle(p) == /\ active[p]  \* otherwise this step is subsumed by stuttering
+Idle(p) == /\ active[p]
            /\ active' = [active EXCEPT ![p] = FALSE]
            /\ UNCHANGED <<msgs, acks, sentUnacked, rcvdUnacked, upEdge>>
 
@@ -419,9 +419,7 @@ THEOREM Spec => []CountersConsistent
 
 TreeWithRoot ==
     LET E == {upEdge[p] : p \in DOMAIN upEdge} \ {NotAnEdge}
-        \* The original definition includes every node occurring in the tree
-        \* twice (except the leader), which unnecessarily complicates the proof.
-        N == (* {e[1] : e \in E} \cup *) {e[2] : e \in E} \cup {Leader}
+        N == {e[2] : e \in E} \cup {Leader}
         O == Transpose([edge |-> E, node |-> N])
     IN \* O is a tree rooted in the leader.
        /\ IsTreeWithRoot(O, Leader)
