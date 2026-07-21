@@ -833,20 +833,15 @@ ABS_NI_ShWb ==
 
 -------------------------------------------------------------------------------
 
-Next ==
+(* Concrete protocol steps (the modelled nodes and directory). *)
+System ==
     \/ \E src \in NODE, data \in DATA : Store(src, data)
-    \/ \E data \in DATA : ABS_Store(data)
     \/ \E src \in NODE :
          \/ \E c \in ReqCmd : PI_Remote(src, c)
          \/ PI_Remote_Replace(src)
          \/ NI_Local_Get_Nak(src) \/ NI_Local_Get_Get(src) \/ NI_Local_Get_Put(src)
          \/ NI_Local_GetX_Nak(src) \/ NI_Local_GetX_GetX(src) \/ NI_Local_GetX_PutX(src)
          \/ NI_InvAck(src) \/ NI_Replace(src)
-         \/ ABS_NI_Remote_Nak_src(src)
-         \/ ABS_NI_Remote_Get_Nak_dst(src)
-         \/ ABS_NI_Remote_Get_Put_src(src)  \/ ABS_NI_Remote_Get_Put_dst(src)
-         \/ ABS_NI_Remote_GetX_Nak_dst(src)
-         \/ ABS_NI_Remote_GetX_PutX_src(src) \/ ABS_NI_Remote_GetX_PutX_dst(src)
     \/ \E dst \in NODE :
          \/ PI_Remote_PutX(dst)
          \/ NI_Nak(dst) \/ NI_Remote_Put(dst) \/ NI_Remote_PutX(dst) \/ NI_Inv(dst)
@@ -858,12 +853,25 @@ Next ==
     \/ PI_Local_PutX \/ PI_Local_Replace
     \/ NI_Nak_Clear \/ NI_Local_Put \/ NI_Local_PutXAcksDone
     \/ NI_Wb \/ NI_FAck \/ NI_ShWb
+
+(* Abstract environment steps: the CMP `Other`-node interactions summarised    *)
+(* by the ABS_* rules (all guarded by Sta.Env_o).                              *)
+Environment ==
+    \/ \E data \in DATA : ABS_Store(data)
+    \/ \E src \in NODE :
+         \/ ABS_NI_Remote_Nak_src(src)
+         \/ ABS_NI_Remote_Get_Nak_dst(src)
+         \/ ABS_NI_Remote_Get_Put_src(src)  \/ ABS_NI_Remote_Get_Put_dst(src)
+         \/ ABS_NI_Remote_GetX_Nak_dst(src)
+         \/ ABS_NI_Remote_GetX_PutX_src(src) \/ ABS_NI_Remote_GetX_PutX_dst(src)
     \/ ABS_PI_Remote_PutX
     \/ ABS_NI_Local_Get_Get \/ ABS_NI_Local_Get_Put
     \/ ABS_NI_Remote_Nak_src_dst \/ ABS_NI_Remote_Get_Put_src_dst
     \/ ABS_NI_Local_GetX_GetX \/ ABS_NI_Local_GetX_PutX
     \/ ABS_NI_Remote_GetX_PutX_src_dst
     \/ ABS_NI_InvAck \/ ABS_NI_ShWb
+
+Next == System \/ Environment
 
 Spec == Init /\ [][Next]_vars
 
