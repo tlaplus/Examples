@@ -160,11 +160,6 @@ InterestingBehavior ==
     \* 30 states with the Leader neutral in the final state.
     TLCGet("level") > 20 => ~neutral(Leader)
 
-NoSuperfluousIdleSteps ==
-    \* Disable Idle steps that leave the variables unchange (an idle process becoming idle)
-    \* to prevent finite stuttering when simulating.
-    ~UNCHANGED vars
-
 ----------------------------------------------------------------------------
 
 \* Processes.

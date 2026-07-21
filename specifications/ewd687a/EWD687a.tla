@@ -87,7 +87,7 @@
 (* not to be detected.  It requires that a process can send acknowledgment *)
 (* messages to any process that can send it computation messages.          *)
 (***************************************************************************)
-EXTENDS Integers
+EXTENDS Integers, Graphs
 
 (***************************************************************************)
 (* We declare the following constants:                                     *)
@@ -215,7 +215,7 @@ VARIABLES
     (* network.  In an implementation, we would, thus, expect to find      *)
     (* code that maintains the values of active, sentUnacked, and          *)
     (* rcvdUnacked in the implementation of a process.  The variables msgs *)
-    (* and acks, however, would likely be implicitly because they model    *)
+    (* and acks, however, would likely be implicit because they model      *)
     (* the state of the network.                                           *)
     (***********************************************************************)
 
@@ -231,7 +231,7 @@ VARIABLES
     msgs,
     (***********************************************************************)
     (* For an edge <<q,p>> \in OutEdges(p), acks[<<q,p>>] is the number of *)
-    (* control) messages in transit from process p to process q.           *)
+    (* (control) messages in transit from process p to process q.          *)
     (***********************************************************************)
     acks
     (***********************************************************************)
@@ -330,7 +330,7 @@ RcvAck(p) == \E e \in OutEdges(p) :
 (* 2b. The receiver q of the ack is the parent of p in the overlay tree,   *)
 (*     and p is neutral after sending the ack.                             *)
 (*                                                                         *)
-(* UP. If process p is neutral after sending an ack (hence netural(p)'),   *)
+(* UP. If process p is neutral after sending an ack (hence neutral(p)'),   *)
 (* it removes itself from the overlay tree by setting the value of         *)
 (* upEdge[p] to NotAnEdge.                                                 *)
 (***************************************************************************)
@@ -377,22 +377,23 @@ RcvMsg(p) == \E e \in InEdges(p) :
                   /\ UNCHANGED <<acks, sentUnacked>>
  
 (***************************************************************************)
-(* A process p may finish its computation and become idle at any time.     *)
+(* An active process p may become idle at any time.                        *)
 (*                                                                         *)
-(* If a non-leader process p is neutral after an idle step, it implies     *)
-(* that p was not a node of the overlay tree when it became idle.  Thus,   *)
-(* there is no need to change upEdge[p] in the  Idle  subaction.           *)
+(* Since p is active before the step, it must be a node of the overlay     *)
+(* tree. If it is a leaf, it can be removed from the tree in a subsequent  *)
+(* SendAck transition.                                                     *)
 (***************************************************************************)
-Idle(p) == /\ active' = [active EXCEPT ![p] = FALSE]
+Idle(p) == /\ active[p]
+           /\ active' = [active EXCEPT ![p] = FALSE]
            /\ UNCHANGED <<msgs, acks, sentUnacked, rcvdUnacked, upEdge>>
 
 ----------------------------------------------------------------------------
-           
+
 Next == \E p \in Procs : SendMsg(p) \/ SendAck(p) \/ RcvMsg(p) \/ RcvAck(p)
                              \/ Idle(p)
 
 Spec == Init /\ [][Next]_vars /\ WF_vars(Next)
- 
+
 ----------------------------------------------------------------------------
  
 (***************************************************************************)
@@ -401,34 +402,31 @@ Spec == Init /\ [][Next]_vars /\ WF_vars(Next)
 (* rcvdUnacked[e] equals sentUnacked[e], for any e in Edges.               *)
 (***************************************************************************)
 CountersConsistent ==
-    [] \A e \in Edges: sentUnacked[e] = rcvdUnacked[e] + acks[e] + msgs[e]
+    \A e \in Edges: sentUnacked[e] = rcvdUnacked[e] + acks[e] + msgs[e]
 
-THEOREM Spec => CountersConsistent
+THEOREM Spec => []CountersConsistent
 
 (***************************************************************************)
-(* The overlay tree is a tree of non-neutral nodes rooted in the leader,   *)
-(* or the tree is empty s.t. it has no edges nor nodes.                    *)
-(* With bigger graphs, expect a significant slowdown when model-checking   *)
-(* the property TreeWithRoot.                                              *)
+(* The overlay tree is a tree rooted in the leader such that all inner     *)
+(* nodes are non-neutral.                                                  *)
 (*                                                                         *)
 (* In a variant of this spec, the conjunct labelled  Up in the  SendAck    *)
 (* subactions could be removed.  In this variant, the processes in the     *)
 (* overlay tree would be processes that are or were non-neutral in the     *)
 (* past.  Consequently, the conjunct labelled  N   would have to be        *)
-(* removed from the property  TreeWithRoot  .                              *)
+(* removed from the property  TreeWithRoot.                                *)
 (***************************************************************************)
+
 TreeWithRoot ==
     LET E == {upEdge[p] : p \in DOMAIN upEdge} \ {NotAnEdge}
-        N == {e[1] : e \in E} \cup {e[2] : e \in E}
-        G == INSTANCE Graphs
-        O == G!Transpose([edge |-> E, node |-> N])
-    IN [](
-          \* O is a tree rooted in the leader.
-          /\ O.edge # {} => G!IsTreeWithRoot(O, Leader)
-          \* All nodes of the overlay tree are non-neutral.
-          /\ N:: \A n \in O.node: ~neutral(n))
+        N == {e[2] : e \in E} \cup {Leader}
+        O == Transpose([edge |-> E, node |-> N])
+    IN \* O is a tree rooted in the leader.
+       /\ IsTreeWithRoot(O, Leader)
+       \* All nodes of the overlay tree, except the root, are non-neutral.
+       /\ N:: \A n \in O.node \ {Leader} : ~neutral(n)
 
-THEOREM Spec => TreeWithRoot
+THEOREM Spec => []TreeWithRoot
 
 ---------------------------------------------------------------------------
 
