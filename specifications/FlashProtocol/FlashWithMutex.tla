@@ -40,6 +40,7 @@ RP_CMD      == {"RP_None", "RP_Replace"}
 WB_CMD      == {"WB_None", "WB_Wb"}
 SHWB_CMD    == {"SHWB_None", "SHWB_ShWb", "SHWB_FAck"}
 NAKC_CMD    == {"NAKC_None", "NAKC_Nakc"}
+ReqCmd      == {"Get", "GetX"}   \* shared vs. exclusive request flavour
 
 DataU  == DATA \cup {Undefined}
 NodeU  == ABS_NODE \cup {Undefined}
@@ -121,12 +122,14 @@ Store(src, data) ==
                           !.LastWrPtr = src]
     /\ UNCHANGED Home
 
-PI_Remote_Get(src) ==
+\* Shared/exclusive request from a remote processor (merges the former
+\* PI_Remote_Get / PI_Remote_GetX; see FlashWithMutexEquiv.tla).
+PI_Remote(src, c) ==
     /\ src # Home
     /\ Sta.Proc[src].ProcCmd = "NODE_None"
     /\ Sta.Proc[src].CacheState = "CACHE_I"
-    /\ Sta' = [Sta EXCEPT !.Proc[src].ProcCmd = "NODE_Get",
-                          !.UniMsg[src].Cmd = "UNI_Get",
+    /\ Sta' = [Sta EXCEPT !.Proc[src].ProcCmd = IF c = "Get" THEN "NODE_Get" ELSE "NODE_GetX",
+                          !.UniMsg[src].Cmd    = IF c = "Get" THEN "UNI_Get"  ELSE "UNI_GetX",
                           !.UniMsg[src].Proc = Home,
                           !.UniMsg[src].Data = Undefined]
     /\ UNCHANGED Home
@@ -157,16 +160,6 @@ PI_Local_Get_Put ==
                               IF Sta.Proc[Home].InvMarked THEN "CACHE_I" ELSE "CACHE_S",
                           !.Proc[Home].CacheData =
                               IF Sta.Proc[Home].InvMarked THEN Undefined ELSE Sta.MemData]
-    /\ UNCHANGED Home
-
-PI_Remote_GetX(src) ==
-    /\ src # Home
-    /\ Sta.Proc[src].ProcCmd = "NODE_None"
-    /\ Sta.Proc[src].CacheState = "CACHE_I"
-    /\ Sta' = [Sta EXCEPT !.Proc[src].ProcCmd = "NODE_GetX",
-                          !.UniMsg[src].Cmd = "UNI_GetX",
-                          !.UniMsg[src].Proc = Home,
-                          !.UniMsg[src].Data = Undefined]
     /\ UNCHANGED Home
 
 PI_Local_GetX_GetX ==
@@ -313,9 +306,11 @@ NI_Local_Get_Put(src) ==
                             !.UniMsg[src].Data = Sta.MemData]
     /\ UNCHANGED Home
 
-NI_Remote_Get_Nak(src, dst) ==
+\* Remote NAK of a shared/exclusive request (merges the former
+\* NI_Remote_Get_Nak / NI_Remote_GetX_Nak; see FlashWithMutexEquiv.tla).
+NI_Remote_Nak(src, dst) ==
     /\ src # dst /\ dst # Home
-    /\ Sta.UniMsg[src].Cmd = "UNI_Get"
+    /\ Sta.UniMsg[src].Cmd \in {"UNI_Get", "UNI_GetX"}
     /\ Sta.UniMsg[src].Proc = dst
     /\ Sta.Proc[dst].CacheState # "CACHE_E"
     /\ Sta' = [Sta EXCEPT !.UniMsg[src].Cmd = "UNI_Nak",
@@ -422,19 +417,6 @@ NI_Local_GetX_PutX(src) ==
        IN Sta' = IF Sta.Dir.Dirty THEN branch1
                  ELSE IF elsifCond THEN localI(branch2base)
                  ELSE localI(branch3base)
-    /\ UNCHANGED Home
-
-NI_Remote_GetX_Nak(src, dst) ==
-    /\ src # dst /\ dst # Home
-    /\ Sta.UniMsg[src].Cmd = "UNI_GetX"
-    /\ Sta.UniMsg[src].Proc = dst
-    /\ Sta.Proc[dst].CacheState # "CACHE_E"
-    /\ Sta' = [Sta EXCEPT !.UniMsg[src].Cmd = "UNI_Nak",
-                          !.UniMsg[src].Proc = dst,
-                          !.UniMsg[src].Data = Undefined,
-                          !.NakcMsg.Cmd = "NAKC_Nakc",
-                          !.FwdCmd = "UNI_None",
-                          !.FwdSrc = src]
     /\ UNCHANGED Home
 
 NI_Remote_GetX_PutX(src, dst) ==
@@ -631,11 +613,13 @@ ABS_NI_Local_Get_Put ==
               ELSE [Sta EXCEPT !.Dir.HeadVld = TRUE, !.Dir.HeadPtr = Other]
     /\ UNCHANGED Home
 
-ABS_NI_Remote_Get_Nak_src(dst) ==
+\* Abstract remote NAK, source side (merges the former ABS_NI_Remote_Get_Nak_src
+\* / ABS_NI_Remote_GetX_Nak_src; see FlashWithMutexEquiv.tla).
+ABS_NI_Remote_Nak_src(dst) ==
     /\ Sta.Env_o /\ dst # Home
     /\ Sta.Proc[dst].CacheState # "CACHE_E"
     /\ Sta.Dir.Pending /\ ~Sta.Dir.Local
-    /\ Sta.PendReqSrc = Other /\ Sta.FwdCmd = "UNI_Get"
+    /\ Sta.PendReqSrc = Other /\ Sta.FwdCmd \in {"UNI_Get", "UNI_GetX"}
     /\ Sta' = [Sta EXCEPT !.NakcMsg.Cmd = "NAKC_Nakc", !.FwdCmd = "UNI_None", !.FwdSrc = Other]
     /\ UNCHANGED Home
 
@@ -652,10 +636,12 @@ ABS_NI_Remote_Get_Nak_dst(src) ==
                           !.FwdSrc = src]
     /\ UNCHANGED Home
 
-ABS_NI_Remote_Get_Nak_src_dst ==
+\* Abstract remote NAK, both sides abstract (merges the former
+\* ABS_NI_Remote_Get_Nak_src_dst / ABS_NI_Remote_GetX_Nak_src_dst).
+ABS_NI_Remote_Nak_src_dst ==
     /\ Sta.Env_o
     /\ Sta.Dir.Pending /\ ~Sta.Dir.Local
-    /\ Sta.PendReqSrc = Other /\ Sta.FwdCmd = "UNI_Get"
+    /\ Sta.PendReqSrc = Other /\ Sta.FwdCmd \in {"UNI_Get", "UNI_GetX"}
     /\ Sta' = [Sta EXCEPT !.NakcMsg.Cmd = "NAKC_Nakc", !.FwdCmd = "UNI_None", !.FwdSrc = Other]
     /\ UNCHANGED Home
 
@@ -756,14 +742,6 @@ ABS_NI_Local_GetX_PutX ==
                  ELSE localI(branch3base)
     /\ UNCHANGED Home
 
-ABS_NI_Remote_GetX_Nak_src(dst) ==
-    /\ Sta.Env_o /\ dst # Home
-    /\ Sta.Proc[dst].CacheState # "CACHE_E"
-    /\ Sta.Dir.Pending /\ ~Sta.Dir.Local
-    /\ Sta.PendReqSrc = Other /\ Sta.FwdCmd = "UNI_GetX"
-    /\ Sta' = [Sta EXCEPT !.NakcMsg.Cmd = "NAKC_Nakc", !.FwdCmd = "UNI_None", !.FwdSrc = Other]
-    /\ UNCHANGED Home
-
 ABS_NI_Remote_GetX_Nak_dst(src) ==
     /\ Sta.Env_o
     /\ Sta.UniMsg[src].Cmd = "UNI_GetX" /\ Sta.UniMsg[src].Proc = Other
@@ -775,13 +753,6 @@ ABS_NI_Remote_GetX_Nak_dst(src) ==
                           !.NakcMsg.Cmd = "NAKC_Nakc",
                           !.FwdCmd = "UNI_None",
                           !.FwdSrc = src]
-    /\ UNCHANGED Home
-
-ABS_NI_Remote_GetX_Nak_src_dst ==
-    /\ Sta.Env_o
-    /\ Sta.Dir.Pending /\ ~Sta.Dir.Local
-    /\ Sta.PendReqSrc = Other /\ Sta.FwdCmd = "UNI_GetX"
-    /\ Sta' = [Sta EXCEPT !.NakcMsg.Cmd = "NAKC_Nakc", !.FwdCmd = "UNI_None", !.FwdSrc = Other]
     /\ UNCHANGED Home
 
 ABS_NI_Remote_GetX_PutX_src(dst) ==
@@ -866,21 +837,22 @@ Next ==
     \/ \E src \in NODE, data \in DATA : Store(src, data)
     \/ \E data \in DATA : ABS_Store(data)
     \/ \E src \in NODE :
-         \/ PI_Remote_Get(src)   \/ PI_Remote_GetX(src)
+         \/ \E c \in ReqCmd : PI_Remote(src, c)
          \/ PI_Remote_Replace(src)
          \/ NI_Local_Get_Nak(src) \/ NI_Local_Get_Get(src) \/ NI_Local_Get_Put(src)
          \/ NI_Local_GetX_Nak(src) \/ NI_Local_GetX_GetX(src) \/ NI_Local_GetX_PutX(src)
          \/ NI_InvAck(src) \/ NI_Replace(src)
-         \/ ABS_NI_Remote_Get_Nak_src(src)  \/ ABS_NI_Remote_Get_Nak_dst(src)
+         \/ ABS_NI_Remote_Nak_src(src)
+         \/ ABS_NI_Remote_Get_Nak_dst(src)
          \/ ABS_NI_Remote_Get_Put_src(src)  \/ ABS_NI_Remote_Get_Put_dst(src)
-         \/ ABS_NI_Remote_GetX_Nak_src(src) \/ ABS_NI_Remote_GetX_Nak_dst(src)
+         \/ ABS_NI_Remote_GetX_Nak_dst(src)
          \/ ABS_NI_Remote_GetX_PutX_src(src) \/ ABS_NI_Remote_GetX_PutX_dst(src)
     \/ \E dst \in NODE :
          \/ PI_Remote_PutX(dst)
          \/ NI_Nak(dst) \/ NI_Remote_Put(dst) \/ NI_Remote_PutX(dst) \/ NI_Inv(dst)
     \/ \E src \in NODE, dst \in NODE :
-         \/ NI_Remote_Get_Nak(src, dst) \/ NI_Remote_Get_Put(src, dst)
-         \/ NI_Remote_GetX_Nak(src, dst) \/ NI_Remote_GetX_PutX(src, dst)
+         \/ NI_Remote_Nak(src, dst) \/ NI_Remote_Get_Put(src, dst)
+         \/ NI_Remote_GetX_PutX(src, dst)
     \/ PI_Local_Get_Get \/ PI_Local_Get_Put
     \/ PI_Local_GetX_GetX \/ PI_Local_GetX_PutX
     \/ PI_Local_PutX \/ PI_Local_Replace
@@ -888,9 +860,9 @@ Next ==
     \/ NI_Wb \/ NI_FAck \/ NI_ShWb
     \/ ABS_PI_Remote_PutX
     \/ ABS_NI_Local_Get_Get \/ ABS_NI_Local_Get_Put
-    \/ ABS_NI_Remote_Get_Nak_src_dst \/ ABS_NI_Remote_Get_Put_src_dst
+    \/ ABS_NI_Remote_Nak_src_dst \/ ABS_NI_Remote_Get_Put_src_dst
     \/ ABS_NI_Local_GetX_GetX \/ ABS_NI_Local_GetX_PutX
-    \/ ABS_NI_Remote_GetX_Nak_src_dst \/ ABS_NI_Remote_GetX_PutX_src_dst
+    \/ ABS_NI_Remote_GetX_PutX_src_dst
     \/ ABS_NI_InvAck \/ ABS_NI_ShWb
 
 Spec == Init /\ [][Next]_vars
