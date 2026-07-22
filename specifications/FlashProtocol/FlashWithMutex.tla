@@ -401,7 +401,10 @@ NI_Local_GetX_PutX(src) ==
        IN /\ Dir' = IF Dir.Dirty \/ elsifCond THEN commonDir ELSE branch3Dir
           /\ Proc' = IF Dir.Dirty
                      THEN [Proc EXCEPT ![Home].CacheState = "CACHE_I", ![Home].CacheData = Undefined]
-                     ELSE IF Dir.Local THEN ProcLocalI ELSE Proc
+                     ELSE IF Dir.Local THEN ProcLocalI
+                     ELSE IF elsifCond
+                          THEN [Proc EXCEPT ![Home].CacheState = "CACHE_I", ![Home].CacheData = Undefined]
+                          ELSE Proc
           /\ UniMsg' = IF Dir.Dirty
                        THEN [UniMsg EXCEPT ![src].Cmd = "UNI_PutX", ![src].Proc = Home,
                                            ![src].Data = Proc[Home].CacheData]
