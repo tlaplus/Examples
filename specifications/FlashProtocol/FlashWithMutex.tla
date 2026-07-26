@@ -114,6 +114,32 @@ Init ==
         /\ Env_o = TRUE
 
 -------------------------------------------------------------------------------
+(* Shared fragments of the *_GetX_PutX actions, which grant a line            *)
+(* exclusively and so have to revoke it from everyone else first.             *)
+
+\* The nodes that must be invalidated before the line can be granted: the
+\* sharers and the head, less Home and the requester themselves.
+InvNodes(exclude) ==
+    {p \in NODE \ exclude : \/ (Dir.ShrVld /\ p \in Dir.ShrSet)
+                            \/ (Dir.HeadVld /\ Dir.HeadPtr = p)}
+
+\* Nobody has to be invalidated: either there is no head pointer, or req is
+\* already the head and the only sharer.
+NoOtherSharers(req) ==
+    Dir.HeadVld => (Dir.HeadPtr = req /\ Dir.ShrSet \subseteq {req})
+
+\* Home's line dropped, because the GetX takes it away.
+ProcHomeInvalid ==
+    [Proc EXCEPT ![Home].CacheState = "CACHE_I", ![Home].CacheData = Undefined]
+
+\* As ProcHomeInvalid, but a Get of Home's that is still in flight is marked, so
+\* that its reply is not mistaken for a fresh grant.
+ProcHomeInvalidMarked ==
+    [Proc EXCEPT ![Home].CacheState = "CACHE_I", ![Home].CacheData = Undefined,
+                 ![Home].InvMarked = IF Proc[Home].ProcCmd = "NODE_Get"
+                                     THEN TRUE ELSE Proc[Home].InvMarked]
+
+-------------------------------------------------------------------------------
 (*                        Concrete (non-ABS) rules                           *)
 -------------------------------------------------------------------------------
 
@@ -183,29 +209,35 @@ PI_Local_GetX_GetX ==
     /\ UNCHANGED <<Home, MemData, InvMsg, RpMsg, WbMsg, ShWbMsg, NakcMsg, CurrData,
                    PrevData, LastWrVld, LastWrPtr, FwdSrc, LastInvAck, Env_o>>
 
+\* The line is shared: the sharers and the head are invalidated first, so
+\* Home's own request goes pending.
+PI_Local_GetX_PutX_Inv ==
+    /\ Dir.HeadVld
+    /\ Dir' = [Dir EXCEPT !.Local = TRUE, !.Dirty = TRUE, !.Pending = TRUE,
+                          !.HeadVld = FALSE, !.HeadPtr = Undefined, !.ShrVld = FALSE,
+                          !.ShrSet = {}, !.InvSet = InvNodes({Home})]
+    /\ InvMsg' = [p \in NODE |-> [Cmd |-> IF p \in InvNodes({Home})
+                                          THEN "INV_Inv" ELSE "INV_None"]]
+    /\ PendReqSrc' = Home
+    /\ Collecting' = TRUE
+    /\ PrevData' = CurrData
+
+\* Nobody holds the line, so it is granted right away.
+PI_Local_GetX_PutX_Grant ==
+    /\ ~Dir.HeadVld
+    /\ Dir' = [Dir EXCEPT !.Local = TRUE, !.Dirty = TRUE]
+    /\ UNCHANGED <<InvMsg, PendReqSrc, Collecting, PrevData>>
+
 PI_Local_GetX_PutX ==
     /\ Proc[Home].ProcCmd = "NODE_None"
     /\ Proc[Home].CacheState \in {"CACHE_I", "CACHE_S"}
     /\ ~Dir.Pending /\ ~Dir.Dirty
-    /\ LET InvP(p) == /\ p # Home
-                      /\ \/ (Dir.ShrVld /\ p \in Dir.ShrSet)
-                         \/ (Dir.HeadVld /\ Dir.HeadPtr = p)
-       IN /\ Dir' = IF Dir.HeadVld
-                    THEN [Dir EXCEPT !.Local = TRUE, !.Dirty = TRUE, !.Pending = TRUE,
-                                     !.HeadVld = FALSE, !.HeadPtr = Undefined, !.ShrVld = FALSE,
-                                     !.ShrSet = {},
-                                     !.InvSet = {p \in NODE : InvP(p)}]
-                    ELSE [Dir EXCEPT !.Local = TRUE, !.Dirty = TRUE]
-          /\ InvMsg' = IF Dir.HeadVld
-                       THEN [p \in NODE |-> [Cmd |-> IF InvP(p) THEN "INV_Inv" ELSE "INV_None"]]
-                       ELSE InvMsg
-          /\ PendReqSrc' = IF Dir.HeadVld THEN Home ELSE PendReqSrc
-          /\ Collecting' = IF Dir.HeadVld THEN TRUE ELSE Collecting
-          /\ PrevData' = IF Dir.HeadVld THEN CurrData ELSE PrevData
-          /\ Proc' = [Proc EXCEPT ![Home].ProcCmd = "NODE_None",
-                                  ![Home].InvMarked = FALSE,
-                                  ![Home].CacheState = "CACHE_E",
-                                  ![Home].CacheData = MemData]
+    /\ Proc' = [Proc EXCEPT ![Home].ProcCmd = "NODE_None",
+                            ![Home].InvMarked = FALSE,
+                            ![Home].CacheState = "CACHE_E",
+                            ![Home].CacheData = MemData]
+    /\ \/ PI_Local_GetX_PutX_Inv
+       \/ PI_Local_GetX_PutX_Grant
     /\ UNCHANGED <<Home, MemData, UniMsg, RpMsg, WbMsg, ShWbMsg, NakcMsg, CurrData,
                    LastWrVld, LastWrPtr, PendReqCmd, FwdCmd, FwdSrc, LastInvAck, Env_o>>
 
@@ -374,48 +406,55 @@ NI_Local_GetX_GetX(src) ==
     /\ UNCHANGED <<Home, Proc, MemData, InvMsg, RpMsg, WbMsg, ShWbMsg, NakcMsg, CurrData,
                    PrevData, LastWrVld, LastWrPtr, FwdSrc, LastInvAck, Env_o>>
 
+\* Home holds the line exclusively, so it can be handed to src directly.
+NI_Local_GetX_PutX_Dirty(src) ==
+    /\ Dir.Dirty
+    /\ Dir' = [Dir EXCEPT !.Local = FALSE, !.Dirty = TRUE, !.HeadVld = TRUE,
+                          !.HeadPtr = src, !.ShrVld = FALSE, !.ShrSet = {}, !.InvSet = {}]
+    /\ UniMsg' = [UniMsg EXCEPT ![src].Cmd = "UNI_PutX", ![src].Proc = Home,
+                                ![src].Data = Proc[Home].CacheData]
+    /\ Proc' = ProcHomeInvalid
+    /\ UNCHANGED <<InvMsg, PendReqSrc, PendReqCmd, Collecting, PrevData>>
+
+\* src is already the head and the only sharer, so nobody has to be invalidated
+\* and memory's copy is handed over.
+NI_Local_GetX_PutX_Grant(src) ==
+    /\ ~Dir.Dirty
+    /\ NoOtherSharers(src)
+    /\ Dir' = [Dir EXCEPT !.Local = FALSE, !.Dirty = TRUE, !.HeadVld = TRUE,
+                          !.HeadPtr = src, !.ShrVld = FALSE, !.ShrSet = {}, !.InvSet = {}]
+    /\ UniMsg' = [UniMsg EXCEPT ![src].Cmd = "UNI_PutX", ![src].Proc = Home,
+                                ![src].Data = MemData]
+    /\ Proc' = IF Dir.Local THEN ProcHomeInvalidMarked ELSE ProcHomeInvalid
+    /\ UNCHANGED <<InvMsg, PendReqSrc, PendReqCmd, Collecting, PrevData>>
+
+\* Others share the line: they are invalidated first and the request goes
+\* pending until their acks come back.
+NI_Local_GetX_PutX_Inv(src) ==
+    /\ ~Dir.Dirty
+    /\ ~NoOtherSharers(src)
+    /\ Dir' = [Dir EXCEPT !.Pending = TRUE, !.Local = FALSE, !.Dirty = TRUE,
+                          !.HeadVld = TRUE, !.HeadPtr = src, !.ShrVld = FALSE,
+                          !.ShrSet = {}, !.InvSet = InvNodes({Home, src})]
+    /\ UniMsg' = [UniMsg EXCEPT ![src].Cmd = "UNI_PutX", ![src].Proc = Home,
+                                ![src].Data = MemData]
+    /\ Proc' = IF Dir.Local THEN ProcHomeInvalidMarked ELSE Proc
+    /\ InvMsg' = [p \in NODE |-> [Cmd |-> IF p \in InvNodes({Home, src})
+                                          THEN "INV_Inv" ELSE "INV_None"]]
+    /\ PendReqSrc' = src
+    /\ PendReqCmd' = "UNI_GetX"
+    /\ Collecting' = TRUE
+    /\ PrevData' = CurrData
+
 NI_Local_GetX_PutX(src) ==
     /\ src # Home
     /\ UniMsg[src].Cmd = "UNI_GetX"
     /\ UniMsg[src].Proc = Home
     /\ ~Dir.Pending
     /\ (Dir.Dirty => (Dir.Local /\ Proc[Home].CacheState = "CACHE_E"))
-    /\ LET Cond3(p) == /\ p # Home /\ p # src
-                       /\ \/ (Dir.ShrVld /\ p \in Dir.ShrSet)
-                          \/ (Dir.HeadVld /\ Dir.HeadPtr = p)
-           elsifCond == Dir.HeadVld => (Dir.HeadPtr = src
-                                        /\ Dir.ShrSet \subseteq {src})
-           ProcLocalI == [Proc EXCEPT ![Home].CacheState = "CACHE_I",
-                                      ![Home].CacheData = Undefined,
-                                      ![Home].InvMarked =
-                                          IF Proc[Home].ProcCmd = "NODE_Get"
-                                          THEN TRUE ELSE Proc[Home].InvMarked]
-           commonDir == [Dir EXCEPT !.Local = FALSE, !.Dirty = TRUE, !.HeadVld = TRUE,
-                                    !.HeadPtr = src, !.ShrVld = FALSE,
-                                    !.ShrSet = {},
-                                    !.InvSet = {}]
-           branch3Dir == [Dir EXCEPT !.Pending = TRUE, !.Local = FALSE, !.Dirty = TRUE,
-                                     !.HeadVld = TRUE, !.HeadPtr = src, !.ShrVld = FALSE,
-                                     !.ShrSet = {},
-                                     !.InvSet = {p \in NODE : Cond3(p)}]
-       IN /\ Dir' = IF Dir.Dirty \/ elsifCond THEN commonDir ELSE branch3Dir
-          /\ Proc' = IF Dir.Dirty
-                     THEN [Proc EXCEPT ![Home].CacheState = "CACHE_I", ![Home].CacheData = Undefined]
-                     ELSE IF Dir.Local THEN ProcLocalI
-                     ELSE IF elsifCond
-                          THEN [Proc EXCEPT ![Home].CacheState = "CACHE_I", ![Home].CacheData = Undefined]
-                          ELSE Proc
-          /\ UniMsg' = IF Dir.Dirty
-                       THEN [UniMsg EXCEPT ![src].Cmd = "UNI_PutX", ![src].Proc = Home,
-                                           ![src].Data = Proc[Home].CacheData]
-                       ELSE [UniMsg EXCEPT ![src].Cmd = "UNI_PutX", ![src].Proc = Home,
-                                           ![src].Data = MemData]
-          /\ InvMsg' = IF Dir.Dirty \/ elsifCond THEN InvMsg
-                       ELSE [p \in NODE |-> [Cmd |-> IF Cond3(p) THEN "INV_Inv" ELSE "INV_None"]]
-          /\ PendReqSrc' = IF Dir.Dirty \/ elsifCond THEN PendReqSrc ELSE src
-          /\ PendReqCmd' = IF Dir.Dirty \/ elsifCond THEN PendReqCmd ELSE "UNI_GetX"
-          /\ Collecting' = IF Dir.Dirty \/ elsifCond THEN Collecting ELSE TRUE
-          /\ PrevData' = IF Dir.Dirty \/ elsifCond THEN PrevData ELSE CurrData
+    /\ \/ NI_Local_GetX_PutX_Dirty(src)
+       \/ NI_Local_GetX_PutX_Grant(src)
+       \/ NI_Local_GetX_PutX_Inv(src)
     /\ UNCHANGED <<Home, MemData, RpMsg, WbMsg, ShWbMsg, NakcMsg, CurrData,
                    LastWrVld, LastWrPtr, FwdCmd, FwdSrc, LastInvAck, Env_o>>
 
@@ -498,18 +537,27 @@ NI_Inv(dst) ==
                    PrevData, LastWrVld, LastWrPtr, PendReqSrc, PendReqCmd, Collecting,
                    FwdCmd, FwdSrc, LastInvAck, Env_o>>
 
+\* Acks are still outstanding: only this one is recorded.
+NI_InvAck_More(src) ==
+    /\ Dir.InvSet \ {src} # {}
+    /\ Dir' = [Dir EXCEPT !.InvSet = Dir.InvSet \ {src}]
+    /\ UNCHANGED Collecting
+
+\* The last ack: the invalidation round is complete and the request retires.
+NI_InvAck_Last(src) ==
+    /\ Dir.InvSet \ {src} = {}
+    /\ Dir' = [Dir EXCEPT !.InvSet = Dir.InvSet \ {src}, !.Pending = FALSE,
+                          !.Local = IF Dir.Local /\ ~Dir.Dirty THEN FALSE ELSE Dir.Local]
+    /\ Collecting' = FALSE
+
 NI_InvAck(src) ==
     /\ src # Home
     /\ InvMsg[src].Cmd = "INV_InvAck"
     /\ Dir.Pending /\ src \in Dir.InvSet
-    /\ LET moreAcks == Dir.InvSet \ {src} # {}
-       IN /\ InvMsg' = [InvMsg EXCEPT ![src].Cmd = "INV_None"]
-          /\ Dir' = IF moreAcks
-                    THEN [Dir EXCEPT !.InvSet = Dir.InvSet \ {src}]
-                    ELSE [Dir EXCEPT !.InvSet = Dir.InvSet \ {src}, !.Pending = FALSE,
-                                     !.Local = IF Dir.Local /\ ~Dir.Dirty THEN FALSE ELSE Dir.Local]
-          /\ Collecting' = IF moreAcks THEN Collecting ELSE FALSE
-          /\ LastInvAck' = src
+    /\ InvMsg' = [InvMsg EXCEPT ![src].Cmd = "INV_None"]
+    /\ LastInvAck' = src
+    /\ \/ NI_InvAck_More(src)
+       \/ NI_InvAck_Last(src)
     /\ UNCHANGED <<Home, Proc, MemData, UniMsg, RpMsg, WbMsg, ShWbMsg, NakcMsg, CurrData,
                    PrevData, LastWrVld, LastWrPtr, PendReqSrc, PendReqCmd, FwdCmd, FwdSrc, Env_o>>
 
@@ -701,38 +749,45 @@ ABS_NI_Local_GetX_GetX ==
     /\ UNCHANGED <<Home, Proc, MemData, UniMsg, InvMsg, RpMsg, WbMsg, ShWbMsg, NakcMsg, CurrData,
                    PrevData, LastWrVld, LastWrPtr, FwdSrc, LastInvAck, Env_o>>
 
+\* Home holds the line exclusively; the abstract node takes it over.
+ABS_NI_Local_GetX_PutX_Dirty ==
+    /\ Dir.Dirty
+    /\ Dir' = [Dir EXCEPT !.Local = FALSE, !.Dirty = TRUE, !.HeadVld = TRUE,
+                          !.HeadPtr = Other, !.ShrVld = FALSE, !.ShrSet = {}, !.InvSet = {}]
+    /\ Proc' = ProcHomeInvalid
+    /\ UNCHANGED <<InvMsg, PendReqSrc, PendReqCmd, Collecting, PrevData>>
+
+\* The abstract node is already the head and no concrete node shares the line.
+ABS_NI_Local_GetX_PutX_Grant ==
+    /\ ~Dir.Dirty
+    /\ NoOtherSharers(Other)
+    /\ Dir' = [Dir EXCEPT !.Local = FALSE, !.Dirty = TRUE, !.HeadVld = TRUE,
+                          !.HeadPtr = Other, !.ShrVld = FALSE, !.ShrSet = {}, !.InvSet = {}]
+    /\ Proc' = IF Dir.Local THEN ProcHomeInvalidMarked ELSE ProcHomeInvalid
+    /\ UNCHANGED <<InvMsg, PendReqSrc, PendReqCmd, Collecting, PrevData>>
+
+\* Concrete nodes share the line: they are invalidated first.
+ABS_NI_Local_GetX_PutX_Inv ==
+    /\ ~Dir.Dirty
+    /\ ~NoOtherSharers(Other)
+    /\ Dir' = [Dir EXCEPT !.Pending = TRUE, !.Local = FALSE, !.Dirty = TRUE,
+                          !.HeadVld = TRUE, !.HeadPtr = Other, !.ShrVld = FALSE,
+                          !.ShrSet = {}, !.InvSet = InvNodes({Home})]
+    /\ Proc' = IF Dir.Local THEN ProcHomeInvalidMarked ELSE Proc
+    /\ InvMsg' = [p \in NODE |-> [Cmd |-> IF p \in InvNodes({Home})
+                                          THEN "INV_Inv" ELSE "INV_None"]]
+    /\ PendReqSrc' = Other
+    /\ PendReqCmd' = "UNI_GetX"
+    /\ Collecting' = TRUE
+    /\ PrevData' = CurrData
+
 ABS_NI_Local_GetX_PutX ==
     /\ Env_o
     /\ ~Dir.Pending
     /\ (Dir.Dirty => (Dir.Local /\ Proc[Home].CacheState = "CACHE_E"))
-    /\ LET Cond3(p) == /\ p # Home
-                       /\ \/ (Dir.ShrVld /\ p \in Dir.ShrSet)
-                          \/ (Dir.HeadVld /\ Dir.HeadPtr = p)
-           elsifCond == Dir.HeadVld => (Dir.HeadPtr = Other /\ Dir.ShrSet = {})
-           ProcLocalI == [Proc EXCEPT ![Home].CacheState = "CACHE_I",
-                                      ![Home].CacheData = Undefined,
-                                      ![Home].InvMarked =
-                                          IF Proc[Home].ProcCmd = "NODE_Get"
-                                          THEN TRUE ELSE Proc[Home].InvMarked]
-           ProcII == [Proc EXCEPT ![Home].CacheState = "CACHE_I", ![Home].CacheData = Undefined]
-           commonDir == [Dir EXCEPT !.Local = FALSE, !.Dirty = TRUE, !.HeadVld = TRUE,
-                                    !.HeadPtr = Other, !.ShrVld = FALSE,
-                                    !.ShrSet = {},
-                                    !.InvSet = {}]
-           branch3Dir == [Dir EXCEPT !.Pending = TRUE, !.Local = FALSE, !.Dirty = TRUE,
-                                     !.HeadVld = TRUE, !.HeadPtr = Other, !.ShrVld = FALSE,
-                                     !.ShrSet = {},
-                                     !.InvSet = {p \in NODE : Cond3(p)}]
-       IN /\ Dir' = IF Dir.Dirty \/ elsifCond THEN commonDir ELSE branch3Dir
-          /\ Proc' = IF Dir.Dirty THEN ProcII
-                     ELSE IF Dir.Local THEN ProcLocalI
-                          ELSE IF elsifCond THEN ProcII ELSE Proc
-          /\ InvMsg' = IF Dir.Dirty \/ elsifCond THEN InvMsg
-                       ELSE [p \in NODE |-> [Cmd |-> IF Cond3(p) THEN "INV_Inv" ELSE "INV_None"]]
-          /\ PendReqSrc' = IF Dir.Dirty \/ elsifCond THEN PendReqSrc ELSE Other
-          /\ PendReqCmd' = IF Dir.Dirty \/ elsifCond THEN PendReqCmd ELSE "UNI_GetX"
-          /\ Collecting' = IF Dir.Dirty \/ elsifCond THEN Collecting ELSE TRUE
-          /\ PrevData' = IF Dir.Dirty \/ elsifCond THEN PrevData ELSE CurrData
+    /\ \/ ABS_NI_Local_GetX_PutX_Dirty
+       \/ ABS_NI_Local_GetX_PutX_Grant
+       \/ ABS_NI_Local_GetX_PutX_Inv
     /\ UNCHANGED <<Home, MemData, UniMsg, RpMsg, WbMsg, ShWbMsg, NakcMsg, CurrData,
                    LastWrVld, LastWrPtr, FwdCmd, FwdSrc, LastInvAck, Env_o>>
 
@@ -790,6 +845,18 @@ ABS_NI_Remote_GetX_PutX_src_dst ==
                    PrevData, LastWrVld, LastWrPtr, PendReqSrc, PendReqCmd, Collecting,
                    LastInvAck, Env_o>>
 
+\* Concrete nodes have not acked yet, so the round stays open.
+ABS_NI_InvAck_More ==
+    /\ Dir.InvSet # {}
+    /\ UNCHANGED <<Dir, Collecting>>
+
+\* All concrete nodes have acked: the round closes and the request retires.
+ABS_NI_InvAck_Last ==
+    /\ Dir.InvSet = {}
+    /\ Dir' = [Dir EXCEPT !.Pending = FALSE,
+                          !.Local = IF Dir.Local /\ ~Dir.Dirty THEN FALSE ELSE Dir.Local]
+    /\ Collecting' = FALSE
+
 ABS_NI_InvAck ==
     /\ Env_o
     /\ Dir.Pending /\ Collecting
@@ -799,12 +866,9 @@ ABS_NI_InvAck ==
                 => UniMsg[q].Proc = Home)
          /\ (UniMsg[q].Cmd = "UNI_PutX"
                 => (UniMsg[q].Proc = Home /\ PendReqSrc = q))
-    /\ LET moreAcks == Dir.InvSet # {}
-       IN /\ Dir' = IF moreAcks THEN Dir
-                    ELSE [Dir EXCEPT !.Pending = FALSE,
-                                     !.Local = IF Dir.Local /\ ~Dir.Dirty THEN FALSE ELSE Dir.Local]
-          /\ Collecting' = IF moreAcks THEN Collecting ELSE FALSE
-          /\ LastInvAck' = Other
+    /\ LastInvAck' = Other
+    /\ \/ ABS_NI_InvAck_More
+       \/ ABS_NI_InvAck_Last
     /\ UNCHANGED <<Home, Proc, MemData, UniMsg, InvMsg, RpMsg, WbMsg, ShWbMsg, NakcMsg, CurrData,
                    PrevData, LastWrVld, LastWrPtr, PendReqSrc, PendReqCmd, FwdCmd, FwdSrc, Env_o>>
 
