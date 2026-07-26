@@ -64,7 +64,7 @@ TypeOK ==
                           CacheState : CACHE_STATE, CacheData : DataU]]
     /\ Dir \in [Pending : BOOLEAN, Local : BOOLEAN, Dirty : BOOLEAN,
                 HeadVld : BOOLEAN, HeadPtr : NodeU, ShrVld : BOOLEAN,
-                ShrSet : [NODE -> BOOLEAN], InvSet : [NODE -> BOOLEAN]]
+                ShrSet : SUBSET NODE, InvSet : SUBSET NODE]
     /\ MemData \in DATA
     /\ UniMsg \in [NODE -> [Cmd : UNI_CMD, Proc : NodeU, Data : DataU]]
     /\ InvMsg \in [NODE -> [Cmd : INV_CMD]]
@@ -93,7 +93,7 @@ Init ==
                                    CacheState |-> "CACHE_I", CacheData |-> Undefined]]
         /\ Dir  = [Pending |-> FALSE, Local |-> FALSE, Dirty |-> FALSE,
                    HeadVld |-> FALSE, HeadPtr |-> Undefined, ShrVld |-> FALSE,
-                   ShrSet |-> [i \in NODE |-> FALSE], InvSet |-> [i \in NODE |-> FALSE]]
+                   ShrSet |-> {}, InvSet |-> {}]
         /\ MemData = d
         /\ UniMsg  = [i \in NODE |-> [Cmd |-> "UNI_None", Proc |-> Undefined, Data |-> Undefined]]
         /\ InvMsg  = [i \in NODE |-> [Cmd |-> "INV_None"]]
@@ -188,13 +188,13 @@ PI_Local_GetX_PutX ==
     /\ Proc[Home].CacheState \in {"CACHE_I", "CACHE_S"}
     /\ ~Dir.Pending /\ ~Dir.Dirty
     /\ LET InvP(p) == /\ p # Home
-                      /\ \/ (Dir.ShrVld /\ Dir.ShrSet[p])
+                      /\ \/ (Dir.ShrVld /\ p \in Dir.ShrSet)
                          \/ (Dir.HeadVld /\ Dir.HeadPtr = p)
        IN /\ Dir' = IF Dir.HeadVld
                     THEN [Dir EXCEPT !.Local = TRUE, !.Dirty = TRUE, !.Pending = TRUE,
                                      !.HeadVld = FALSE, !.HeadPtr = Undefined, !.ShrVld = FALSE,
-                                     !.ShrSet = [p \in NODE |-> FALSE],
-                                     !.InvSet = [p \in NODE |-> InvP(p)]]
+                                     !.ShrSet = {},
+                                     !.InvSet = {p \in NODE : InvP(p)}]
                     ELSE [Dir EXCEPT !.Local = TRUE, !.Dirty = TRUE]
           /\ InvMsg' = IF Dir.HeadVld
                        THEN [p \in NODE |-> [Cmd |-> IF InvP(p) THEN "INV_Inv" ELSE "INV_None"]]
@@ -302,8 +302,8 @@ NI_Local_Get_Put(src) ==
     /\ Dir' = IF Dir.Dirty
               THEN [Dir EXCEPT !.Dirty = FALSE, !.HeadVld = TRUE, !.HeadPtr = src]
               ELSE IF Dir.HeadVld
-                   THEN [Dir EXCEPT !.ShrVld = TRUE, !.ShrSet[src] = TRUE,
-                                    !.InvSet = [p \in NODE |-> (p = src) \/ Dir.ShrSet[p]]]
+                   THEN [Dir EXCEPT !.ShrVld = TRUE, !.ShrSet = Dir.ShrSet \cup {src},
+                                    !.InvSet = Dir.ShrSet \cup {src}]
                    ELSE [Dir EXCEPT !.HeadVld = TRUE, !.HeadPtr = src]
     /\ MemData' = IF Dir.Dirty THEN Proc[Home].CacheData ELSE MemData
     /\ Proc' = IF Dir.Dirty THEN [Proc EXCEPT ![Home].CacheState = "CACHE_S"] ELSE Proc
@@ -381,10 +381,10 @@ NI_Local_GetX_PutX(src) ==
     /\ ~Dir.Pending
     /\ (Dir.Dirty => (Dir.Local /\ Proc[Home].CacheState = "CACHE_E"))
     /\ LET Cond3(p) == /\ p # Home /\ p # src
-                       /\ \/ (Dir.ShrVld /\ Dir.ShrSet[p])
+                       /\ \/ (Dir.ShrVld /\ p \in Dir.ShrSet)
                           \/ (Dir.HeadVld /\ Dir.HeadPtr = p)
            elsifCond == Dir.HeadVld => (Dir.HeadPtr = src
-                                        /\ \A p \in NODE : p # src => ~Dir.ShrSet[p])
+                                        /\ Dir.ShrSet \subseteq {src})
            ProcLocalI == [Proc EXCEPT ![Home].CacheState = "CACHE_I",
                                       ![Home].CacheData = Undefined,
                                       ![Home].InvMarked =
@@ -392,12 +392,12 @@ NI_Local_GetX_PutX(src) ==
                                           THEN TRUE ELSE Proc[Home].InvMarked]
            commonDir == [Dir EXCEPT !.Local = FALSE, !.Dirty = TRUE, !.HeadVld = TRUE,
                                     !.HeadPtr = src, !.ShrVld = FALSE,
-                                    !.ShrSet = [p \in NODE |-> FALSE],
-                                    !.InvSet = [p \in NODE |-> FALSE]]
+                                    !.ShrSet = {},
+                                    !.InvSet = {}]
            branch3Dir == [Dir EXCEPT !.Pending = TRUE, !.Local = FALSE, !.Dirty = TRUE,
                                      !.HeadVld = TRUE, !.HeadPtr = src, !.ShrVld = FALSE,
-                                     !.ShrSet = [p \in NODE |-> FALSE],
-                                     !.InvSet = [p \in NODE |-> Cond3(p)]]
+                                     !.ShrSet = {},
+                                     !.InvSet = {p \in NODE : Cond3(p)}]
        IN /\ Dir' = IF Dir.Dirty \/ elsifCond THEN commonDir ELSE branch3Dir
           /\ Proc' = IF Dir.Dirty
                      THEN [Proc EXCEPT ![Home].CacheState = "CACHE_I", ![Home].CacheData = Undefined]
@@ -501,12 +501,12 @@ NI_Inv(dst) ==
 NI_InvAck(src) ==
     /\ src # Home
     /\ InvMsg[src].Cmd = "INV_InvAck"
-    /\ Dir.Pending /\ Dir.InvSet[src]
-    /\ LET moreAcks == \E p \in NODE : p # src /\ Dir.InvSet[p]
+    /\ Dir.Pending /\ src \in Dir.InvSet
+    /\ LET moreAcks == Dir.InvSet \ {src} # {}
        IN /\ InvMsg' = [InvMsg EXCEPT ![src].Cmd = "INV_None"]
           /\ Dir' = IF moreAcks
-                    THEN [Dir EXCEPT !.InvSet[src] = FALSE]
-                    ELSE [Dir EXCEPT !.InvSet[src] = FALSE, !.Pending = FALSE,
+                    THEN [Dir EXCEPT !.InvSet = Dir.InvSet \ {src}]
+                    ELSE [Dir EXCEPT !.InvSet = Dir.InvSet \ {src}, !.Pending = FALSE,
                                      !.Local = IF Dir.Local /\ ~Dir.Dirty THEN FALSE ELSE Dir.Local]
           /\ Collecting' = IF moreAcks THEN Collecting ELSE FALSE
           /\ LastInvAck' = src
@@ -533,9 +533,11 @@ NI_FAck ==
 NI_ShWb ==
     /\ ShWbMsg.Cmd = "SHWB_ShWb"
     /\ ShWbMsg' = [ShWbMsg EXCEPT !.Cmd = "SHWB_None", !.Proc = Undefined, !.Data = Undefined]
+    \* ShWbMsg.Proc is Other when the sharer is the abstract node; only concrete
+    \* nodes are recorded in the directory.
     /\ Dir' = [Dir EXCEPT !.Pending = FALSE, !.Dirty = FALSE, !.ShrVld = TRUE,
-                          !.ShrSet = [p \in NODE |-> (p = ShWbMsg.Proc) \/ Dir.ShrSet[p]],
-                          !.InvSet = [p \in NODE |-> (p = ShWbMsg.Proc) \/ Dir.ShrSet[p]]]
+                          !.ShrSet = Dir.ShrSet \cup ({ShWbMsg.Proc} \cap NODE),
+                          !.InvSet = Dir.ShrSet \cup ({ShWbMsg.Proc} \cap NODE)]
     /\ MemData' = ShWbMsg.Data
     /\ UNCHANGED <<Home, Proc, UniMsg, InvMsg, RpMsg, WbMsg, NakcMsg, CurrData,
                    PrevData, LastWrVld, LastWrPtr, PendReqSrc, PendReqCmd, Collecting,
@@ -544,8 +546,8 @@ NI_ShWb ==
 NI_Replace(src) ==
     /\ RpMsg[src].Cmd = "RP_Replace"
     /\ RpMsg' = [RpMsg EXCEPT ![src].Cmd = "RP_None"]
-    /\ Dir' = [Dir EXCEPT !.ShrSet[src] = IF Dir.ShrVld THEN FALSE ELSE Dir.ShrSet[src],
-                          !.InvSet[src] = IF Dir.ShrVld THEN FALSE ELSE Dir.InvSet[src]]
+    /\ Dir' = [Dir EXCEPT !.ShrSet = IF Dir.ShrVld THEN Dir.ShrSet \ {src} ELSE Dir.ShrSet,
+                          !.InvSet = IF Dir.ShrVld THEN Dir.InvSet \ {src} ELSE Dir.InvSet]
     /\ UNCHANGED <<Home, Proc, MemData, UniMsg, InvMsg, WbMsg, ShWbMsg, NakcMsg, CurrData,
                    PrevData, LastWrVld, LastWrPtr, PendReqSrc, PendReqCmd, Collecting,
                    FwdCmd, FwdSrc, LastInvAck, Env_o>>
@@ -599,7 +601,7 @@ ABS_NI_Local_Get_Put ==
     /\ Dir' = IF Dir.Dirty
               THEN [Dir EXCEPT !.Dirty = FALSE, !.HeadVld = TRUE, !.HeadPtr = Other]
               ELSE IF Dir.HeadVld
-                   THEN [Dir EXCEPT !.ShrVld = TRUE, !.InvSet = [p \in NODE |-> Dir.ShrSet[p]]]
+                   THEN [Dir EXCEPT !.ShrVld = TRUE, !.InvSet = Dir.ShrSet]
                    ELSE [Dir EXCEPT !.HeadVld = TRUE, !.HeadPtr = Other]
     /\ MemData' = IF Dir.Dirty THEN Proc[Home].CacheData ELSE MemData
     /\ Proc' = IF Dir.Dirty THEN [Proc EXCEPT ![Home].CacheState = "CACHE_S"] ELSE Proc
@@ -704,9 +706,9 @@ ABS_NI_Local_GetX_PutX ==
     /\ ~Dir.Pending
     /\ (Dir.Dirty => (Dir.Local /\ Proc[Home].CacheState = "CACHE_E"))
     /\ LET Cond3(p) == /\ p # Home
-                       /\ \/ (Dir.ShrVld /\ Dir.ShrSet[p])
+                       /\ \/ (Dir.ShrVld /\ p \in Dir.ShrSet)
                           \/ (Dir.HeadVld /\ Dir.HeadPtr = p)
-           elsifCond == Dir.HeadVld => (Dir.HeadPtr = Other /\ \A p \in NODE : ~Dir.ShrSet[p])
+           elsifCond == Dir.HeadVld => (Dir.HeadPtr = Other /\ Dir.ShrSet = {})
            ProcLocalI == [Proc EXCEPT ![Home].CacheState = "CACHE_I",
                                       ![Home].CacheData = Undefined,
                                       ![Home].InvMarked =
@@ -715,12 +717,12 @@ ABS_NI_Local_GetX_PutX ==
            ProcII == [Proc EXCEPT ![Home].CacheState = "CACHE_I", ![Home].CacheData = Undefined]
            commonDir == [Dir EXCEPT !.Local = FALSE, !.Dirty = TRUE, !.HeadVld = TRUE,
                                     !.HeadPtr = Other, !.ShrVld = FALSE,
-                                    !.ShrSet = [p \in NODE |-> FALSE],
-                                    !.InvSet = [p \in NODE |-> FALSE]]
+                                    !.ShrSet = {},
+                                    !.InvSet = {}]
            branch3Dir == [Dir EXCEPT !.Pending = TRUE, !.Local = FALSE, !.Dirty = TRUE,
                                      !.HeadVld = TRUE, !.HeadPtr = Other, !.ShrVld = FALSE,
-                                     !.ShrSet = [p \in NODE |-> FALSE],
-                                     !.InvSet = [p \in NODE |-> Cond3(p)]]
+                                     !.ShrSet = {},
+                                     !.InvSet = {p \in NODE : Cond3(p)}]
        IN /\ Dir' = IF Dir.Dirty \/ elsifCond THEN commonDir ELSE branch3Dir
           /\ Proc' = IF Dir.Dirty THEN ProcII
                      ELSE IF Dir.Local THEN ProcLocalI
@@ -797,7 +799,7 @@ ABS_NI_InvAck ==
                 => UniMsg[q].Proc = Home)
          /\ (UniMsg[q].Cmd = "UNI_PutX"
                 => (UniMsg[q].Proc = Home /\ PendReqSrc = q))
-    /\ LET moreAcks == \E p \in NODE : Dir.InvSet[p]
+    /\ LET moreAcks == Dir.InvSet # {}
        IN /\ Dir' = IF moreAcks THEN Dir
                     ELSE [Dir EXCEPT !.Pending = FALSE,
                                      !.Local = IF Dir.Local /\ ~Dir.Dirty THEN FALSE ELSE Dir.Local]
@@ -811,7 +813,7 @@ ABS_NI_ShWb ==
     /\ ShWbMsg.Cmd = "SHWB_ShWb" /\ ShWbMsg.Proc = Other
     /\ ShWbMsg' = [ShWbMsg EXCEPT !.Cmd = "SHWB_None", !.Proc = Undefined, !.Data = Undefined]
     /\ Dir' = [Dir EXCEPT !.Pending = FALSE, !.Dirty = FALSE, !.ShrVld = TRUE,
-                          !.InvSet = [p \in NODE |-> Dir.ShrSet[p]]]
+                          !.InvSet = Dir.ShrSet]
     /\ MemData' = ShWbMsg.Data
     /\ UNCHANGED <<Home, Proc, UniMsg, InvMsg, RpMsg, WbMsg, NakcMsg, CurrData,
                    PrevData, LastWrVld, LastWrPtr, PendReqSrc, PendReqCmd, Collecting,
