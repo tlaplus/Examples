@@ -107,7 +107,7 @@ Here is a list of specs included in this repository which are validated by the C
 | [Disruptor](specifications/Disruptor)                                                               | Nicholas Schultz-Møller                             |          |             |         |     ✔     |    ✔     |
 | [DAG-based Consensus](specifications/dag-consensus)                                                 | Giuliano Losa                                       |          |             |    ✔    |     ✔     |          |
 | [German Cache-Coherence Protocol](specifications/GermanProtocol)                                    | Markus Kuppe                                        |          |             |         |     ✔     |    ✔     |
-| [FLASH Cache-Coherence Protocol](specifications/FlashProtocol)                                      | Markus Kuppe                                        |          |             |         |     ✔     |          |
+| [FLASH Cache-Coherence Protocol](specifications/FlashProtocol)                                      | Markus Kuppe                                        |          |             |         |     ✔     |    ✔     |
 
 
 ## Other Examples

@@ -15,6 +15,18 @@
       "models": []
     },
     {
+      "path": "specifications/FlashProtocol/APFlashWithMutex.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/FlashProtocol/APFlashWithMutex.cfg",
+          "runtime": "00:03:36",
+          "mode": "symbolic",
+          "result": "success"
+        }
+      ]
+    },
+    {
       "path": "specifications/FlashProtocol/MCFlashWithMutex.tla",
       "features": [],
       "models": [
