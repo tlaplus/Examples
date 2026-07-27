@@ -32,11 +32,11 @@
       "models": [
         {
           "path": "specifications/FlashProtocol/MCFlashWithMutex.cfg",
-          "runtime": "00:00:09",
+          "runtime": "00:00:04",
           "mode": "exhaustive search",
           "result": "success",
-          "distinctStates": 131976,
-          "totalStates": 650236,
+          "distinctStates": 32994,
+          "totalStates": 159216,
           "stateDepth": 34
         }
       ]
