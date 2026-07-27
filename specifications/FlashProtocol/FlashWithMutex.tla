@@ -24,9 +24,11 @@ CONSTANTS
     Undefined    \* the "undefine"/isundefined sentinel
 
 ASSUME OtherNotInNODE   == Other \notin NODE
+ASSUME OtherNotInDATA   == Other \notin DATA
 ASSUME UndefNotInNODE   == Undefined \notin NODE
 ASSUME UndefNotInDATA   == Undefined \notin DATA
 ASSUME UndefNotOther    == Undefined # Other
+ASSUME NODEDATADisjoint == NODE \cap DATA = {}
 ASSUME NODENonEmpty     == NODE # {}
 ASSUME DATANonEmpty     == DATA # {}
 ASSUME NODEFinite       == IsFiniteSet(NODE)
