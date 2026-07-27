@@ -899,4 +899,66 @@ CacheDataProp ==
 
 MemDataProp ==
     ~Dir.Dirty => MemData = CurrData
+
+-------------------------------------------------------------------------------
+(* The Murphi `Lemma_*` invariants.  Unlike the three properties above these  *)
+(* are not statements about the protocol a user cares about; they are the     *)
+(* side conditions that make the CMP `Other`-node abstraction sound, and the  *)
+(* Murphi rules cite them by name in comments on the guards they justify.     *)
+(* Keeping them as invariants is what turns those citations into claims TLC   *)
+(* and Apalache can check.                                                    *)
+(*                                                                            *)
+(* Each Murphi lemma opens with `forall h : NODE do h = Home -> ...`, which   *)
+(* only instantiates h to the Home node; the translations below write Home    *)
+(* directly.                                                                  *)
+
+\* An exclusive copy is unique and no grant or writeback is in flight that
+\* could produce a second one.  `AbsDirtyClean` is this consequent stated for
+\* the abstract node, which is why the ABS_* rules that hand out `CurrData`
+\* are guarded by it -- the Murphi rules mark those guards "by Lemma_1".
+Lemma_1 ==
+    \A dst \in NODE :
+        Proc[dst].CacheState = "CACHE_E" =>
+            /\ Dir.Dirty
+            /\ WbMsg.Cmd # "WB_Wb"
+            /\ ShWbMsg.Cmd # "SHWB_ShWb"
+            /\ \A p \in NODE : p # dst => Proc[p].CacheState # "CACHE_E"
+            /\ UniMsg[Home].Cmd # "UNI_Put"
+            /\ \A q \in NODE : UniMsg[q].Cmd # "UNI_PutX"
+
+\* A Get that Home forwarded to a third node is the request Home is working
+\* on, so the ABS_* rules may read PendReqSrc/FwdCmd instead of the message.
+Lemma_2 ==
+    \A src, dst \in NODE :
+        (/\ src # dst /\ dst # Home
+         /\ UniMsg[src].Cmd = "UNI_Get" /\ UniMsg[src].Proc = dst)
+            => /\ Dir.Pending /\ ~Dir.Local
+               /\ PendReqSrc = src /\ FwdCmd = "UNI_Get"
+
+\* Lemma_2 for the exclusive flavour.
+Lemma_3 ==
+    \A src, dst \in NODE :
+        (/\ src # dst /\ dst # Home
+         /\ UniMsg[src].Cmd = "UNI_GetX" /\ UniMsg[src].Proc = dst)
+            => /\ Dir.Pending /\ ~Dir.Local
+               /\ PendReqSrc = src /\ FwdCmd = "UNI_GetX"
+
+\* An outstanding invalidation ack pins down the rest of the network: the
+\* consequent is ABS_NI_InvAck's guard, which is why that rule may fire on
+\* behalf of the abstract node without inspecting it.
+Lemma_4 ==
+    \A p \in NODE :
+        (p # Home /\ InvMsg[p].Cmd = "INV_InvAck") =>
+            /\ Dir.Pending /\ Collecting
+            /\ NakcMsg.Cmd = "NAKC_None" /\ ShWbMsg.Cmd = "SHWB_None"
+            /\ \A q \in NODE :
+                 /\ (UniMsg[q].Cmd \in {"UNI_Get", "UNI_GetX"} => UniMsg[q].Proc = Home)
+                 /\ (UniMsg[q].Cmd = "UNI_PutX" => (UniMsg[q].Proc = Home /\ PendReqSrc = q))
+
+\* An exclusive copy holds the most recently written value, so the ABS_* rules
+\* may hand out CurrData as the abstract node's copy.  This is also the first
+\* conjunct of CacheDataProp; it is restated here to keep the correspondence
+\* with the Murphi invariants one-to-one.
+Lemma_5 ==
+    \A p \in NODE : Proc[p].CacheState = "CACHE_E" => Proc[p].CacheData = CurrData
 =============================================================================
