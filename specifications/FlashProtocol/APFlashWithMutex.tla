@@ -9,7 +9,8 @@
 
    Run bounded model checking for executions of at most 5 Next steps with:
      apalache-mc check --length=5 --config=APFlashWithMutex.cfg APFlashWithMutex.tla
-   This completes in about 4 minutes on a 2021 M1 MacBook.
+   Runtime depends on the hardware and on the invariant list; manifest.json
+   records the current measurement.
 *)
 
 CONSTANTS

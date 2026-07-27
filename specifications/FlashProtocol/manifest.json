@@ -20,7 +20,7 @@
       "models": [
         {
           "path": "specifications/FlashProtocol/APFlashWithMutex.cfg",
-          "runtime": "00:03:36",
+          "runtime": "00:38:09",
           "mode": "symbolic",
           "result": "success"
         }
