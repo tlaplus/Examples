@@ -55,6 +55,12 @@ vars == <<Home, Proc, Dir, MemData, UniMsg, InvMsg, RpMsg, WbMsg, ShWbMsg, NakcM
           CurrData, PrevData, PendReqSrc, PendReqCmd, Collecting, FwdCmd, FwdSrc,
           Env_o>>
 
+\* The history variables.  CurrData is the value most recently written:
+\* the ABS_* actions hand it out as the abstract node's copy, and the data
+\* properties check cached copies against it.  PrevData snapshots CurrData when
+\* an invalidation round opens; nothing but CacheDataProp reads it, to let a
+\* sharer still hold the pre-round value while Collecting.
+
 \* Variables that most actions leave untouched as a unit, grouped so that the
 \* frame conditions can name the group instead of listing its members.  An
 \* action that does change one member spells the group's others out.
