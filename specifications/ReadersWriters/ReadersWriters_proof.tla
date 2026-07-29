@@ -42,10 +42,7 @@ LEMMA TailIsSeq ==
 (***************************************************************************)
 (* Type correctness.                                                       *)
 (***************************************************************************)
-THEOREM TypeCorrect == Spec => []TypeOK
-<1>1. Init => TypeOK
-  BY DEF Init, TypeOK
-<1>2. TypeOK /\ [Next]_vars => TypeOK'
+LEMMA TypeOKStep == TypeOK /\ [Next]_vars => TypeOK'
   <2>. SUFFICES ASSUME TypeOK, [Next]_vars  PROVE TypeOK'
     OBVIOUS
   <2>. USE DEF TypeOK
@@ -97,66 +94,23 @@ THEOREM TypeCorrect == Spec => []TypeOK
   <2>5. CASE UNCHANGED vars
     BY <2>5 DEF vars
   <2>. QED  BY <2>1, <2>2, <2>3, <2>4, <2>5 DEF Next
+
+THEOREM TypeCorrect == Spec => []TypeOK
+<1>1. Init => TypeOK
+  BY DEF Init, TypeOK
+<1>2. TypeOK /\ [Next]_vars => TypeOK'
+  BY TypeOKStep
 <1>. QED  BY <1>1, <1>2, PTL DEF Spec
 
 (***************************************************************************)
-(* The mutex / single-writer safety property.                              *)
-(* Inductive together with TypeOK.                                         *)
+(* The mutex / single-writer safety property.  Safety is inductive only    *)
+(* relative to TypeOK, which enters as a hypothesis here and is discharged *)
+(* with TypeCorrect in the temporal step of THEOREM SafetyCorrect.         *)
 (***************************************************************************)
-Inv == TypeOK /\ Safety
-
-LEMMA SafetyStep == Inv /\ [Next]_vars => Inv'
-  <1>. SUFFICES ASSUME Inv, [Next]_vars  PROVE Inv'
-    OBVIOUS
-  <1>. USE DEF Inv, TypeOK, Safety
-  <1>typok. TypeOK'
-    \* Re-derive the type-correctness step inline (same as in TypeCorrect).
-    <2>1. ASSUME NEW actor \in Actors, TryRead(actor)
-          PROVE  TypeOK'
-      <3>. <<"read", actor>> \in {"read","write"} \X Actors
-        OBVIOUS
-      <3>. QED  BY <2>1 DEF TryRead
-    <2>2. ASSUME NEW actor \in Actors, TryWrite(actor)
-          PROVE  TypeOK'
-      <3>. <<"write", actor>> \in {"read","write"} \X Actors
-        OBVIOUS
-      <3>. QED  BY <2>2 DEF TryWrite
-    <2>3. CASE ReadOrWrite
-      <3>. USE <2>3 DEF ReadOrWrite
-      <3>1. waiting # << >>
-        OBVIOUS
-      <3>2. Tail(waiting) \in Seq({"read","write"} \X Actors)
-        BY <3>1, TailIsSeq
-      <3>3. Head(waiting) \in {"read","write"} \X Actors
-        BY <3>1, HeadInSeqRange
-      <3>4. Head(waiting)[2] \in Actors
-        BY <3>3
-      <3>5. CASE Head(waiting)[1] = "read"
-        <4>. DEFINE actor == Head(waiting)[2]
-        <4>1. Read(actor)
-          BY <3>5
-        <4>. QED  BY <3>2, <3>4, <4>1 DEF Read
-      <3>6. CASE Head(waiting)[1] = "write"
-        <4>. DEFINE actor == Head(waiting)[2]
-        <4>1. Write(actor)
-          BY <3>6
-        <4>. QED  BY <3>2, <3>4, <4>1 DEF Write
-      <3>7. Head(waiting)[1] \in {"read","write"}
-        BY <3>3
-      <3>. QED  BY <3>5, <3>6, <3>7
-    <2>4. ASSUME NEW actor \in readers \cup writers, StopActivity(actor)
-          PROVE  TypeOK'
-      <3>1. CASE actor \in readers
-        BY <3>1, <2>4 DEF StopActivity
-      <3>2. CASE actor \notin readers
-        <4>1. actor \in writers
-          BY <3>2, <2>4
-        <4>. QED  BY <3>2, <4>1, <2>4 DEF StopActivity
-      <3>. QED  BY <3>1, <3>2
-    <2>5. CASE UNCHANGED vars
-      BY <2>5 DEF vars
-    <2>. QED  BY <2>1, <2>2, <2>3, <2>4, <2>5 DEF Next, Stop
-  <1>safety. Safety'
+LEMMA SafetyStep == TypeOK /\ Safety /\ [Next]_vars => Safety'
+    <2>. SUFFICES ASSUME TypeOK, Safety, [Next]_vars  PROVE Safety'
+      OBVIOUS
+    <2>. USE DEF TypeOK, Safety
     <2>1. ASSUME NEW actor \in Actors, TryRead(actor)
           PROVE  Safety'
       BY <2>1 DEF TryRead
@@ -253,16 +207,13 @@ LEMMA SafetyStep == Inv /\ [Next]_vars => Inv'
     <2>5. CASE UNCHANGED vars
       BY <2>5 DEF vars
     <2>. QED  BY <2>1, <2>2, <2>3, <2>4, <2>5 DEF Next, Stop
-  <1>. QED  BY <1>typok, <1>safety
 
 THEOREM SafetyCorrect == Spec => []Safety
-<1>1. Init => Inv
+<1>1. Init => Safety
   <2>1. Cardinality({}) = 0
     BY FS_EmptySet
-  <2>. QED  BY <2>1 DEF Init, Inv, TypeOK, Safety
-<1>2. Inv /\ [Next]_vars => Inv'
+  <2>. QED  BY <2>1 DEF Init, Safety
+<1>2. TypeOK /\ Safety /\ [Next]_vars => Safety'
   BY SafetyStep
-<1>3. Inv => Safety
-  BY DEF Inv
-<1>. QED  BY <1>1, <1>2, <1>3, PTL DEF Spec
+<1>. QED  BY <1>1, <1>2, TypeCorrect, PTL DEF Spec
 ============================================================================
