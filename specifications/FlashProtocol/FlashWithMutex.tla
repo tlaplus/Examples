@@ -882,6 +882,9 @@ Next == System \/ Environment
 
 Spec == Init /\ [][Next]_vars
 
+\* TypeOK is defined up with the variables; its theorem has to wait for Spec.
+THEOREM TypeCorrect == Spec => []TypeOK
+
 -------------------------------------------------------------------------------
 (* Progress, stated as liveness.                                              *)
 (*                                                                            *)
@@ -945,21 +948,34 @@ FairSpec == Init /\ [][Next]_vars /\ Fairness
 \* that is endlessly NAKed and reissued satisfies it.
 ReqProgress ==
     \A n \in NODE : (Proc[n].ProcCmd # "NODE_None") ~> (Proc[n].ProcCmd = "NODE_None")
+THEOREM ReqProgressCorrect == FairSpec => ReqProgress
 
 \* The directory does not stay busy forever.  Of everything here this is the
 \* closest counterpart to Progress1_it11.
 DirProgress == Dir.Pending ~> ~Dir.Pending
+THEOREM DirProgressCorrect == FairSpec => DirProgress
 
 \* No message is stranded in the network.
 UniProgress ==
     \A n \in NODE : (UniMsg[n].Cmd # "UNI_None") ~> (UniMsg[n].Cmd = "UNI_None")
+THEOREM UniProgressCorrect == FairSpec => UniProgress
+
 InvProgress ==
     \A n \in NODE : (InvMsg[n].Cmd # "INV_None") ~> (InvMsg[n].Cmd = "INV_None")
+THEOREM InvProgressCorrect == FairSpec => InvProgress
+
 RpProgress ==
     \A n \in NODE : (RpMsg[n].Cmd = "RP_Replace") ~> (RpMsg[n].Cmd = "RP_None")
+THEOREM RpProgressCorrect == FairSpec => RpProgress
+
 WbProgress   == (WbMsg.Cmd = "WB_Wb") ~> (WbMsg.Cmd = "WB_None")
+THEOREM WbProgressCorrect == FairSpec => WbProgress
+
 ShWbProgress == (ShWbMsg.Cmd # "SHWB_None") ~> (ShWbMsg.Cmd = "SHWB_None")
+THEOREM ShWbProgressCorrect == FairSpec => ShWbProgress
+
 NakcProgress == (NakcMsg.Cmd = "NAKC_Nakc") ~> (NakcMsg.Cmd = "NAKC_None")
+THEOREM NakcProgressCorrect == FairSpec => NakcProgress
 
 \* Starvation freedom, which does NOT hold and is not checked -- it is here to
 \* mark the boundary of what the properties above claim.  TLC returns a lasso in
@@ -979,6 +995,7 @@ ReqSuccess ==
 CacheStateProp ==
     \A p, q \in NODE :
         p # q => ~(Proc[p].CacheState = "CACHE_E" /\ Proc[q].CacheState = "CACHE_E")
+THEOREM CacheStateCorrect == Spec => []CacheStateProp
 
 CacheDataProp ==
     \A p \in NODE :
@@ -986,9 +1003,11 @@ CacheDataProp ==
         /\ (Proc[p].CacheState = "CACHE_S" =>
               /\ (Collecting => Proc[p].CacheData = PrevData)
               /\ (~Collecting => Proc[p].CacheData = CurrData))
+THEOREM CacheDataCorrect == Spec => []CacheDataProp
 
 MemDataProp ==
     ~Dir.Dirty => MemData = CurrData
+THEOREM MemDataCorrect == Spec => []MemDataProp
 
 -------------------------------------------------------------------------------
 (* The Murphi `Lemma_*` invariants.  Unlike the three properties above these  *)
@@ -1015,6 +1034,7 @@ Lemma_1 ==
             /\ \A p \in NODE : p # dst => Proc[p].CacheState # "CACHE_E"
             /\ UniMsg[Home].Cmd # "UNI_Put"
             /\ \A q \in NODE : UniMsg[q].Cmd # "UNI_PutX"
+THEOREM Lemma_1_Correct == Spec => []Lemma_1
 
 \* A Get that Home forwarded to a third node is the request Home is working
 \* on, so the ABS_* rules may read PendReqSrc/FwdCmd instead of the message.
@@ -1024,6 +1044,7 @@ Lemma_2 ==
          /\ UniMsg[src].Cmd = "UNI_Get" /\ UniMsg[src].Proc = dst)
             => /\ Dir.Pending /\ ~Dir.Local
                /\ PendReqSrc = src /\ FwdCmd = "UNI_Get"
+THEOREM Lemma_2_Correct == Spec => []Lemma_2
 
 \* Lemma_2 for the exclusive flavour.
 Lemma_3 ==
@@ -1032,6 +1053,7 @@ Lemma_3 ==
          /\ UniMsg[src].Cmd = "UNI_GetX" /\ UniMsg[src].Proc = dst)
             => /\ Dir.Pending /\ ~Dir.Local
                /\ PendReqSrc = src /\ FwdCmd = "UNI_GetX"
+THEOREM Lemma_3_Correct == Spec => []Lemma_3
 
 \* An outstanding invalidation ack pins down the rest of the network: the
 \* consequent is ABS_NI_InvAck's guard, which is why that rule may fire on
@@ -1044,6 +1066,7 @@ Lemma_4 ==
             /\ \A q \in NODE :
                  /\ (UniMsg[q].Cmd \in {"UNI_Get", "UNI_GetX"} => UniMsg[q].Proc = Home)
                  /\ (UniMsg[q].Cmd = "UNI_PutX" => (UniMsg[q].Proc = Home /\ PendReqSrc = q))
+THEOREM Lemma_4_Correct == Spec => []Lemma_4
 
 \* An exclusive copy holds the most recently written value, so the ABS_* rules
 \* may hand out CurrData as the abstract node's copy.  This is also the first
@@ -1051,4 +1074,5 @@ Lemma_4 ==
 \* with the Murphi invariants one-to-one.
 Lemma_5 ==
     \A p \in NODE : Proc[p].CacheState = "CACHE_E" => Proc[p].CacheData = CurrData
+THEOREM Lemma_5_Correct == Spec => []Lemma_5
 =============================================================================
