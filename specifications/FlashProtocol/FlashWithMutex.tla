@@ -883,6 +883,96 @@ Next == System \/ Environment
 Spec == Init /\ [][Next]_vars
 
 -------------------------------------------------------------------------------
+(* Progress, stated as liveness.                                              *)
+(*                                                                            *)
+(* Fairness is asserted per *message slot* rather than per action.  Which      *)
+(* handler applies to a waiting message depends on the directory state, which  *)
+(* other actions change while the message waits, so no single handler need be  *)
+(* continuously enabled -- but some handler of the slot's group always is, so   *)
+(* weak fairness on the group suffices and strong fairness is not needed.      *)
+(* Nothing below constrains the voluntary actions -- Store, the PI_* request    *)
+(* and eviction rules, and the ABS_* rules by which the abstract node issues    *)
+(* requests of its own -- so those may happen or not.                          *)
+
+\* Everything that can consume or rewrite the unicast message in slot n.
+HandleUni(n) ==
+    \/ NI_Nak(n)
+    \/ NI_Local_Get_Nak(n)  \/ NI_Local_Get_Get(n)   \/ NI_Local_Get_Put(n)
+    \/ NI_Local_GetX_Nak(n) \/ NI_Local_GetX_GetX(n) \/ NI_Local_GetX_PutX(n)
+    \/ NI_Remote_Put(n) \/ NI_Remote_PutX(n)
+    \/ (n = Home /\ (NI_Local_Put \/ NI_Local_PutXAcksDone))
+    \/ \E d \in NODE : \/ NI_Remote_Nak(n, d)
+                       \/ NI_Remote_Get_Put(n, d)
+                       \/ NI_Remote_GetX_PutX(n, d)
+    \/ ABS_NI_Remote_Get_Nak_dst(n)  \/ ABS_NI_Remote_GetX_Nak_dst(n)
+    \/ ABS_NI_Remote_Get_Put_dst(n)  \/ ABS_NI_Remote_GetX_PutX_dst(n)
+
+\* The invalidate/ack handshake on slot n.
+HandleInv(n) == NI_Inv(n) \/ NI_InvAck(n)
+
+\* The shared-writeback slot, which also carries the forward ack.
+HandleShWb == NI_FAck \/ NI_ShWb \/ ABS_NI_ShWb
+
+\* A request Home forwarded to node d on the abstract node's behalf: the reply
+\* comes from the abstract node, so it has to be fair or the directory would
+\* stay pending forever.
+AbsRespond(d) ==
+    \/ ABS_NI_Remote_Nak_src(d)
+    \/ ABS_NI_Remote_Get_Put_src(d)
+    \/ ABS_NI_Remote_GetX_PutX_src(d)
+
+\* As AbsRespond, with the forwarding target abstract as well.
+AbsRespondSrcDst ==
+    \/ ABS_NI_Remote_Nak_src_dst
+    \/ ABS_NI_Remote_Get_Put_src_dst
+    \/ ABS_NI_Remote_GetX_PutX_src_dst
+
+Fairness ==
+    /\ \A n \in NODE : /\ WF_vars(HandleUni(n))
+                       /\ WF_vars(HandleInv(n))
+                       /\ WF_vars(NI_Replace(n))
+                       /\ WF_vars(AbsRespond(n))
+    /\ WF_vars(NI_Nak_Clear)
+    /\ WF_vars(NI_Wb)
+    /\ WF_vars(HandleShWb)
+    /\ WF_vars(ABS_NI_InvAck)
+    /\ WF_vars(AbsRespondSrcDst)
+
+FairSpec == Init /\ [][Next]_vars /\ Fairness
+
+\* No request stays outstanding forever.  This is deadlock freedom, not a claim
+\* that requests succeed: a request also retires by being NAKed, so a request
+\* that is endlessly NAKed and reissued satisfies it.
+ReqProgress ==
+    \A n \in NODE : (Proc[n].ProcCmd # "NODE_None") ~> (Proc[n].ProcCmd = "NODE_None")
+
+\* The directory does not stay busy forever.  Of everything here this is the
+\* closest counterpart to Progress1_it11.
+DirProgress == Dir.Pending ~> ~Dir.Pending
+
+\* No message is stranded in the network.
+UniProgress ==
+    \A n \in NODE : (UniMsg[n].Cmd # "UNI_None") ~> (UniMsg[n].Cmd = "UNI_None")
+InvProgress ==
+    \A n \in NODE : (InvMsg[n].Cmd # "INV_None") ~> (InvMsg[n].Cmd = "INV_None")
+RpProgress ==
+    \A n \in NODE : (RpMsg[n].Cmd = "RP_Replace") ~> (RpMsg[n].Cmd = "RP_None")
+WbProgress   == (WbMsg.Cmd = "WB_Wb") ~> (WbMsg.Cmd = "WB_None")
+ShWbProgress == (ShWbMsg.Cmd # "SHWB_None") ~> (ShWbMsg.Cmd = "SHWB_None")
+NakcProgress == (NakcMsg.Cmd = "NAKC_Nakc") ~> (NakcMsg.Cmd = "NAKC_None")
+
+\* Starvation freedom, which does NOT hold and is not checked -- it is here to
+\* mark the boundary of what the properties above claim.  TLC returns a lasso in
+\* which n2 asks for the line, Home asks too, the abstract node serves Home, n2
+\* is NAKed, retries, and the cycle repeats.  Every state of that cycle has a
+\* continuation rule enabled, so the Murphi progress invariants hold throughout
+\* it: an enabledness invariant cannot see starvation, only a temporal property
+\* can.  Ruling the cycle out needs an arbitration assumption the protocol does
+\* not make.
+ReqSuccess ==
+    \A n \in NODE : (Proc[n].ProcCmd = "NODE_Get") ~> (Proc[n].CacheState # "CACHE_I")
+
+-------------------------------------------------------------------------------
 (* Safety properties translated from the Murphi `invariant`s (for indep.     *)
 (* cross-checking; not part of the bisimulation).                            *)
 

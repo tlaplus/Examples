@@ -40,6 +40,22 @@
           "stateDepth": 34
         }
       ]
+    },
+    {
+      "path": "specifications/FlashProtocol/MCFlashWithMutexLive.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/FlashProtocol/MCFlashWithMutexLive.cfg",
+          "runtime": "00:04:44",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 131976,
+          "totalStates": 636852,
+          "stateDepth": 34,
+          "workers": 4
+        }
+      ]
     }
   ]
 }
