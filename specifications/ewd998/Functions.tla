@@ -6,6 +6,7 @@
 (*  \vspace{12pt}}^'                                                       *)
 (***************************************************************************)
 
+EXTENDS Integers
 LOCAL INSTANCE Folds
 
 (***************************************************************************)
@@ -166,6 +167,15 @@ FoldFunctionOnSet(op(_,_), base, fun, indices) ==
   (*  FoldFunctionOnSet(LAMBDA x,y: {x} \cup y, {}, <<1,2>>, {}) = {}        *)
   (***************************************************************************)
   MapThenFoldSet(op, base, LAMBDA i : fun[i], LAMBDA s: CHOOSE x \in s : TRUE, indices)
+
+
+(***************************************************************************)
+(* Sum of the values of a function, over a set of indices or over its      *)
+(* entire domain.  Required by FunctionTheorems.                           *)
+(***************************************************************************)
+SumFunctionOnSet(fun, indices) == FoldFunctionOnSet(+, 0, fun, indices)
+
+SumFunction(fun) == SumFunctionOnSet(fun, DOMAIN fun)
 
 =============================================================================
 \* Modification History
