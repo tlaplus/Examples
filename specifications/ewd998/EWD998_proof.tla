@@ -43,34 +43,12 @@ THEOREM TypeCorrect == Init /\ [][Next]_vars => []TypeOK
 <1>. QED  BY <1>1, <1>2, PTL
 
 (***************************************************************************)
-(* Lemmas about FoldFunction that should go to a library.                  *)
-(***************************************************************************)
-IsAssociativeOn(op(_,_), S) ==
-  \A x,y,z \in S : op(x, op(y,z)) = op(op(x,y), z)
-  
-IsCommutativeOn(op(_,_), S) ==
-  \A x,y \in S : op(x,y) = op(y,x)
-  
-IsIdentityOn(op(_,_), e, S) ==
-  \A x \in S : op(e,x) = x
-
-
-(***************************************************************************)
-(* The provers have trouble applying these generic lemmas to the specific  *)
-(* instances required for the spec so we restate them for the operators    *)
-(* that appear in the definition of the inductive invariant.               *)
+(* The provers have trouble applying the generic lemmas to the specific    *)
+(* instances required for the spec, so the ones needed here are restated   *)
+(* for the operators that appear in the inductive invariant.               *)
 (***************************************************************************)
 LEMMA NodeIsFinite == IsFiniteSet(Node)
 BY FS_Interval DEF Node
-
-LEMMA PlusACI ==
-  /\ IsAssociativeOn(+, Nat)
-  /\ IsCommutativeOn(+, Nat)
-  /\ IsIdentityOn(+, 0, Nat)
-  /\ IsAssociativeOn(+, Int)
-  /\ IsCommutativeOn(+, Int)
-  /\ IsIdentityOn(+, 0, Int)
-BY DEF IsAssociativeOn, IsCommutativeOn, IsIdentityOn
 
 LEMMA SumEmpty ==
   ASSUME NEW fun
