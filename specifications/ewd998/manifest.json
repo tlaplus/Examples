@@ -171,11 +171,6 @@
       "models": []
     },
     {
-      "path": "specifications/ewd998/Functions.tla",
-      "features": [],
-      "models": []
-    },
-    {
       "path": "specifications/ewd998/SmokeEWD998.tla",
       "features": [],
       "models": [
