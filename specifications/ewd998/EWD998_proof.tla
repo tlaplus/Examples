@@ -2,7 +2,7 @@
 (***************************************************************************)
 (* Proofs checked by TLAPS about the EWD998 specification.                 *)
 (***************************************************************************)
-EXTENDS EWD998, FiniteSetTheorems, TLAPS
+EXTENDS EWD998, FiniteSetTheorems, FunctionTheorems, FiniteSetsExtTheorems, TLAPS
 
 USE NAssumption
 
@@ -43,75 +43,12 @@ THEOREM TypeCorrect == Init /\ [][Next]_vars => []TypeOK
 <1>. QED  BY <1>1, <1>2, PTL
 
 (***************************************************************************)
-(* Lemmas about FoldFunction that should go to a library.                  *)
-(***************************************************************************)
-IsAssociativeOn(op(_,_), S) ==
-  \A x,y,z \in S : op(x, op(y,z)) = op(op(x,y), z)
-  
-IsCommutativeOn(op(_,_), S) ==
-  \A x,y \in S : op(x,y) = op(y,x)
-  
-IsIdentityOn(op(_,_), e, S) ==
-  \A x \in S : op(e,x) = x
-
-LEMMA FoldFunctionIsFoldFunctionOnSet ==
-  ASSUME NEW op(_,_), NEW base, NEW fun
-  PROVE  FoldFunction(op, base, fun) = FoldFunctionOnSet(op, base, fun, DOMAIN fun)
-
-LEMMA FoldFunctionOnSetEmpty ==
-  ASSUME NEW op(_,_), NEW base, NEW fun
-  PROVE  FoldFunctionOnSet(op, base, fun, {}) = base 
-
-LEMMA FoldFunctionOnSetIterate ==
-  ASSUME NEW op(_,_), 
-         NEW S, IsFiniteSet(S), NEW T, 
-         NEW base \in T, NEW fun \in [S -> T], 
-         NEW inds \in SUBSET S, NEW e \in inds,
-         IsAssociativeOn(op, T), IsCommutativeOn(op, T), IsIdentityOn(op, base, T)
-  PROVE  FoldFunctionOnSet(op, base, fun, inds)
-       = op(fun[e], FoldFunctionOnSet(op, base, fun, inds \ {e}))
-
-LEMMA FoldFunctionOnSetUnion ==
-  ASSUME NEW op(_,_),
-         NEW S, IsFiniteSet(S), NEW T,
-         NEW base \in T, NEW fun \in [S -> T],
-         NEW inds1 \in SUBSET S, NEW inds2 \in SUBSET S, inds1 \cap inds2 = {},
-         IsAssociativeOn(op, T), IsCommutativeOn(op, T), IsIdentityOn(op, base, T)
-  PROVE  FoldFunctionOnSet(op, base, fun, inds1 \cup inds2)
-         = op(FoldFunctionOnSet(op, base, fun, inds1), FoldFunctionOnSet(op, base, fun, inds2))
-
-LEMMA FoldFunctionOnSetEqual ==
-  ASSUME NEW op(_,_),
-         NEW S, IsFiniteSet(S), NEW T, NEW base \in T,
-         NEW f \in [S -> T], NEW g \in [S -> T],
-         NEW inds \in SUBSET S,
-         \A x \in inds : f[x] = g[x]
-  PROVE  FoldFunctionOnSet(op, base, f, inds) = FoldFunctionOnSet(op, base, g, inds)
-
-LEMMA FoldFunctionOnSetType == 
-  ASSUME NEW op(_,_),
-         NEW S, NEW T, IsFiniteSet(S), 
-         NEW base \in T, NEW fun \in [S -> T],
-         NEW inds \in SUBSET S,
-         \A x,y \in T : op(x,y) \in T
-  PROVE  FoldFunctionOnSet(op, base, fun, inds) \in T
-
-(***************************************************************************)
-(* The provers have trouble applying these generic lemmas to the specific  *)
-(* instances required for the spec so we restate them for the operators    *)
-(* that appear in the definition of the inductive invariant.               *)
+(* The provers have trouble applying the generic lemmas to the specific    *)
+(* instances required for the spec, so the ones needed here are restated   *)
+(* for the operators that appear in the inductive invariant.               *)
 (***************************************************************************)
 LEMMA NodeIsFinite == IsFiniteSet(Node)
 BY FS_Interval DEF Node
-
-LEMMA PlusACI ==
-  /\ IsAssociativeOn(+, Nat)
-  /\ IsCommutativeOn(+, Nat)
-  /\ IsIdentityOn(+, 0, Nat)
-  /\ IsAssociativeOn(+, Int)
-  /\ IsCommutativeOn(+, Int)
-  /\ IsIdentityOn(+, 0, Int)
-BY DEF IsAssociativeOn, IsCommutativeOn, IsIdentityOn
 
 LEMMA SumEmpty ==
   ASSUME NEW fun
@@ -122,7 +59,19 @@ LEMMA SumIterate ==
   ASSUME NEW fun \in [Node -> Int], 
          NEW inds \in SUBSET Node, NEW e \in inds
   PROVE  Sum(fun, inds) = fun[e] + Sum(fun, inds \ {e})
-\* BY FoldFunctionOnSetIterate, NodeIsFinite, PlusACI DEF Sum (* fails *)
+<1>1. IsFiniteSet(inds \ {e})
+  BY NodeIsFinite, FS_Subset
+<1>2. e \notin inds \ {e}
+  OBVIOUS
+<1>3. inds = (inds \ {e}) \union {e}
+  OBVIOUS
+<1>4. \A s \in (inds \ {e}) \union {e} : fun[s] \in Int
+  OBVIOUS
+<1>5. MapThenSumSet(LAMBDA s : fun[s], (inds \ {e}) \union {e})
+      = fun[e] + MapThenSumSet(LAMBDA s : fun[s], inds \ {e})
+  BY <1>1, <1>2, <1>4, MapThenSumSetAddElement
+<1>. QED
+  BY <1>3, <1>5 DEF Sum, MapThenSumSet, FoldFunctionOnSet
 
 LEMMA SumSingleton ==
   ASSUME NEW fun \in [Node -> Int], NEW x \in Node
@@ -133,25 +82,53 @@ LEMMA SumUnion ==
   ASSUME NEW fun \in [Node -> Int],
          NEW inds1 \in SUBSET Node, NEW inds2 \in SUBSET Node, inds1 \cap inds2 = {}
   PROVE  Sum(fun, inds1 \cup inds2) = Sum(fun, inds1) + Sum(fun, inds2)
+<1>1. IsFiniteSet(inds1) /\ IsFiniteSet(inds2)
+  BY NodeIsFinite, FS_Subset
+<1>2. \A x \in inds1 \union inds2 : fun[x] \in Int
+  OBVIOUS
+<1>. QED
+  BY <1>1, <1>2, MapThenSumSetDisjointUnion
+     DEF Sum, MapThenSumSet, FoldFunctionOnSet
 
 LEMMA SumEqual ==
   ASSUME NEW f \in [Node -> Int], NEW g \in [Node -> Int],
          NEW inds \in SUBSET Node,
          \A x \in inds : f[x] = g[x]
   PROVE  Sum(f, inds) = Sum(g, inds)
-\* BY FoldFunctionOnSetEqual, NodeIsFinite DEF Sum (* fails *)
+<1>1. IsFiniteSet(inds)
+  BY NodeIsFinite, FS_Subset
+<1>. QED
+  BY <1>1, FoldFunctionOnSetEqual DEF Sum
 
 LEMMA SumIsInt == 
   ASSUME NEW fun \in [Node -> Int],
          NEW inds \in SUBSET Node
   PROVE  Sum(fun, inds) \in Int
-BY FoldFunctionOnSetType, NodeIsFinite, Isa DEF Sum
+<1>1. IsFiniteSet(inds)
+  BY NodeIsFinite, FS_Subset
+<1>2. \A i \in inds : fun[i] \in Int
+  OBVIOUS
+<1>3. \A t,u \in Int : t + u \in Int
+  OBVIOUS
+<1>4. 0 \in Int
+  OBVIOUS
+<1>. QED
+  BY <1>1, <1>2, <1>3, <1>4, FoldFunctionOnSetType DEF Sum
 
 LEMMA SumIsNat == 
   ASSUME NEW fun \in [Node -> Nat],
          NEW inds \in SUBSET Node
   PROVE  Sum(fun, inds) \in Nat
-BY FoldFunctionOnSetType, NodeIsFinite, \A x,y \in Nat: x+y \in Nat, IsaM("blast") DEF Sum
+<1>1. IsFiniteSet(inds)
+  BY NodeIsFinite, FS_Subset
+<1>2. \A i \in inds : fun[i] \in Nat
+  OBVIOUS
+<1>3. \A t,u \in Nat : t + u \in Nat
+  OBVIOUS
+<1>4. 0 \in Nat
+  OBVIOUS
+<1>. QED
+  BY <1>1, <1>2, <1>3, <1>4, FoldFunctionOnSetType, IsaM("blast") DEF Sum
 
 LEMMA SumZero ==
   ASSUME NEW fun \in [Node -> Int], NEW inds \in SUBSET Node,
