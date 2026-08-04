@@ -149,8 +149,41 @@ jobs:
             | map(select(has("proof")))
             # Failing on Linux
             | map(select(.path != "specifications/LoopInvariance/SumSequence.tla"))
+            # Proofs with steps that carry no proof; --strict reports these as
+            # incomplete (exit 11), so they are checked without it below.
+            # Voting/PConProof: steps left open deliberately.
+            | map(select(.path != "specifications/Paxos/Voting.tla"))
+            | map(select(.path != "specifications/PaxosHowToWinATuringAward/Voting.tla"))
+            | map(select(.path != "specifications/byzpaxos/PConProof.tla"))
+            # AllocatorImplementation: blocked on referring to facts derived in
+            # instantiated modules; deferred until that part of the PM is
+            # reimplemented.
+            | map(select(.path != "specifications/allocator/AllocatorImplementation_proof.tla"))
+            # Elevator: blocked on the PM not handling definitions of the form
+            # [x \in S, y \in T |-> e(x,y)].
+            | map(select(.path != "specifications/MultiCarElevator/Elevator_proof.tla"))
             # Skip long-running proofs in CI
             | map(select(.proof.maxRuntimeMinutes <= 5))
+            | map((.proof.maxRuntimeMinutes | tostring) + "\u0000" + .path + "\u0000")
+            | join("")' \
+          | xargs --verbose --null --no-run-if-empty -n 2 \
+          sh -c 'time timeout --signal=KILL "${1}m" "$DEPS_DIR/tlapm/bin/tlapm" --strict "$2" -I "$DEPS_DIR/community" --stretch 5' --
+      - name: Check proofs with incomplete steps
+        if: matrix.os != 'windows-latest' && !matrix.unicode
+        run: |
+          set -o pipefail
+          find specifications -iname "manifest.json" -print0 \
+          | xargs --null --no-run-if-empty \
+          jq --join-output '
+            .modules
+            | map(select(has("proof")))
+            | map(select(.proof.maxRuntimeMinutes <= 5))
+            | map(select(
+                  .path == "specifications/Paxos/Voting.tla"
+               or .path == "specifications/PaxosHowToWinATuringAward/Voting.tla"
+               or .path == "specifications/byzpaxos/PConProof.tla"
+               or .path == "specifications/allocator/AllocatorImplementation_proof.tla"
+               or .path == "specifications/MultiCarElevator/Elevator_proof.tla"))
             | map((.proof.maxRuntimeMinutes | tostring) + "\u0000" + .path + "\u0000")
             | join("")' \
           | xargs --verbose --null --no-run-if-empty -n 2 \
