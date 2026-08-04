@@ -151,10 +151,16 @@ jobs:
             | map(select(.path != "specifications/LoopInvariance/SumSequence.tla"))
             # Proofs with steps that carry no proof; --strict reports these as
             # incomplete (exit 11), so they are checked without it below.
+            # Voting/PConProof: steps left open deliberately.
             | map(select(.path != "specifications/Paxos/Voting.tla"))
             | map(select(.path != "specifications/PaxosHowToWinATuringAward/Voting.tla"))
             | map(select(.path != "specifications/byzpaxos/PConProof.tla"))
+            # AllocatorImplementation: blocked on referring to facts derived in
+            # instantiated modules; deferred until that part of the PM is
+            # reimplemented.
             | map(select(.path != "specifications/allocator/AllocatorImplementation_proof.tla"))
+            # Elevator: blocked on the PM not handling definitions of the form
+            # [x \in S, y \in T |-> e(x,y)].
             | map(select(.path != "specifications/MultiCarElevator/Elevator_proof.tla"))
             # Skip long-running proofs in CI
             | map(select(.proof.maxRuntimeMinutes <= 5))
