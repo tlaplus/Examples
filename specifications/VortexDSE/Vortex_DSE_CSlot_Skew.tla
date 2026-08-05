@@ -22,6 +22,10 @@ EXTENDS Naturals, FiniteSets
 
 CONSTANTS Nodes, MsgIDs, MaxSkew
 
+ASSUME NodesAssumption  == IsFiniteSet(Nodes)  /\ Nodes  # {}
+ASSUME MsgIDsAssumption == IsFiniteSet(MsgIDs)
+ASSUME MaxSkewAssumption == MaxSkew \in Nat
+
 \* Node liveness states, named rather than written as bare strings.
 Up   == "up"
 Down == "down"

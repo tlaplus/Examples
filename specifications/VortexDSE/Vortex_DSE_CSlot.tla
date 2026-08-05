@@ -36,6 +36,9 @@ CONSTANTS
     \* @type: Set(Str);
     MsgIDs           \* finite set of distinct message identifiers
 
+ASSUME NodesAssumption  == IsFiniteSet(Nodes)  /\ Nodes  # {}
+ASSUME MsgIDsAssumption == IsFiniteSet(MsgIDs)
+
 \* Node liveness states, named rather than written as bare strings.
 Up   == "up"
 Down == "down"
@@ -141,7 +144,7 @@ Spec == Init /\ [][Next]_vars
 
 TypeInvariant ==
     /\ current_slot \in Nat
-    /\ \A m \in network : m.id \in MsgIDs /\ m.cslot \in Nat
+    /\ network      \subseteq MsgRecord
     /\ processed    \in [Nodes -> SUBSET MsgIDs]
     /\ persisted    \in [Nodes -> SUBSET MsgIDs]
     /\ node_state   \in [Nodes -> {Up, Down}]

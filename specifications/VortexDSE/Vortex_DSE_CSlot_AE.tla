@@ -74,6 +74,9 @@ CONSTANTS
     \* @type: Set(Str);
     MsgIDs           \* finite set of distinct message identifiers
 
+ASSUME NodesAssumption  == IsFiniteSet(Nodes)  /\ Nodes  # {}
+ASSUME MsgIDsAssumption == IsFiniteSet(MsgIDs)
+
 \* AE phase names, rather than bare strings.
 Open      == "open"
 Frozen    == "frozen"

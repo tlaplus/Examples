@@ -31,6 +31,9 @@ CONSTANTS
     \* @type: Set(Str);
     MsgIDs           \* finite set of distinct message identifiers
 
+ASSUME NodesAssumption  == IsFiniteSet(Nodes)  /\ Nodes  # {}
+ASSUME MsgIDsAssumption == IsFiniteSet(MsgIDs)
+
 \* Node liveness states, named rather than written as bare strings.
 Up   == "up"
 Down == "down"

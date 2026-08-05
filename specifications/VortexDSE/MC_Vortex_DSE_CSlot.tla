@@ -2,21 +2,32 @@
 (***************************************************************************)
 (* TLC harness for Vortex_DSE_CSlot.                                       *)
 (*                                                                          *)
-(* The specification itself has no slot horizon: Tick is unbounded and      *)
-(* DuplicateInject may forge any slot in Nat. The horizon is a             *)
-(* model-checking concern and lives here.                                   *)
+(* The specification has no slot horizon: Tick is unbounded and the        *)
+(* adversary may forge any slot in Nat. The horizon is a model-checking    *)
+(* concern and lives here.                                                  *)
 (*                                                                          *)
-(* It is imposed inside the actions rather than as a CONSTRAINT, so the    *)
-(* state graph is genuinely finite rather than merely truncated. That      *)
-(* matters for the liveness model: under a state constraint TLC discards   *)
-(* successor states, which can mask or invent violations of temporal       *)
-(* properties.                                                              *)
+(* It is imposed inside MCTick rather than as a state CONSTRAINT. A         *)
+(* constraint was tried first, as the review guidelines prefer, but TLC     *)
+(* evaluates invariants on the state that crosses the boundary before the   *)
+(* constraint discards it: with MaxSlot = 2 a Tick produces current_slot =  *)
+(* 3, and any invariant mentioning the horizon fails there. Bounding the    *)
+(* ticker instead keeps the reachable graph inside the horizon.             *)
+(*                                                                          *)
+(* It also avoids a second problem in the liveness model, where discarding  *)
+(* successor states can mask or invent violations of temporal properties.   *)
+(*                                                                          *)
+(* MCNext restricts the forged slot as well, because TLC cannot enumerate   *)
+(* Nat.                                                                     *)
 (***************************************************************************)
 EXTENDS Vortex_DSE_CSlot
 
 CONSTANT MaxSlot
 
+ASSUME MaxSlotAssumption == MaxSlot \in Nat
+
 Slots == 0..MaxSlot
+
+MCMsgRecord == [id: MsgIDs, cslot: Slots]
 
 \* The ticker stops at the horizon.
 MCTick ==
@@ -33,6 +44,21 @@ MCNext ==
 
 MCSpec == Init /\ [][MCNext]_vars
 
+\* Type correctness within the horizon. TLC cannot evaluate the
+\* specification's own TypeInvariant, whose MsgRecord ranges over Nat.
+MCTypeInvariant ==
+    /\ current_slot \in Slots
+    /\ network      \subseteq MCMsgRecord
+    /\ processed    \in [Nodes -> SUBSET MsgIDs]
+    /\ persisted    \in [Nodes -> SUBSET MsgIDs]
+    /\ node_state   \in [Nodes -> {Up, Down}]
+
+-------------------------------------------------------------------------------
+(*                            LIVENESS HARNESS                              *)
+
+\* Strong fairness on Process is necessary, not decorative: with weak
+\* fairness the liveness model reports a temporal-property violation,
+\* because a crash intermittently disables Process.
 MCFairness ==
     /\ WF_vars(MCTick)
     /\ \A n \in Nodes : WF_vars(Rejoin(n))
@@ -44,11 +70,5 @@ MCLiveSpec == Init /\ [][MCNext]_vars /\ MCFairness
 \* ticker reaches the horizon MCTick is permanently disabled, so the slot
 \* counter stays there rather than merely visiting it.
 MCTickProgress == <>[](current_slot = MaxSlot)
-
-\* Everything reachable in this model lies within the horizon.
-MCTypeInvariant ==
-    /\ TypeInvariant
-    /\ current_slot \in Slots
-    /\ \A m \in network : m.cslot \in Slots
 
 ====
