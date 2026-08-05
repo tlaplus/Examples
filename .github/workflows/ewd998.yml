@@ -14,6 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - name: Install Java 17 for TLC
+      uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: 17
     - name: Get (nightly) TLC
       run: wget https://nightly.tlapl.us/dist/tla2tools.jar
     - name: Get (nightly) CommunityModules
@@ -35,4 +40,3 @@ jobs:
       with:
         name: trace.ndjson
         path: specifications/ewd998/trace.ndjson
-
