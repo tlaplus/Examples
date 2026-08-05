@@ -45,7 +45,6 @@
 
 EXTENDS Vortex_DSE_CSlot, TLAPS
 
-ASSUME MaxSlotType == MaxSlot \in Nat
 
 -------------------------------------------------------------------------------
 (*                      THE INVARIANT WE PROVE                              *)
@@ -104,9 +103,8 @@ LEMMA InitStrictExactlyOnce == Init => StrictExactlyOnceInv
 \* discharged in the theorem below via the machine-checked TypeCorrect.
 LEMMA NextStrictExactlyOnce ==
     TypeInvariant /\ StrictExactlyOnceInv /\ [Next]_vars => StrictExactlyOnceInv'
-  <1> USE MaxSlotType
-        DEF StrictExactlyOnceInv, ExactlyOnceCore, PersistedClean,
-            TypeInvariant, MsgRecord, vars
+  <1> USE DEF StrictExactlyOnceInv, ExactlyOnceCore, PersistedClean,
+              TypeInvariant, MsgRecord, vars
   <1> SUFFICES ASSUME TypeInvariant, StrictExactlyOnceInv, [Next]_vars
                PROVE  StrictExactlyOnceInv'
       OBVIOUS
@@ -209,8 +207,8 @@ LEMMA NextStrictExactlyOnce ==
   \* the injected id was already processed — but here we only need to show
   \* the invariant is preserved by the injection itself (not by Process).
   \* Since processed' = processed and persisted' = persisted, trivial.
-  <1>5. CASE \E id \in MsgIDs, k \in 0..MaxSlot : DuplicateInject(id, k)
-        <2> PICK i \in MsgIDs, k \in 0..MaxSlot : DuplicateInject(i, k)
+  <1>5. CASE \E id \in MsgIDs, k \in Nat : DuplicateInject(id, k)
+        <2> PICK i \in MsgIDs, k \in Nat : DuplicateInject(i, k)
             BY <1>5
         <2>1. /\ processed' = processed
               /\ persisted'  = persisted
@@ -248,10 +246,10 @@ LEMMA NextStrictExactlyOnce ==
 \* machine-checked TypeCorrect in Vortex_DSE_CSlot_Proofs.tla, reproduced here
 \* so this proof is self-contained.
 LEMMA InitType == Init => TypeInvariant
-  BY MaxSlotType DEF Init, TypeInvariant, MsgRecord
+  BY DEF Init, TypeInvariant, MsgRecord
 
 LEMMA NextType == TypeInvariant /\ [Next]_vars => TypeInvariant'
-  <1> USE MaxSlotType DEF TypeInvariant, MsgRecord, vars
+  <1> USE DEF TypeInvariant, MsgRecord, vars
   <1> SUFFICES ASSUME TypeInvariant, [Next]_vars
                PROVE  TypeInvariant'
       OBVIOUS
@@ -263,7 +261,7 @@ LEMMA NextType == TypeInvariant /\ [Next]_vars => TypeInvariant'
         BY <1>3 DEF Crash
   <1>4. CASE \E n \in Nodes : Rejoin(n)
         BY <1>4 DEF Rejoin
-  <1>5. CASE \E id \in MsgIDs, k \in 0..MaxSlot : DuplicateInject(id, k)
+  <1>5. CASE \E id \in MsgIDs, k \in Nat : DuplicateInject(id, k)
         BY <1>5 DEF DuplicateInject
   <1>6. CASE Tick
         BY <1>6 DEF Tick

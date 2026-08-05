@@ -20,6 +20,12 @@
           "result": "success",
           "totalStates": 186367,
           "distinctStates": 18903
+        },
+        {
+          "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_liveness.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success"
         }
       ]
     },
@@ -40,6 +46,40 @@
           "result": "success",
           "totalStates": 79601,
           "distinctStates": 10000
+        }
+      ]
+    },
+    {
+      "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_Skew.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_Skew.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success",
+          "totalStates": 96481,
+          "distinctStates": 10099
+        }
+      ]
+    },
+    {
+      "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_TTL.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_TTL.cfg",
+          "runtime": "00:00:05",
+          "mode": "exhaustive search",
+          "result": "success",
+          "totalStates": 8084795,
+          "distinctStates": 608477
+        },
+        {
+          "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_TTL_liveness.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success"
         }
       ]
     },
@@ -80,36 +120,12 @@
     {
       "path": "specifications/VortexDSE/Vortex_DSE_CSlot_Skew.tla",
       "features": [],
-      "models": [
-        {
-          "path": "specifications/VortexDSE/Vortex_DSE_CSlot_Skew_tiny.cfg",
-          "runtime": "00:00:01",
-          "mode": "exhaustive search",
-          "result": "success",
-          "totalStates": 96481,
-          "distinctStates": 10099
-        }
-      ]
+      "models": []
     },
     {
       "path": "specifications/VortexDSE/Vortex_DSE_CSlot_TTL.tla",
       "features": [],
-      "models": [
-        {
-          "path": "specifications/VortexDSE/Vortex_DSE_CSlot_TTL_liveness.cfg",
-          "runtime": "00:00:01",
-          "mode": "exhaustive search",
-          "result": "success"
-        },
-        {
-          "path": "specifications/VortexDSE/Vortex_DSE_CSlot_TTL_tiny.cfg",
-          "runtime": "00:00:05",
-          "mode": "exhaustive search",
-          "result": "success",
-          "totalStates": 8084795,
-          "distinctStates": 608477
-        }
-      ]
+      "models": []
     }
   ]
 }

@@ -34,6 +34,14 @@ memory concession, not a stronger version of the protocol.
 | `Vortex_DSE_CSlot_AE` | the agreement layer: `Freeze`, `Reconcile`, `Commit` over the strict mode |
 | `Vortex_DSE_CSlot_AE_Proofs` | deductive proofs for the agreement layer |
 
+None of these carries a slot horizon: the ticker is unbounded and the
+adversary may forge any slot in `Nat`. Horizons are a model-checking concern
+and live in the `MC_` modules, which bound the actions directly rather than
+applying a state constraint — under a constraint TLC discards successor
+states, which is unsound for the temporal properties. `MaxSkew` is the one
+bound that stays in a specification, because it is an assumption the protocol
+relies on rather than a checking artifact.
+
 `Vortex_DSE_CSlot_AE` is specified over the strict admission rule; it is not a
 refinement of the default mode. Extending it to the late-tolerant rule requires
 restating what "no reordering across slots" means, and is not done here.
@@ -46,9 +54,9 @@ in both cases. There are no `OMITTED` steps in these modules.
 
 | | obligations |
 | --- | --- |
-| `Vortex_DSE_CSlot_Proofs` | 194 |
-| `Vortex_DSE_CSlot_ExactlyOnce_Proof` | 131 |
-| `Vortex_DSE_CSlot_AE_Proofs` | 34 |
+| `Vortex_DSE_CSlot_Proofs` | 191 |
+| `Vortex_DSE_CSlot_ExactlyOnce_Proof` | 128 |
+| `Vortex_DSE_CSlot_AE_Proofs` | 32 |
 
 Every model completes in a few seconds. `Vortex_DSE_CSlot_AE` also carries
 Apalache type annotations, but no symbolic model is registered here; the models
@@ -57,12 +65,10 @@ below are TLC only.
 ## Scope
 
 `Vortex_DSE_CSlot_Skew` bounds pairwise clock skew structurally, by forbidding
-any tick that would breach the bound. It states the assumption; it does not
+any tick that would breach `MaxSkew`. It states the assumption; it does not
 model the mechanism that maintains it. Likewise `Reconcile` is a single atomic
 step at specification level — the multi-round protocol underneath is out of
 scope here.
 
 Source repositories, including the whitepaper and the model-checking logs:
 <https://github.com/vasilisnasopoulos>
-
-Prepared with AI assistance.

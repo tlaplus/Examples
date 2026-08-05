@@ -34,9 +34,11 @@ CONSTANTS
     \* @type: Set(Str);
     Nodes,           \* finite set of node identifiers
     \* @type: Set(Str);
-    MsgIDs,          \* finite set of distinct message identifiers
-    \* @type: Int;
-    MaxSlot          \* slot horizon (state-space bound)
+    MsgIDs           \* finite set of distinct message identifiers
+
+\* Node liveness states, named rather than written as bare strings.
+Up   == "up"
+Down == "down"
 
 VARIABLES
     \* @type: Int;
@@ -48,11 +50,11 @@ VARIABLES
     \* @type: Str -> Set(Str);
     persisted,           \* persisted[n] = mmap snapshot (survives crash)
     \* @type: Str -> Str;
-    node_state           \* node_state[n] \in {"up", "down"}
+    node_state           \* node_state[n] \in {Up, Down}
 
 vars == <<current_slot, network, processed, persisted, node_state>>
 
-MsgRecord == [id: MsgIDs, cslot: 0..MaxSlot]
+MsgRecord == [id: MsgIDs, cslot: Nat]
 
 -------------------------------------------------------------------------------
 (*                              INITIAL STATE                               *)
@@ -62,7 +64,7 @@ Init ==
     /\ network      = {}
     /\ processed    = [n \in Nodes |-> {}]
     /\ persisted    = [n \in Nodes |-> {}]
-    /\ node_state   = [n \in Nodes |-> "up"]
+    /\ node_state   = [n \in Nodes |-> Up]
 
 -------------------------------------------------------------------------------
 (*                                ACTIONS                                   *)
@@ -87,7 +89,7 @@ Submit(id) ==
 Process(n, m) ==
     /\ n \in Nodes
     /\ m \in network
-    /\ node_state[n] = "up"
+    /\ node_state[n] = Up
     /\ m.id \notin processed[n]              \* exactly-once guard (local)
     /\ m.cslot <= current_slot               \* admit present OR late (own slot)
     /\ processed' = [processed EXCEPT ![n] = @ \cup {m.id}]
@@ -96,18 +98,18 @@ Process(n, m) ==
 \* CRASH: node loses RAM. mmap snapshot in `persisted` survives.
 Crash(n) ==
     /\ n \in Nodes
-    /\ node_state[n] = "up"
+    /\ node_state[n] = Up
     /\ persisted'  = [persisted  EXCEPT ![n] = processed[n]]
-    /\ node_state' = [node_state EXCEPT ![n] = "down"]
+    /\ node_state' = [node_state EXCEPT ![n] = Down]
     /\ processed'  = [processed  EXCEPT ![n] = {}]
     /\ UNCHANGED <<current_slot, network>>
 
 \* REJOIN: node recovers from mmap snapshot. processed = persisted.
 Rejoin(n) ==
     /\ n \in Nodes
-    /\ node_state[n] = "down"
+    /\ node_state[n] = Down
     /\ processed'  = [processed  EXCEPT ![n] = persisted[n]]
-    /\ node_state' = [node_state EXCEPT ![n] = "up"]
+    /\ node_state' = [node_state EXCEPT ![n] = Up]
     /\ UNCHANGED <<current_slot, network, persisted>>
 
 \* Adversarial duplicate / replay injection.
@@ -115,13 +117,12 @@ Rejoin(n) ==
 \* or future). The C-slot gate must still hold.
 DuplicateInject(id, fake_cslot) ==
     /\ id \in MsgIDs
-    /\ fake_cslot \in 0..MaxSlot
+    /\ fake_cslot \in Nat
     /\ network' = network \cup {[id |-> id, cslot |-> fake_cslot]}
     /\ UNCHANGED <<current_slot, processed, persisted, node_state>>
 
 \* Slot ticker advances by 1.
 Tick ==
-    /\ current_slot < MaxSlot
     /\ current_slot' = current_slot + 1
     /\ UNCHANGED <<network, processed, persisted, node_state>>
 
@@ -130,7 +131,7 @@ Next ==
     \/ \E n \in Nodes, m \in network : Process(n, m)
     \/ \E n \in Nodes : Crash(n)
     \/ \E n \in Nodes : Rejoin(n)
-    \/ \E id \in MsgIDs, k \in 0..MaxSlot : DuplicateInject(id, k)
+    \/ \E id \in MsgIDs, k \in Nat : DuplicateInject(id, k)
     \/ Tick
 
 Spec == Init /\ [][Next]_vars
@@ -139,11 +140,11 @@ Spec == Init /\ [][Next]_vars
 (*                              TYPE INVARIANT                              *)
 
 TypeInvariant ==
-    /\ current_slot \in 0..MaxSlot
-    /\ network      \subseteq MsgRecord
+    /\ current_slot \in Nat
+    /\ \A m \in network : m.id \in MsgIDs /\ m.cslot \in Nat
     /\ processed    \in [Nodes -> SUBSET MsgIDs]
     /\ persisted    \in [Nodes -> SUBSET MsgIDs]
-    /\ node_state   \in [Nodes -> {"up", "down"}]
+    /\ node_state   \in [Nodes -> {Up, Down}]
 
 -------------------------------------------------------------------------------
 (*                       CORE SAFETY INVARIANTS                             *)
@@ -168,7 +169,7 @@ NoFutureAdmission ==
 \* mmap snapshot never invents ids that were not in the network.
 PersistedReflectsReality ==
     \A n \in Nodes :
-        node_state[n] = "down" =>
+        node_state[n] = Down =>
             persisted[n] \subseteq {m.id : m \in network}
 
 \* I4: NO PHANTOM PROCESS.
@@ -186,20 +187,14 @@ DecisionLocalityOnly ==
             (\E m \in network : m.id = id)
 
 -------------------------------------------------------------------------------
-(*                          STATE-SPACE CONSTRAINT                          *)
-
-StateConstraint ==
-    current_slot <= MaxSlot
-
--------------------------------------------------------------------------------
 (*                              LIVENESS LAYER                              *)
 (*                                                                          *)
 (* DESIGN NOTE — fairness assignment is intentional:                        *)
 (*                                                                          *)
-(*  - SF(Tick): the slot ticker is fair, advancing eventually. This is a    *)
-(*    physical-hardware assumption (the ticker process does not stall       *)
-(*    forever). Strong fairness because Tick is always enabled until        *)
-(*    current_slot reaches MaxSlot.                                         *)
+(*  - WF(Tick): the slot ticker advances eventually. This is a physical-    *)
+(*    hardware assumption (the ticker process does not stall forever).      *)
+(*    Weak fairness suffices: Tick is unbounded here, so it is always       *)
+(*    enabled and never intermittently disabled.                            *)
 (*                                                                          *)
 (*  - WF(Rejoin(n)) per node: a crashed node, given the chance, eventually  *)
 (*    rejoins. This corresponds to operational recovery (operator restart). *)
@@ -216,20 +211,22 @@ StateConstraint ==
 (***************************************************************************)
 
 Fairness ==
-    /\ SF_vars(Tick)
+    /\ WF_vars(Tick)
     /\ \A n \in Nodes : WF_vars(Rejoin(n))
     /\ \A n \in Nodes : SF_vars(\E m \in network : Process(n, m))
 
 LiveSpec == Init /\ [][Next]_vars /\ Fairness
 
 \* L1 TICK PROGRESS.
-\* Under SF(Tick), the slot counter eventually reaches the horizon.
-TickProgress == <>(current_slot = MaxSlot)
+\* Under WF(Tick) the slot counter grows without bound: no slot index is
+\* ever a ceiling. A model-checkable form, bounded by a horizon, is in
+\* MC_Vortex_DSE_CSlot.
+TickProgress == \A k \in Nat : <>(current_slot > k)
 
 \* L2 EVENTUAL REJOIN.
-\* Every crashed node eventually returns to "up", under WF(Rejoin(n)).
+\* Every crashed node eventually returns to Up, under WF(Rejoin(n)).
 EventualRejoin ==
-    \A n \in Nodes : (node_state[n] = "down") ~> (node_state[n] = "up")
+    \A n \in Nodes : (node_state[n] = Down) ~> (node_state[n] = Up)
 
 \* L3 EVENTUAL ADMISSION (VALIDITY — the property the new rule recovers).
 \* Once a message is in the network, every node eventually admits it.

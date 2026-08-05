@@ -11,16 +11,15 @@
 
 EXTENDS Vortex_DSE_CSlot_AE, TLAPS
 
-ASSUME MaxSlotType == MaxSlot \in Nat
 
 -------------------------------------------------------------------------------
 (*                  PART A — TYPE INVARIANT                                 *)
 
 LEMMA InitType == Init => TypeInvariant
-  BY MaxSlotType DEF Init, TypeInvariant, MsgRecord
+  BY DEF Init, TypeInvariant, MsgRecord
 
 LEMMA NextType == TypeInvariant /\ [Next]_vars => TypeInvariant'
-  <1> USE MaxSlotType DEF TypeInvariant, MsgRecord, vars
+  <1> USE DEF TypeInvariant, MsgRecord, vars
   <1> SUFFICES ASSUME TypeInvariant, [Next]_vars
                PROVE  TypeInvariant'
       OBVIOUS
@@ -32,7 +31,7 @@ LEMMA NextType == TypeInvariant /\ [Next]_vars => TypeInvariant'
         BY <1>3 DEF Freeze
   <1>4. CASE Reconcile
         BY <1>4 DEF Reconcile
-  <1>5. CASE \E id \in MsgIDs, k \in 0..MaxSlot : DuplicateInject(id, k)
+  <1>5. CASE \E id \in MsgIDs, k \in Nat : DuplicateInject(id, k)
         BY <1>5 DEF DuplicateInject
   <1>6. CASE NextCslot
         BY <1>6 DEF NextCslot

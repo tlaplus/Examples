@@ -33,18 +33,17 @@
 
 EXTENDS Vortex_DSE_CSlot, TLAPS
 
-ASSUME MaxSlotType == MaxSlot \in Nat
 
 -------------------------------------------------------------------------------
 (*                  PART A — TYPE INVARIANT (type-correctness)             *)
 
 \* (1) The initial state satisfies the type invariant.
 LEMMA InitType == Init => TypeInvariant
-  BY MaxSlotType DEF Init, TypeInvariant, MsgRecord
+  BY DEF Init, TypeInvariant, MsgRecord
 
 \* (2) Every step (or stutter) preserves the type invariant.
 LEMMA NextType == TypeInvariant /\ [Next]_vars => TypeInvariant'
-  <1> USE MaxSlotType DEF TypeInvariant, MsgRecord, vars
+  <1> USE DEF TypeInvariant, MsgRecord, vars
   <1> SUFFICES ASSUME TypeInvariant, [Next]_vars
                PROVE  TypeInvariant'
       OBVIOUS
@@ -56,7 +55,7 @@ LEMMA NextType == TypeInvariant /\ [Next]_vars => TypeInvariant'
         BY <1>3 DEF Crash
   <1>4. CASE \E n \in Nodes : Rejoin(n)
         BY <1>4 DEF Rejoin
-  <1>5. CASE \E id \in MsgIDs, k \in 0..MaxSlot : DuplicateInject(id, k)
+  <1>5. CASE \E id \in MsgIDs, k \in Nat : DuplicateInject(id, k)
         BY <1>5 DEF DuplicateInject
   <1>6. CASE Tick
         BY <1>6 DEF Tick
@@ -93,7 +92,7 @@ LEMMA InitSafe == Init => SafeInv
 
 \* (2) Inductive step for the strengthened invariant.
 LEMMA NextSafe == SafeInv /\ [Next]_vars => SafeInv'
-  <1> USE MaxSlotType DEF SafeInv, TypeInvariant, MsgRecord,
+  <1> USE DEF SafeInv, TypeInvariant, MsgRecord,
                           NoFutureAdmission, PersistedSafe, vars
   <1> SUFFICES ASSUME SafeInv, [Next]_vars
                PROVE  SafeInv'
@@ -197,8 +196,8 @@ LEMMA NextSafe == SafeInv /\ [Next]_vars => SafeInv'
               <3> QED BY <3>1, <3>2
         <2> QED BY <2>2, <2>3
   \* ---- DuplicateInject: network grows with an arbitrary cslot; gate holds. ----
-  <1>5. CASE \E id \in MsgIDs, k \in 0..MaxSlot : DuplicateInject(id, k)
-        <2> PICK i \in MsgIDs, k \in 0..MaxSlot : DuplicateInject(i, k)
+  <1>5. CASE \E id \in MsgIDs, k \in Nat : DuplicateInject(id, k)
+        <2> PICK i \in MsgIDs, k \in Nat : DuplicateInject(i, k)
             BY <1>5
         <2>1. /\ network'      = network \cup {[id |-> i, cslot |-> k]}
               /\ processed'    = processed

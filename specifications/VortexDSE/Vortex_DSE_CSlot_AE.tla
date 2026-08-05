@@ -72,9 +72,12 @@ CONSTANTS
     \* @type: Set(Str);
     Nodes,           \* finite set of node identifiers
     \* @type: Set(Str);
-    MsgIDs,          \* finite set of distinct message identifiers
-    \* @type: Int;
-    MaxSlot          \* slot horizon (state-space bound)
+    MsgIDs           \* finite set of distinct message identifiers
+
+\* AE phase names, rather than bare strings.
+Open      == "open"
+Frozen    == "frozen"
+Committed == "committed"
 
 VARIABLES
     \* @type: Int;
@@ -84,13 +87,13 @@ VARIABLES
     \* @type: Str -> Set(Str);
     processed,       \* processed[n] = msg ids admitted by n in current cslot
     \* @type: Str -> Str;
-    phase,           \* phase[n] \in {"open", "frozen", "committed"}
+    phase,           \* phase[n] \in {Open, Frozen, Committed}
     \* @type: Str -> Set(Str);
     committed_set    \* committed_set[n] = AE-final input set for n at current cslot
 
 vars == <<current_slot, network, processed, phase, committed_set>>
 
-MsgRecord == [id: MsgIDs, cslot: 0..MaxSlot]
+MsgRecord == [id: MsgIDs, cslot: Nat]
 
 -------------------------------------------------------------------------------
 (*                              INITIAL STATE                               *)
@@ -99,7 +102,7 @@ Init ==
     /\ current_slot   = 0
     /\ network        = {}
     /\ processed      = [n \in Nodes |-> {}]
-    /\ phase          = [n \in Nodes |-> "open"]
+    /\ phase          = [n \in Nodes |-> Open]
     /\ committed_set  = [n \in Nodes |-> {}]
 
 -------------------------------------------------------------------------------
@@ -117,7 +120,7 @@ Submit(id) ==
 Process(n, m) ==
     /\ n \in Nodes
     /\ m \in network
-    /\ phase[n] = "open"
+    /\ phase[n] = Open
     /\ m.id \notin processed[n]
     /\ m.cslot = current_slot
     /\ processed' = [processed EXCEPT ![n] = @ \cup {m.id}]
@@ -127,8 +130,8 @@ Process(n, m) ==
 \* In implementation: triggered by reaching the freeze deadline (~0.75 * Delta_t).
 Freeze(n) ==
     /\ n \in Nodes
-    /\ phase[n] = "open"
-    /\ phase' = [phase EXCEPT ![n] = "frozen"]
+    /\ phase[n] = Open
+    /\ phase' = [phase EXCEPT ![n] = Frozen]
     /\ UNCHANGED <<current_slot, network, processed, committed_set>>
 
 \* Reconcile: abstract AE protocol. When ALL nodes are frozen, they
@@ -136,16 +139,16 @@ Freeze(n) ==
 \* equality. Atomic step at spec level; multi-round Bloom+Merkle at impl level.
 \* Models assumption A3 (in-spec loss envelope).
 Reconcile ==
-    /\ \A n \in Nodes : phase[n] = "frozen"
+    /\ \A n \in Nodes : phase[n] = Frozen
     /\ LET union_view == UNION { processed[n] : n \in Nodes }
        IN committed_set' = [n \in Nodes |-> union_view]
-    /\ phase' = [n \in Nodes |-> "committed"]
+    /\ phase' = [n \in Nodes |-> Committed]
     /\ UNCHANGED <<current_slot, network, processed>>
 
 \* Adversarial duplicate / replay injection.
 DuplicateInject(id, fake_cslot) ==
     /\ id \in MsgIDs
-    /\ fake_cslot \in 0..MaxSlot
+    /\ fake_cslot \in Nat
     /\ network' = network \cup {[id |-> id, cslot |-> fake_cslot]}
     /\ UNCHANGED <<current_slot, processed, phase, committed_set>>
 
@@ -155,11 +158,10 @@ DuplicateInject(id, fake_cslot) ==
 \* on next Reconcile (we do not retain history in-model; the implementation
 \* logs each committed_set externally as the cslot-final ledger entry).
 NextCslot ==
-    /\ current_slot < MaxSlot
-    /\ \A n \in Nodes : phase[n] = "committed"
+    /\ \A n \in Nodes : phase[n] = Committed
     /\ current_slot' = current_slot + 1
     /\ processed' = [n \in Nodes |-> {}]
-    /\ phase'     = [n \in Nodes |-> "open"]
+    /\ phase'     = [n \in Nodes |-> Open]
     /\ UNCHANGED <<network, committed_set>>
 
 Next ==
@@ -167,7 +169,7 @@ Next ==
     \/ \E n \in Nodes, m \in network : Process(n, m)
     \/ \E n \in Nodes : Freeze(n)
     \/ Reconcile
-    \/ \E id \in MsgIDs, k \in 0..MaxSlot : DuplicateInject(id, k)
+    \/ \E id \in MsgIDs, k \in Nat : DuplicateInject(id, k)
     \/ NextCslot
 
 Spec == Init /\ [][Next]_vars
@@ -176,10 +178,10 @@ Spec == Init /\ [][Next]_vars
 (*                              TYPE INVARIANT                              *)
 
 TypeInvariant ==
-    /\ current_slot   \in 0..MaxSlot
-    /\ network        \subseteq MsgRecord
+    /\ current_slot   \in Nat
+    /\ \A m \in network : m.id \in MsgIDs /\ m.cslot \in Nat
     /\ processed      \in [Nodes -> SUBSET MsgIDs]
-    /\ phase          \in [Nodes -> {"open", "frozen", "committed"}]
+    /\ phase          \in [Nodes -> {Open, Frozen, Committed}]
     /\ committed_set  \in [Nodes -> SUBSET MsgIDs]
 
 -------------------------------------------------------------------------------
@@ -191,7 +193,7 @@ TypeInvariant ==
 \* This is the formal counterpart of the AE design guarantee.
 MerkleAgreement ==
     \A n1, n2 \in Nodes :
-        (phase[n1] = "committed" /\ phase[n2] = "committed")
+        (phase[n1] = Committed /\ phase[n2] = Committed)
             => committed_set[n1] = committed_set[n2]
 
 \* AE-I2: COMMITTED IS SUPERSET OF LOCAL PROCESSED.
@@ -201,7 +203,7 @@ MerkleAgreement ==
 \* view. (This rules out the "frozen and then dropped" failure mode.)
 CommittedSupersetsProcessed ==
     \A n \in Nodes :
-        phase[n] = "committed" => processed[n] \subseteq committed_set[n]
+        phase[n] = Committed => processed[n] \subseteq committed_set[n]
 
 \* AE-I3: NO PHANTOM IN COMMITTED.
 \* Every id in any committed_set corresponds to a real network record with
@@ -209,7 +211,7 @@ CommittedSupersetsProcessed ==
 \* admissions.
 NoPhantomInCommitted ==
     \A n \in Nodes :
-        phase[n] = "committed" =>
+        phase[n] = Committed =>
             \A id \in committed_set[n] :
                 \E m \in network : m.id = id /\ m.cslot = current_slot
 
@@ -226,13 +228,7 @@ NoReorderAcrossCslot ==
 \* transitions are enforced structurally by the Freeze, Reconcile, NextCslot
 \* guards; declared here as an explicit type-level safety net.
 PhaseProgressionValid ==
-    \A n \in Nodes : phase[n] \in {"open", "frozen", "committed"}
-
--------------------------------------------------------------------------------
-(*                          STATE-SPACE CONSTRAINT                          *)
-
-StateConstraint ==
-    current_slot <= MaxSlot
+    \A n \in Nodes : phase[n] \in {Open, Frozen, Committed}
 
 -------------------------------------------------------------------------------
 (*                              LIVENESS LAYER                              *)
@@ -256,15 +252,15 @@ LiveSpec == Init /\ [][Next]_vars /\ Fairness
 \* Every node eventually commits for the cslot it participates in.
 EventualCommit ==
     \A n \in Nodes :
-        (phase[n] = "open") ~> (phase[n] = "committed")
+        (phase[n] = Open) ~> (phase[n] = Committed)
 
 \* AE-L2: EVENTUAL AGREEMENT.
 \* If two nodes both reach the committed phase, MerkleAgreement holds.
 \* (Safety + liveness composition.)
 EventualAgreement ==
     \A n1, n2 \in Nodes :
-        (phase[n1] = "open" /\ phase[n2] = "open")
-            ~> (phase[n1] = "committed" /\ phase[n2] = "committed"
+        (phase[n1] = Open /\ phase[n2] = Open)
+            ~> (phase[n1] = Committed /\ phase[n2] = Committed
                 /\ committed_set[n1] = committed_set[n2])
 
 =============================================================================

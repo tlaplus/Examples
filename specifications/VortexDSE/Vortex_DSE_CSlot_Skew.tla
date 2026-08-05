@@ -20,7 +20,11 @@
 
 EXTENDS Naturals, FiniteSets
 
-CONSTANTS Nodes, MsgIDs, MaxSlot, MaxSkew
+CONSTANTS Nodes, MsgIDs, MaxSkew
+
+\* Node liveness states, named rather than written as bare strings.
+Up   == "up"
+Down == "down"
 
 VARIABLES
     node_slot,    \* [Nodes -> Int]  per-node clock
@@ -31,7 +35,7 @@ VARIABLES
 
 vars == <<node_slot, network, processed, persisted, node_state>>
 
-MsgRecord == [id: MsgIDs, cslot: 0..MaxSlot, origin: Nodes]
+MsgRecord == [id: MsgIDs, cslot: Nat, origin: Nodes]
 
 -------------------------------------------------------------------------------
 Init ==
@@ -39,14 +43,14 @@ Init ==
     /\ network     = {}
     /\ processed   = [n \in Nodes |-> {}]
     /\ persisted   = [n \in Nodes |-> {}]
-    /\ node_state  = [n \in Nodes |-> "up"]
+    /\ node_state  = [n \in Nodes |-> Up]
 
 -------------------------------------------------------------------------------
 \* Submit: sender n stamps with its own local slot.
 Submit(id, n) ==
     /\ id \in MsgIDs
     /\ n \in Nodes
-    /\ node_state[n] = "up"
+    /\ node_state[n] = Up
     /\ id \notin {m.id : m \in network}
     /\ \A x \in Nodes : id \notin processed[x]
     /\ network' = network \cup {[id |-> id, cslot |-> node_slot[n], origin |-> n]}
@@ -56,7 +60,7 @@ Submit(id, n) ==
 Process(n, m) ==
     /\ n \in Nodes
     /\ m \in network
-    /\ node_state[n] = "up"
+    /\ node_state[n] = Up
     /\ m.id \notin processed[n]
     /\ m.cslot = node_slot[n]
     /\ processed' = [processed EXCEPT ![n] = @ \cup {m.id}]
@@ -64,23 +68,23 @@ Process(n, m) ==
 
 Crash(n) ==
     /\ n \in Nodes
-    /\ node_state[n] = "up"
+    /\ node_state[n] = Up
     /\ persisted'  = [persisted  EXCEPT ![n] = processed[n]]
-    /\ node_state' = [node_state EXCEPT ![n] = "down"]
+    /\ node_state' = [node_state EXCEPT ![n] = Down]
     /\ processed'  = [processed  EXCEPT ![n] = {}]
     /\ UNCHANGED <<node_slot, network>>
 
 Rejoin(n) ==
     /\ n \in Nodes
-    /\ node_state[n] = "down"
+    /\ node_state[n] = Down
     /\ processed'  = [processed  EXCEPT ![n] = persisted[n]]
-    /\ node_state' = [node_state EXCEPT ![n] = "up"]
+    /\ node_state' = [node_state EXCEPT ![n] = Up]
     /\ UNCHANGED <<node_slot, network, persisted>>
 
 \* Byzantine inject: adversary spoofs both cslot AND origin.
 ByzantineInject(id, fake_cslot, fake_origin) ==
     /\ id \in MsgIDs
-    /\ fake_cslot \in 0..MaxSlot
+    /\ fake_cslot \in Nat
     /\ fake_origin \in Nodes
     /\ network' = network \cup
          {[id |-> id, cslot |-> fake_cslot, origin |-> fake_origin]}
@@ -89,7 +93,6 @@ ByzantineInject(id, fake_cslot, fake_origin) ==
 \* Per-node tick, bounded by MaxSkew vs slowest node.
 SkewedTick(n) ==
     /\ n \in Nodes
-    /\ node_slot[n] < MaxSlot
     /\ \A other \in Nodes :
          (node_slot[n] + 1) - node_slot[other] <= MaxSkew
     /\ node_slot' = [node_slot EXCEPT ![n] = @ + 1]
@@ -100,7 +103,7 @@ Next ==
     \/ \E n \in Nodes, m \in network : Process(n, m)
     \/ \E n \in Nodes : Crash(n)
     \/ \E n \in Nodes : Rejoin(n)
-    \/ \E id \in MsgIDs, k \in 0..MaxSlot, o \in Nodes : ByzantineInject(id, k, o)
+    \/ \E id \in MsgIDs, k \in Nat, o \in Nodes : ByzantineInject(id, k, o)
     \/ \E n \in Nodes : SkewedTick(n)
 
 Spec == Init /\ [][Next]_vars
@@ -109,11 +112,11 @@ Spec == Init /\ [][Next]_vars
 (*                          INVARIANTS                                       *)
 
 TypeInvariant ==
-    /\ node_slot   \in [Nodes -> 0..MaxSlot]
-    /\ network     \subseteq MsgRecord
+    /\ node_slot   \in [Nodes -> Nat]
+    /\ \A m \in network : m.id \in MsgIDs /\ m.cslot \in Nat /\ m.origin \in Nodes
     /\ processed   \in [Nodes -> SUBSET MsgIDs]
     /\ persisted   \in [Nodes -> SUBSET MsgIDs]
-    /\ node_state  \in [Nodes -> {"up", "down"}]
+    /\ node_state  \in [Nodes -> {Up, Down}]
 
 \* The Tick guard guarantees this; it is asserted as invariant to make
 \* the skew bound an explicit, machine-checked property.
@@ -134,14 +137,12 @@ CSlotLocalAdmission ==
 
 PersistedReflectsReality ==
     \A n \in Nodes :
-        node_state[n] = "down" =>
+        node_state[n] = Down =>
             persisted[n] \subseteq {m.id : m \in network}
 
 NoPhantomProcess ==
     \A n \in Nodes : processed[n] \subseteq {m.id : m \in network}
 
 -------------------------------------------------------------------------------
-StateConstraint ==
-    \A n \in Nodes : node_slot[n] <= MaxSlot
 
 =============================================================================
