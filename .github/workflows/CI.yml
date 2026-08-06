@@ -33,20 +33,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install Java 25 for Apalache
+      - name: Install Java
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 25
-      - name: Capture Apalache Java
-        run: echo "APALACHE_JAVA_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
-      - name: Install Java 17 for TLC
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
+          distribution: adopt
           java-version: 17
-      - name: Capture TLC Java
-        run: echo "TLC_JAVA_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
       - name: Install timeout command
         if: matrix.os == 'macos-latest'
         run: brew install coreutils
@@ -211,3 +202,4 @@ jobs:
             --community_modules_jar_path $DEPS_DIR/community/modules.jar  \
             --examples_root .
           git diff -a
+
