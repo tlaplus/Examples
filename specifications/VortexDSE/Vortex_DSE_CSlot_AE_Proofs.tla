@@ -2,11 +2,7 @@
 (***************************************************************************)
 (* TLAPS target: Vortex_DSE_CSlot_AE (per-slot Merkle agreement layer).     *)
 (*                                                                          *)
-(* Public bundle today: TLC + Apalache (bounded). This module is the       *)
-(* deductive upgrade — see TLAPS_NEXT.md for scope and theorem order.       *)
-(*                                                                          *)
-(* Scaffold status: TypeInvariant proof structure started; remaining        *)
-(* obligations require TLAPS on a developer machine (tlapm not in CI here). *)
+(* Deductive counterpart to the TLC models in this directory.              *)
 (***************************************************************************)
 
 EXTENDS Vortex_DSE_CSlot_AE, TLAPS
@@ -19,26 +15,8 @@ LEMMA InitType == Init => TypeInvariant
   BY DEF Init, TypeInvariant, MsgRecord
 
 LEMMA NextType == TypeInvariant /\ [Next]_vars => TypeInvariant'
-  <1> USE DEF TypeInvariant, MsgRecord, vars
-  <1> SUFFICES ASSUME TypeInvariant, [Next]_vars
-               PROVE  TypeInvariant'
-      OBVIOUS
-  <1>1. CASE \E id \in MsgIDs : Submit(id)
-        BY <1>1 DEF Submit
-  <1>2. CASE \E n \in Nodes, m \in network : Process(n, m)
-        BY <1>2 DEF Process
-  <1>3. CASE \E n \in Nodes : Freeze(n)
-        BY <1>3 DEF Freeze
-  <1>4. CASE Reconcile
-        BY <1>4 DEF Reconcile
-  <1>5. CASE \E id \in MsgIDs, k \in Nat : DuplicateInject(id, k)
-        BY <1>5 DEF DuplicateInject
-  <1>6. CASE NextCslot
-        BY <1>6 DEF NextCslot
-  <1>7. CASE UNCHANGED vars
-        BY <1>7
-  <1>8. QED
-        BY <1>1, <1>2, <1>3, <1>4, <1>5, <1>6, <1>7 DEF Next
+  BY DEF TypeInvariant, MsgRecord, vars, Next,
+         Send, Process, Freeze, Reconcile, NextCslot
 
 THEOREM TypeCorrect == Spec => []TypeInvariant
   <1>1. Init => TypeInvariant

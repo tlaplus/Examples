@@ -21,7 +21,7 @@ MCNext ==
     \/ \E n \in Nodes, m \in network : Process(n, m)
     \/ \E n \in Nodes : Crash(n)
     \/ \E n \in Nodes : Rejoin(n)
-    \/ \E id \in MsgIDs, k \in Slots, o \in Nodes : ByzantineInject(id, k, o)
+    \/ \E id \in MsgIDs, k \in Slots : ByzantineInject(id, k)
     \/ \E n \in Nodes : MCTick(n)
 
 MCSpec == Init /\ [][MCNext]_vars

@@ -22,18 +22,17 @@ MCNextCslot ==
     /\ NextCslot
 
 MCNext ==
-    \/ \E id \in MsgIDs : Submit(id)
+    \/ \E id \in MsgIDs, k \in Slots : Send(id, k)
     \/ \E n \in Nodes, m \in network : Process(n, m)
     \/ \E n \in Nodes : Freeze(n)
     \/ Reconcile
-    \/ \E id \in MsgIDs, k \in Slots : DuplicateInject(id, k)
     \/ MCNextCslot
 
 MCSpec == Init /\ [][MCNext]_vars
 
 MCFairness ==
-    /\ SF_vars(Reconcile)
-    /\ SF_vars(MCNextCslot)
+    /\ WF_vars(Reconcile)
+    /\ WF_vars(MCNextCslot)
     /\ \A n \in Nodes : WF_vars(Freeze(n))
 
 MCLiveSpec == Init /\ [][MCNext]_vars /\ MCFairness

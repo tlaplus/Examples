@@ -11,7 +11,7 @@
 (*     constraint on Tick.                                                  *)
 (*                                                                          *)
 (*  2. BYZANTINE INJECT: adversary may inject a message with arbitrary     *)
-(*     cslot AND arbitrary origin node id (spoof the sender).              *)
+(*     cslot on any message id.                                            *)
 (*                                                                          *)
 (* The same exactly-once / no-phantom / strict-equality properties must    *)
 (* still hold, locally per node. Decision-locality means each node makes   *)
@@ -39,7 +39,7 @@ VARIABLES
 
 vars == <<node_slot, network, processed, persisted, node_state>>
 
-MsgRecord == [id: MsgIDs, cslot: Nat, origin: Nodes]
+MsgRecord == [id: MsgIDs, cslot: Nat]
 
 -------------------------------------------------------------------------------
 Init ==
@@ -57,7 +57,7 @@ Submit(id, n) ==
     /\ node_state[n] = Up
     /\ id \notin {m.id : m \in network}
     /\ \A x \in Nodes : id \notin processed[x]
-    /\ network' = network \cup {[id |-> id, cslot |-> node_slot[n], origin |-> n]}
+    /\ network' = network \cup {[id |-> id, cslot |-> node_slot[n]]}
     /\ UNCHANGED <<node_slot, processed, persisted, node_state>>
 
 \* Process: STRICT slot equality, but vs LOCAL clock now.
@@ -85,13 +85,12 @@ Rejoin(n) ==
     /\ node_state' = [node_state EXCEPT ![n] = Up]
     /\ UNCHANGED <<node_slot, network, persisted>>
 
-\* Byzantine inject: adversary spoofs both cslot AND origin.
-ByzantineInject(id, fake_cslot, fake_origin) ==
+\* Byzantine inject: adversary stamps an arbitrary slot on any id.
+ByzantineInject(id, fake_cslot) ==
     /\ id \in MsgIDs
     /\ fake_cslot \in Nat
-    /\ fake_origin \in Nodes
     /\ network' = network \cup
-         {[id |-> id, cslot |-> fake_cslot, origin |-> fake_origin]}
+         {[id |-> id, cslot |-> fake_cslot]}
     /\ UNCHANGED <<node_slot, processed, persisted, node_state>>
 
 \* Per-node tick, bounded by MaxSkew vs slowest node.
@@ -107,7 +106,7 @@ Next ==
     \/ \E n \in Nodes, m \in network : Process(n, m)
     \/ \E n \in Nodes : Crash(n)
     \/ \E n \in Nodes : Rejoin(n)
-    \/ \E id \in MsgIDs, k \in Nat, o \in Nodes : ByzantineInject(id, k, o)
+    \/ \E id \in MsgIDs, k \in Nat : ByzantineInject(id, k)
     \/ \E n \in Nodes : SkewedTick(n)
 
 Spec == Init /\ [][Next]_vars
@@ -117,7 +116,7 @@ Spec == Init /\ [][Next]_vars
 
 TypeInvariant ==
     /\ node_slot   \in [Nodes -> Nat]
-    /\ \A m \in network : m.id \in MsgIDs /\ m.cslot \in Nat /\ m.origin \in Nodes
+    /\ network     \in SUBSET MsgRecord
     /\ processed   \in [Nodes -> SUBSET MsgIDs]
     /\ persisted   \in [Nodes -> SUBSET MsgIDs]
     /\ node_state  \in [Nodes -> {Up, Down}]
@@ -129,6 +128,7 @@ BoundedSkew ==
         /\ node_slot[n1] - node_slot[n2] <= MaxSkew
         /\ node_slot[n2] - node_slot[n1] <= MaxSkew
 
+\* Corollary of the type invariant.
 ExactlyOncePerNode ==
     \A n \in Nodes : Cardinality(processed[n]) <= Cardinality(MsgIDs)
 
@@ -139,10 +139,9 @@ CSlotLocalAdmission ==
     \A n \in Nodes : \A id \in processed[n] :
         \E m \in network : m.id = id /\ m.cslot <= node_slot[n]
 
+\* Holds at all times, not only while the node is down.
 PersistedReflectsReality ==
-    \A n \in Nodes :
-        node_state[n] = Down =>
-            persisted[n] \subseteq {m.id : m \in network}
+    \A n \in Nodes : persisted[n] \subseteq {m.id : m \in network}
 
 NoPhantomProcess ==
     \A n \in Nodes : processed[n] \subseteq {m.id : m \in network}

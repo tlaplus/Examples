@@ -17,9 +17,7 @@
           "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot.cfg",
           "runtime": "00:00:01",
           "mode": "exhaustive search",
-          "result": "success",
-          "totalStates": 186367,
-          "distinctStates": 18903
+          "result": "success"
         },
         {
           "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_liveness.cfg",
@@ -43,9 +41,7 @@
           "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_AE_tiny.cfg",
           "runtime": "00:00:01",
           "mode": "exhaustive search",
-          "result": "success",
-          "totalStates": 79601,
-          "distinctStates": 10000
+          "result": "success"
         }
       ]
     },
@@ -57,9 +53,7 @@
           "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_Skew.cfg",
           "runtime": "00:00:01",
           "mode": "exhaustive search",
-          "result": "success",
-          "totalStates": 96481,
-          "distinctStates": 10099
+          "result": "success"
         }
       ]
     },
@@ -71,9 +65,7 @@
           "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_TTL.cfg",
           "runtime": "00:00:05",
           "mode": "exhaustive search",
-          "result": "success",
-          "totalStates": 8084795,
-          "distinctStates": 608477
+          "result": "success"
         },
         {
           "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_TTL_liveness.cfg",

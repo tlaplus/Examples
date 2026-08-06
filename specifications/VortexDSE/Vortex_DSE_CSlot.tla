@@ -21,7 +21,7 @@
 (*   - arbitrary message reordering (network is a SET),                     *)
 (*   - unbounded delivery delay (Process is nondeterministic),              *)
 (*   - node crashes and rejoins (state survives only via mmap snapshot),   *)
-(*   - adversarial duplicate injection (replay attack).                     *)
+(*   - adversarial injection and replay: Send stamps any slot, any id.      *)
 (*                                                                          *)
 (* T_0 = 0 by normalization. We model integer slots directly: each ts is   *)
 (* already the C_slot index of the message (i.e. ts = floor(T_hw/Delta_t)).*)
@@ -47,7 +47,7 @@ VARIABLES
     \* @type: Int;
     current_slot,
     \* @type: Set({ id: Str, cslot: Int });
-    network,             \* in-flight messages (SET = no ordering)
+    network,             \* every message ever sent; nothing is discarded
     \* @type: Str -> Set(Str);
     processed,           \* processed[n] = msg ids node n has admitted
     \* @type: Str -> Set(Str);
@@ -72,13 +72,15 @@ Init ==
 -------------------------------------------------------------------------------
 (*                                ACTIONS                                   *)
 
-\* Submit: sender stamps T_hw, which yields cslot = current_slot at emission.
-\* Network may deliver this arbitrarily later (no ordering, no time bound).
-Submit(id) ==
+\* Emission. A message enters the network carrying a slot stamp. An honest
+\* sender stamps the slot it is currently in; an adversary stamps whatever it
+\* likes, past or future, and may re-send an id it has already sent. There is
+\* no separate honest action: Send(id, current_slot) is the honest case, and
+\* singling it out would add nothing, since no fairness is assumed on it.
+Send(id, cslot) ==
     /\ id \in MsgIDs
-    /\ id \notin {m.id : m \in network}
-    /\ \A n \in Nodes : id \notin processed[n]
-    /\ network' = network \cup {[id |-> id, cslot |-> current_slot]}
+    /\ cslot \in Nat
+    /\ network' = network \cup {[id |-> id, cslot |-> cslot]}
     /\ UNCHANGED <<current_slot, processed, persisted, node_state>>
 
 \* C-SLOT ADMISSION (default build — late tolerated, nothing dropped).
@@ -115,26 +117,16 @@ Rejoin(n) ==
     /\ node_state' = [node_state EXCEPT ![n] = Up]
     /\ UNCHANGED <<current_slot, network, persisted>>
 
-\* Adversarial duplicate / replay injection.
-\* Attacker injects a message with arbitrary cslot value (past, present,
-\* or future). The C-slot gate must still hold.
-DuplicateInject(id, fake_cslot) ==
-    /\ id \in MsgIDs
-    /\ fake_cslot \in Nat
-    /\ network' = network \cup {[id |-> id, cslot |-> fake_cslot]}
-    /\ UNCHANGED <<current_slot, processed, persisted, node_state>>
-
 \* Slot ticker advances by 1.
 Tick ==
     /\ current_slot' = current_slot + 1
     /\ UNCHANGED <<network, processed, persisted, node_state>>
 
 Next ==
-    \/ \E id \in MsgIDs : Submit(id)
+    \/ \E id \in MsgIDs, k \in Nat : Send(id, k)
     \/ \E n \in Nodes, m \in network : Process(n, m)
     \/ \E n \in Nodes : Crash(n)
     \/ \E n \in Nodes : Rejoin(n)
-    \/ \E id \in MsgIDs, k \in Nat : DuplicateInject(id, k)
     \/ Tick
 
 Spec == Init /\ [][Next]_vars
@@ -151,43 +143,42 @@ TypeInvariant ==
 
 -------------------------------------------------------------------------------
 (*                       CORE SAFETY INVARIANTS                             *)
+(*                                                                          *)
+(* NoFutureAdmission is the property of interest. The three below it are    *)
+(* consequences, kept because they are the statements a reader is likely to *)
+(* look for and because they are cheap regression checks, not because they  *)
+(* add strength.                                                            *)
 
-\* I1: EXACTLY-ONCE PER NODE.
-\* No node processes the same id twice (set semantics + guard).
-ExactlyOncePerNode ==
-    \A n \in Nodes : Cardinality(processed[n]) <= Cardinality(MsgIDs)
-
-\* I2: NO FUTURE ADMISSION (the headline safety property).
-\* A node never admits a message whose slot has not yet been reached.
-\* The gate is m.cslot <= current_slot and current_slot is monotonic,
-\* so every admitted id has a network record whose cslot lies in
-\* [0, current_slot]: a real, present-or-past slot, never future-dated.
-\* Late messages (cslot < current_slot) ARE admitted here (into their
-\* own slot) — that is intended; only future-dated admission is barred.
+\* THE HEADLINE PROPERTY.
+\* A node never admits a message whose slot has not yet been reached. The
+\* gate is m.cslot <= current_slot and current_slot is monotonic, so every
+\* admitted id has a network record whose cslot lies in [0, current_slot]:
+\* a real, present-or-past slot, never future-dated. Late messages (cslot <
+\* current_slot) ARE admitted, into their own slot — that is intended; only
+\* future-dated admission is barred.
 NoFutureAdmission ==
     \A n \in Nodes : \A id \in processed[n] :
         \E m \in network : m.id = id /\ m.cslot <= current_slot
 
-\* I3: PERSISTED REFLECTS REALITY.
-\* mmap snapshot never invents ids that were not in the network.
-PersistedReflectsReality ==
-    \A n \in Nodes :
-        node_state[n] = Down =>
-            persisted[n] \subseteq {m.id : m \in network}
-
-\* I4: NO PHANTOM PROCESS.
-\* Every processed id corresponds to a real network record.
+\* Corollary of NoFutureAdmission: only sent messages are processed.
 NoPhantomProcess ==
     \A n \in Nodes : processed[n] \subseteq {m.id : m \in network}
 
-\* I5: DECISION LOCALITY.
-\* If two nodes have both processed id, that id exists in network.
-\* Structural consequence: the gate depends only on (m.cslot, current_slot),
-\* not on n. Same (m.cslot, current_slot) => same decision at every node.
+\* Corollary of NoPhantomProcess.
 DecisionLocalityOnly ==
     \A n1, n2 \in Nodes : \A id \in MsgIDs :
         (id \in processed[n1] /\ id \in processed[n2]) =>
             (\E m \in network : m.id = id)
+
+\* Corollary of the type invariant, since processed[n] is a set of MsgIDs
+\* and MsgIDs is finite.
+ExactlyOncePerNode ==
+    \A n \in Nodes : Cardinality(processed[n]) <= Cardinality(MsgIDs)
+
+\* The crash snapshot never holds an id that was never sent. This holds at
+\* all times, not only while the node is down.
+PersistedReflectsReality ==
+    \A n \in Nodes : persisted[n] \subseteq {m.id : m \in network}
 
 -------------------------------------------------------------------------------
 (*                              LIVENESS LAYER                              *)
@@ -209,8 +200,8 @@ DecisionLocalityOnly ==
 (*    eventually admitted. This is what recovers VALIDITY: every TX that    *)
 (*    reaches the network is eventually admitted by every up node.          *)
 (*                                                                          *)
-(*  - NO fairness on Submit / DuplicateInject. Submit is a user action;    *)
-(*    adversary injection is, by definition, not fair.                     *)
+(*  - NO fairness on Send. Emission is a user or adversary action; neither  *)
+(*    is required to happen.                                                *)
 (***************************************************************************)
 
 Fairness ==

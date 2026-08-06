@@ -17,11 +17,10 @@ MCTick ==
     /\ Tick
 
 MCNext ==
-    \/ \E id \in MsgIDs : Submit(id)
+    \/ \E id \in MsgIDs, k \in Slots : Send(id, k)
     \/ \E n \in Nodes, m \in network : Process(n, m)
     \/ \E n \in Nodes : Crash(n)
     \/ \E n \in Nodes : Rejoin(n)
-    \/ \E id \in MsgIDs, k \in Slots : DuplicateInject(id, k)
     \/ MCTick
 
 MCSpec == Init /\ [][MCNext]_vars

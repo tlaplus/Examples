@@ -111,11 +111,12 @@ Init ==
 -------------------------------------------------------------------------------
 (*                                ACTIONS                                   *)
 
-\* Submit: producer stamps cslot from its own clock (= current_slot under A1).
-Submit(id) ==
+\* Emission, as in Vortex_DSE_CSlot: honest submission is the case
+\* cslot = current_slot, adversarial injection or replay is any other stamp.
+Send(id, cslot) ==
     /\ id \in MsgIDs
-    /\ id \notin {m.id : m \in network}
-    /\ network' = network \cup {[id |-> id, cslot |-> current_slot]}
+    /\ cslot \in Nat
+    /\ network' = network \cup {[id |-> id, cslot |-> cslot]}
     /\ UNCHANGED <<current_slot, processed, phase, committed_set>>
 
 \* Process: C-slot strict admission. Only enabled in the open phase.
@@ -148,13 +149,6 @@ Reconcile ==
     /\ phase' = [n \in Nodes |-> Committed]
     /\ UNCHANGED <<current_slot, network, processed>>
 
-\* Adversarial duplicate / replay injection.
-DuplicateInject(id, fake_cslot) ==
-    /\ id \in MsgIDs
-    /\ fake_cslot \in Nat
-    /\ network' = network \cup {[id |-> id, cslot |-> fake_cslot]}
-    /\ UNCHANGED <<current_slot, processed, phase, committed_set>>
-
 \* NextCslot: advance to next slot. Only enabled when all nodes have
 \* committed the current cslot (closing the AE phase deterministically).
 \* Resets processed and phase for the new cslot. committed_set is overwritten
@@ -168,11 +162,10 @@ NextCslot ==
     /\ UNCHANGED <<network, committed_set>>
 
 Next ==
-    \/ \E id \in MsgIDs : Submit(id)
+    \/ \E id \in MsgIDs, k \in Nat : Send(id, k)
     \/ \E n \in Nodes, m \in network : Process(n, m)
     \/ \E n \in Nodes : Freeze(n)
     \/ Reconcile
-    \/ \E id \in MsgIDs, k \in Nat : DuplicateInject(id, k)
     \/ NextCslot
 
 Spec == Init /\ [][Next]_vars
@@ -190,46 +183,47 @@ TypeInvariant ==
 -------------------------------------------------------------------------------
 (*                         CORE SAFETY INVARIANTS                           *)
 
-\* AE-I1: MERKLE AGREEMENT (headline property of this module).
-\* Any two nodes that have committed for the current cslot hold identical
-\* committed_set. In implementation: equal Merkle roots.
-\* This is the formal counterpart of the AE design guarantee.
+\* The ids admitted somewhere for the slot currently open.
+AdmittedThisSlot == {m.id : m \in {mm \in network : mm.cslot = current_slot}}
+
+\* The two facts the rest of this section follows from.
+
+\* Admission is confined to the open slot.
+ProcessedAreCurrentSlot ==
+    \A n \in Nodes : processed[n] \subseteq AdmittedThisSlot
+
+\* Committing takes the union of what everyone admitted, nothing else.
+CommittedIsUnion ==
+    \A n \in Nodes :
+        phase[n] = Committed =>
+            committed_set[n] = UNION {processed[nn] : nn \in Nodes}
+
+\* Corollary of CommittedIsUnion: committed nodes hold the same set.
 MerkleAgreement ==
     \A n1, n2 \in Nodes :
         (phase[n1] = Committed /\ phase[n2] = Committed)
             => committed_set[n1] = committed_set[n2]
 
-\* AE-I2: COMMITTED IS SUPERSET OF LOCAL PROCESSED.
-\* AE Reconcile only adds, never removes. A node's committed_set always
-\* contains every message it locally admitted (no in-spec rollback of local
-\* admission). Local processed view is monotonically a subset of the merged
-\* view. (This rules out the "frozen and then dropped" failure mode.)
+\* Corollary of CommittedIsUnion: committing never drops a local admission.
 CommittedSupersetsProcessed ==
     \A n \in Nodes :
         phase[n] = Committed => processed[n] \subseteq committed_set[n]
 
-\* AE-I3: NO PHANTOM IN COMMITTED.
-\* Every id in any committed_set corresponds to a real network record with
-\* m.cslot = current_slot. AE cannot fabricate messages, only union real
-\* admissions.
+\* Corollary of the two together: nothing is committed that was not sent
+\* for this slot.
 NoPhantomInCommitted ==
     \A n \in Nodes :
         phase[n] = Committed =>
             \A id \in committed_set[n] :
                 \E m \in network : m.id = id /\ m.cslot = current_slot
 
-\* AE-I4: NO REORDER ACROSS CSLOT.
-\* A message admitted in cslot k carries the cslot stamp k, never
-\* re-attributed to another cslot. (Trivially follows from the gate
-\* m.cslot = current_slot at admission time.)
+\* Corollary of ProcessedAreCurrentSlot: an admitted id carries this slot's
+\* stamp and is never re-attributed to another.
 NoReorderAcrossCslot ==
     \A n \in Nodes : \A id \in processed[n] :
         \E m \in network : m.id = id /\ m.cslot = current_slot
 
-\* AE-I5: PHASE PROGRESSION VALID.
-\* A node's phase is always one of the three legal states. Forward-only
-\* transitions are enforced structurally by the Freeze, Reconcile, NextCslot
-\* guards; declared here as an explicit type-level safety net.
+\* Corollary of the type invariant.
 PhaseProgressionValid ==
     \A n \in Nodes : phase[n] \in {Open, Frozen, Committed}
 
@@ -237,7 +231,8 @@ PhaseProgressionValid ==
 (*                              LIVENESS LAYER                              *)
 (*                                                                          *)
 (* Fairness assignment:                                                     *)
-(*  - SF(Reconcile): once all nodes are frozen, AE must run.               *)
+(*  - WF(Reconcile), WF(NextCslot): weak fairness suffices, because once   *)
+(*    enabled these actions are disabled only by being taken.              *)
 (*  - SF(NextCslot): once all nodes are committed, slot must advance.      *)
 (*  - WF(Freeze(n)) per node: each node eventually freezes.                *)
 (*  - NO fairness on Process / Submit / DuplicateInject (same rationale as *)
@@ -245,8 +240,8 @@ PhaseProgressionValid ==
 (***************************************************************************)
 
 Fairness ==
-    /\ SF_vars(Reconcile)
-    /\ SF_vars(NextCslot)
+    /\ WF_vars(Reconcile)
+    /\ WF_vars(NextCslot)
     /\ \A n \in Nodes : WF_vars(Freeze(n))
 
 LiveSpec == Init /\ [][Next]_vars /\ Fairness

@@ -54,13 +54,22 @@ in both cases. There are no `OMITTED` steps in these modules.
 
 | | obligations |
 | --- | --- |
-| `Vortex_DSE_CSlot_Proofs` | 191 |
-| `Vortex_DSE_CSlot_ExactlyOnce_Proof` | 128 |
-| `Vortex_DSE_CSlot_AE_Proofs` | 32 |
+| `Vortex_DSE_CSlot_Proofs` | 23 |
+| `Vortex_DSE_CSlot_ExactlyOnce_Proof` | 19 |
+| `Vortex_DSE_CSlot_AE_Proofs` | 10 |
 
 Every model completes in a few seconds. `Vortex_DSE_CSlot_AE` also carries
 Apalache type annotations, but no symbolic model is registered here; the models
 below are TLC only.
+
+Each module states one property of interest and marks the rest as corollaries
+of it, rather than presenting a flat list that suggests more is being proved
+than is. In the core that property is `NoFutureAdmission`; in the agreement
+layer it is the pair `ProcessedAreCurrentSlot` and `CommittedIsUnion`.
+
+Emission is a single action. An honest sender stamps the slot it is in and an
+adversary stamps anything; since no fairness is assumed either way, splitting
+them into two actions distinguished nothing.
 
 ## Scope
 

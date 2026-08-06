@@ -67,13 +67,13 @@ Init ==
 -------------------------------------------------------------------------------
 (*                                ACTIONS                                   *)
 
-\* Submit: sender stamps T_hw, which yields cslot = current_slot at emission.
-\* Network may deliver this arbitrarily later (no ordering, no time bound).
-Submit(id) ==
+\* Emission, as in Vortex_DSE_CSlot: one action covers honest submission
+\* (cslot = current_slot) and adversarial injection or replay (any other
+\* stamp). No fairness is assumed on it either way.
+Send(id, cslot) ==
     /\ id \in MsgIDs
-    /\ id \notin {m.id : m \in network}
-    /\ \A n \in Nodes : id \notin processed[n]
-    /\ network' = network \cup {[id |-> id, cslot |-> current_slot]}
+    /\ cslot \in Nat
+    /\ network' = network \cup {[id |-> id, cslot |-> cslot]}
     /\ UNCHANGED <<current_slot, processed, persisted, node_state>>
 
 \* C-SLOT STRICT ADMISSION.
@@ -108,26 +108,16 @@ Rejoin(n) ==
     /\ node_state' = [node_state EXCEPT ![n] = Up]
     /\ UNCHANGED <<current_slot, network, persisted>>
 
-\* Adversarial duplicate / replay injection.
-\* Attacker injects a message with arbitrary cslot value (past, present,
-\* or future). The C-slot gate must still hold.
-DuplicateInject(id, fake_cslot) ==
-    /\ id \in MsgIDs
-    /\ fake_cslot \in Nat
-    /\ network' = network \cup {[id |-> id, cslot |-> fake_cslot]}
-    /\ UNCHANGED <<current_slot, processed, persisted, node_state>>
-
 \* Slot ticker advances by 1.
 Tick ==
     /\ current_slot' = current_slot + 1
     /\ UNCHANGED <<network, processed, persisted, node_state>>
 
 Next ==
-    \/ \E id \in MsgIDs : Submit(id)
+    \/ \E id \in MsgIDs, k \in Nat : Send(id, k)
     \/ \E n \in Nodes, m \in network : Process(n, m)
     \/ \E n \in Nodes : Crash(n)
     \/ \E n \in Nodes : Rejoin(n)
-    \/ \E id \in MsgIDs, k \in Nat : DuplicateInject(id, k)
     \/ Tick
 
 Spec == Init /\ [][Next]_vars
@@ -165,9 +155,7 @@ CSlotStrictAdmission ==
 \* I3: PERSISTED REFLECTS REALITY.
 \* persistent snapshot never invents ids that were not in the network.
 PersistedReflectsReality ==
-    \A n \in Nodes :
-        node_state[n] = Down =>
-            persisted[n] \subseteq {m.id : m \in network}
+    \A n \in Nodes : persisted[n] \subseteq {m.id : m \in network}
 
 \* I4: NO PHANTOM PROCESS.
 \* Every processed id corresponds to a real network record.
@@ -220,8 +208,8 @@ NoLateAdmission ==
 (*    bug. Adding WF(Process) would falsely claim "every TX eventually     *)
 (*    admitted", which contradicts the strict admission gate.              *)
 (*                                                                          *)
-(*  - NO fairness on Submit / DuplicateInject. Submit is a user action;    *)
-(*    adversary injection is, by definition, not fair.                     *)
+(*  - NO fairness on Send. Emission is a user or adversary action; neither  *)
+(*    is required to happen.                                                *)
 (***************************************************************************)
 
 Fairness ==
