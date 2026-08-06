@@ -20,7 +20,18 @@ The protocol has two admission rules, and the difference is one operator.
 | `Vortex_DSE_CSlot_TTL` | `m.cslot = current_slot` | an opt-in bounded-memory mode. A message that misses its slot is rejected permanently, so state does not grow behind the frontier. |
 
 Both modes are specified because both are implemented; the strict rule is a
-memory concession, not a stronger version of the protocol.
+memory concession, not a stronger version of the protocol, and the two
+modules say exactly that:
+
+* `Vortex_DSE_CSlot_TTL_Proofs` proves `Spec => C!Spec` — the strict mode
+  refines the default one, so every safety property established for the
+  default is inherited rather than reproved. Equality is a stronger gate
+  than `<=`, and nothing else differs.
+
+* `MC_Vortex_DSE_CSlot_TTL_admission.cfg` is a deliberate liveness failure.
+  `EventualAdmission` holds under the default rule and does not hold here: a
+  message whose slot has passed is refused for good. That is the price of
+  bounding memory, checked rather than asserted.
 
 ## Modules
 
@@ -30,6 +41,7 @@ memory concession, not a stronger version of the protocol.
 | `Vortex_DSE_CSlot_Proofs` | `TypeCorrect`, `NoFutureAdmissionCorrect` |
 | `Vortex_DSE_CSlot_ExactlyOnce_Proof` | `StrictExactlyOnceCorrect` |
 | `Vortex_DSE_CSlot_TTL` | the strict admission mode |
+| `Vortex_DSE_CSlot_TTL_Proofs` | that the strict mode refines the default one |
 | `Vortex_DSE_CSlot_Skew` | replaces the single global slot with a per-node clock, plus Byzantine injection of forged slot stamps and origins |
 | `Vortex_DSE_CSlot_AE` | the agreement layer: `Freeze`, `Reconcile`, `Commit` over the strict mode |
 | `Vortex_DSE_CSlot_AE_Proofs` | deductive proofs for the agreement layer |
@@ -57,6 +69,7 @@ in both cases. There are no `OMITTED` steps in these modules.
 | `Vortex_DSE_CSlot_Proofs` | 23 |
 | `Vortex_DSE_CSlot_ExactlyOnce_Proof` | 19 |
 | `Vortex_DSE_CSlot_AE_Proofs` | 10 |
+| `Vortex_DSE_CSlot_TTL_Proofs` | 34 |
 
 Every model completes in a few seconds. `Vortex_DSE_CSlot_AE` also carries
 Apalache type annotations, but no symbolic model is registered here; the models

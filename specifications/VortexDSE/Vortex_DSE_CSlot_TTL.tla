@@ -52,6 +52,12 @@ VARIABLES
 
 vars == <<current_slot, network, processed, persisted, node_state>>
 
+\* The default mode, over the same variable names. Every action here is an
+\* action of it: the admission gate is equality where the default admits on
+\* <=, and nothing else differs. The refinement is proved in
+\* Vortex_DSE_CSlot_TTL_Proofs.
+C == INSTANCE Vortex_DSE_CSlot
+
 MsgRecord == [id: MsgIDs, cslot: Nat]
 
 -------------------------------------------------------------------------------
@@ -225,6 +231,15 @@ TickProgress == \A k \in Nat : <>(current_slot > k)
 
 \* L2 EVENTUAL REJOIN.
 \* Every crashed node eventually returns to Up, under WF(Rejoin(n)).
+\* What the bounded-memory mode gives up, stated so the cost is visible
+\* rather than implied. A message whose slot has passed is refused for good,
+\* so this property does NOT hold here — it is checked as a deliberate
+\* liveness failure, and it is the reason the strict rule is a concession to
+\* memory rather than a stronger protocol.
+EventualAdmission ==
+    \A n \in Nodes : \A id \in MsgIDs :
+        (\E m \in network : m.id = id) ~> (id \in processed[n])
+
 EventualRejoin ==
     \A n \in Nodes : (node_state[n] = Down) ~> (node_state[n] = Up)
 

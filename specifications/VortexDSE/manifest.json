@@ -68,6 +68,12 @@
           "result": "success"
         },
         {
+          "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_TTL_admission.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "liveness failure"
+        },
+        {
           "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_TTL_liveness.cfg",
           "runtime": "00:00:01",
           "mode": "exhaustive search",
@@ -118,6 +124,14 @@
       "path": "specifications/VortexDSE/Vortex_DSE_CSlot_TTL.tla",
       "features": [],
       "models": []
+    },
+    {
+      "path": "specifications/VortexDSE/Vortex_DSE_CSlot_TTL_Proofs.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 1
+      }
     }
   ]
 }
