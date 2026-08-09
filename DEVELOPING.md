@@ -22,7 +22,6 @@ Here is a brief overview of each script in the order they are run in [the CI](.g
    The script ensures the models don't crash and that their result is as expected, either success or a specific type of failure.
    If applicable, the script also checks the size of the state graph against the values recorded in `manifest.json`.
 1. [`smoke_test_large_models.py`](.github/scripts/smoke_test_large_models.py): not all models in this repository can be run to completion within 30 seconds, so this script runs medium & large models for five seconds before terminating their process - just to ensure they basically function and don't immediately crash.
-1. [`check_proofs.py`](.github/scripts/check_proofs.py): this script runs TLAPM against all modules that contain formal proofs, to ensure the proofs are valid.
 
 There are also a number of utility scripts:
 1. [`generate_manifest.py`](.github/scripts/generate_manifest.py): this can be run by users to automatically generate a new `manifest.json` file for their specs.
@@ -81,10 +80,6 @@ python .github/scripts/check_small_models.py --tools_jar_path deps/tools/tla2too
 ```
 ```sh
 python .github/scripts/smoke_test_large_models.py --tools_jar_path deps/tools/tla2tools.jar --apalache_path deps/apalache --tlapm_lib_path deps/tlapm/library --community_modules_jar_path deps/community/modules.jar --examples_root .
-```
-Note: `check_proofs.py` does not run on Windows.
-```sh
-python .github/scripts/check_proofs.py --tlapm_path deps/tlapm --examples_root .
 ```
 You can also run the non-CI utility scripts as follows:
 ```sh
