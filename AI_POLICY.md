@@ -33,9 +33,10 @@ change does not need a 5-page description.
 TLA+ specifications, and code are the only acceptable AI-generated content, per
 the other rules in this policy.
 
-- **The number of active Pull Requests is limited.** It takes effort to open a
-high-quality Pull Request. You have to prioritize your contributions and submit
-the important ones first.
+- **Review capacity is the bottleneck of this project.** Do not assume your Pull
+Request will be reviewed, however sound it is. It has to be compelling enough
+that a maintainer chooses to spend their time on it, so open the contributions
+that matter most, not everything you can produce.
 
 - **Signed-off-by and Developer Certificate of Origin.** AI agents MUST NOT add
 Signed-off-by tags. Only humans can legally certify the Developer Certificate of
