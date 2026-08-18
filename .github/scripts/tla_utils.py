@@ -2,6 +2,7 @@ import locale
 from datetime import datetime
 from datetime import timedelta
 import json
+import os
 from os.path import join, normpath, pathsep, dirname
 from pathlib import PureWindowsPath
 import subprocess
@@ -147,6 +148,34 @@ def get_tlc_feature_flags(module_features):
         jvm_parameters.append('-Dtlc2.tool.impl.Tool.cdot=true')
     return jvm_parameters
 
+def get_java_command(tool):
+    """
+    Gets the Java executable configured for a specific tool.
+    """
+    java_executable = os.environ.get(f'{tool}_JAVA')
+    if java_executable:
+        return java_executable
+    java_home = os.environ.get(f'{tool}_JAVA_HOME')
+    if java_home:
+        executable = 'java.exe' if sys.platform == 'win32' else 'java'
+        return normpath(join(java_home, 'bin', executable))
+    return 'java'
+
+def get_java_environment(tool):
+    """
+    Gets an environment that makes a specific tool's Java the default.
+    """
+    env = os.environ.copy()
+    java_home = os.environ.get(f'{tool}_JAVA_HOME')
+    if java_home:
+        env['JAVA_HOME'] = java_home
+        env['PATH'] = pathsep.join([normpath(join(java_home, 'bin')), env.get('PATH', '')])
+    java_executable = os.environ.get(f'{tool}_JAVA')
+    if java_executable:
+        env['JAVA'] = java_executable
+        env['JAVACMD'] = java_executable
+    return env
+
 def check_model(
         tools_jar_path,
         apalache_path,
@@ -193,7 +222,8 @@ def check_model(
                 timeout=hard_timeout_in_seconds,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
-                text=True
+                text=True,
+                env=get_java_environment('APALACHE')
             )
             return apalache
         else:
@@ -217,7 +247,7 @@ def check_model(
                 '-cleanup'
             ] + get_run_mode(mode)
             tlc = subprocess.run(
-                ['java'] + jvm_parameters + ['tlc2.TLC'] + tlc_parameters,
+                [get_java_command('TLC')] + jvm_parameters + ['tlc2.TLC'] + tlc_parameters,
                 timeout=hard_timeout_in_seconds,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
@@ -286,4 +316,3 @@ def extract_state_count_info(tlc_output):
     total_states = locale.atoi(state_count_findings.group('total_states'))
     state_depth = locale.atoi(state_depth_findings.group('state_depth'))
     return (distinct_states, total_states, state_depth)
-
