@@ -41,7 +41,9 @@ def check_model(module, model, expected_runtime):
     module_path = tla_utils.from_cwd(examples_root, module['path'])
     model_path = tla_utils.from_cwd(examples_root, model['path'])
     logging.info(model_path)
-    hard_timeout_in_seconds = 60
+    # Apalache pays for JVM and solver startup before the bounded check
+    # begins, so symbolic models need more room than TLC ones.
+    hard_timeout_in_seconds = 120 if model['mode'] == 'symbolic' else 60
     start_time = timer()
     tlc_result = tla_utils.check_model(
         tools_jar_path,
