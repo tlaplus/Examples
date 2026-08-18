@@ -19,8 +19,6 @@ CONSTANTS
   \* @type: Set(Str);
   DATA,
   \* @type: Str;
-  Other,
-  \* @type: Str;
   Undefined
 
 VARIABLES
@@ -57,9 +55,7 @@ VARIABLES
   \* @type: Str;
   FwdCmd,
   \* @type: Str;
-  FwdSrc,
-  \* @type: Bool;
-  Env_o
+  FwdSrc
 
 \* Both components of the variable group are strings, which the type checker
 \* cannot tell apart from a two-element sequence.  The group is shadowed here
@@ -77,7 +73,6 @@ INSTANCE FlashWithMutex
 \* Concrete values for the constants used by APFlashWithMutex.cfg.
 NodeVal      == { "n1", "n2" }
 DataVal      == { "d1", "d2" }
-OtherVal     == "Other"
 UndefinedVal == "Undefined"
 
 ==============================================================================

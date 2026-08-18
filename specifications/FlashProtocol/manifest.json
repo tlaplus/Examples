@@ -15,12 +15,17 @@
       "models": []
     },
     {
+      "path": "specifications/FlashProtocol/FlashWithMutexCMP.tla",
+      "features": [],
+      "models": []
+    },
+    {
       "path": "specifications/FlashProtocol/APFlashWithMutex.tla",
       "features": [],
       "models": [
         {
           "path": "specifications/FlashProtocol/APFlashWithMutex.cfg",
-          "runtime": "00:38:09",
+          "runtime": "00:00:44",
           "mode": "symbolic",
           "result": "success"
         }
@@ -32,12 +37,12 @@
       "models": [
         {
           "path": "specifications/FlashProtocol/MCFlashWithMutex.cfg",
-          "runtime": "00:00:04",
+          "runtime": "00:00:01",
           "mode": "exhaustive search",
           "result": "success",
-          "distinctStates": 32994,
-          "totalStates": 159216,
-          "stateDepth": 34
+          "distinctStates": 2024,
+          "totalStates": 7552,
+          "stateDepth": 21
         }
       ]
     },
@@ -47,12 +52,12 @@
       "models": [
         {
           "path": "specifications/FlashProtocol/MCFlashWithMutexLive.cfg",
-          "runtime": "00:04:44",
+          "runtime": "00:00:15",
           "mode": "exhaustive search",
           "result": "success",
-          "distinctStates": 131976,
-          "totalStates": 636852,
-          "stateDepth": 34,
+          "distinctStates": 8096,
+          "totalStates": 30196,
+          "stateDepth": 21,
           "workers": 4
         }
       ]
