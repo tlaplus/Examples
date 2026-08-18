@@ -50,7 +50,7 @@ def parse_module(path):
     ] + (['-enableassertions'] if enable_assertions else [])
     sany_parameters = ['-error-codes', path]
     sany = subprocess.run(
-        ['java'] + jvm_parameters + ['tla2sany.SANY'] + sany_parameters,
+        [tla_utils.get_java_command('TLC')] + jvm_parameters + ['tla2sany.SANY'] + sany_parameters,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True
@@ -83,4 +83,3 @@ logging.info(f'Parsing using {thread_count} threads')
 with ThreadPoolExecutor(thread_count) as executor:
     results = executor.map(parse_module, modules)
     exit(0 if all(results) else 1)
-

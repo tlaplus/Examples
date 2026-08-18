@@ -48,7 +48,7 @@ def translate_module(module_path):
     jvm_parameters = ['-cp', tools_path] + (['-enableassertions'] if enable_assertions else [])
     pcal_parameters = ['-nocfg', module_path]
     pcal = subprocess.run(
-        ['java'] + jvm_parameters + ['pcal.trans'] + pcal_parameters,
+        [tla_utils.get_java_command('TLC')] + jvm_parameters + ['pcal.trans'] + pcal_parameters,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True
@@ -67,4 +67,3 @@ logging.info(f'Translating PlusCal using {thread_count} threads')
 with ThreadPoolExecutor(thread_count) as executor:
     results = executor.map(translate_module, modules)
     exit(0 if all(results) else 1)
-
