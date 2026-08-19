@@ -13,7 +13,42 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  prelude:
+    # None of these checks depend on the platform or on whether specs are
+    # converted to Unicode, so they run once here rather than once per matrix
+    # job. Checking the metadata up front also keeps a malformed manifest from
+    # burning the whole matrix before it fails.
+    runs-on: ubuntu-latest
+    env:
+      SCRIPT_DIR: .github/scripts
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v4
+      - name: Install python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install python packages
+        run: pip install -r "$SCRIPT_DIR/requirements.txt"
+      - name: Check manifest.json format
+        run: |
+          python "$SCRIPT_DIR/check_manifest_schema.py" \
+            --schema_path manifest-schema.json
+      - name: Check manifest files
+        run: |
+          python "$SCRIPT_DIR/check_manifest_files.py"  \
+            --ci_ignore_path .ciignore
+      - name: Check manifest feature flags
+        run: |
+          python "$SCRIPT_DIR/check_manifest_features.py" \
+            --examples_root .
+      - name: Check README spec table
+        run: |
+          python "$SCRIPT_DIR/check_markdown_table.py"  \
+            --readme_path README.md
+
   validate:
+    needs: prelude
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -61,22 +96,6 @@ jobs:
       - name: Download TLA⁺ dependencies (Linux & macOS)
         if: matrix.os != 'windows-latest'
         run: $SCRIPT_DIR/linux-setup.sh $SCRIPT_DIR $DEPS_DIR false
-      - name: Check manifest.json format
-        run: |
-          python "$SCRIPT_DIR/check_manifest_schema.py" \
-            --schema_path manifest-schema.json
-      - name: Check manifest files
-        run: |
-          python "$SCRIPT_DIR/check_manifest_files.py"  \
-            --ci_ignore_path .ciignore
-      - name: Check manifest feature flags
-        run: |
-          python "$SCRIPT_DIR/check_manifest_features.py" \
-            --examples_root .
-      - name: Check README spec table
-        run: |
-          python "$SCRIPT_DIR/check_markdown_table.py"  \
-            --readme_path README.md
       - name: Convert specs to unicode
         if: matrix.unicode
         run: |
