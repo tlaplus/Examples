@@ -15,6 +15,7 @@ Here is a brief overview of each script in the order they are run in [the CI](.g
 1. [`check_markdown_table.py`](.github/scripts/check_markdown_table.py): this uses the [mistletoe](https://pypi.org/project/mistletoe/) markdown parser python package to parse [`README.md`](README.md), extract the spec table, then validate its format & contents against each `manifest.json`; before this script was developed the table tended to diverge wildly from the actual content of this repo.
 1. [`unicode_conversion.py`](.github/scripts/unicode_conversion.py): this script uses [tlauc](https://github.com/tlaplus-community/tlauc) to convert each spec into its Unicode form to ensure TLA⁺ tooling functions identically on ASCII & Unicode specs.
    The CI spawns separate runs with and without conversion of specs to Unicode.
+   The Unicode run converts and parses every module but does not model-check every model, since whether the tools accept a Unicode module is settled when it is parsed.
 1. [`translate_pluscal.py`](.github/scripts/translate_pluscal.py): this script runs the PlusCal translator on all modules containing PlusCal, to ensure their PlusCal syntax is valid.
 1. [`parse_modules.py`](.github/scripts/parse_modules.py): this script runs the SANY parser against all `.tla` files in the repository to ensure they are syntactically & semantically valid.
    This can get quite complicated as many modules import specs defined in Apalache, TLAPM, or the community modules.
