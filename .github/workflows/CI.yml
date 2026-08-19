@@ -19,6 +19,11 @@ jobs:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
         unicode: [true, false]
+        # Unicode support is a matter of file encoding, and Linux and macOS
+        # handle that identically, so the Linux Unicode job covers this one.
+        exclude:
+          - os: macos-latest
+            unicode: true
       fail-fast: false
     env:
       SCRIPT_DIR: .github/scripts
