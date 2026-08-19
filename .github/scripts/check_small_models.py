@@ -23,6 +23,7 @@ parser.add_argument('--only', nargs='+', help='If provided, only check models in
 parser.add_argument('--verbose', help='Set logging output level to debug', action='store_true')
 parser.add_argument('--enable_assertions', help='Enable Java assertions (pass -enableassertions to JVM)', action='store_true')
 parser.add_argument('--skip_apalache', help='Skip all symbolic (Apalache) models; useful when running against Unicode specs since Apalache does not yet support Unicode (https://github.com/apalache-mc/apalache/issues/2995)', action='store_true')
+parser.add_argument('--representative_sample', help='Check only the fastest model per combination of module features and run mode, instead of every model', action='store_true')
 args = parser.parse_args()
 
 logging.basicConfig(level = logging.DEBUG if args.verbose else logging.INFO)
@@ -36,6 +37,7 @@ skip_models = args.skip
 only_models = args.only
 enable_assertions = args.enable_assertions
 skip_apalache = args.skip_apalache
+representative_sample = args.representative_sample
 
 def check_model(module, model, expected_runtime):
     module_path = tla_utils.from_cwd(examples_root, module['path'])
@@ -94,25 +96,53 @@ def check_model(module, model, expected_runtime):
             logging.error(f'Unhandled TLC result type {type(tlc_result)}: {tlc_result}')
             return False
 
-# Ensure longest-running modules go first
+def coverage_class(module, model):
+    """
+    The kind of coverage a model contributes: which TLA+ constructs the tools
+    have to handle, and how TLC is driven. Models within one class exercise
+    the same code paths, so a single member stands in for all of them.
+    """
+    mode = model['mode']
+    return (
+        frozenset(module['features']),
+        'proof' in module,
+        next(iter(mode)) if type(mode) is dict else mode
+    )
+
+def pick_representatives(models):
+    """
+    Reduces the given models to the fastest one per coverage class.
+    """
+    fastest = {}
+    for candidate in models:
+        module, model, runtime = candidate
+        key = coverage_class(module, model)
+        if key not in fastest or runtime < fastest[key][2]:
+            fastest[key] = candidate
+    return list(fastest.values())
+
 manifest = tla_utils.load_all_manifests(examples_root)
-small_models = sorted(
-    [
-        (module, model, runtime)
-        for path, spec in manifest
-        for module in spec['modules']
-        for model in module['models']
-            if (runtime := tla_utils.parse_timespan(model['runtime'])) <= timedelta(seconds=30)
-            and model['path'] not in skip_models
-            and not (skip_apalache and model['mode'] == 'symbolic')
-            and (only_models == [] or model['path'] in only_models)
-    ],
-    key = lambda m: m[2],
-    reverse=True
-)
+selected_models = [
+    (module, model, runtime)
+    for path, spec in manifest
+    for module in spec['modules']
+    for model in module['models']
+        if (runtime := tla_utils.parse_timespan(model['runtime'])) <= timedelta(seconds=30)
+        and model['path'] not in skip_models
+        and not (skip_apalache and model['mode'] == 'symbolic')
+        and (only_models == [] or model['path'] in only_models)
+]
+
+if representative_sample:
+    selected_models = pick_representatives(selected_models)
+
+# Ensure longest-running modules go first
+small_models = sorted(selected_models, key = lambda m: m[2], reverse=True)
 
 for path in skip_models:
     logging.info(f'Skipping {path}')
+
+logging.info(f'Checking {len(small_models)} models')
 
 success = all([check_model(*model) for model in small_models])
 exit(0 if success else 1)
