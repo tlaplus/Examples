@@ -1,13 +1,13 @@
 \* Note: deletes have not been implemented
 ---- MODULE btree ----
-EXTENDS TLC,
-        Naturals,
+EXTENDS Naturals,
         FiniteSets,
-        Sequences
+        Sequences,
+        Relation
 
 CONSTANTS Vals,
-          MaxKey,
-          MaxNode,
+          Keys,
+          Nodes,
           MaxOccupancy,
 
           \* states
@@ -26,27 +26,19 @@ CONSTANTS Vals,
 \* Assumptions the algorithm imposes
 \*
 
+\* All the tree does with a key is compare it: ChildNodeFor descends by
+\* comparing a key against the ones a node holds, and PivotOf splits a node's
+\* keys into a smaller and a larger half.  A strict total order is therefore
+\* everything the algorithm needs of the key domain, which it does not bound.
+ASSUME KeysAreOrdered == IsStrictlyTotallyOrderedUnder(<, Keys)
+
 \* MaxOccupancy is the branching factor.  Below 2, PivotOf leaves one side of
 \* every split empty, and IsFree reports the emptied in-tree leaf as free for
 \* ChooseFreeNode to hand out a second time.
 ASSUME MaxOccupancyPermitsSplitting == MaxOccupancy \in Nat /\ MaxOccupancy >= 2
 
 \* Even the empty tree is a root node, which Init takes from the free nodes.
-ASSUME NodePoolIsNonEmpty == MaxNode \in Nat \ {0}
-
-\*
-\* Assumptions only model checking imposes
-\*
-\* The algorithm bounds neither the key domain nor the node pool.  MaxKey and
-\* MaxNode exist to keep Keys, Nodes and the domains of childOf and valOf
-\* finite, which is also why exhausting the pool is reported by FreeNodesRemain,
-\* as a model too small rather than a defect in the tree.
-
-\* With no key, no request action is ever enabled and TLC deadlocks on Init.
-ASSUME KeyDomainIsNonEmpty == MaxKey \in Nat \ {0}
-
-Keys == 1..MaxKey
-Nodes == 1..MaxNode
+ASSUME NodePoolIsNonEmpty == Nodes # {}
 
 NIL == CHOOSE x : x \notin Nodes
 MISSING == CHOOSE v : v \notin Vals
@@ -335,6 +327,5 @@ KeyOrderPreserved == \A n \in Inners : (\A k \in keysOf[n] : (\A kc \in keysOf[c
 LeavesCantHaveLast == \A n \in Leaves : lastOf[n] = NIL
 KeysInLeavesAreUnique ==
     \A n1, n2 \in Leaves : ((keysOf[n1] \intersect keysOf[n2]) # {}) => n1=n2
-FreeNodesRemain == \E n \in Nodes : IsFree(n)
 
 ====
