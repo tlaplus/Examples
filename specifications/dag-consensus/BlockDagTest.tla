@@ -15,6 +15,10 @@ Leader(r) == CASE
 
 INSTANCE BlockDag WITH N <- N, R <- R, Leader <- Leader
 
+\* TLC does not check the assumptions of an instantiated module, so assume them again:
+ASSUME RoundsArePositiveIntegers
+ASSUME LeadersAreNodes
+
 v11 == <<1, 1>> \* leader
 v21 == <<2, 1>>
 v12 == <<1, 2>>

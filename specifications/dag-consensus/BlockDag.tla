@@ -13,6 +13,16 @@ CONSTANTS
 ,   Leader(_) \* operator mapping each round to its leader
 
 (**************************************************************************************)
+(* Round 0 is reserved for the genesis vertex, so it must not be a round of the       *)
+(* protocol.  Rounds being integers also bounds the set whose Max PreviousLeader      *)
+(* takes by 0..r-1, and it is what makes the recursion of Linearize well-founded.     *)
+(**************************************************************************************)
+
+ASSUME RoundsArePositiveIntegers == R \subseteq Nat \ {0}
+
+ASSUME LeadersAreNodes == \A r \in R : Leader(r) \in N
+
+(**************************************************************************************)
 (* For our purpose of checking safety and liveness, DAG vertices just consist of a   *)
 (* node and a round.                                                                  *)
 (**************************************************************************************)
@@ -26,8 +36,6 @@ Round(v) == IF v = <<>> THEN 0 ELSE v[2] \* accomodates <<>> as default value
 LeaderVertex(r) == IF r > 0 THEN <<Leader(r), r>> ELSE <<>>
 IsLeader(v) == LeaderVertex(Round(v)) = v
 Genesis == <<>>
-ASSUME IsLeader(Genesis) \* this should hold
-
 (**************************************************************************************)
 (* OrderSet(S) arbitrarily order the members of the set S.  Note that, in TLA+,       *)
 (* `CHOOSE' is deterministic but arbitrary choice, i.e. `CHOOSE e \in S : TRUE' is    *)
