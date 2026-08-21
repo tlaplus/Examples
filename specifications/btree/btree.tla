@@ -22,6 +22,29 @@ CONSTANTS Vals,
           SPLIT_ROOT_INNER,
           UPDATE_LEAF
 
+\*
+\* Assumptions the algorithm imposes
+\*
+
+\* MaxOccupancy is the branching factor.  Below 2, PivotOf leaves one side of
+\* every split empty, and IsFree reports the emptied in-tree leaf as free for
+\* ChooseFreeNode to hand out a second time.
+ASSUME MaxOccupancyPermitsSplitting == MaxOccupancy \in Nat /\ MaxOccupancy >= 2
+
+\* Even the empty tree is a root node, which Init takes from the free nodes.
+ASSUME NodePoolIsNonEmpty == MaxNode \in Nat \ {0}
+
+\*
+\* Assumptions only model checking imposes
+\*
+\* The algorithm bounds neither the key domain nor the node pool.  MaxKey and
+\* MaxNode exist to keep Keys, Nodes and the domains of childOf and valOf
+\* finite, which is also why exhausting the pool is reported by FreeNodesRemain,
+\* as a model too small rather than a defect in the tree.
+
+\* With no key, no request action is ever enabled and TLC deadlocks on Init.
+ASSUME KeyDomainIsNonEmpty == MaxKey \in Nat \ {0}
+
 Keys == 1..MaxKey
 Nodes == 1..MaxNode
 
