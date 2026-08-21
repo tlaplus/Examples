@@ -11,15 +11,20 @@
     {
       "path": "specifications/btree/btree.tla",
       "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/btree/MCbtree.tla",
+      "features": [],
       "models": [
         {
-          "path": "specifications/btree/btree.cfg",
+          "path": "specifications/btree/MCbtree.cfg",
           "runtime": "00:00:15",
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 374727,
           "totalStates": 2820091,
-          "stateDepth": 40
+          "stateDepth": 38
         }
       ]
     },
