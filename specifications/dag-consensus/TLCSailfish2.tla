@@ -24,6 +24,19 @@ GST == 6
 
 INSTANCE Sailfish
 
+(**************************************************************************************)
+(* TLC does not check the assumptions of an instantiated module, so we assume them    *)
+(* again here to have them checked against the parameters defined above.              *)
+(**************************************************************************************)
+ASSUME NodesAreFinite
+ASSUME ByzantineNodesAreNodes
+ASSUME RoundsStartAtOne
+ASSUME LeadersAreNodes
+ASSUME GSTIsARoundNumber
+ASSUME CorrectNodesFormQuorum
+ASSUME QuorumMinusByzantineIsBlocking
+ASSUME BlockingSetsIntersectQuorums
+
 StateConstraint == \A n \in N \ F : round[n] \in 0..Max(R)
 
 Done == \A n \in N \ F : round[n] = Max(R)

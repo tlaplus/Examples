@@ -17,7 +17,38 @@ CONSTANTS
 ,   Leader(_) \* operator mapping each round to its leader
 ,   GST \* the first round in which the system is synchronous
 
-ASSUME \E n \in R : R = 1..n \* rounds start at 1; 0 is used as default placeholder
+(**************************************************************************************)
+(* Explicitly state the properties of the constants that the protocol relies on.    *)
+(* They are all satisfied by the canonical instantiation, in which N has n > 3f       *)
+(* members, F has at most f members, the quorums are the sets of at least n-f nodes,  *)
+(* and the blocking sets are the sets of at least f+1 nodes.  Beware that TLC does    *)
+(* not check the assumptions of an instantiated module; the TLC-specific modules      *)
+(* therefore assume each of them again, by name.                                      *)
+(**************************************************************************************)
+
+\* Quorums and blocking sets are defined by counting nodes, which presupposes that
+\* there are finitely many of them:
+ASSUME NodesAreFinite == IsFiniteSet(N)
+
+ASSUME ByzantineNodesAreNodes == F \subseteq N
+
+\* Rounds are contiguous, since a node entering round r reasons about r-1 and r-2:
+ASSUME RoundsStartAtOne == \E n \in R : R = 1..n
+
+\* GST need not be a member of R; if it is not, then the system never becomes
+\* synchronous in the rounds under consideration:
+ASSUME GSTIsARoundNumber == GST \in Nat
+
+\* Since only correct nodes are guaranteed to follow the protocol, the correct nodes
+\* have to form a quorum, or else no round could ever be entered:
+ASSUME CorrectNodesFormQuorum == IsQuorum(N \ F)
+
+\* Removing the Byzantine nodes from a quorum leaves a blocking set:
+ASSUME QuorumMinusByzantineIsBlocking ==
+    \A Q \in SUBSET N : IsQuorum(Q) => IsBlocking(Q \ F)
+
+ASSUME BlockingSetsIntersectQuorums ==
+    \A B,Q \in SUBSET N : IsBlocking(B) /\ IsQuorum(Q) => B \cap Q # {}
 
 INSTANCE BlockDag \* Import definitions related to DAGs of blocks
 
