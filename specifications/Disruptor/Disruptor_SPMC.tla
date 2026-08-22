@@ -27,6 +27,10 @@ ASSUME AtLeastOneReader       == Readers /= {}
 ASSUME SizeIsPositive         == Size \in Nat \ {0}
 ASSUME MaxPublishedIsPositive == MaxPublished \in Nat \ {0}
 
+(* A thread id in both sets would share one pc between its writer and its  *)
+(* reader role, so BeginRead would enable EndWrite and vice versa.         *)
+ASSUME WritersReadersDisjoint == Writers \cap Readers = {}
+
 VARIABLES
   ringbuffer,
   published,    (* Write cursor. One for the producer.               *)
