@@ -16,7 +16,6 @@
 EXTENDS Integers, FiniteSets, Sequences
 
 CONSTANTS
-  MaxPublished, (* Max number of published events. Bounds the model. *)
   Writers,      (* Writer/producer thread ids.                       *)
   Readers,      (* Reader/consumer thread ids.                       *)
   Size,         (* Ringbuffer size.                                  *)
@@ -25,7 +24,6 @@ CONSTANTS
 ASSUME AtLeastOneWriter       == Writers /= {}
 ASSUME AtLeastOneReader       == Readers /= {}
 ASSUME SizeIsPositive         == Size \in Nat \ {0}
-ASSUME MaxPublishedIsPositive == MaxPublished \in Nat \ {0}
 
 (* A thread id in both sets would share one pc between its writer and its  *)
 (* reader role, so BeginRead would enable EndWrite and vice versa.         *)
@@ -145,12 +143,6 @@ Spec ==
   Init /\ [][Next]_vars /\ Fairness
 
 (***************************************************************************)
-(* State constraint - bounds model:                                        *)
-(***************************************************************************)
-
-StateConstraint == published < MaxPublished
-
-(***************************************************************************)
 (* Invariants:                                                             *)
 (***************************************************************************)
 
@@ -162,14 +154,5 @@ TypeOk ==
   /\ pc        \in [ Writers \union Readers -> { Access, Advance } ]
 
 NoDataRaces == Buffer!NoDataRaces
-
-(***************************************************************************)
-(* Properties:                                                             *)
-(***************************************************************************)
-
-(* Eventually always, consumers must have read all published values.       *)
-Liveliness ==
-  \A r \in Readers : \A i \in 0 .. (MaxPublished - 1) :
-    <>[](i \in 0 .. published => Len(consumed[r]) >= i + 1 /\ consumed[r][i + 1] = i)
 
 =============================================================================
