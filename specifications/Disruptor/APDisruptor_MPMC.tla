@@ -5,8 +5,6 @@
 EXTENDS Integers, FiniteSets, Sequences
 
 CONSTANTS
-  \* @type: Int;
-  MaxPublished,
   \* @type: Set(THREAD);
   Writers,
   \* @type: Set(THREAD);
