@@ -21,23 +21,26 @@ moreNminusTdiv2 == (N - T) \div 2 + 1
 
 VARIABLE pc, rcvd, sent
 
-ASSUME  /\ N \in Nat /\ T \in Nat /\ F \in Nat
+ASSUME  ConstantsAreNat ==
+        /\ N \in Nat /\ T \in Nat /\ F \in Nat
         /\ moreNplus3Tdiv2 \in Nat /\ moreNminusTdiv2 \in Nat
     
-ASSUME (N > 3 * T) /\ (T >= F) /\ (F >= 0)
+ASSUME FaultAssumption == (N > 3 * T) /\ (T >= F) /\ (F >= 0)
 
 (* auxiliary parameter
    "more than (N + 3 * T) / 2 VOTE messages"        
    1st case: if (N + 3 * T) is odd, 2nd case: even
  *)
-ASSUME  \/ 2 * moreNplus3Tdiv2 = N + 3 * T + 1
+ASSUME  MoreNplus3Tdiv2Def ==
+        \/ 2 * moreNplus3Tdiv2 = N + 3 * T + 1
         \/ 2 * moreNplus3Tdiv2 = N + 3 * T + 2
 
 (* auxiliary parameter
    "more than (N - T) / 2 VOTE messages"            
    1st case: if (N - T) is odd, 2nd case: even     
  *)    
-ASSUME  \/ 2 * moreNminusTdiv2 = N - T + 1
+ASSUME  MoreNminusTdiv2Def ==
+        \/ 2 * moreNminusTdiv2 = N - T + 1
         \/ 2 * moreNminusTdiv2 = N - T + 2
 
 P == 1 .. N                 (* all processes, including the faulty ones    *)
