@@ -11,8 +11,7 @@
 (* consumer threads.                                                       *)
 (***************************************************************************)
 
-LOCAL INSTANCE Naturals
-LOCAL INSTANCE FiniteSets
+EXTENDS Naturals, FiniteSets
 
 CONSTANTS
   Size,    (* The number of slots in the RingBuffer.                *)
@@ -21,10 +20,10 @@ CONSTANTS
   Values,  (* The set of values storable in the RingBuffer's slots. *)
   NULL
 
-ASSUME Size \in Nat \ {0}
-ASSUME Writers /= {}
-ASSUME Readers /= {}
-ASSUME NULL \notin Values
+ASSUME SizeIsPositive   == Size \in Nat \ {0}
+ASSUME AtLeastOneWriter == Writers /= {}
+ASSUME AtLeastOneReader == Readers /= {}
+ASSUME NullNotAValue    == NULL \notin Values
 
 VARIABLE ringbuffer
 
