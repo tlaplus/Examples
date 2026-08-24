@@ -10,7 +10,7 @@
 (* and consumers and that all consumers eventually read all published      *)
 (* values (in a Multicast fashion - i.e. all consumers read all events).   *)
 (*                                                                         *)
-(* To see a data race, try and run the model with two producers.           *)
+(* To see a data race, relax ExactlyOneWriter and run with two producers.  *)
 (***************************************************************************)
 
 EXTENDS Integers, FiniteSets, Sequences
@@ -21,7 +21,8 @@ CONSTANTS
   Size,         (* Ringbuffer size.                                  *)
   NULL
 
-ASSUME AtLeastOneWriter       == Writers /= {}
+(* This spec is SPMC; see Disruptor_MPMC for multiple producers.           *)
+ASSUME ExactlyOneWriter       == IsFiniteSet(Writers) /\ Cardinality(Writers) = 1
 ASSUME AtLeastOneReader       == Readers /= {}
 ASSUME SizeIsPositive         == Size \in Nat \ {0}
 
