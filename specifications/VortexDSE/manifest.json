@@ -1,0 +1,137 @@
+{
+  "sources": [
+    "https://github.com/vasilisnasopoulos/vortex-dse-whitepaper",
+    "https://github.com/vasilisnasopoulos/vortex-dse-cslot-proofs",
+    "https://github.com/vasilisnasopoulos/vortex-merkle-agreement"
+  ],
+  "authors": [
+    "Vasilis Nasopoulos"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success"
+        },
+        {
+          "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_liveness.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_AE.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_AE_liveness.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success"
+        },
+        {
+          "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_AE_tiny.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_Skew.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_Skew.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_TTL.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_TTL.cfg",
+          "runtime": "00:00:05",
+          "mode": "exhaustive search",
+          "result": "success"
+        },
+        {
+          "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_TTL_admission.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "liveness failure"
+        },
+        {
+          "path": "specifications/VortexDSE/MC_Vortex_DSE_CSlot_TTL_liveness.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success"
+        }
+      ]
+    },
+    {
+      "path": "specifications/VortexDSE/Vortex_DSE_CSlot.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/VortexDSE/Vortex_DSE_CSlot_AE.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/VortexDSE/Vortex_DSE_CSlot_AE_Proofs.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 1
+      }
+    },
+    {
+      "path": "specifications/VortexDSE/Vortex_DSE_CSlot_ExactlyOnce_Proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 1
+      }
+    },
+    {
+      "path": "specifications/VortexDSE/Vortex_DSE_CSlot_Proofs.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 1
+      }
+    },
+    {
+      "path": "specifications/VortexDSE/Vortex_DSE_CSlot_Skew.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/VortexDSE/Vortex_DSE_CSlot_TTL.tla",
+      "features": [],
+      "models": []
+    },
+    {
+      "path": "specifications/VortexDSE/Vortex_DSE_CSlot_TTL_Proofs.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 1
+      }
+    }
+  ]
+}
