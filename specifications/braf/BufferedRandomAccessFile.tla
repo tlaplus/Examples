@@ -18,6 +18,10 @@ EXTENDS Naturals, Sequences, TLC, Common
 
 CONSTANT BuffSz
 
+\* Seek's `pos \div BuffSz` needs a nonzero divisor, and Inv2 is unsatisfiable
+\* when BuffSz = 0.
+ASSUME BuffSzIsPositive == BuffSz \in Nat \ {0}
+
 VARIABLES
     \* in-memory variables (BufferedRandomAccessFile class fields)
     dirty,
@@ -380,12 +384,25 @@ Spec == Init /\ [][Next]_vars
 \* This module contains constants and definitions common to both
 \* RandomAccessFile and BufferedRandomAccessFile.
 
-EXTENDS Naturals, Sequences
+EXTENDS Naturals, Sequences, FiniteSets
 
 CONSTANTS
     Symbols, \* data stored in the file (in reality there are 256 symbols: bytes 0x00 to 0xFF)
     ArbitrarySymbol, \* special token for an arbitrary symbol (to reduce the need for nondeterministic choice)
     MaxOffset \* the highest possible offset (in reality this is 2^63 - 1)
+
+\* DiskF and TruncateOrExtendFile mention ArbitrarySymbol explicitly, so
+\* Permutations(Symbols) is an unsound SYMMETRY set unless it is not a symbol.
+ASSUME ArbitrarySymbolIsDistinct == ArbitrarySymbol \notin Symbols
+
+\* Permutations requires a finite set, as does enumerating SymbolOrArbitrary.
+ASSUME SymbolsIsFinite == IsFiniteSet(Symbols)
+
+\* Not needed for soundness; without it every offset holds ArbitrarySymbol.
+ASSUME SymbolsIsNonEmpty == Symbols # {}
+
+\* Offset == 0..MaxOffset types curr, lo, diskPos, length, and file_pointer.
+ASSUME MaxOffsetIsNat == MaxOffset \in Nat
 
 \* The set of legal offsets
 Offset == 0..MaxOffset
