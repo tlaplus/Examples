@@ -202,6 +202,30 @@ Next(n) ==
 Spec == Init /\ [][\E n \in Node: Next(n)]_vars
              /\ \A n \in Node: WF_vars(System(n))
 
+OpenSpec == 
+        Init /\ [][\E n \in Nodes: Next(n)]_<<active, color>> \* Allow variables inbox
+                                                              \* and count to change
+                                                              \* even if no actions
+                                                              \* of the next-state
+                                                              \* relations are enabled.
+                                                              \* A lower-level spec,
+                                                              \* may want to send
+                                                              \* messages (of a new
+                                                              \* type).
+                                           \* We can't simply rewrite Spec to 
+                                           \* I /\ []N_v with v declared as a constant
+                                           \* to be able to subst v with vars in model:
+                                           \*
+                                           \* CONSTANT v
+                                           \* Spec == Init /\ [][\E n \in Nodes: Next(n)_v
+                                           \*
+                                           \* vars is not constant-level and thus rejected
+                                           \* by level-checking.  Also, it would mean that
+                                           \* the actual meaning of the spec requires us
+                                           \* to look at the model.  And what about the
+                                           \* fairness constraint anyway?!?
+             /\ \A n \in Nodes: WF_vars(System(n))
+
 Max3TokenRounds ==
     \* Termination is detected within a maximum of three token rounds after the
     \* system is terminated.
