@@ -1,13 +1,18 @@
 (********************************************************************************)
-(* MultiPaxos with leader leases, a single self-contained spec. Leader lease    *)
-(* protocol's per-node state is folded into each node's record, and the lease   *)
-(* protocol messages share the single `msgs` bag with consensus messages. The   *)
-(* stable-leader check reads directly from the lease state of nodes; there is   *)
-(* no separate refinement layer.                                                *)
+(* This specification models MultiPaxos with leader leases. A leader holding    *)
+(* leases from a majority of replicas can serve linearizable reads locally      *)
+(* after committing recovered writes. The model covers lease acquisition,       *)
+(* renewal, revocation, and expiration, including interactions with leader      *)
+(* changes and replica failures.                                                *)
+(*                                                                              *)
+(* Algorithm reference:                                                         *)
+(* Tushar D. Chandra, Robert Griesemer, and Joshua Redstone. 2007.              *)
+(* Paxos made live: an engineering perspective. PODC '07, ACM, pp. 398-407.     *)
+(* https://doi.org/10.1145/1281100.1281103                                      *)
 (********************************************************************************)
 
 ---- MODULE MultiPaxos ----
-EXTENDS FiniteSets, Sequences, Integers, TLC
+EXTENDS FiniteSets, Sequences, Integers, TLC, Functions
 
 (*******************************)
 (* Model inputs & assumptions. *)
@@ -15,50 +20,30 @@ EXTENDS FiniteSets, Sequences, Integers, TLC
 CONSTANT Replicas,       \* symmetric set of server nodes
          Writes,         \* symmetric set of write commands (each w/ unique value)
          Reads,          \* symmetric set of read commands
-         MaxBallot,      \* maximum ballot pickable for leader preemption
          TGuard,         \* lease guard phase window length (in abstract ticks)
-         TLease,         \* lease renewal extend window length (in abstract ticks)
-         MaxTime,        \* upper bound on abstract time for model checking
-         NodeFailuresOn  \* if true, turn on node failures injection
+         TLease          \* lease renewal extend window length (in abstract ticks)
 
 ReplicasAssumption == /\ IsFiniteSet(Replicas)
-                      /\ Cardinality(Replicas) >= 1
+                      /\ Replicas # {}
                       /\ "none" \notin Replicas
 
 Population == Cardinality(Replicas)
 
 MajorityNum == (Population \div 2) + 1
 
-WritesAssumption == /\ IsFiniteSet(Writes)
-                    /\ Cardinality(Writes) >= 1
-                    /\ "nil" \notin Writes
+ReadsWritesAssumption == /\ IsFiniteSet(Reads)
+                         /\ IsFiniteSet(Writes)
+                         /\ Writes # {}
+                         /\ "nil" \notin Reads
+                         /\ "nil" \notin Writes
+                         /\ Reads \cap Writes = {}
 
-ReadsAssumption == /\ IsFiniteSet(Reads)
-                   /\ Cardinality(Reads) >= 0
-                   /\ "nil" \notin Writes
-
-MaxBallotAssumption == /\ MaxBallot \in Nat
-                       /\ MaxBallot >= 2
-
-TGuardAssumption == /\ TGuard \in Nat
-                    /\ TGuard >= 1
-
-TLeaseAssumption == /\ TLease \in Nat
-                    /\ TLease >= 1
-
-MaxTimeAssumption == /\ MaxTime \in Nat
-                     /\ MaxTime >= TGuard + TLease
-
-NodeFailuresOnAssumption == NodeFailuresOn \in BOOLEAN
+TimeWindowsAssumption == /\ TGuard \in Nat \ {0}
+                         /\ TLease \in Nat \ {0}
 
 ASSUME /\ ReplicasAssumption
-       /\ WritesAssumption
-       /\ ReadsAssumption
-       /\ MaxBallotAssumption
-       /\ TGuardAssumption
-       /\ TLeaseAssumption
-       /\ MaxTimeAssumption
-       /\ NodeFailuresOnAssumption
+       /\ ReadsWritesAssumption
+       /\ TimeWindowsAssumption
 
 ----------
 
@@ -73,8 +58,6 @@ NumReads == Cardinality(Reads)
 
 NumCommands == Cardinality(Commands)
 
-Range(seq) == {seq[i]: i \in 1..Len(seq)}
-
 \* Client observable events.
 ClientEvents ==      [type: {"Req"}, cmd: Commands]
                 \cup [type: {"Ack"}, cmd: Commands,
@@ -86,12 +69,15 @@ AckEvent(c, v) == [type |-> "Ack", cmd |-> c, val |-> v]
                         \* for a write command, val is the old value
 
 InitPending ==    (CHOOSE ws \in [1..Cardinality(Writes) -> Writes]
-                        : Range(ws) = Writes)
+                        : IsInjective(ws))
                \o (CHOOSE rs \in [1..Cardinality(Reads) -> Reads]
-                        : Range(rs) = Reads)
+                        : IsInjective(rs))
+                    \* justification for CHOOSE: there is no identity associated
+                    \* with each individual write/read command; we just need to
+                    \* name any permutation of them to get started
 
 \* Server-side consensus constants & states.
-Ballots == 1..MaxBallot
+Ballots == Nat \ {0}
 
 Slots == 1..NumWrites
 
@@ -110,8 +96,8 @@ NullInst == [status |-> "Empty",
              voted |-> [bal |-> 0, write |-> "nil"]]
 
 \* Lease-side constants & typedefs.
-Times == 1..MaxTime
-ExpireTimes == 0..(MaxTime + TGuard + TLease)
+Times == Nat \ {0}
+ExpireTimes == Nat
                 \* stored expiration / guard deadlines; 0 is the "null" time
 
 SeqNums == Nat
@@ -177,6 +163,8 @@ FirstEmptySlot(insts) ==
         ELSE CHOOSE s \in Slots:
                 /\ insts[s].status = "Empty"
                 /\ \A t \in 1..(s - 1): insts[t].status # "Empty"
+                \* justification for CHOOSE: the ELSE branch guarantees an
+                \* empty slot exists; using CHOOSE to name it
 
 \* Service-internal consensus messages.
 PrepareMsgs == [type: {"Prepare"}, src: Replicas, bal: Ballots]
@@ -202,6 +190,9 @@ PeakVotedWrite(prs, s) ==
                     CHOOSE ppr \in prs:
                         \A pr \in prs: pr.votes[s].bal =< ppr.votes[s].bal
              IN  ppr.votes[s].write
+                \* justification for CHOOSE: the ELSE branch guarantees a
+                \* non-empty finite reply set, therefore a max ballot exists;
+                \* using CHOOSE to name a reply with that max ballot
 
 LastTouchedSlot(prs) ==
     IF \A s \in Slots: PeakVotedWrite(prs, s) = "nil"
@@ -209,6 +200,9 @@ LastTouchedSlot(prs) ==
         ELSE CHOOSE s \in Slots:
                 /\ PeakVotedWrite(prs, s) # "nil"
                 /\ \A t \in (s + 1)..NumWrites: PeakVotedWrite(prs, t) = "nil"
+                \* justification for CHOOSE: the ELSE branch guarantees a
+                \* slot with non-nil PeakVotedWrite exists; using CHOOSE to
+                \* name the highest slot among them
 
 AcceptMsgs == [type: {"Accept"}, src: Replicas,
                                  bal: Ballots,
@@ -318,6 +312,10 @@ variable msgs = {},                             \* messages in the network
          observed = <<>>,                       \* client observed events
          crashed = [r \in Replicas |-> FALSE],  \* replica crashed flag
          time = [r \in Replicas |-> 1];         \* per-node monotone clock
+            \* for simplicity, this spec initializes all nodes' clocks to the
+            \* same value of 1; this is not a requirement of leasing -- nodes
+            \* always reference their own clock and they don't need to align on
+            \* the absolute timestamps (i.e., clock skew is fine)
 
 define
     \* A lease from grantee p's perspective is "active" iff p's asGrantee[f]
@@ -380,9 +378,7 @@ define
                   /\ Cardinality(reqsMade) = NumCommands
                   /\ Cardinality(acksRecv) = NumCommands
 
-    numCrashed == Cardinality({r \in Replicas: crashed[r]})
-
-    timeExhausted == \A r \in Replicas: time[r] = MaxTime
+    NodeFailuresOn == TRUE  \* replicas may crash at any time
 end define;
 
 \* Send a set of messages helper.
@@ -624,12 +620,10 @@ macro TakeNewReadRequest(r) begin
     end with;
 end macro;
 
-\* Replica node crashes itself under promised conditions.
+\* A live replica may crash permanently.
 macro ReplicaCrashes(r) begin
-    \* if fewer than (N - MajorityNum) number of replicas have failed
-    await /\ MajorityNum + numCrashed < Cardinality(Replicas)
-          /\ ~crashed[r]
-          /\ node[r].balMaxKnown < MaxBallot;
+    await /\ NodeFailuresOn
+          /\ ~crashed[r];
     \* mark myself as crashed
     crashed[r] := TRUE;
 end macro;
@@ -792,7 +786,9 @@ end macro;
 \* Advances time by one tick globally, and garbage-collects expired lease
 \* state. Per-pair seq counters are preserved across GC.
 macro TimeTick() begin
-    await \A r \in Replicas: time[r] < MaxTime;
+    \* leasing requires nodes to align on how fast time flies (bounded clock
+    \* drift); for simplicity, this spec advances all nodes' clocks by the same
+    \* mount of 1; in practice, bounded epsilon differences are tolerated
     time := [r \in Replicas |-> time[r] + 1];
     node := [r \in Replicas |->
         [node[r] EXCEPT
@@ -817,7 +813,7 @@ end macro;
 \* Replica server node main loop.
 process Replica \in Replicas
 begin
-    rloop: while (~terminated) /\ (~timeExhausted) /\ (~crashed[self]) do
+    rloop: while (~terminated) /\ (~crashed[self]) do
         either
             BecomeLeader(self);
         or
@@ -853,16 +849,14 @@ begin
         or
             TimeTick();
         or
-            if NodeFailuresOn then
-                ReplicaCrashes(self);
-            end if;
+            ReplicaCrashes(self);
         end either;
     end while;
 end process;
 
 end algorithm; *)
 
-\* BEGIN TRANSLATION (chksum(pcal) = "793df0be" /\ chksum(tla) = "1cf9a6d4")
+\* BEGIN TRANSLATION (chksum(pcal) = "1fbd19f8" /\ chksum(tla) = "9a7c41f2")
 VARIABLES pc, msgs, node, pending, observed, crashed, time
 
 (* define statement *)
@@ -924,9 +918,7 @@ terminated == /\ Len(pending) = 0
               /\ Cardinality(reqsMade) = NumCommands
               /\ Cardinality(acksRecv) = NumCommands
 
-numCrashed == Cardinality({r \in Replicas: crashed[r]})
-
-timeExhausted == \A r \in Replicas: time[r] = MaxTime
+NodeFailuresOn == TRUE
 
 
 vars == << pc, msgs, node, pending, observed, crashed, time >>
@@ -943,7 +935,7 @@ Init == (* Global variables *)
         /\ pc = [self \in ProcSet |-> "rloop"]
 
 rloop(self) == /\ pc[self] = "rloop"
-               /\ IF (~terminated) /\ (~timeExhausted) /\ (~crashed[self])
+               /\ IF (~terminated) /\ (~crashed[self])
                      THEN /\ \/ /\ node[self].leader # self
                                 /\ \E b \in Ballots:
                                      /\ /\ b > node[self].balMaxKnown
@@ -1172,8 +1164,7 @@ rloop(self) == /\ pc[self] = "rloop"
                                         /\ node[self].asGrantor[m.grantee].status = "Revoking"
                                      /\ node' = [node EXCEPT ![self].asGrantor[m.grantee] = [NullGrantorState EXCEPT !.seq = m.seq]]
                                 /\ UNCHANGED <<msgs, pending, observed, crashed, time>>
-                             \/ /\ \A r \in Replicas: time[r] < MaxTime
-                                /\ time' = [r \in Replicas |-> time[r] + 1]
+                             \/ /\ time' = [r \in Replicas |-> time[r] + 1]
                                 /\ node' =     [r \in Replicas |->
                                            [node[r] EXCEPT
                                                !.asGrantor =
@@ -1193,13 +1184,9 @@ rloop(self) == /\ pc[self] = "rloop"
                                                          THEN [NullGranteeState EXCEPT !.seq = node[r].asGrantee[f].seq]
                                                          ELSE node[r].asGrantee[f]]]]
                                 /\ UNCHANGED <<msgs, pending, observed, crashed>>
-                             \/ /\ IF NodeFailuresOn
-                                      THEN /\ /\ MajorityNum + numCrashed < Cardinality(Replicas)
-                                              /\ ~crashed[self]
-                                              /\ node[self].balMaxKnown < MaxBallot
-                                           /\ crashed' = [crashed EXCEPT ![self] = TRUE]
-                                      ELSE /\ TRUE
-                                           /\ UNCHANGED crashed
+                             \/ /\ /\ NodeFailuresOn
+                                   /\ ~crashed[self]
+                                /\ crashed' = [crashed EXCEPT ![self] = TRUE]
                                 /\ UNCHANGED <<msgs, node, pending, observed, time>>
                           /\ pc' = [pc EXCEPT ![self] = "rloop"]
                      ELSE /\ pc' = [pc EXCEPT ![self] = "Done"]
@@ -1220,5 +1207,61 @@ Spec == Init /\ [][Next]_vars
 Termination == <>(\A self \in ProcSet: pc[self] = "Done")
 
 \* END TRANSLATION 
+
+----------
+
+(*************************)
+(* Type check invariant. *)
+(*************************)
+TypeOK == /\ msgs \in SUBSET Messages
+          /\ node \in [Replicas -> NodeStates]
+          /\ time \in [Replicas -> Times]
+          /\ pending \in Seq(Commands)
+          /\ observed \in Seq(ClientEvents)
+          /\ crashed \in [Replicas -> BOOLEAN]
+          /\ pc \in [Replicas -> {"rloop", "Done"}]
+          \* Additional bounds and consistency checks for client state.
+          /\ Len(pending) =< NumCommands
+          /\ IsInjective(pending)
+          /\ Len(observed) =< 2 * NumCommands
+          /\ IsInjective(observed)
+          /\ Cardinality(reqsMade) >= Cardinality(acksRecv)
+
+THEOREM Spec => []TypeOK
+
+----------
+
+(*************************************)
+(* Lease expiration safety property. *)
+(*************************************)
+LeaseExpirationSafety ==
+    \A f, p \in Replicas:
+        (/\ node[p].asGrantee[f].status = "Renewed"
+         /\ node[p].asGrantee[f].leaseExpire > time[p])
+            => (/\ node[f].asGrantor[p].status \in {"Renewing", "Revoking"}
+                /\ node[f].asGrantor[p].leaseExpire
+                   >= node[p].asGrantee[f].leaseExpire)
+
+THEOREM Spec => []LeaseExpirationSafety
+
+----------
+
+(******************************************)
+(* Lease uniqueness guarantee assertions. *)
+(******************************************)
+AtMostGrantsOneLeader ==
+    \A f \in Replicas, b \in Ballots:
+        Cardinality({p \in Replicas: FGrantsPWithBal(f, p, b)}) =< 1
+
+HasLeaseQuorum(p) ==
+    Cardinality({f \in Replicas:
+                 FGrantsPWithBal(f, p, node[p].balMaxKnown)}) >= MajorityNum
+
+AtMostOneStableLeader ==
+    \A p1, p2 \in Replicas:
+        (HasLeaseQuorum(p1) /\ HasLeaseQuorum(p2)) => (p1 = p2)
+
+THEOREM Spec => /\ []AtMostGrantsOneLeader
+                /\ []AtMostOneStableLeader
 
 ====

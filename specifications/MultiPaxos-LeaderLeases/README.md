@@ -4,12 +4,14 @@ This folder contains a TLA+ specification for MultiPaxos with leader leases. It 
 
 Replicas grant leases to their believed leader, promising not to step up as a competing leader or vote for another node while the lease is active. Consequently, a leader is considered *stable* when holding >= majority number of leases, where it can be confident it is the only such leader of the cluster. The stable leader hence can serve linearizable reads directly from it's latest committed value, without involving a quorum round. A lease is usually kept refreshed, but reacts to failures via expiration.
 
+The spec uses `Functions.tla` from the TLA+ CommunityModules. When running SANY or TLC from the command line, include `CommunityModules-deps.jar` alongside `tla2tools.jar` on the Java classpath.
+
 ### Files List
 
 The files include:
 
-- `MultiPaxos.tla`: full protocol spec written in PlusCal and with translation attached
-- `MultiPaxos_MC.tla`: entrance of running model checking; contains the checked constraints
+- `MultiPaxos.tla`: full protocol spec written in PlusCal, with generated TLA+ translation, type invariant, and lease safety properties
+- `MultiPaxos_MC.tla`: model-checking entry point with TLC configuration helpers and the linearizability check
 - `MultiPaxos_MC.cfg`: recommended model inputs and configurations (checks in ~20 hours on an EC2 `r7i.24xlarge` instance)
 - `MultiPaxos_MC_short.cfg`: config with one fewer write and one fewer timer tick in the input (checks in ~1 minute)
 
@@ -24,6 +26,7 @@ To play with the spec and fail the check, try for example:
 
 **External links**:
 
+- Link to the Paxos Made Live paper: <https://dl.acm.org/doi/10.1145/1281100.1281103>
 - Link to a rundown of distributed leases, covering leader leases and more: <https://bodega-consensus.com/>
   - Plain blog post version: <https://www.josehu.com/technical/2026/07/07/distributed-lease-and-consensus.html>
 - Link to the Summerset codebase: <https://github.com/josehu07/summerset>
