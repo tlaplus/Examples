@@ -41,6 +41,7 @@ MCInit ==
   \* Reduce the number of initial states. 
   /\ active \in [Node -> {TRUE}]
   /\ color \in [Node -> {"white"}]
+  /\ passes = IF terminated THEN 0 ELSE -1
 
 Inv ==
     \* TODO Choose some upper length or a invariant that produces a more

@@ -23,6 +23,7 @@ MCInit ==
   /\ inbox = [n \in Node |-> IF n = Initiator 
                               THEN << [type |-> "tok", q |-> 0, color |-> "black", vc |-> clock[n] ] >> 
                               ELSE <<>>] \* with empty channels.
+  /\ passes = IF terminated THEN 0 ELSE -1
 
 ----------------------------------------------------------------------------
 
