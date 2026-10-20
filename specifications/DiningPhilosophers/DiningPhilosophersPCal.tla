@@ -14,7 +14,7 @@ In the Chandy-Misra formulation, philosophers may hand forks directly to each
 other.
 
 I ran this with alygin's TLA+ extension for VSCode:
-  https://marketplace.visualstudio.com/items?itemName=alygin.vscode-tlaplus
+  https://marketplace.visualstudio.com/items?itemName=tlaplus.vscode-ide
 "> TLA+: Parse module" updates the translated TLA+ to match the PlusCal
   'algorithm' above.
 "> TLA+: Check model with TLC" checks the model's correctness.
