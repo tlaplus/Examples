@@ -71,6 +71,11 @@ NoLivelock ==
 NoStarvation ==
     \A p \in P: []<>IsEating(p)
 
+\* Proved in DiningPhilosophers_proof.
+THEOREM DeadlockFreedom == Spec => []NoDeadlock
+THEOREM LivelockFreedom == Spec => NoLivelock
+THEOREM StarvationFreedom == Spec => NoStarvation
+
 -----
 
 Alias ==
