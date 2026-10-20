@@ -26,10 +26,21 @@ Init ==
     \* all forks are available
     /\ forks = 1..N
 
-TakeBoth(p) ==
-    /\ {LeftFork(p), RightFork(p)} \subseteq forks
-    /\ forks' = forks \ {LeftFork(p), RightFork(p)}
-    /\ philosophers' = [philosophers EXCEPT ![p] = {LeftFork(p), RightFork(p)}]
+TakeLeft(p) ==
+    \* Philosopher N grabs the right fork first.
+    /\ p = N => philosophers[p] = {RightFork(p)}
+    /\ LeftFork(p) \in forks
+    /\ forks' = forks \ {LeftFork(p)}
+    /\ philosophers' = 
+        [philosophers EXCEPT ![p] = philosophers[p] \cup {LeftFork(p)}]
+
+TakeRight(p) ==
+    \* All other philosophers grab the left fork first.
+    /\ p # N => philosophers[p] = {LeftFork(p)}
+    /\ RightFork(p) \in forks 
+    /\ forks' = forks \ {RightFork(p)}
+    /\ philosophers' = 
+        [philosophers EXCEPT ![p] = philosophers[p] \cup {RightFork(p)}]
 
 Release(p) ==
     /\ philosophers[p] = {LeftFork(p), RightFork(p)}
@@ -38,14 +49,15 @@ Release(p) ==
 
 Next ==
     \E p \in P:
-        \/ TakeBoth(p)
+        \/ TakeLeft(p)
+        \/ TakeRight(p)
         \/ Release(p)
 
 Spec ==
     /\ Init
     /\ [][Next]_vars
     /\ \A p \in P :
-        SF_vars(TakeBoth(p) \/ Release(p))
+        SF_vars(TakeLeft(p) \/ TakeRight(p) \/ Release(p))
 
 IsEating(p) ==
     Cardinality(philosophers[p]) = 2
