@@ -52,6 +52,9 @@ ASSUME BlockingSetsIntersectQuorums ==
 
 INSTANCE BlockDag \* Import definitions related to DAGs of blocks
 
+\* INSTANCE imports the definition, but does not assert the assumption.
+ASSUME LeadersAreNodes
+
 (**************************************************************************************)
 (* Now we specify the algorithm in the PlusCal language.                              *)
 (**************************************************************************************)
