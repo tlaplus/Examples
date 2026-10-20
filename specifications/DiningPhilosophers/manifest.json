@@ -1,7 +1,8 @@
 {
   "sources": [],
   "authors": [
-    "Jeff Hemphill"
+    "Jeff Hemphill",
+    "Markus Kuppe"
   ],
   "tags": [
     "beginner"
@@ -20,6 +21,18 @@
       ]
     },
     {
+      "path": "specifications/DiningPhilosophers/DiningPhilosophers.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/DiningPhilosophers/DiningPhilosophers.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "safety failure"
+        }
+      ]
+    },
+    {
       "path": "specifications/DiningPhilosophers/DiningPhilosophersPCal.tla",
       "features": [
         "pluscal"
@@ -33,6 +46,18 @@
           "distinctStates": 67,
           "totalStates": 336,
           "stateDepth": 29
+        }
+      ]
+    },
+    {
+      "path": "specifications/DiningPhilosophers/DiningPhilosophers_anim.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/DiningPhilosophers/DiningPhilosophers_anim.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "deadlock failure"
         }
       ]
     }
