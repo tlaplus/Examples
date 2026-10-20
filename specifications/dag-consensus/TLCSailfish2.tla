@@ -34,6 +34,7 @@ ASSUME RoundsStartAtOne
 ASSUME LeadersAreNodes
 ASSUME GSTIsARoundNumber
 ASSUME CorrectNodesFormQuorum
+ASSUME QuorumsAreMonotone
 ASSUME QuorumMinusByzantineIsBlocking
 ASSUME BlockingSetsIntersectQuorums
 
