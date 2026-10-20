@@ -33,6 +33,7 @@ TakeLeft(p) ==
         [philosophers EXCEPT ![p] = philosophers[p] \cup {LeftFork(p)}]
 
 TakeRight(p) ==
+    /\ LeftFork(p) \in philosophers[p]
     /\ RightFork(p) \in forks 
     /\ forks' = forks \ {RightFork(p)}
     /\ philosophers' = 
