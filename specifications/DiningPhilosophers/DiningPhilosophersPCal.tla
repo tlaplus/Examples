@@ -1,4 +1,4 @@
----- MODULE DiningPhilosophers ----
+---- MODULE DiningPhilosophersPCal ----
 
 (*
 TLA+ / PlusCal implementation of the Dining Philosophers problem.

@@ -39,8 +39,8 @@ echo Check MCDieHarder
 $TLC_COMMAND specifications/DieHard/MCDieHarder || (($? == 12))  ## Expect a safety violation
 echo Check DieHard
 $TLC_COMMAND specifications/DieHard/DieHard || (($? == 12))  ## Expect a safety violation
-echo Check DiningPhilosophers
-$TLC_COMMAND specifications/DiningPhilosophers/DiningPhilosophers
+echo Check DiningPhilosophersPCal
+$TLC_COMMAND specifications/DiningPhilosophers/DiningPhilosophersPCal
 echo Check TransitiveClosure
 $TLC_COMMAND specifications/TransitiveClosure/TransitiveClosure
 echo Check MCEcho
