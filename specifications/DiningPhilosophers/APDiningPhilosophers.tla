@@ -1,5 +1,5 @@
 ---- MODULE APDiningPhilosophers ----
-(* Apalache type annotations for DiningPhilosophers.tla, applied via
+(* Apalache type annotations for DiningPhilosophersPCal.tla, applied via
    INSTANCE so the original spec remains free of tool-specific
    idiosyncrasies. *)
 
@@ -17,6 +17,6 @@ VARIABLES
   \* @type: Int -> Bool;
   hungry
 
-INSTANCE DiningPhilosophers
+INSTANCE DiningPhilosophersPCal
 
 ====
