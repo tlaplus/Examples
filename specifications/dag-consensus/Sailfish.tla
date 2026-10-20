@@ -127,7 +127,12 @@ l0:     while (TRUE) {
                 }
                 else
                 with (delivered \in SUBSET {v \in vs : Round(v) = r-1}) {
+                    \* Correct nodes check the following conditions and ignore the
+                    \* message if they do not hold.
                     await IsQuorum({Node(v) : v \in delivered}); \* ignored otherwise
+                    if (Leader(r) = self)
+                        await   \/ LeaderVertex(r-1) \in delivered
+                                \/ NoLeaderVoteQuorum(r, {v \in vs : Round(v) = r}, {self});
                     vs := vs \cup {newV};
                     es := es \cup {<<newV, pv>> : pv \in delivered}
                 }
@@ -135,8 +140,8 @@ l0:     while (TRUE) {
         }
     }
 }*)
-\* BEGIN TRANSLATION (chksum(pcal) = "c16dfa43" /\ chksum(tla) = "9cdbd4f5")
-\* Label l0 of process correctNode at line 42 col 9 changed to l0_
+\* BEGIN TRANSLATION (chksum(pcal) = "1dcb31ed" /\ chksum(tla) = "afe5b430")
+\* Label l0 of process correctNode at line 73 col 9 changed to l0_
 VARIABLES vs, es
 
 (* define statement *)
@@ -195,6 +200,10 @@ byzantineNode(self) == /\ \E r \in R:
                                          /\ es' = (es \cup {<<newV, Genesis>>})
                                     ELSE /\ \E delivered \in SUBSET {v \in vs : Round(v) = r-1}:
                                               /\ IsQuorum({Node(v) : v \in delivered})
+                                              /\ IF Leader(r) = self
+                                                    THEN /\ \/ LeaderVertex(r-1) \in delivered
+                                                            \/ NoLeaderVoteQuorum(r, {v \in vs : Round(v) = r}, {self})
+                                                    ELSE /\ TRUE
                                               /\ vs' = (vs \cup {newV})
                                               /\ es' = (es \cup {<<newV, pv>> : pv \in delivered})
                        /\ UNCHANGED << round, log >>
