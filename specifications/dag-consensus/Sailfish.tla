@@ -43,6 +43,10 @@ ASSUME GSTIsARoundNumber == GST \in Nat
 \* have to form a quorum, or else no round could ever be entered:
 ASSUME CorrectNodesFormQuorum == IsQuorum(N \ F)
 
+\* An additional vote cannot turn a quorum into a non-quorum.
+ASSUME QuorumsAreMonotone ==
+    \A Q, S \in SUBSET N : IsQuorum(Q) /\ Q \subseteq S => IsQuorum(S)
+
 \* Removing the Byzantine nodes from a quorum leaves a blocking set:
 ASSUME QuorumMinusByzantineIsBlocking ==
     \A Q \in SUBSET N : IsQuorum(Q) => IsBlocking(Q \ F)
