@@ -70,10 +70,10 @@ Table ==
 \* A plate in front of philosopher p, with food on it while p eats.
 Plate(p) ==
     Group(<<
-        Circle(Cx, 95, 15, [fill |-> "white", stroke |-> "#999"]),
-        Circle(Cx, 95, 10, [fill |-> "none", stroke |-> "#ddd"])
+        Circle(Cx, 95, 15, ("fill" :> "white" @@ "stroke" :> "#999")),
+        Circle(Cx, 95, 10, ("fill" :> "none" @@ "stroke" :> "#ddd"))
       >> \o
-      Show(IsEating(p), Circle(Cx, 95, 7, [fill |-> "#e07b39"])),
+      Show(IsEating(p), Circle(Cx, 95, 7, ("fill" :> "#e07b39"))),
       ("transform" :> RotateAboutCenter(SeatAngle(p))))
 
 \* Philosopher p with an arm and a fork for each fork that p holds.
@@ -82,16 +82,15 @@ Philosopher(p) ==
         arm(x1, x2) == Line(x1, 52, x2, 62,
                             ("stroke" :> StateColor(p) @@ "stroke-width" :> "6" @@
                              "stroke-linecap" :> "round"))
-        hand(x)     == Circle(x, 61, 4, [fill |-> "#f6d7b0", stroke |-> "#555"])
+        hand(x)     == Circle(x, 61, 4, ("fill" :> "#f6d7b0" @@ "stroke" :> "#555"))
         left  == LeftFork(p) \in philosophers[p]
-        \* For N = 1, both hands would show the same, only, fork.
-        right == RightFork(p) \in philosophers[p] /\ RightFork(p) # LeftFork(p)
+        right == RightFork(p) \in philosophers[p]
     IN Group(
         Show(left,  arm(Cx + 10, Cx + 25)) \o
         Show(right, arm(Cx - 10, Cx - 25)) \o
         <<
-          Rect(Cx - 18, 44, 36, 24, [rx |-> "12", fill |-> StateColor(p), stroke |-> "#555"]),
-          Circle(Cx, 32, 12, [fill |-> "#f6d7b0", stroke |-> "#555"]),
+          Rect(Cx - 18, 44, 36, 24, ("rx" :> "12" @@ "fill" :> StateColor(p) @@ "stroke" :> "#555")),
+          Circle(Cx, 32, 12, ("fill" :> "#f6d7b0" @@ "stroke" :> "#555")),
           Label(Cx, 36, t, ToString(p), 12, "#333")
         >> \o
         \* Held forks point towards the plate.
@@ -105,14 +104,14 @@ Philosopher(p) ==
 TableFork(f) ==
     Group(
       Show(f \in forks, ForkGlyph(Cx, 92, 180)) \o
-      <<Label(Cx, 123, ForkAngle(f), ToString(f), 9, "#7a5230")>>,
+      <<Label(Cx, 114, ForkAngle(f), ToString(f), 9, "#7a5230")>>,
       ("transform" :> RotateAboutCenter(ForkAngle(f))))
 
 Legend ==
     LET x == 2 * Cx + 15
         entry(i, color, str) ==
             Group(<<
-                Rect(x, 20 + 22 * i, 14, 14, [rx |-> "4", fill |-> color, stroke |-> "#555"]),
+                Rect(x, 20 + 22 * i, 14, 14, ("rx" :> "4" @@ "fill" :> color @@ "stroke" :> "#555")),
                 Text(x + 20, 32 + 22 * i, str,
                      ("font-family" :> "sans-serif" @@ "font-size" :> "11" @@ "fill" :> "#333"))
               >>, <<>>)
@@ -131,6 +130,12 @@ ScaleStr ==
     ToString(Scale \div 100) \o "." \o
     (IF Scale % 100 < 10 THEN "0" ELSE "") \o ToString(Scale % 100)
 
+\* Spectacle has no TLCGet, so only AnimDoc, not AnimView, shows the step number.
+StepNumber ==
+    Text(ViewWidth - 10, ViewHeight - 10, "Step " \o ToString(TLCGet("level")),
+         ("text-anchor" :> "end" @@ "font-family" :> "monospace" @@
+          "font-size" :> "17" @@ "fill" :> "#666"))
+
 AnimView ==
     Group(<<Table>> \o
           [p \in P |-> Plate(p)] \o
@@ -139,11 +144,17 @@ AnimView ==
           <<Legend>>,
           ("transform" :> "scale(" \o ScaleStr \o " " \o ScaleStr \o ")"))
 
+AnimDoc == SVGDoc(Group(<<AnimView, StepNumber>>, <<>>), 0, 0, ViewWidth, ViewHeight, <<>>)
+
 \* Animation alias for generating SVG files with TLC.
 AnimAlias ==
     [
         philosophers |-> philosophers, forks |-> forks
     ] @@
-    [ _anim |-> SVGSerialize(SVGDoc(AnimView, 0, 0, ViewWidth, ViewHeight, <<>>), "DiningPhilosophers_anim_", TLCGet("level")) ]
+    [ _anim |-> SVGSerialize(AnimDoc, "DiningPhilosophers_anim_", TLCGet("level")) ]
+
+\* Watch expression for the TLA+ Debugger; overwrites a single SVG file.
+AnimWatch ==
+    SVGSerialize(AnimDoc, "DiningPhilosophers_anim", 0)
 
 ====
