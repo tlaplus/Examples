@@ -16,6 +16,8 @@ CONSTANTS   Person,     \* The set of all people using the elevator system
             Elevator,   \* The set of all elevators
             FloorCount  \* The number of floors serviced by the elevator system
 
+ASSUME FloorCountIsPositive == FloorCount \in (Nat \ {0})
+
 VARIABLES   PersonState,            \* The state of each person
             ActiveElevatorCalls,    \* The set of all active elevator calls
             ElevatorState           \* The state of each elevator
