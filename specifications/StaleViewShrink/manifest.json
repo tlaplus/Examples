@@ -14,31 +14,31 @@
       "models": [
         {
           "path": "specifications/StaleViewShrink/StaleShrink.cfg",
-          "runtime": "00:00:08",
+          "runtime": "00:00:02",
           "mode": "exhaustive search",
           "result": "success",
-          "distinctStates": 65001,
-          "totalStates": 107209,
-          "stateDepth": 44
+          "distinctStates": 16848,
+          "totalStates": 48663,
+          "stateDepth": 52
         },
         {
           "path": "specifications/StaleViewShrink/StaleShrinkV6Wait2x.cfg",
-          "runtime": "00:00:23",
+          "runtime": "00:00:03",
           "mode": "exhaustive search",
           "result": "success",
-          "distinctStates": 245146,
-          "totalStates": 364922,
-          "stateDepth": 56
+          "distinctStates": 43348,
+          "totalStates": 111445,
+          "stateDepth": 64
         },
         {
           "path": "specifications/StaleViewShrink/StaleShrinkV3Cascade.cfg",
-          "runtime": "00:00:14",
+          "runtime": "00:00:03",
           "mode": "exhaustive search",
           "result": "safety failure"
         },
         {
           "path": "specifications/StaleViewShrink/StaleShrinkV6TooShort.cfg",
-          "runtime": "00:00:01",
+          "runtime": "00:00:02",
           "mode": "exhaustive search",
           "result": "safety failure"
         }
