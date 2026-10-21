@@ -1,16 +1,18 @@
 # Dining Philosophers
 
-This folder contains specifications of the
+This folder contains two independent specifications of the
 [Dining Philosophers problem](https://en.wikipedia.org/wiki/Dining_philosophers_problem).
 
 ## From naive to correct (TLA+)
 
-The git history builds a TLA+ spec of the forks, one solution per
-commit. The table lists, for each commit, the properties for which TLC
-finds a counterexample:
+[`DiningPhilosophers.tla`](DiningPhilosophers.tla) models the forks directly.
+
+The git history shows how the spec got there. The table lists, for each
+commit, the properties for which TLC finds a counterexample:
 
 | Step | Solution | Known as | Coordination | Deadlock | Livelock | Starvation | Spectacle |
 |---|---|---|---|---|---|---|---|
+| 1 | Take the forks in any order | Unordered fork acquisition | none | yes | yes | yes |  |
 
 This repository has specs of two other solutions:
 
@@ -22,6 +24,12 @@ This repository has specs of two other solutions:
   Lamport's Bakery algorithm and its Boulangerie variant are in
   [`Bakery-Boulangerie`](../Bakery-Boulangerie). They solve mutual exclusion,
   not dining, but the ticket idea carries over.
+
+[`DiningPhilosophers_anim.tla`](DiningPhilosophers_anim.tla) draws the table,
+forks, and philosophers for any `N` and writes one SVG per state. The
+animation comes from [Spectacle](https://github.com/will62794/spectacle).
+
+![Animation of DiningPhilosophers](DiningPhilosophers_anim.gif)
 
 ## Chandy-Misra (PlusCal)
 
