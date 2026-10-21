@@ -79,6 +79,14 @@
           "workers": 1
         }
       ]
+    },
+    {
+      "path": "specifications/DiningPhilosophers/DiningPhilosophers_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 3
+      }
     }
   ]
 }
