@@ -3,13 +3,14 @@
 (* Proof that the solution in DiningPhilosophers is starvation free: every *)
 (* philosopher eats infinitely often.                                      *)
 (*                                                                         *)
-(* All philosophers but N take their left fork first, and N takes its      *)
-(* right fork first.  Either way, each philosopher first takes the lower-  *)
-(* numbered of its two forks (Dijkstra's resource hierarchy).              *)
+(* Odd philosophers take their left fork first, and even philosophers      *)
+(* take their right fork first.  Either way, each philosopher first takes  *)
+(* the lower-ranked of its two forks, where odd forks but fork 1 rank      *)
+(* lowest, then fork 1, then the even forks (a resource hierarchy).        *)
 (*                                                                         *)
 (* A philosopher who holds fork f either eats, and then releases f, or     *)
-(* holds f as its low fork and waits for its high fork, whose number is    *)
-(* larger.  By induction from the largest fork down, every fork is free    *)
+(* holds f as its low fork and waits for its high fork, whose rank is      *)
+(* higher.  By induction from the highest rank down, every fork is free    *)
 (* infinitely often, so strong fairness lets every philosopher take its    *)
 (* low fork, then its high fork, and eat.                                  *)
 (***************************************************************************)
@@ -40,16 +41,25 @@ LEMMA RightForkDef ==
 BY NAtLeastTwo DEF P, RightFork
 
 \* The fork that a philosopher takes first, and the one it takes second.
-LowFork(p)  == IF p = N THEN RightFork(p) ELSE LeftFork(p)
-HighFork(p) == IF p = N THEN LeftFork(p) ELSE RightFork(p)
+LowFork(p)  == IF p % 2 = 0 THEN RightFork(p) ELSE LeftFork(p)
+HighFork(p) == IF p % 2 = 0 THEN LeftFork(p) ELSE RightFork(p)
+
+Rank(f) == IF f % 2 = 0 THEN 2 ELSE IF f = 1 THEN 1 ELSE 0
+
+LEMMA RankType == \A f \in P : Rank(f) \in 0..2
+BY DEF Rank
 
 LEMMA ForkFacts ==
     \A q \in P :
         /\ LowFork(q) \in P
         /\ HighFork(q) \in P
-        /\ LowFork(q) < HighFork(q)
+        /\ LowFork(q) # HighFork(q)
+        /\ Rank(LowFork(q)) < Rank(HighFork(q))
         /\ {LowFork(q), HighFork(q)} = {LeftFork(q), RightFork(q)}
-BY NAtLeastTwo, RightForkDef DEF P, LowFork, HighFork, LeftFork
+BY NAtLeastTwo, RightForkDef DEF P, LowFork, HighFork, LeftFork, Rank
+
+LEMMA Parity == \A q \in P : q % 2 = 0 \/ q % 2 = 1
+BY DEF P
 
 \* The philosopher whose right fork is f.
 Pred(f) == IF f = 1 THEN N ELSE f - 1
@@ -100,18 +110,18 @@ LEMMA TakeAgree ==
     ASSUME Inv, NEW p \in P, TakeLeft(p) \/ TakeRight(p)
     PROVE  TakeLow(p) \/ TakeHigh(p)
 <1>. USE DEF Inv, TypeOK, LowFork, HighFork
-<1>1. CASE TakeLeft(p) /\ p # N
+<1>1. CASE TakeLeft(p) /\ p % 2 = 1
   <2>1. LeftFork(p) \in P /\ LeftFork(p) \notin philosophers[p]
     BY <1>1 DEF TakeLeft, OnTable, LeftFork
   <2>2. philosophers[p] = {}
     BY <2>1, <1>1 DEF Phases, Idle, Hungry, Eating
   <2>. QED
     BY <1>1, <2>2 DEF TakeLeft, TakeLow
-<1>2. CASE TakeLeft(p) /\ p = N
+<1>2. CASE TakeLeft(p) /\ p % 2 = 0
   BY <1>2 DEF TakeLeft, TakeHigh
-<1>3. CASE TakeRight(p) /\ p # N
+<1>3. CASE TakeRight(p) /\ p % 2 = 1
   BY <1>3 DEF TakeRight, TakeHigh
-<1>4. CASE TakeRight(p) /\ p = N
+<1>4. CASE TakeRight(p) /\ p % 2 = 0
   <2>1. RightFork(p) \in P /\ RightFork(p) \notin philosophers[p]
     BY <1>4, ForksDistinct DEF TakeRight, OnTable
   <2>2. philosophers[p] = {}
@@ -119,7 +129,7 @@ LEMMA TakeAgree ==
   <2>. QED
     BY <1>4, <2>2 DEF TakeRight, TakeLow
 <1>. QED
-  BY <1>1, <1>2, <1>3, <1>4
+  BY <1>1, <1>2, <1>3, <1>4, Parity
 
 LEMMA NextAgree == ASSUME Inv, Next PROVE NextLH
 BY TakeAgree DEF Next, NextLH
@@ -323,7 +333,7 @@ LEMMA IdleEnabled ==
   OBVIOUS
 <1>1. philosophers \in [P -> SUBSET P] /\ philosophers[q] = {}
   BY DEF Inv, TypeOK, Idle
-<1>2. CASE q # N
+<1>2. CASE q % 2 = 1
   <2>1. LeftFork(q) \in forks
     BY <1>2 DEF LowFork
   <2>2. <<[philosophers EXCEPT ![q] = philosophers[q] \cup {LeftFork(q)}],
@@ -333,7 +343,7 @@ LEMMA IdleEnabled ==
     BY <1>1, <1>2, <2>1, <2>2, ExpandENABLED DEF TakeLeft, vars
   <2>. QED
     BY <2>3, ExpandENABLED DEF Act, TakeLeft, TakeRight, Release, vars
-<1>3. CASE q = N
+<1>3. CASE q % 2 = 0
   <2>1. RightFork(q) \in forks
     BY <1>3 DEF LowFork
   <2>2. <<[philosophers EXCEPT ![q] = philosophers[q] \cup {RightFork(q)}],
@@ -344,7 +354,7 @@ LEMMA IdleEnabled ==
   <2>. QED
     BY <2>3, ExpandENABLED DEF Act, TakeLeft, TakeRight, Release, vars
 <1>. QED
-  BY <1>2, <1>3
+  BY <1>2, <1>3, Parity
 
 LEMMA HungryEnabled ==
     ASSUME NEW q \in P
@@ -356,32 +366,32 @@ LEMMA HungryEnabled ==
   BY DEF Inv, TypeOK, Hungry
 <1>2. LeftFork(q) # RightFork(q)
   BY ForksDistinct
-<1>3. CASE q # N
+<1>3. CASE q % 2 = 1
   <2>1. philosophers[q] = {LeftFork(q)} /\ RightFork(q) \in forks
     BY <1>1, <1>3 DEF LowFork, HighFork
   <2>2. <<[philosophers EXCEPT ![q] = philosophers[q] \cup {RightFork(q)}],
           forks \ {RightFork(q)}>> # <<philosophers, forks>>
     BY <1>1, <1>2, <2>1
-  <2>3. (q # N => philosophers[q] = {LeftFork(q)}) /\ RightFork(q) \in forks
+  <2>3. (q % 2 = 1 => philosophers[q] = {LeftFork(q)}) /\ RightFork(q) \in forks
     BY <2>1
   <2>4. ENABLED <<TakeRight(q)>>_vars
     BY <2>2, <2>3, ExpandENABLED DEF TakeRight, vars
   <2>. QED
     BY <2>4, ExpandENABLED DEF Act, TakeLeft, TakeRight, Release, vars
-<1>4. CASE q = N
+<1>4. CASE q % 2 = 0
   <2>1. philosophers[q] = {RightFork(q)} /\ LeftFork(q) \in forks
     BY <1>1, <1>4 DEF LowFork, HighFork
   <2>2. <<[philosophers EXCEPT ![q] = philosophers[q] \cup {LeftFork(q)}],
           forks \ {LeftFork(q)}>> # <<philosophers, forks>>
     BY <1>1, <1>2, <2>1
-  <2>3. (q = N => philosophers[q] = {RightFork(q)}) /\ LeftFork(q) \in forks
+  <2>3. (q % 2 = 0 => philosophers[q] = {RightFork(q)}) /\ LeftFork(q) \in forks
     BY <2>1
   <2>4. ENABLED <<TakeLeft(q)>>_vars
     BY <2>2, <2>3, ExpandENABLED DEF TakeLeft, vars
   <2>. QED
     BY <2>4, ExpandENABLED DEF Act, TakeLeft, TakeRight, Release, vars
 <1>. QED
-  BY <1>3, <1>4
+  BY <1>3, <1>4, Parity
 
 LEMMA EatingEnabled ==
     ASSUME NEW q \in P
@@ -483,14 +493,14 @@ LEMMA EatRelease ==
   BY <1>1, <1>2, <1>3, <1>4, InvSpec, SpecNext, PTL DEF EatingFrees
 
 \* A hungry philosopher who holds f as its low fork eventually frees f,
-\* provided that all forks larger than f are free infinitely often.
+\* provided that all forks ranked above f are free infinitely often.
 LEMMA HungryRelease ==
     ASSUME NEW f \in P, NEW q \in P
-    PROVE  Spec /\ (\A g \in P : g > f => FreeIO(g)) => HungryFrees(f, q)
+    PROVE  Spec /\ (\A g \in P : Rank(g) > Rank(f) => FreeIO(g)) => HungryFrees(f, q)
 <1>1. CASE f = LowFork(q)
-  <2>1. HighFork(q) \in P /\ HighFork(q) > f
+  <2>1. HighFork(q) \in P /\ Rank(HighFork(q)) > Rank(f)
     BY <1>1, ForkFacts
-  <2>2. (\A g \in P : g > f => FreeIO(g)) => FreeIO(HighFork(q))
+  <2>2. (\A g \in P : Rank(g) > Rank(f) => FreeIO(g)) => FreeIO(HighFork(q))
     BY <2>1
   <2>3. Spec /\ FreeIO(HighFork(q)) => HungryToEating(q)
     BY HungryEat
@@ -540,7 +550,7 @@ LEMMA HeldBy ==
 
 LEMMA FreeStep ==
     ASSUME NEW f \in P
-    PROVE  Spec /\ (\A g \in P : g > f => FreeIO(g)) => FreeIO(f)
+    PROVE  Spec /\ (\A g \in P : Rank(g) > Rank(f) => FreeIO(g)) => FreeIO(f)
 <1>1. Pred(f) \in P
   BY PredInP
 <1>2. Inv /\ ~(f \in forks) =>
@@ -552,30 +562,30 @@ LEMMA FreeStep ==
   BY EatRelease
 <1>4. Spec => EatingFrees(f, Pred(f))
   BY <1>1, EatRelease
-<1>5. Spec /\ (\A g \in P : g > f => FreeIO(g)) => HungryFrees(f, f)
+<1>5. Spec /\ (\A g \in P : Rank(g) > Rank(f) => FreeIO(g)) => HungryFrees(f, f)
   BY HungryRelease
-<1>6. Spec /\ (\A g \in P : g > f => FreeIO(g)) => HungryFrees(f, Pred(f))
+<1>6. Spec /\ (\A g \in P : Rank(g) > Rank(f) => FreeIO(g)) => HungryFrees(f, Pred(f))
   BY <1>1, HungryRelease
 <1>. QED
   BY <1>2, <1>3, <1>4, <1>5, <1>6, InvSpec, PTL
      DEF FreeIO, EatingFrees, HungryFrees
 
 THEOREM AllFree == \A f \in P : Spec => FreeIO(f)
-<1>. DEFINE Q(m) == Spec => \A g \in P : g + m > N => FreeIO(g)
+<1>. DEFINE Q(m) == Spec => \A g \in P : Rank(g) + m > 2 => FreeIO(g)
 <1>1. Q(0)
-  BY NAtLeastTwo DEF P
+  BY RankType
 <1>2. \A m \in Nat : Q(m) => Q(m + 1)
   <2>. SUFFICES ASSUME NEW m \in Nat, Q(m)
                 PROVE  Q(m + 1)
     OBVIOUS
-  <2>1. ASSUME NEW g \in P, g + (m + 1) > N
+  <2>1. ASSUME NEW g \in P, Rank(g) + (m + 1) > 2
         PROVE  Spec => FreeIO(g)
-    <3>1. CASE g + m > N
+    <3>1. CASE Rank(g) + m > 2
       BY <3>1
-    <3>2. CASE ~(g + m > N)
-      <4>1. \A h \in P : h > g => h + m > N
-        BY <2>1, <3>2, NAtLeastTwo DEF P
-      <4>2. Spec => \A h \in P : h > g => FreeIO(h)
+    <3>2. CASE ~(Rank(g) + m > 2)
+      <4>1. \A h \in P : Rank(h) > Rank(g) => Rank(h) + m > 2
+        BY <2>1, <3>2, RankType
+      <4>2. Spec => \A h \in P : Rank(h) > Rank(g) => FreeIO(h)
         BY <4>1
       <4>. QED
         BY <4>2, FreeStep
@@ -586,10 +596,10 @@ THEOREM AllFree == \A f \in P : Spec => FreeIO(f)
 <1>. HIDE DEF Q
 <1>3. \A m \in Nat : Q(m)
   BY <1>1, <1>2, NatInduction
-<1>4. Q(N)
-  BY <1>3, NAtLeastTwo
+<1>4. Q(3)
+  BY <1>3
 <1>. QED
-  BY <1>4, NAtLeastTwo DEF Q, P
+  BY <1>4, RankType DEF Q
 
 -----------------------------------------------------------------------------
 (***************************************************************************)
@@ -646,9 +656,11 @@ BY StarvationFreedom, StarvationImpliesNoLivelock
 
 -----------------------------------------------------------------------------
 (***************************************************************************)
-(* Deadlock freedom.  If no one eats, fork N is free, because it is the    *)
-(* high fork of both philosophers who can hold it.  So philosopher N-1 or  *)
-(* N can take it if hungry; if both are idle, fork N-1 is free too.        *)
+(* Deadlock freedom.  If no one eats, every even fork is free, because it  *)
+(* is the high fork of both philosophers who can hold it.  So a hungry     *)
+(* philosopher whose high fork is even can take it.  Otherwise philosopher *)
+(* 1 is idle, and fork 1 is free: philosopher N could hold it only as its  *)
+(* low fork, and then N's high fork would be even.                         *)
 (***************************************************************************)
 
 LEMMA ActEnabledNext ==
@@ -656,46 +668,60 @@ LEMMA ActEnabledNext ==
     PROVE  (ENABLED <<Act(q)>>_vars) => ENABLED Next
 BY ExpandENABLED DEF Act, Next, TakeLeft, TakeRight, Release, vars
 
-LEMMA TopForks ==
-    /\ N - 1 \in P /\ N \in P
-    /\ LowFork(N - 1) = N - 1 /\ HighFork(N - 1) = N
-    /\ LowFork(N) = 1 /\ HighFork(N) = N
-    /\ Pred(N) = N - 1 /\ 1 # N /\ N - 1 # N
-    /\ Pred(N - 1) = N \/ LowFork(Pred(N - 1)) # N - 1
-BY NAtLeastTwo, RightForkDef DEF P, LowFork, HighFork, LeftFork, Pred
+LEMMA EvenFree ==
+    ASSUME Inv, \A q \in P : ~Eating(q), NEW f \in P, Rank(f) = 2
+    PROVE  f \in forks
+<1>. SUFFICES ASSUME ~(f \in forks) PROVE FALSE
+  OBVIOUS
+<1>1. PICK q \in P : f \in philosophers[q]
+  BY DEF Inv, OnTable
+<1>2. f = LowFork(q)
+  BY <1>1 DEF Inv, Phases, Idle, Hungry
+<1>. QED
+  BY <1>2, ForkFacts, RankType
+
+LEMMA OneForks ==
+    /\ 1 \in P /\ 2 \in P /\ N \in P
+    /\ LowFork(1) = 1 /\ HighFork(1) = 2 /\ Rank(2) = 2
+    /\ Pred(1) = N /\ N # 1
+    /\ LowFork(N) = 1 => Rank(HighFork(N)) = 2
+BY NAtLeastTwo, RightForkDef DEF P, LowFork, HighFork, LeftFork, Pred, Rank
 
 THEOREM InvNoDeadlock == Inv => NoDeadlock
 <1>. SUFFICES ASSUME Inv PROVE ENABLED Next
   BY DEF NoDeadlock
-<1>. DEFINE M == N - 1
-<1>0. TopForks
-  BY TopForks
+<1>0. OneForks
+  BY OneForks
 <1>1. CASE \E q \in P : Eating(q)
   BY <1>1, EatingEnabled, ActEnabledNext
 <1>2. CASE \A q \in P : ~Eating(q)
-  <2>1. ~HeldEat(N, N) /\ ~HeldEat(N, Pred(N))
-        /\ ~HeldEat(M, M) /\ ~HeldEat(M, Pred(M))
-    BY <1>0, <1>2, PredInP DEF HeldEat
-  <2>2. N \in forks
-    <3>1. N # LowFork(N) /\ N # LowFork(Pred(N))
-      BY <1>0
+  <2>1. CASE \E q \in P : Hungry(q) /\ Rank(HighFork(q)) = 2
+    <3>1. PICK q \in P : Hungry(q) /\ Rank(HighFork(q)) = 2
+      BY <2>1
+    <3>2. HighFork(q) \in forks
+      BY <1>2, <3>1, ForkFacts, EvenFree
     <3>. QED
-      BY <1>0, <2>1, <3>1, HeldBy
-  <2>3. CASE Hungry(M)
-    BY <1>0, <2>2, <2>3, HungryEnabled, ActEnabledNext
-  <2>4. CASE Hungry(N)
-    BY <1>0, <2>2, <2>4, HungryEnabled, ActEnabledNext
-  <2>5. CASE ~Hungry(M) /\ ~Hungry(N)
-    <3>1. Idle(M) /\ Idle(N)
-      BY <1>0, <1>2, <2>5 DEF Inv, Phases
-    <3>2. ~Hungry(Pred(M)) \/ LowFork(Pred(M)) # M
-      BY <1>0, <2>5
-    <3>3. M \in forks
-      BY <1>0, <2>1, <2>5, <3>2, HeldBy
+      BY <3>1, <3>2, HungryEnabled, ActEnabledNext
+  <2>2. CASE \A q \in P : ~(Hungry(q) /\ Rank(HighFork(q)) = 2)
+    <3>1. Idle(1)
+      BY <1>0, <1>2, <2>2 DEF Inv, Phases
+    <3>2. 1 \in forks
+      <4>. SUFFICES ASSUME ~(1 \in forks) PROVE FALSE
+        OBVIOUS
+      <4>1. PICK r \in P : 1 \in philosophers[r]
+        BY <1>0 DEF Inv, OnTable
+      <4>2. Hungry(r) /\ 1 = LowFork(r)
+        BY <1>2, <4>1 DEF Inv, Phases, Idle, Hungry
+      <4>3. r = 1 \/ r = N
+        BY <1>0, <4>2, Holders
+      <4>4. r # 1
+        BY <3>1, <4>1 DEF Idle
+      <4>. QED
+        BY <1>0, <2>2, <4>2, <4>3, <4>4
     <3>. QED
-      BY <1>0, <3>1, <3>3, IdleEnabled, ActEnabledNext
+      BY <1>0, <3>1, <3>2, IdleEnabled, ActEnabledNext
   <2>. QED
-    BY <2>3, <2>4, <2>5
+    BY <2>1, <2>2
 <1>. QED
   BY <1>1, <1>2
 
