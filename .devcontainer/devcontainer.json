@@ -3,7 +3,7 @@
 
   // Install optional extension. If this fails, it just degrades the convenience factor.
   "extensions": [
-    "alygin.vscode-tlaplus-nightly",
+    "tlaplus.vscode-ide",
     "EFanZh.graphviz-preview",
     "cssho.vscode-svgviewer",
     "tomoki1207.pdf"
