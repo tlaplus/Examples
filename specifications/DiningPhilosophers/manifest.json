@@ -29,9 +29,9 @@
           "runtime": "00:00:01",
           "mode": "exhaustive search",
           "result": "success",
-          "distinctStates": 161,
-          "totalStates": 331,
-          "stateDepth": 11
+          "distinctStates": 731,
+          "totalStates": 1951,
+          "stateDepth": 8
         }
       ]
     },
@@ -61,9 +61,22 @@
           "runtime": "00:00:01",
           "mode": "exhaustive search",
           "result": "success",
-          "distinctStates": 161,
-          "totalStates": 331,
-          "stateDepth": 11
+          "distinctStates": 731,
+          "totalStates": 1951,
+          "stateDepth": 8
+        }
+      ]
+    },
+    {
+      "path": "specifications/DiningPhilosophers/DiningPhilosophers_stats.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/DiningPhilosophers/DiningPhilosophers_stats.cfg",
+          "runtime": "unknown",
+          "mode": "generate",
+          "result": "unknown",
+          "workers": 1
         }
       ]
     }

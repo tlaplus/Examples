@@ -1,6 +1,6 @@
 ---------------------------- MODULE DiningPhilosophers ----------------------------
 
-EXTENDS Naturals, FiniteSets
+EXTENDS Naturals, FiniteSets, Sequences
 
 CONSTANT N \* Number of philosophers
 ASSUME NIsPosNat == N \in Nat \ {0}
@@ -16,39 +16,47 @@ ASSUME ForksCovered == {RightFork(p) : p \in P} = P
 Neighbors(p) ==
     {q \in P \ {p} : {LeftFork(q), RightFork(q)} \cap {LeftFork(p), RightFork(p)} # {}}
 
-VARIABLES philosophers, forks, waits
-vars == <<philosophers, forks, waits>>
+VARIABLES philosophers, forks, queue
+vars == <<philosophers, forks, queue>>
 
 TypeOK ==
     /\ philosophers \in [P -> SUBSET P]
     /\ forks \in SUBSET P
-    /\ waits \in [P -> SUBSET P]
+    /\ queue \in Seq(P)
 
 Init ==
     \* each philosopher starts with no forks
     /\ philosophers = [ p \in P |-> {} ]
     \* all forks are available
     /\ forks = 1..N
-    \* no philosopher has eaten yet
-    /\ waits = [ p \in P |-> {} ]
+    \* the waiter's queue of hungry philosophers is empty
+    /\ queue = <<>>
+
+Request(p) ==
+    /\ philosophers[p] = {}
+    /\ \A i \in 1..Len(queue) : queue[i] # p
+    /\ queue' = Append(queue, p)
+    /\ UNCHANGED <<philosophers, forks>>
 
 TakeBoth(p) ==
-    \* p has let its neighbors eat since it last ate.
-    /\ waits[p] = {}
+    \* The waiter serves p once no neighbor of p asked before p.
+    /\ \E i \in 1..Len(queue) :
+        /\ queue[i] = p
+        /\ \A j \in 1..(i - 1) : queue[j] \notin Neighbors(p)
+        /\ queue' = SubSeq(queue, 1, i - 1) \o SubSeq(queue, i + 1, Len(queue))
     /\ {LeftFork(p), RightFork(p)} \subseteq forks
     /\ forks' = forks \ {LeftFork(p), RightFork(p)}
     /\ philosophers' = [philosophers EXCEPT ![p] = {LeftFork(p), RightFork(p)}]
-    /\ waits' = [q \in P |-> waits[q] \ {p}]
 
 Release(p) ==
     /\ philosophers[p] = {LeftFork(p), RightFork(p)}
     /\ forks' = forks \cup {LeftFork(p), RightFork(p)}
     /\ philosophers' = [philosophers EXCEPT ![p] = {}]
-    \* p waits until both neighbors have eaten.
-    /\ waits' = [waits EXCEPT ![p] = Neighbors(p)]
+    /\ UNCHANGED queue
 
 Next ==
     \E p \in P:
+        \/ Request(p)
         \/ TakeBoth(p)
         \/ Release(p)
 
@@ -56,7 +64,7 @@ Spec ==
     /\ Init
     /\ [][Next]_vars
     /\ \A p \in P :
-        SF_vars(TakeBoth(p) \/ Release(p))
+        SF_vars(Request(p) \/ TakeBoth(p) \/ Release(p))
 
 IsEating(p) ==
     Cardinality(philosophers[p]) = 2
@@ -80,7 +88,7 @@ Alias ==
     [
         philosophers |-> philosophers,
         forks |-> forks,
-        waits |-> waits,
+        queue |-> queue,
         eating |-> [ p \in DOMAIN philosophers |-> ThinkHungryEat(p) ]
     ]
 
