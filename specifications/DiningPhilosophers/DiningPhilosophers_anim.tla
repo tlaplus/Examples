@@ -46,6 +46,12 @@ StateColor(p) ==
       [] Cardinality(philosophers[p]) = 1 -> HungryColor
       [] OTHER                            -> ThinkingColor
 
+\* Philosophers who hold a fork are seated by the footman.
+Seated == Cardinality({q \in P : philosophers[q] # {}})
+
+\* A thinking philosopher waits for the footman while all N-1 seats are taken.
+WaitsForSeat(p) == philosophers[p] = {} /\ Seated = N - 1
+
 (***************************************************************************)
 (* A fork centered at (x, y), rotated by a degrees.  Unrotated, its tines  *)
 (* point up.                                                               *)
@@ -98,7 +104,8 @@ Philosopher(p) ==
         Show(right, ForkGlyph(Cx - 22, 70, 160)) \o
         Show(left,  hand(Cx + 25)) \o
         Show(right, hand(Cx - 25)),
-        ("transform" :> RotateAboutCenter(t)))
+        ("transform" :> RotateAboutCenter(t) @@
+         "opacity" :> IF WaitsForSeat(p) THEN "0.35" ELSE "1"))
 
 \* Fork f on the table; only its number remains while someone holds it.
 TableFork(f) ==
@@ -118,7 +125,12 @@ Legend ==
     IN Group(<<
         entry(0, ThinkingColor, "thinking"),
         entry(1, HungryColor,   "hungry (1 fork)"),
-        entry(2, EatingColor,   "eating (2 forks)")
+        entry(2, EatingColor,   "eating (2 forks)"),
+        Text(x, 32 + 22 * 3, "seated: " \o ToString(Seated) \o "/" \o ToString(N - 1),
+             ("font-family" :> "sans-serif" @@ "font-size" :> "11" @@
+              "fill" :> IF Seated = N - 1 THEN "#c0392b" ELSE "#333")),
+        Text(x, 32 + 22 * 4, "faded: no free seat",
+             ("font-family" :> "sans-serif" @@ "font-size" :> "11" @@ "fill" :> "#333"))
       >>, <<>>)
 
 \* Scale the drawing, in hundredths, to 600 wide, which fits Spectacle's pane.
