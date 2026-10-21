@@ -1,4 +1,4 @@
----- MODULE APDiningPhilosophers ----
+---- MODULE APDiningPhilosophersPCal ----
 (* Apalache type annotations for DiningPhilosophersPCal.tla, applied via
    INSTANCE so the original spec remains free of tool-specific
    idiosyncrasies. *)

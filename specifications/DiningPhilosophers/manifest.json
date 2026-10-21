@@ -9,11 +9,11 @@
   ],
   "modules": [
     {
-      "path": "specifications/DiningPhilosophers/APDiningPhilosophers.tla",
+      "path": "specifications/DiningPhilosophers/APDiningPhilosophersPCal.tla",
       "features": [],
       "models": [
         {
-          "path": "specifications/DiningPhilosophers/APDiningPhilosophers.cfg",
+          "path": "specifications/DiningPhilosophers/APDiningPhilosophersPCal.cfg",
           "runtime": "00:00:01",
           "mode": "symbolic",
           "result": "success"
