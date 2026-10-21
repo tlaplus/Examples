@@ -1,0 +1,48 @@
+{
+  "sources": [
+    "https://github.com/ValiChord/polite-shrink"
+  ],
+  "authors": [
+    "Ceri John",
+    "Claude AI (Anthropic)"
+  ],
+  "tags": [],
+  "modules": [
+    {
+      "path": "specifications/StaleViewShrink/StaleShrink.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/StaleViewShrink/StaleShrink.cfg",
+          "runtime": "00:00:08",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 65001,
+          "totalStates": 107209,
+          "stateDepth": 44
+        },
+        {
+          "path": "specifications/StaleViewShrink/StaleShrinkV6Wait2x.cfg",
+          "runtime": "00:00:23",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 245146,
+          "totalStates": 364922,
+          "stateDepth": 56
+        },
+        {
+          "path": "specifications/StaleViewShrink/StaleShrinkV3Cascade.cfg",
+          "runtime": "00:00:14",
+          "mode": "exhaustive search",
+          "result": "safety failure"
+        },
+        {
+          "path": "specifications/StaleViewShrink/StaleShrinkV6TooShort.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "safety failure"
+        }
+      ]
+    }
+  ]
+}
