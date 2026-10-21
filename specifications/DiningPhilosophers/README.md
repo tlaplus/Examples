@@ -19,7 +19,7 @@ commit, the properties for which TLC finds a counterexample:
 | 5 | [Let a philosopher who ate wait for its neighbors](https://github.com/tlaplus/examples/commit/173c60f8d1375217f61b901094b0dd36acd967c2) | [Priority to waiting neighbors](https://www.cs.utexas.edu/~EWD/transcriptions/EWD03xx/EWD310.html) | neighbors + atomic fork pair | no | no | no | —[^step5] | [open](https://will62794.github.io/spectacle/#!/home?specpath=https%3A%2F%2Fraw.githubusercontent.com%2Ftlaplus%2Fexamples%2F173c60f8d1375217f61b901094b0dd36acd967c2%2Fspecifications%2FDiningPhilosophers%2FDiningPhilosophers.tla&constants%5BN%5D=5) |
 | 6 | [Let a waiter serve philosophers in order](https://github.com/tlaplus/examples/commit/637ef15fc210e5785bb3f9a68769392ca36601d3) | Waiter (arbitrator) with a queue | global queue | no | no | no | 0.73 | [open](https://will62794.github.io/spectacle/#!/home?specpath=https%3A%2F%2Fraw.githubusercontent.com%2Ftlaplus%2Fexamples%2F637ef15fc210e5785bb3f9a68769392ca36601d3%2Fspecifications%2FDiningPhilosophers%2FDiningPhilosophers.tla&constants%5BN%5D=5) |
 | 7 | [Let a footman seat at most `N-1` philosophers](https://github.com/tlaplus/examples/commit/20efef8f7b1b790d3643284d7c96434453580581) | [Footman (butler) solution](https://en.wikipedia.org/wiki/Dining_philosophers_problem#Limiting_the_number_of_diners_in_the_table) | global counter | no | no | no | 0.42 | [open](https://will62794.github.io/spectacle/#!/home?specpath=https%3A%2F%2Fraw.githubusercontent.com%2Ftlaplus%2Fexamples%2F20efef8f7b1b790d3643284d7c96434453580581%2Fspecifications%2FDiningPhilosophers%2FDiningPhilosophers.tla&constants%5BN%5D=5) |
-| 8 | Let philosopher `N` take its right fork first | [Resource hierarchy (asymmetric) solution](https://doi.org/10.1147/sj.72.0074) | fork order (local) | no | no | no | 0.55 |  |
+| 8 | [Let philosopher `N` take its right fork first](https://github.com/tlaplus/examples/commit/048764145a337a362be7bcb3140c158ed06d35f6) | [Resource hierarchy (asymmetric) solution](https://doi.org/10.1147/sj.72.0074) | fork order (local) | no | no | no | 0.55 | [open](https://will62794.github.io/spectacle/#!/home?specpath=https%3A%2F%2Fraw.githubusercontent.com%2Ftlaplus%2Fexamples%2F048764145a337a362be7bcb3140c158ed06d35f6%2Fspecifications%2FDiningPhilosophers%2FDiningPhilosophers.tla&constants%5BN%5D=5) |
 
 This repository has specs of two other solutions:
 
@@ -31,6 +31,14 @@ This repository has specs of two other solutions:
   Lamport's Bakery algorithm and its Boulangerie variant are in
   [`Bakery-Boulangerie`](../Bakery-Boulangerie). They solve mutual exclusion,
   not dining, but the ticket idea carries over.
+
+TLC checks the spec only for `N = 5`.
+[`DiningPhilosophers_proof.tla`](DiningPhilosophers_proof.tla) proves with
+TLAPS that the spec is free of deadlock, livelock, and starvation for every `N`:
+
+```
+tlapm --strict DiningPhilosophers_proof.tla
+```
 
 [`DiningPhilosophers_anim.tla`](DiningPhilosophers_anim.tla) draws the table,
 forks, and philosophers for any `N` and writes one SVG per state. The
