@@ -21,21 +21,6 @@
       ]
     },
     {
-      "path": "specifications/DiningPhilosophers/DiningPhilosophers.tla",
-      "features": [],
-      "models": [
-        {
-          "path": "specifications/DiningPhilosophers/DiningPhilosophers.cfg",
-          "runtime": "00:00:01",
-          "mode": "exhaustive search",
-          "result": "success",
-          "distinctStates": 70,
-          "totalStates": 220,
-          "stateDepth": 6
-        }
-      ]
-    },
-    {
       "path": "specifications/DiningPhilosophers/DiningPhilosophersPCal.tla",
       "features": [
         "pluscal"
@@ -51,29 +36,6 @@
           "stateDepth": 29
         }
       ]
-    },
-    {
-      "path": "specifications/DiningPhilosophers/DiningPhilosophers_anim.tla",
-      "features": [],
-      "models": [
-        {
-          "path": "specifications/DiningPhilosophers/DiningPhilosophers_anim.cfg",
-          "runtime": "00:00:01",
-          "mode": "exhaustive search",
-          "result": "success",
-          "distinctStates": 70,
-          "totalStates": 220,
-          "stateDepth": 6
-        }
-      ]
-    },
-    {
-      "path": "specifications/DiningPhilosophers/DiningPhilosophers_proof.tla",
-      "features": [],
-      "models": [],
-      "proof": {
-        "maxRuntimeMinutes": 3
-      }
     }
   ]
 }
