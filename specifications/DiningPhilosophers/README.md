@@ -12,7 +12,8 @@ commit, the properties for which TLC finds a counterexample:
 
 | Step | Solution | Known as | Coordination | Deadlock | Livelock | Starvation | Spectacle |
 |---|---|---|---|---|---|---|---|
-| 1 | Take the forks in any order | Unordered fork acquisition | none | yes | yes | yes |  |
+| 1 | [Take the forks in any order](https://github.com/tlaplus/examples/commit/89da1aa3e41b33fdb00062fa0a0a57ef4494e211) | Unordered fork acquisition | none | yes | yes | yes | [open](https://will62794.github.io/spectacle/#!/home?specpath=https%3A%2F%2Fraw.githubusercontent.com%2Ftlaplus%2Fexamples%2F89da1aa3e41b33fdb00062fa0a0a57ef4494e211%2Fspecifications%2FDiningPhilosophers%2FDiningPhilosophers.tla&constants%5BN%5D=5) |
+| 2 | Take the left fork before the right fork | [Naive (symmetric) solution](https://en.wikipedia.org/wiki/Dining_philosophers_problem#Problems) | none | yes | yes | yes |  |
 
 This repository has specs of two other solutions:
 
