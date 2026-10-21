@@ -27,17 +27,16 @@ Init ==
     /\ forks = 1..N
 
 TakeLeft(p) ==
-    \* The footman seats at most N-1 philosophers.  This conjunct reads
-    \* every philosopher's state: the footman is essentially global state.
-    /\ Cardinality({q \in P : philosophers[q] # {}}) < N - 1
+    \* Philosopher N grabs the right fork first.
+    /\ p = N => philosophers[p] = {RightFork(p)}
     /\ LeftFork(p) \in forks
     /\ forks' = forks \ {LeftFork(p)}
     /\ philosophers' = 
         [philosophers EXCEPT ![p] = philosophers[p] \cup {LeftFork(p)}]
 
 TakeRight(p) ==
-    \* Philosophers grab the left fork first.
-    /\ philosophers[p] = {LeftFork(p)}
+    \* All other philosophers grab the left fork first.
+    /\ p # N => philosophers[p] = {LeftFork(p)}
     /\ RightFork(p) \in forks 
     /\ forks' = forks \ {RightFork(p)}
     /\ philosophers' = 
