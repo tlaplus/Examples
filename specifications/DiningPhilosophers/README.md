@@ -14,7 +14,8 @@ commit, the properties for which TLC finds a counterexample:
 |---|---|---|---|---|---|---|---|
 | 1 | [Take the forks in any order](https://github.com/tlaplus/examples/commit/89da1aa3e41b33fdb00062fa0a0a57ef4494e211) | Unordered fork acquisition | none | yes | yes | yes | [open](https://will62794.github.io/spectacle/#!/home?specpath=https%3A%2F%2Fraw.githubusercontent.com%2Ftlaplus%2Fexamples%2F89da1aa3e41b33fdb00062fa0a0a57ef4494e211%2Fspecifications%2FDiningPhilosophers%2FDiningPhilosophers.tla&constants%5BN%5D=5) |
 | 2 | [Take the left fork before the right fork](https://github.com/tlaplus/examples/commit/bf33e1bb350d46fc55904002e5de3807466de573) | [Naive (symmetric) solution](https://en.wikipedia.org/wiki/Dining_philosophers_problem#Problems) | none | yes | yes | yes | [open](https://will62794.github.io/spectacle/#!/home?specpath=https%3A%2F%2Fraw.githubusercontent.com%2Ftlaplus%2Fexamples%2Fbf33e1bb350d46fc55904002e5de3807466de573%2Fspecifications%2FDiningPhilosophers%2FDiningPhilosophers.tla&constants%5BN%5D=5) |
-| 3 | Put the left fork back if the right fork is taken | Back-off and retry | none | no | yes | yes |  |
+| 3 | [Put the left fork back if the right fork is taken](https://github.com/tlaplus/examples/commit/3f171e1ec2db66c4ffa87727e8ed1a74f40c46fa) | Back-off and retry | none | no | yes | yes | [open](https://will62794.github.io/spectacle/#!/home?specpath=https%3A%2F%2Fraw.githubusercontent.com%2Ftlaplus%2Fexamples%2F3f171e1ec2db66c4ffa87727e8ed1a74f40c46fa%2Fspecifications%2FDiningPhilosophers%2FDiningPhilosophers.tla&constants%5BN%5D=5) |
+| 4 | Take both forks at once | [Dijkstra's semaphore solution (Tanenbaum's monitor)](https://en.wikipedia.org/wiki/Dining_philosophers_problem#Dijkstra's_solution) | atomic fork pair | no | no | yes |  |
 
 This repository has specs of two other solutions:
 
