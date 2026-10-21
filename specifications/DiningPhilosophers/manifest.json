@@ -29,8 +29,8 @@
           "runtime": "00:00:01",
           "mode": "exhaustive search",
           "result": "success",
-          "distinctStates": 70,
-          "totalStates": 220,
+          "distinctStates": 58,
+          "totalStates": 174,
           "stateDepth": 6
         }
       ]
@@ -61,8 +61,8 @@
           "runtime": "00:00:01",
           "mode": "exhaustive search",
           "result": "success",
-          "distinctStates": 70,
-          "totalStates": 220,
+          "distinctStates": 58,
+          "totalStates": 174,
           "stateDepth": 6
         }
       ]

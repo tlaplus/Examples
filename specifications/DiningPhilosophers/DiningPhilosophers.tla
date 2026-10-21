@@ -27,16 +27,16 @@ Init ==
     /\ forks = 1..N
 
 TakeLeft(p) ==
-    \* Philosopher N grabs the right fork first.
-    /\ p = N => philosophers[p] = {RightFork(p)}
+    \* Even philosophers grab the right fork first.
+    /\ p % 2 = 0 => philosophers[p] = {RightFork(p)}
     /\ LeftFork(p) \in forks
     /\ forks' = forks \ {LeftFork(p)}
     /\ philosophers' = 
         [philosophers EXCEPT ![p] = philosophers[p] \cup {LeftFork(p)}]
 
 TakeRight(p) ==
-    \* All other philosophers grab the left fork first.
-    /\ p # N => philosophers[p] = {LeftFork(p)}
+    \* Odd philosophers grab the left fork first.
+    /\ p % 2 = 1 => philosophers[p] = {LeftFork(p)}
     /\ RightFork(p) \in forks 
     /\ forks' = forks \ {RightFork(p)}
     /\ philosophers' = 
