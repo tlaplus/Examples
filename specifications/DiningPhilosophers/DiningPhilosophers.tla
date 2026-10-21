@@ -39,6 +39,12 @@ TakeRight(p) ==
     /\ philosophers' = 
         [philosophers EXCEPT ![p] = philosophers[p] \cup {RightFork(p)}]
 
+PutBack(p) ==
+    /\ philosophers[p] = {LeftFork(p)}
+    /\ RightFork(p) \notin forks
+    /\ forks' = forks \cup {LeftFork(p)}
+    /\ philosophers' = [philosophers EXCEPT ![p] = {}]
+
 Release(p) ==
     /\ philosophers[p] = {LeftFork(p), RightFork(p)}
     /\ forks' = forks \cup {LeftFork(p), RightFork(p)}
@@ -48,13 +54,14 @@ Next ==
     \E p \in P:
         \/ TakeLeft(p)
         \/ TakeRight(p)
+        \/ PutBack(p)
         \/ Release(p)
 
 Spec ==
     /\ Init
     /\ [][Next]_vars
     /\ \A p \in P :
-        SF_vars(TakeLeft(p) \/ TakeRight(p) \/ Release(p))
+        SF_vars(TakeLeft(p) \/ TakeRight(p) \/ PutBack(p) \/ Release(p))
 
 IsEating(p) ==
     Cardinality(philosophers[p]) = 2

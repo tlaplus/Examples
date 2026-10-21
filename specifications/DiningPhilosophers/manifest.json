@@ -28,7 +28,7 @@
           "path": "specifications/DiningPhilosophers/DiningPhilosophers.cfg",
           "runtime": "00:00:01",
           "mode": "exhaustive search",
-          "result": "safety failure"
+          "result": "liveness failure"
         }
       ]
     },
@@ -57,7 +57,10 @@
           "path": "specifications/DiningPhilosophers/DiningPhilosophers_anim.cfg",
           "runtime": "00:00:01",
           "mode": "exhaustive search",
-          "result": "deadlock failure"
+          "result": "success",
+          "distinctStates": 82,
+          "totalStates": 351,
+          "stateDepth": 6
         }
       ]
     }
