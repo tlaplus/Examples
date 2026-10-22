@@ -96,12 +96,11 @@ VARIABLES now,        \* the clock (nodes never read it; see STRUCTURE)
 vars == <<now, holds, intent, announced, snapshots>>
 
 TypeOK == /\ now \in 0..Horizon
-          /\ holds \subseteq Nodes
+          /\ holds \in SUBSET Nodes
           /\ intent \in [Nodes -> 0..(Horizon + D)]
-          /\ announced \subseteq Nodes
+          /\ announced \in SUBSET Nodes
+          /\ snapshots \in Seq((SUBSET Nodes) \X (SUBSET Nodes))
           /\ Len(snapshots) <= L
-          /\ \A i \in 1..Len(snapshots) :
-                snapshots[i] \in (SUBSET Nodes) \X (SUBSET Nodes)
 
 Announcers == { n \in Nodes : intent[n] # 0 }
 
