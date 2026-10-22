@@ -108,6 +108,7 @@ Here is a list of specs included in this repository which are validated by the C
 | [DAG-based Consensus](specifications/dag-consensus)                                                 | Giuliano Losa                                       |          |             |    ✔    |     ✔     |          |
 | [German Cache-Coherence Protocol](specifications/GermanProtocol)                                    | Markus Kuppe                                        |          |             |         |     ✔     |    ✔     |
 | [FLASH Cache-Coherence Protocol](specifications/FlashProtocol)                                      | Markus Kuppe                                        |          |             |         |     ✔     |    ✔     |
+| [Stale-View Shrink (Mutual Inclusion)](specifications/StaleViewShrink)                              | Ceri John, Claude AI (Anthropic)                    |          |             |         |     ✔     |          |
 
 
 ## Other Examples
