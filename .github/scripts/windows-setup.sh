@@ -36,7 +36,7 @@ main() {
   mkdir -p "$DEPS_DIR"
   # Get TLA⁺ tools
   mkdir -p "$DEPS_DIR/tools"
-  curl http://nightly.tlapl.us/dist/tla2tools.jar --output "$DEPS_DIR/tools/tla2tools.jar"
+  curl -L --fail https://github.com/tlaplus/tlaplus/releases/download/rolling/tla2tools.jar --output "$DEPS_DIR/tools/tla2tools.jar"
   # Get Apalache
   APALACHE_LATEST="https://github.com/apalache-mc/apalache/releases/latest/download/apalache.zip"
   APALACHE_FALLBACK="https://github.com/apalache-mc/apalache/releases/download/v0.52.2/apalache.zip"

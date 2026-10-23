@@ -40,7 +40,7 @@ main() {
   mkdir -p "$DEPS_DIR"
   # Get TLA⁺ tools
   mkdir -p "$DEPS_DIR/tools"
-  wget -nv http://nightly.tlapl.us/dist/tla2tools.jar -P "$DEPS_DIR/tools"
+  wget -nv https://github.com/tlaplus/tlaplus/releases/download/rolling/tla2tools.jar -P "$DEPS_DIR/tools"
   # Get Apalache
   APALACHE_LATEST="https://github.com/apalache-mc/apalache/releases/latest/download/apalache.tgz"
   APALACHE_FALLBACK="https://github.com/apalache-mc/apalache/releases/download/v0.52.2/apalache.tgz"
