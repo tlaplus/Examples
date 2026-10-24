@@ -98,6 +98,9 @@ IsFree(node) == isLeaf[node] /\ keysOf[node] = {}
 
 ChooseFreeNode == CHOOSE n \in Nodes : IsFree(n)
 
+HasFreeNode == \E n \in Nodes : IsFree(n)
+HasTwoFreeNodes == \E n1, n2 \in Nodes : n1 # n2 /\ IsFree(n1) /\ IsFree(n2)
+
 
 Init == /\ isLeaf = [n \in Nodes |-> TRUE]
         /\ keysOf = [n \in Nodes |-> {}]
@@ -217,6 +220,7 @@ SplitRootLeaf ==
         n2Keys == {x \in keys: x>=pivot} 
         keyToInsert == args[1] IN
     /\ state = SPLIT_ROOT_LEAF
+    /\ HasTwoFreeNodes
     /\ root' = newRoot
     /\ isLeaf' = [isLeaf EXCEPT ![newRoot]=FALSE, ![n2]=TRUE]
     /\ keysOf' = [keysOf EXCEPT ![newRoot]={pivot}, ![n1]=n1Keys, ![n2]=n2Keys]
@@ -248,6 +252,7 @@ SplitRootInner ==
         n1Keys == {x \in keys: x<pivot}
         n2Keys == {x \in keys: x>pivot} IN
     /\ state = SPLIT_ROOT_INNER
+    /\ HasTwoFreeNodes
     /\ root' = newRoot
     /\ isLeaf' = [isLeaf EXCEPT ![newRoot]=FALSE, ![n2]=FALSE]
     /\ keysOf' = [keysOf EXCEPT ![newRoot]={pivot}, ![n1]=n1Keys, ![n2]=n2Keys]
@@ -273,6 +278,7 @@ SplitLeaf ==
         keyToInsert == args[1]
     IN
     /\ state = SPLIT_LEAF
+    /\ HasFreeNode
     /\ isLeaf' = [isLeaf EXCEPT ![n2]=TRUE]
     /\ keysOf' = [keysOf EXCEPT ![parent]=@ \union {pivot}, ![n1]=n1Keys, ![n2]=n2Keys]
     \* In the parent, point the pivot key to n1, and point the parent key to n2.
