@@ -1,0 +1,63 @@
+{
+  "sources": [
+    "https://www.hillelwayne.com/post/refinement/"
+  ],
+  "authors": [
+    "Hillel Wayne"
+  ],
+  "tags": [
+    "beginner"
+  ],
+  "modules": [
+    {
+      "path": "specifications/SpecificationRefinement/abstract.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecificationRefinement/abstract.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 4,
+          "totalStates": 5,
+          "stateDepth": 3
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpecificationRefinement/bad.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecificationRefinement/bad.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "liveness failure"
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpecificationRefinement/good.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/SpecificationRefinement/good.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 9,
+          "totalStates": 9,
+          "stateDepth": 5
+        }
+      ]
+    },
+    {
+      "path": "specifications/SpecificationRefinement/good_proof.tla",
+      "features": [],
+      "models": [],
+      "proof": {
+        "maxRuntimeMinutes": 1
+      }
+    }
+  ]
+}
