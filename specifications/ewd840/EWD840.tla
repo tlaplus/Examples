@@ -5,7 +5,8 @@
 (* Derivation of a termination detection algorithm for distributed         *)
 (* computations (with W.H.J.Feijen and A.J.M. van Gasteren).               *)
 (***************************************************************************)
-EXTENDS Naturals
+\* TLAPS is needed for instantiating SyncTerminationDetection, see https://github.com/tlaplus/tlapm/issues/250
+EXTENDS Naturals, TLAPS
 
 CONSTANT N
 ASSUME NAssumption == N \in Nat \ {0}
