@@ -281,8 +281,10 @@ BY Live, TypeCorrect, Invariant, PTL DEF Spec
 (* Note that the parameters of the module SyncTerminationDetection are     *)
 (* instantiated by the symbols of the same name in the present module.     *)
 (***************************************************************************)
+TDP == INSTANCE SyncTerminationDetection_proof
+
 THEOREM Spec => TD!Spec
-<1>. USE DEF Node, TD!Node
+<1>. USE DEF Node, TD!Node, TDP!Node
 <1>1. Init => TD!Init
   BY DEF Init, TD!Init, terminationDetected
 <1>2. TypeOK /\ Inv /\ [Next]_vars => [TD!Next]_TD!vars
@@ -299,18 +301,19 @@ THEOREM Spec => TD!Spec
     BY <2>4 DEF Deactivate, TD!Next, TD!Terminate, TD!terminated
   <2>. QED  BY <2>1, <2>2, <2>3, <2>4 DEF Next, System, Environment
 <1>3. []TypeOK /\ []Inv /\ [][Next]_vars /\ WF_vars(System)
-      => WF_TD!vars(TD!DetectTermination)
+      => TDP!Fair
   <2>. SUFFICES /\ []TypeOK /\ []Inv /\ [][Next]_vars /\ WF_vars(System)
-                /\ []ENABLED <<TD!DetectTermination>>_TD!vars
+                /\ <>[](TDP!terminated /\ ~terminationDetected)
                 => FALSE 
-    BY PTL
-  <2>1. TypeOK /\ ENABLED <<TD!DetectTermination>>_TD!vars
-        => terminated /\ ~terminationDetected
-    BY ExpandENABLED 
-       DEF TypeOK, TD!DetectTermination, TD!vars, terminated, TD!terminated, terminationDetected
+    <3>. TypeOK => TDP!TypeOK
+      BY DEF TypeOK, TDP!TypeOK, terminationDetected
+    <3>. QED  BY TDP!Fairness, PTL
+  <2>1. TDP!terminated => terminated
+    BY DEF TDP!terminated, terminated
   <2>. QED BY <2>1, Live, PTL DEF Liveness
 <1>. QED  
-  BY <1>1, <1>2, <1>3, TypeCorrect, Invariant, PTL DEF Spec, TD!Spec
+  BY <1>1, <1>2, <1>3, TypeCorrect, Invariant, PTL DEF Spec, TD!Spec, TD!Fair, TDP!Fair, 
+     TD!vars, TDP!vars, TD!DetectTermination, TDP!DetectTermination, TD!terminated, TDP!terminated
 =============================================================================
 \* Modification History
 \* Created Mon Sep 09 11:33:10 CEST 2013 by merz

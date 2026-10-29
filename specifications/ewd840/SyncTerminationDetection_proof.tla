@@ -39,6 +39,11 @@ LEMMA Enabled_ST ==
     PROVE (ENABLED <<DetectTermination>>_vars) <=> terminated /\ ~terminationDetected
 BY ExpandENABLED DEF TypeOK, DetectTermination, terminated, vars
 
+LEMMA Fairness ==
+    ASSUME []TypeOK
+    PROVE  Fair <=> (<>[](terminated /\ ~terminationDetected) => []<><<DetectTermination>>_vars)
+BY Enabled_ST, PTL DEF Fair
+
 (****************************************************************************)
 (* Proving liveness is easy since a single occurrence of the helpful action *)
 (* DetectTermination leads to the desired state.                            *)
@@ -52,6 +57,6 @@ THEOREM Live == Spec => Liveness
   BY DEF TypeOK, DetectTermination
 <1>3. TypeOK /\ P => ENABLED <<DetectTermination>>_vars
   BY Enabled_ST
-<1>. QED  BY <1>1, <1>2, <1>3, TypeCorrect, PTL DEF Spec, Liveness
+<1>. QED  BY <1>1, <1>2, <1>3, TypeCorrect, PTL DEF Spec, Fair, Liveness
 
 =============================================================================

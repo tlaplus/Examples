@@ -50,7 +50,8 @@ Next ==
   \/ DetectTermination
 
 vars == <<active, terminationDetected>>
-Spec == Init /\ [][Next]_vars /\ WF_vars(DetectTermination)
+Fair == WF_vars(DetectTermination)
+Spec == Init /\ [][Next]_vars /\ Fair
 
 ------------------------------------------------------------------------------
 (* Correctness properties *)
