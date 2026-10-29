@@ -85,7 +85,7 @@
       "features": [],
       "models": [],
       "proof": {
-        "maxRuntimeMinutes": 3
+        "maxRuntimeMinutes": 5
       }
     }
   ]

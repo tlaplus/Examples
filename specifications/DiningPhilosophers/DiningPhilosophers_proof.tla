@@ -116,18 +116,18 @@ LEMMA TakeAgree ==
   <2>2. philosophers[p] = {}
     BY <2>1, <1>1 DEF Phases, Idle, Hungry, Eating
   <2>. QED
-    BY <1>1, <2>2 DEF TakeLeft, TakeLow
+    BY <1>1, <2>2, Zenon DEF TakeLeft, TakeLow
 <1>2. CASE TakeLeft(p) /\ p % 2 = 0
-  BY <1>2 DEF TakeLeft, TakeHigh
+  BY <1>2, Zenon DEF TakeLeft, TakeHigh
 <1>3. CASE TakeRight(p) /\ p % 2 = 1
-  BY <1>3 DEF TakeRight, TakeHigh
+  BY <1>3, Isa DEF TakeRight, TakeHigh
 <1>4. CASE TakeRight(p) /\ p % 2 = 0
   <2>1. RightFork(p) \in P /\ RightFork(p) \notin philosophers[p]
     BY <1>4, ForksDistinct DEF TakeRight, OnTable
   <2>2. philosophers[p] = {}
     BY <2>1, <1>4 DEF Phases, Idle, Hungry, Eating
   <2>. QED
-    BY <1>4, <2>2 DEF TakeRight, TakeLow
+    BY <1>4, <2>2, Zenon DEF TakeRight, TakeLow
 <1>. QED
   BY <1>1, <1>2, <1>3, <1>4, Parity
 
@@ -222,7 +222,7 @@ THEOREM OnTableNext == Inv /\ [Next]_vars => OnTable'
 <1>3. ASSUME NEW p \in P, Release(p)
       PROVE  g \in forks' <=> \A r \in P : g \notin philosophers'[r]
   <2>1. CASE g \in {LowFork(p), HighFork(p)}
-    BY <1>3, <2>1, ReleaseFrame DEF Exclusive
+    BY <1>3, <2>1, ReleaseFrame, Zenon DEF Exclusive
   <2>2. CASE g \notin {LowFork(p), HighFork(p)}
     <3>1. \A r \in P : g \in philosophers'[r] <=> g \in philosophers[r]
       BY <1>3, <2>2, ReleaseFrame
@@ -285,10 +285,10 @@ BY InvInit, InvNext, PTL DEF Spec
 Act(p) == TakeLeft(p) \/ TakeRight(p) \/ Release(p)
 
 LEMMA SpecNext == Spec => [][Next]_vars
-BY DEF Spec
+BY Isa DEF Spec
 
 LEMMA SpecFair == \A q \in P : Spec => SF_vars(Act(q))
-BY DEF Spec, Act
+BY Isa DEF Spec, Act
 
 \* A step either is a step of q or leaves q's forks alone.
 LEMMA NextSplit ==
@@ -340,9 +340,9 @@ LEMMA IdleEnabled ==
           forks \ {LeftFork(q)}>> # <<philosophers, forks>>
     BY <1>1
   <2>3. ENABLED <<TakeLeft(q)>>_vars
-    BY <1>1, <1>2, <2>1, <2>2, ExpandENABLED DEF TakeLeft, vars
+    BY <1>1, <1>2, <2>1, <2>2, ExpandENABLED, Isa DEF TakeLeft, vars
   <2>. QED
-    BY <2>3, ExpandENABLED DEF Act, TakeLeft, TakeRight, Release, vars
+    BY <2>3, ExpandENABLED, Zenon DEF Act, TakeLeft, TakeRight, Release, vars
 <1>3. CASE q % 2 = 0
   <2>1. RightFork(q) \in forks
     BY <1>3 DEF LowFork
@@ -350,9 +350,9 @@ LEMMA IdleEnabled ==
           forks \ {RightFork(q)}>> # <<philosophers, forks>>
     BY <1>1
   <2>3. ENABLED <<TakeRight(q)>>_vars
-    BY <1>1, <1>3, <2>1, <2>2, ExpandENABLED DEF TakeRight, vars
+    BY <1>1, <1>3, <2>1, <2>2, ExpandENABLED, Isa DEF TakeRight, vars
   <2>. QED
-    BY <2>3, ExpandENABLED DEF Act, TakeLeft, TakeRight, Release, vars
+    BY <2>3, ExpandENABLED, Zenon DEF Act, TakeLeft, TakeRight, Release, vars
 <1>. QED
   BY <1>2, <1>3, Parity
 
@@ -375,9 +375,9 @@ LEMMA HungryEnabled ==
   <2>3. (q % 2 = 1 => philosophers[q] = {LeftFork(q)}) /\ RightFork(q) \in forks
     BY <2>1
   <2>4. ENABLED <<TakeRight(q)>>_vars
-    BY <2>2, <2>3, ExpandENABLED DEF TakeRight, vars
+    BY <2>2, <2>3, ExpandENABLED, Isa DEF TakeRight, vars
   <2>. QED
-    BY <2>4, ExpandENABLED DEF Act, TakeLeft, TakeRight, Release, vars
+    BY <2>4, ExpandENABLED, Zenon DEF Act, TakeLeft, TakeRight, Release, vars
 <1>4. CASE q % 2 = 0
   <2>1. philosophers[q] = {RightFork(q)} /\ LeftFork(q) \in forks
     BY <1>1, <1>4 DEF LowFork, HighFork
@@ -387,9 +387,9 @@ LEMMA HungryEnabled ==
   <2>3. (q % 2 = 0 => philosophers[q] = {RightFork(q)}) /\ LeftFork(q) \in forks
     BY <2>1
   <2>4. ENABLED <<TakeLeft(q)>>_vars
-    BY <2>2, <2>3, ExpandENABLED DEF TakeLeft, vars
+    BY <2>2, <2>3, ExpandENABLED, Isa DEF TakeLeft, vars
   <2>. QED
-    BY <2>4, ExpandENABLED DEF Act, TakeLeft, TakeRight, Release, vars
+    BY <2>4, ExpandENABLED, Zenon DEF Act, TakeLeft, TakeRight, Release, vars
 <1>. QED
   BY <1>3, <1>4, Parity
 
@@ -408,9 +408,9 @@ LEMMA EatingEnabled ==
         # <<philosophers, forks>>
   BY <1>1, <1>2
 <1>4. ENABLED <<Release(q)>>_vars
-  BY <1>1, <1>3, ExpandENABLED DEF Release, vars
+  BY <1>1, <1>3, ExpandENABLED, Isa DEF Release, vars
 <1>. QED
-  BY <1>4, ExpandENABLED DEF Act, TakeLeft, TakeRight, Release, vars
+  BY <1>4, ExpandENABLED, Zenon DEF Act, TakeLeft, TakeRight, Release, vars
 
 -----------------------------------------------------------------------------
 (***************************************************************************)
@@ -445,7 +445,7 @@ LEMMA IdleHungry ==
 <1>3. Inv /\ Idle(q) /\ LowFork(q) \in forks => ENABLED <<Act(q)>>_vars
   BY IdleEnabled
 <1>4. Spec => SF_vars(Act(q))
-  BY SpecFair
+  BY SpecFair, Isa
 <1>. QED
   BY <1>1, <1>2, <1>3, <1>4, InvSpec, SpecNext, PTL DEF FreeIO, IdleToHungry
 
@@ -466,7 +466,7 @@ LEMMA HungryEat ==
 <1>3. Inv /\ Hungry(q) /\ HighFork(q) \in forks => ENABLED <<Act(q)>>_vars
   BY HungryEnabled
 <1>4. Spec => SF_vars(Act(q))
-  BY SpecFair
+  BY SpecFair, Isa
 <1>. QED
   BY <1>1, <1>2, <1>3, <1>4, InvSpec, SpecNext, PTL DEF FreeIO, HungryToEating
 
@@ -488,7 +488,7 @@ LEMMA EatRelease ==
 <1>3. Inv /\ HeldEat(f, q) => ENABLED <<Act(q)>>_vars
   BY EatingEnabled DEF HeldEat
 <1>4. Spec => SF_vars(Act(q))
-  BY SpecFair
+  BY SpecFair, Isa
 <1>. QED
   BY <1>1, <1>2, <1>3, <1>4, InvSpec, SpecNext, PTL DEF EatingFrees
 
@@ -595,7 +595,7 @@ THEOREM AllFree == \A f \in P : Spec => FreeIO(f)
     BY <2>1
 <1>. HIDE DEF Q
 <1>3. \A m \in Nat : Q(m)
-  BY <1>1, <1>2, NatInduction
+  BY <1>1, <1>2, NatInduction, Isa
 <1>4. Q(3)
   BY <1>3
 <1>. QED
@@ -616,7 +616,7 @@ LEMMA EatingIsEating == \A p \in P : Eating(p) => IsEating(p)
 <1>3. Cardinality({LowFork(p)} \cup {HighFork(p)}) = 2
   BY <1>1, <1>2, FS_AddElement
 <1>. QED
-  BY <1>3 DEF Eating, IsEating
+  BY <1>3, Zenon DEF Eating, IsEating
 
 THEOREM StarvationFreedom
 <1>. SUFFICES ASSUME NEW p \in P PROVE Spec => []<>IsEating(p)
@@ -666,7 +666,7 @@ BY StarvationFreedom, StarvationImpliesNoLivelock
 LEMMA ActEnabledNext ==
     ASSUME NEW q \in P
     PROVE  (ENABLED <<Act(q)>>_vars) => ENABLED Next
-BY ExpandENABLED DEF Act, Next, TakeLeft, TakeRight, Release, vars
+BY ExpandENABLED, Zenon DEF Act, Next, TakeLeft, TakeRight, Release, vars
 
 LEMMA EvenFree ==
     ASSUME Inv, \A q \in P : ~Eating(q), NEW f \in P, Rank(f) = 2
