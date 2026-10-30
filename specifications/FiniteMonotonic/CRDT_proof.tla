@@ -339,7 +339,7 @@ THEOREM OGLiveness == OGSpec => <>(\A n, o \in Node : counter[n] = counter[o])
 <1>2. ASSUME NEW m \in Nat,
              \A k \in 0 .. (m-1) : S(k)
       PROVE  S(m)
-  BY <1>1
+  BY <1>1, <1>2
 <1>3. \A m \in Nat : S(m)
   <2>. HIDE DEF S
   <2>. QED  BY <1>2, GeneralNatInduction, Isa
