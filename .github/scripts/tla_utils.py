@@ -3,7 +3,7 @@ from datetime import datetime
 from datetime import timedelta
 import json
 import os
-from os.path import join, normpath, pathsep, dirname
+from os.path import abspath, join, normpath, pathsep, dirname
 from pathlib import PureWindowsPath
 import subprocess
 import sys
@@ -199,9 +199,9 @@ def check_model(
     # through `cmd.exe /c`. On Linux/macOS it is the unsuffixed shell script
     # `apalache-mc` and we invoke it directly.
     apalache_launcher = (
-        ['cmd.exe', '/c', normpath(join(apalache_path, 'bin', 'apalache-mc.bat'))]
+        ['cmd.exe', '/c', abspath(join(apalache_path, 'bin', 'apalache-mc.bat'))]
         if sys.platform == 'win32' else
-        [normpath(join(apalache_path, 'bin', 'apalache-mc'))])
+        [abspath(join(apalache_path, 'bin', 'apalache-mc'))])
     module_path = normpath(module_path)
     model_path = normpath(model_path)
     tlapm_lib_path = normpath(tlapm_lib_path)
@@ -212,13 +212,19 @@ def check_model(
             # example. Apalache's own default of 10 is itself an arbitrary
             # choice; 5 keeps CI runtimes manageable across the suite while
             # still exercising each spec non-trivially.
+            # Apalache resolves modules only from the spec's directory, its
+            # own standard library, and the working directory; it ignores
+            # TLA-Library. Run it from the TLAPS library directory so specs
+            # that extend TLAPS parse, and pass every path absolutely.
             apalache = subprocess.run(
                 apalache_launcher + [
                     'check',
                     '--length=5',
-                    f'--config={model_path}',
-                    module_path
+                    f'--out-dir={abspath("_apalache-out")}',
+                    f'--config={abspath(model_path)}',
+                    abspath(module_path)
                 ],
+                cwd=tlapm_lib_path,
                 timeout=hard_timeout_in_seconds,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
