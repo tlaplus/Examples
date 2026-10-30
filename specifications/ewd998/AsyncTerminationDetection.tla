@@ -65,8 +65,9 @@ Next ==
   \/ DetectTermination
 
 vars == <<active, pending, terminationDetected>>
+Fair == WF_vars(DetectTermination)
 Spec == /\ Init /\ [][Next]_vars
-        /\ WF_vars(DetectTermination)
+        /\ Fair
            \* reasonable but not necessary for detecting termination
            \* /\ \A i \in Node : WF_vars(Wakeup(i))
 

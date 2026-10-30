@@ -43,6 +43,11 @@ LEMMA EnabledDT ==
   PROVE  (ENABLED <<DetectTermination>>_vars) <=> (terminated /\ ~ terminationDetected)
 BY ExpandENABLED DEF TypeOK, DetectTermination, terminated, vars
 
+LEMMA Fairness ==
+  ASSUME []TypeOK
+  PROVE  Fair <=> (<>[](terminated /\ ~ terminationDetected) => []<><<DetectTermination>>_vars)
+BY EnabledDT, PTL DEF Fair
+
 THEOREM Liveness == Spec => Live
 <1>. DEFINE P == terminated /\ ~ terminationDetected
             Q == terminationDetected
@@ -52,7 +57,7 @@ THEOREM Liveness == Spec => Live
   BY DEF DetectTermination
 <1>3. TypeOK /\ P => ENABLED <<DetectTermination>>_vars
   BY EnabledDT
-<1>. QED  BY <1>1, <1>2, <1>3, TypeCorrect, PTL DEF Spec, Live
+<1>. QED  BY <1>1, <1>2, <1>3, TypeCorrect, PTL DEF Spec, Fair, Live
 
 =============================================================================
 \* Modification History

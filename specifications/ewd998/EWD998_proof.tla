@@ -759,8 +759,10 @@ BY TypeCorrect, Invariance, Live, PTL DEF Spec
 (* In order to reuse lemmas about the high-level specification, we         *)
 (* instantiate the corresponding proof module.                             *)
 (***************************************************************************)
-LEMMA NodeIsNode == TD!Node = Node
-BY DEF Node, TD!Node
+TDP == INSTANCE AsyncTerminationDetection_proof
+
+LEMMA NodeIsNode == TD!Node = Node /\ TDP!Node = Node
+BY DEF Node, TD!Node, TDP!Node
 
 THEOREM Refinement == Spec => TD!Spec
 <1>. USE NodeIsNode
@@ -841,25 +843,27 @@ THEOREM Refinement == Spec => TD!Spec
   <2>7. QED
     BY <2>1, <2>2, <2>3, <2>4, <2>5, <2>6 DEF Environment, Next, System
 <1>4. []TypeOK /\ []Inv /\ [][Next]_vars /\ WF_vars(System) 
-         => WF_(TD!vars)(TD!DetectTermination)
+         => TDP!Fair
   <2>1. SUFFICES /\ []TypeOK /\ []Inv /\ [][Next]_vars /\ WF_vars(System)
-                 /\ []ENABLED <<TD!DetectTermination>>_(TD!vars)
+                 /\ <>[](TDP!terminated /\ ~ terminationDetected)
                  => FALSE
-    BY PTL
-  <2>2. TypeOK /\ ENABLED <<TD!DetectTermination>>_(TD!vars) 
-           => Termination /\ ~ terminationDetected
-    <3>. SUFFICES ASSUME TypeOK, ENABLED <<TD!DetectTermination>>_(TD!vars)
-                  PROVE  Termination /\ ~ terminationDetected
+    <3>. TypeOK => TDP!TypeOK
+      BY DEF TypeOK, TDP!TypeOK, terminationDetected
+    <3>. QED  BY TDP!Fairness, PTL
+  <2>2. TypeOK /\ TDP!terminated => Termination
+    <3>. SUFFICES ASSUME TypeOK, TDP!terminated
+                  PROVE  Termination
       OBVIOUS
-    <3>1. TD!terminated /\ ~ terminationDetected
-      BY ExpandENABLED DEF TD!DetectTermination, TD!vars, terminationDetected
-    <3>2. \A n \in Node : ~ active[n] /\ pending[n] = 0
-      BY <3>1 DEF TD!terminated
-    <3>3. B = 0
-      BY <3>2, SumZero, pending \in [Node -> Int] DEF TypeOK, B
-    <3>. QED  BY <3>1, <3>2, <3>3 DEF Termination
+    <3>1. \A n \in Node : ~ active[n] /\ pending[n] = 0
+      BY DEF TDP!terminated
+    <3>2. B = 0
+      BY <3>1, SumZero, pending \in [Node -> Int] DEF TypeOK, B
+    <3>. QED  BY <3>1, <3>2 DEF Termination
   <2>. QED  BY <2>2, Live, TypeCorrect, Invariance, PTL DEF Liveness
-<1>. QED  BY <1>1, <1>2, <1>4, TypeCorrect, Invariance, PTL DEF Spec, TD!Spec
+<1>. QED  
+  BY <1>1, <1>2, <1>4, TypeCorrect, Invariance, PTL DEF Spec, TD!Spec, TD!Fair, TDP!Fair,
+     TD!vars, TDP!vars, TD!DetectTermination, TDP!DetectTermination, TD!terminated, TDP!terminated,
+     Node, TD!Node, TDP!Node
 
 (***************************************************************************)
 (* The (state-level) safety invariant `TerminationDetection`:              *)
