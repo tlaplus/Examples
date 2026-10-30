@@ -5,7 +5,8 @@
 (* Shmuel Safra's version of termination detection.                        *)
 (* https://www.cs.utexas.edu/users/EWD/ewd09xx/EWD998.PDF                  *)
 (***************************************************************************)
-EXTENDS Integers, FiniteSets, Functions
+\* TLAPS is needed for instantiating AsyncTerminationDetection, see https://github.com/tlaplus/tlapm/issues/250
+EXTENDS Integers, FiniteSets, Functions, TLAPS
 
 CONSTANT
     \* @type: Int;
