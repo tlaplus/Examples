@@ -46,7 +46,7 @@ START: \* Start the transaction
     tx := tx \union {self};
     snapshotStore := store; \* take my snapshot of store
 
-    with (rk \in SUBSET Key \ { {} }; wk \in SUBSET Key \ { {} }) {
+    with (rk \in (SUBSET Key) \ { {} }; wk \in (SUBSET Key) \ { {} }) {
         read_keys := rk;     \* select a random read-key-set  from possible read-keys
         write_keys := wk;    \* select a random write-key-set from possible write-keys  
     };
@@ -79,7 +79,7 @@ COMMIT: \* Commit the transaction to the database if there is no conflict
 }
 *)
 
-\* BEGIN TRANSLATION (chksum(pcal) = "1adfcb46" /\ chksum(tla) = "5b28617f")
+\* BEGIN TRANSLATION (chksum(pcal) = "be9e3fd6" /\ chksum(tla) = "d93ee94d")
 VARIABLES store, tx, missed, pc, snapshotStore, read_keys, write_keys, ops
 
 vars == << store, tx, missed, pc, snapshotStore, read_keys, write_keys, ops
@@ -101,8 +101,8 @@ Init == (* Global variables *)
 START(self) == /\ pc[self] = "START"
                /\ tx' = (tx \union {self})
                /\ snapshotStore' = [snapshotStore EXCEPT ![self] = store]
-               /\ \E rk \in SUBSET Key \ { {} }:
-                    \E wk \in SUBSET Key \ { {} }:
+               /\ \E rk \in (SUBSET Key) \ { {} }:
+                    \E wk \in (SUBSET Key) \ { {} }:
                       /\ read_keys' = [read_keys EXCEPT ![self] = rk]
                       /\ write_keys' = [write_keys EXCEPT ![self] = wk]
                /\ pc' = [pc EXCEPT ![self] = "READ"]
