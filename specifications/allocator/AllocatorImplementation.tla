@@ -166,11 +166,11 @@ Invariant ==  \** a lower-level invariant
   /\ \A c \in Clients : 
        /\ Cardinality(RequestsInTransit(c)) <= 1
        /\ requests[c] = unsat[c]
-                     \cup UNION RequestsInTransit(c)
-                     \cup UNION AllocsInTransit(c)
+                     \cup (UNION RequestsInTransit(c))
+                     \cup (UNION AllocsInTransit(c))
        /\ alloc[c] = holding[c] 
-                  \cup UNION AllocsInTransit(c) 
-                  \cup UNION ReturnsInTransit(c)
+                  \cup (UNION AllocsInTransit(c)) 
+                  \cup (UNION ReturnsInTransit(c))
 
 (* correctness properties in terms of clients' variables *)
 ResourceMutex ==

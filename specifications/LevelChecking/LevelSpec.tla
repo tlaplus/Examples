@@ -983,9 +983,9 @@
                 {i \in paramNums : /\ IsOpParam(i)
                                    /\ Node[subst.subWith[i]].ref \in
                                         OpDefNodeId}
-          IN  UNION {Sub(lc) : lc \in rcd.levelConstraints}
+          IN  (UNION {Sub(lc) : lc \in rcd.levelConstraints})
                 \cup
-              UNION { {LC(i, alp) : alp \in SubALP(i)} : i \in OpDefParams },
+              (UNION { {LC(i, alp) : alp \in SubALP(i)} : i \in OpDefParams }),
 
         argLevelConstraints |->
           (******************************************************************)
@@ -1046,9 +1046,9 @@
                (* SubParamALP(i).                                           *)
                (*************************************************************)
 
-          IN  UNION {Sub(alc) : alc \in rcd.argLevelConstraints}
+          IN  (UNION {Sub(alc) : alc \in rcd.argLevelConstraints})
                 \cup
-              UNION {ALCSet(i) : i \in paramNums},
+              (UNION {ALCSet(i) : i \in paramNums}),
 
         argLevelParams |->
           (******************************************************************)
