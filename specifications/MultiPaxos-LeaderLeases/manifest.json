@@ -1,0 +1,45 @@
+{
+  "sources": [
+    "https://dl.acm.org/doi/10.1145/1281100.1281103",
+    "https://bodega-consensus.com/"
+  ],
+  "authors": [
+    "Guanzhou Hu"
+  ],
+  "tags": [
+    "intermediate"
+  ],
+  "modules": [
+    {
+      "path": "specifications/MultiPaxos-LeaderLeases/MultiPaxos.tla",
+      "features": [
+        "pluscal"
+      ],
+      "models": []
+    },
+    {
+      "path": "specifications/MultiPaxos-LeaderLeases/MultiPaxos_MC.tla",
+      "features": [],
+      "models": [
+        {
+          "path": "specifications/MultiPaxos-LeaderLeases/MultiPaxos_MC.cfg",
+          "runtime": "23:52:24",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 47446058778,
+          "totalStates": 164469752990,
+          "stateDepth": 64
+        },
+        {
+          "path": "specifications/MultiPaxos-LeaderLeases/MultiPaxos_MC_short.cfg",
+          "runtime": "00:04:16",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 38873980,
+          "totalStates": 91353858,
+          "stateDepth": 51
+        }
+      ]
+    }
+  ]
+}
