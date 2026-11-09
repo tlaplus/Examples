@@ -305,7 +305,7 @@ THEOREM OGLiveness == OGSpec => <>(\A n, o \in Node : counter[n] = counter[o])
                       => <> \E k \in 0 .. (m-1) : P(k)
           OBVIOUS
         <5>1. TypeOK /\ C(u,v) => ENABLED <<Gossip(u,v)>>_vars
-          BY EnabledGossip
+          BY EnabledGossip, ExpandENABLED DEF Gossip, vars, C
         <5>2. /\ TypeOK /\ TypeOK' /\ Safety /\ Safety'
               /\ \E k \in 0 .. m : P(k)
               /\ <<Gossip(u,v)>>_vars
