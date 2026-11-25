@@ -97,16 +97,15 @@ LEMMA EnabledSystem ==
     PROVE  (ENABLED <<System>>_vars) <=> 
               \/ tpos = 0 /\ (tcolor = "black" \/ color[0] = "black")
               \/ tpos \in Node \ {0} /\ (~active[tpos] \/ tcolor = "black" \/ color[tpos] = "black")
-<1>1. <<System>>_vars <=> System
-  <2>1. InitiateProbe => <<InitiateProbe>>_vars
-    BY DEF TypeOK, InitiateProbe, vars
-  <2>2. ASSUME NEW i \in Node \ {0}
-        PROVE  PassToken(i) => <<PassToken(i)>>_vars
-    BY <2>2 DEF Node, PassToken, vars
-  <2>. QED  BY <2>1, <2>2 DEF System
-<1>2. (ENABLED <<System>>_vars) <=> (ENABLED System)
-  BY <1>1, ENABLEDaxioms
-<1>. QED BY <1>2, ExpandENABLED DEF System, InitiateProbe, PassToken, vars
+<1>1. (ENABLED <<System>>_vars) <=> (ENABLED System)
+  <2>1. CASE tpos = 0
+    BY <2>1, ExpandENABLED DEF System, InitiateProbe, PassToken,
+                               vars, TypeOK, Node, Color
+  <2>2. CASE tpos # 0
+    BY <2>2, ExpandENABLED DEF System, InitiateProbe, PassToken,
+                               vars, TypeOK, Node, Color
+  <2>. QED  BY <2>1, <2>2
+<1>. QED BY <1>1, ExpandENABLED DEF System, InitiateProbe, PassToken, vars
 
 (***************************************************************************)
 (* We need to prove that once the system has globally terminated, the      *)
