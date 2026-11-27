@@ -173,7 +173,7 @@ ParentOf(n) == CHOOSE p \in Nodes: \/ \E k \in Keys: n = childOf[p, k]
 WhichToSplit ==
     LET  node == Head(toSplit)
          parent == ParentOf(node)
-         splitParent == AtMaxOccupancy(parent)
+         splitParent == IF node = root THEN FALSE ELSE AtMaxOccupancy(parent)
          noMoreSplits == ~splitParent  \* if the parent doesn't need splitting, we don't need to consider more nodes for splitting
     IN /\ state = WHICH_TO_SPLIT
        /\ toSplit' =
