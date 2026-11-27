@@ -23,8 +23,17 @@
           "mode": "exhaustive search",
           "result": "success",
           "distinctStates": 374727,
-          "totalStates": 2820091,
+          "totalStates": 2892343,
           "stateDepth": 38
+        },
+        {
+          "path": "specifications/btree/MCbtreeExhaustion.cfg",
+          "runtime": "00:00:01",
+          "mode": "exhaustive search",
+          "result": "success",
+          "distinctStates": 202,
+          "totalStates": 778,
+          "stateDepth": 11
         }
       ]
     },
